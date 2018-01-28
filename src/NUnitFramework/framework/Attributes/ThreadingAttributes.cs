@@ -34,6 +34,7 @@ namespace NUnit.Framework
     /// to serve the same purpose.
     /// </summary>
     [AttributeUsage(AttributeTargets.Method | AttributeTargets.Class | AttributeTargets.Assembly, AllowMultiple = false, Inherited=false)]
+    [Obsolete("Use ApartmentAttribute")]
     public class RequiresSTAAttribute : PropertyAttribute
     {
         /// <summary>
@@ -53,6 +54,7 @@ namespace NUnit.Framework
     /// to serve the same purpose.
     /// </summary>
     [AttributeUsage(AttributeTargets.Method | AttributeTargets.Class | AttributeTargets.Assembly, AllowMultiple = false, Inherited=false)]
+    [Obsolete("Use ApartmentAttribute")]
     public class RequiresMTAAttribute : PropertyAttribute
     {
         /// <summary>

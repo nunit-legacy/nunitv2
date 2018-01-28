@@ -27,6 +27,7 @@ namespace NUnit.Framework
 	/// </summary>
 	/// 
 	[AttributeUsage(AttributeTargets.Method, AllowMultiple=false, Inherited=false)]
+    [Obsolete("Not supportd in NUnit 3")]
 	public class ExpectedExceptionAttribute : Attribute
 	{
 		private Type expectedException;
