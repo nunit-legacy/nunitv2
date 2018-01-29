@@ -18,6 +18,7 @@ namespace NUnit.Framework
 	/// <see cref="Is"/>, from which it inherits much of its
 	/// behavior, in certain mock object frameworks.
 	/// </summary>
+    [Obsolete("Not supported in NUnit 3")]
 	public class AssertionHelper : ConstraintFactory
     {
         #region Assert

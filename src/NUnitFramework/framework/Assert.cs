@@ -2072,6 +2072,7 @@ namespace NUnit.Framework
         /// <param name="aString">The string to be tested</param>
         /// <param name="message">The message to display in case of failure</param>
         /// <param name="args">Array of objects to be used in formatting the message</param>
+        [Obsolete("Use Constraint syntax")]
         public static void IsNullOrEmpty(string aString, string message, params object[] args)
         {
             Assert.That(aString, new NullOrEmptyStringConstraint(), message, args);
@@ -2081,6 +2082,7 @@ namespace NUnit.Framework
         /// </summary>
         /// <param name="aString">The string to be tested</param>
         /// <param name="message">The message to display in case of failure</param>
+        [Obsolete("Use Constraint syntax")]
         public static void IsNullOrEmpty(string aString, string message)
         {
             Assert.That(aString, new NullOrEmptyStringConstraint(), message, null);
@@ -2089,6 +2091,7 @@ namespace NUnit.Framework
         /// Assert that a string is either null or equal to string.Empty
         /// </summary>
         /// <param name="aString">The string to be tested</param>
+        [Obsolete("Use Constraint syntax")]
         public static void IsNullOrEmpty(string aString)
         {
             Assert.That(aString, new NullOrEmptyStringConstraint(), null, null);
@@ -2104,6 +2107,7 @@ namespace NUnit.Framework
         /// <param name="aString">The string to be tested</param>
         /// <param name="message">The message to display in case of failure</param>
         /// <param name="args">Array of objects to be used in formatting the message</param>
+        [Obsolete("Use Constraint syntax")]
         public static void IsNotNullOrEmpty(string aString, string message, params object[] args)
         {
             Assert.That(aString, new NotConstraint(new NullOrEmptyStringConstraint()), message, args);
@@ -2113,6 +2117,7 @@ namespace NUnit.Framework
         /// </summary>
         /// <param name="aString">The string to be tested</param>
         /// <param name="message">The message to display in case of failure</param>
+        [Obsolete("Use Constraint syntax")]
         public static void IsNotNullOrEmpty(string aString, string message)
         {
             Assert.That(aString, new NotConstraint(new NullOrEmptyStringConstraint()), message, null);
@@ -2121,6 +2126,7 @@ namespace NUnit.Framework
         /// Assert that a string is not null or empty
         /// </summary>
         /// <param name="aString">The string to be tested</param>
+        [Obsolete("Use Constraint syntax")]
         public static void IsNotNullOrEmpty(string aString)
         {
             Assert.That(aString, new NotConstraint(new NullOrEmptyStringConstraint()), null, null);

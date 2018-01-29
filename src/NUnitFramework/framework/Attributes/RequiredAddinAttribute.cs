@@ -15,6 +15,7 @@ namespace NUnit.Framework
     /// as NotRunnable.
     /// </summary>
     [AttributeUsage(AttributeTargets.Assembly,AllowMultiple=true, Inherited=false)]
+    [Obsolete("Not supported in NUnit 3")]
     public class RequiredAddinAttribute : Attribute
     {
         private string requiredAddin;

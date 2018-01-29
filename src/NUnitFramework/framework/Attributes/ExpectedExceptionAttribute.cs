@@ -27,6 +27,7 @@ namespace NUnit.Framework
 	/// </summary>
 	/// 
 	[AttributeUsage(AttributeTargets.Method, AllowMultiple=false, Inherited=false)]
+    [Obsolete("Use Assert.Throw")]
 	public class ExpectedExceptionAttribute : Attribute
 	{
 		private Type expectedException;

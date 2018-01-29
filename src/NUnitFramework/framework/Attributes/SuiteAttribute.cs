@@ -13,6 +13,7 @@ namespace NUnit.Framework
 	/// that returns a list of tests.
 	/// </summary>
 	[AttributeUsage(AttributeTargets.Property, AllowMultiple=false, Inherited=false)]
+    [Obsolete("Not supported in NUnit 3")]
 	public class SuiteAttribute : Attribute
 	{}
 }

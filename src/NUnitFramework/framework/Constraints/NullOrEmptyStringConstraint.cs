@@ -11,6 +11,7 @@ namespace NUnit.Framework.Constraints
     /// <summary>
     /// NullEmptyStringConstraint tests whether a string is either null or empty.
     /// </summary>
+    [Obsolete("Use Constraint syntax")]
     public class NullOrEmptyStringConstraint : Constraint
     {
         /// <summary>
