@@ -42,12 +42,12 @@ namespace NUnit.Core
 		/// <summary>
 		/// The SetUp method.
 		/// </summary>
-		protected MethodInfo[] setUpMethods;
+		protected IList<MethodInfo> setUpMethods;
 
 		/// <summary>
 		/// The teardown method
 		/// </summary>
-		protected MethodInfo[] tearDownMethods;
+		protected IList<MethodInfo> tearDownMethods;
 
 #if CLR_2_0 || CLR_4_0
         /// <summary>
@@ -230,8 +230,8 @@ namespace NUnit.Core
                 TestSuite suite = this.Parent as TestSuite;
                 if (suite != null)
                 {
-                    this.setUpMethods = suite.GetSetUpMethods();
-                    this.tearDownMethods = suite.GetTearDownMethods();
+                    this.setUpMethods = suite.SetUpMethods;
+                    this.tearDownMethods = suite.TearDownMethods;
 #if CLR_2_0 || CLR_4_0
                     this.suiteActions = suite.GetTestActions();
 #endif
@@ -449,7 +449,7 @@ namespace NUnit.Core
 			{
                 if (tearDownMethods != null)
                 {
-                    int index = tearDownMethods.Length;
+                    int index = tearDownMethods.Count;
                     while (--index >= 0)
                         Reflect.InvokeMethod(tearDownMethods[index], tearDownMethods[index].IsStatic ? null : this.Fixture);
                 }

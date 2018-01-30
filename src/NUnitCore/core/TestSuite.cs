@@ -35,26 +35,6 @@ using System.Diagnostics;
 		/// </summary>
 		private ArrayList tests = new ArrayList();
 
-        /// <summary>
-        /// The fixture setup methods for this suite
-        /// </summary>
-        protected MethodInfo[] fixtureSetUpMethods;
-
-        /// <summary>
-        /// The fixture teardown methods for this suite
-        /// </summary>
-        protected MethodInfo[] fixtureTearDownMethods;
-
-        /// <summary>
-        /// The setup methods for this suite
-        /// </summary>
-        protected MethodInfo[] setUpMethods;
-
-        /// <summary>
-        /// The teardown methods for this suite
-        /// </summary>
-        protected MethodInfo[] tearDownMethods;
-
 #if CLR_2_0 || CLR_4_0
         /// <summary>
         /// The actions for this suite
@@ -192,15 +172,19 @@ using System.Diagnostics;
             set { fixture = value; }
         }
 
-        public MethodInfo[] GetSetUpMethods()
-        {
-            return setUpMethods;
-        }
+        public IList<MethodInfo> SetUpMethods { get; protected set; }
 
-        public MethodInfo[] GetTearDownMethods()
-        {
-            return tearDownMethods;
-        }
+        public IList<MethodInfo> TearDownMethods { get; protected set; }
+
+        /// <summary>
+        /// The fixture setup methods for this suite
+        /// </summary>
+        protected IList<MethodInfo> FixtureSetUpMethods { get; set; }
+
+        /// <summary>
+        /// The fixture teardown methods for this suite
+        /// </summary>
+        protected IList<MethodInfo> FixtureTearDownMethods { get; set; }
 
 #if CLR_2_0 || CLR_4_0
         internal virtual TestAction[] GetTestActions()
@@ -224,7 +208,7 @@ using System.Diagnostics;
 
         #endregion
 
-		#region Test Overrides
+        #region Test Overrides
 
         public override string TestType
         {
@@ -373,8 +357,8 @@ using System.Diagnostics;
 					if (Fixture == null && !IsStaticClass( FixtureType ) )
 						CreateUserFixture();
 
-                    if (this.fixtureSetUpMethods != null)
-                        foreach( MethodInfo fixtureSetUp in fixtureSetUpMethods )
+                    if (this.FixtureSetUpMethods != null)
+                        foreach( MethodInfo fixtureSetUp in FixtureSetUpMethods )
                             Reflect.InvokeMethod(fixtureSetUp, fixtureSetUp.IsStatic ? null : Fixture);
 
                     TestExecutionContext.CurrentContext.Update();
@@ -462,12 +446,12 @@ using System.Diagnostics;
             {
                 try
                 {
-                    if (this.fixtureTearDownMethods != null)
+                    if (this.FixtureTearDownMethods != null)
                     {
-                        int index = fixtureTearDownMethods.Length;
+                        int index = FixtureTearDownMethods.Count;
                         while (--index >= 0 )
                         {
-                            MethodInfo fixtureTearDown = fixtureTearDownMethods[index];
+                            MethodInfo fixtureTearDown = FixtureTearDownMethods[index];
                             Reflect.InvokeMethod(fixtureTearDown, fixtureTearDown.IsStatic ? null : Fixture);
                         }
                     }

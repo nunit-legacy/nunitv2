@@ -88,10 +88,16 @@ namespace NUnit.Core.Builders
                 return false;
             }
 
-            if (!NUnitFramework.CheckSetUpTearDownMethods(type, NUnitFramework.FixtureSetUpAttribute, ref reason) )
+            if (!NUnitFramework.CheckSetUpTearDownMethods(type, NUnitFramework.FixtureSetUpAttribute, ref reason))
                 return false;
-            
+
+            if (!NUnitFramework.CheckSetUpTearDownMethods(type, NUnitFramework.OneTimeSetUpAttribute, ref reason))
+                return false;
+
             if (!NUnitFramework.CheckSetUpTearDownMethods(type, NUnitFramework.FixtureTearDownAttribute, ref reason))
+                return false;
+
+            if (!NUnitFramework.CheckSetUpTearDownMethods(type, NUnitFramework.OneTimeTearDownAttribute, ref reason))
                 return false;
 
             if (Reflect.HasMethodWithAttribute(type, NUnitFramework.SetUpAttribute, true))

@@ -5,6 +5,7 @@
 // ****************************************************************
 
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Reflection;
 
@@ -25,12 +26,19 @@ namespace NUnit.Core
             int index = TestName.Name.LastIndexOf('.');
             if (index > 0)
                 this.TestName.Name = this.TestName.Name.Substring(index + 1);
-            
-			this.fixtureSetUpMethods = Reflect.GetMethodsWithAttribute( type, NUnitFramework.SetUpAttribute, true );
-			this.fixtureTearDownMethods = Reflect.GetMethodsWithAttribute( type, NUnitFramework.TearDownAttribute, true );
+
+            var fixtureSetUpMethods = new List<MethodInfo>();
+            fixtureSetUpMethods.AddRange(Reflect.GetMethodsWithAttribute(type, NUnitFramework.SetUpAttribute, true));
+            fixtureSetUpMethods.AddRange(Reflect.GetMethodsWithAttribute(type, NUnitFramework.OneTimeSetUpAttribute, true));
+            FixtureSetUpMethods = fixtureSetUpMethods;
+
+            var fixtureTearDownMethods = new List<MethodInfo>();
+            fixtureTearDownMethods.AddRange(Reflect.GetMethodsWithAttribute(type, NUnitFramework.TearDownAttribute, true));
+            fixtureTearDownMethods.AddRange(Reflect.GetMethodsWithAttribute(type, NUnitFramework.OneTimeTearDownAttribute, true));
+            FixtureTearDownMethods = fixtureTearDownMethods;
 
 #if CLR_2_0 || CLR_4_0
-		    this.actions = ActionsHelper.GetActionsFromTypesAttributes(type);
+            this.actions = ActionsHelper.GetActionsFromTypesAttributes(type);
 #endif
 		}
 		#endregion

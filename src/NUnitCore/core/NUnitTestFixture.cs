@@ -6,7 +6,7 @@
 
 using System;
 using System.Reflection;
-using System.Collections;
+using System.Collections.Generic;
 
 namespace NUnit.Core
 {
@@ -21,13 +21,20 @@ namespace NUnit.Core
         public NUnitTestFixture(Type fixtureType, object[] arguments)
             : base(fixtureType, arguments)
         {
-            this.fixtureSetUpMethods =
-                Reflect.GetMethodsWithAttribute(fixtureType, NUnitFramework.FixtureSetUpAttribute, true);
-            this.fixtureTearDownMethods =
-                Reflect.GetMethodsWithAttribute(fixtureType, NUnitFramework.FixtureTearDownAttribute, true);
-            this.setUpMethods = 
+
+            var fixtureSetUpMethods = new List<MethodInfo>();
+            fixtureSetUpMethods.AddRange(Reflect.GetMethodsWithAttribute(fixtureType, NUnitFramework.FixtureSetUpAttribute, true));
+            fixtureSetUpMethods.AddRange(Reflect.GetMethodsWithAttribute(fixtureType, NUnitFramework.OneTimeSetUpAttribute, true));
+            FixtureSetUpMethods = fixtureSetUpMethods;
+
+            var fixtureTearDownMethods = new List<MethodInfo>();
+            fixtureTearDownMethods.AddRange(Reflect.GetMethodsWithAttribute(fixtureType, NUnitFramework.FixtureTearDownAttribute, true));
+            fixtureTearDownMethods.AddRange(Reflect.GetMethodsWithAttribute(fixtureType, NUnitFramework.OneTimeTearDownAttribute, true));
+            FixtureTearDownMethods = fixtureTearDownMethods;
+
+            SetUpMethods = 
                 Reflect.GetMethodsWithAttribute(this.FixtureType, NUnitFramework.SetUpAttribute, true);
-            this.tearDownMethods = 
+            TearDownMethods = 
                 Reflect.GetMethodsWithAttribute(this.FixtureType, NUnitFramework.TearDownAttribute, true);
 
 #if CLR_2_0 || CLR_4_0

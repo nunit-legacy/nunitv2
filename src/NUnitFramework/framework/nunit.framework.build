@@ -13,6 +13,8 @@
         <include name="Attributes/IncludeExcludeAttributes.cs"/>
         <include name="Attributes/JoinTypeAttributes.cs"/>
         <include name="Attributes/MaxTimeAttribute.cs"/>
+        <include name="Attributes/OneTImeSetUpAttribute.cs"/>
+        <include name="Attributes/OneTImeTearDownAttribute.cs"/>
         <include name="Attributes/PropertyAttribute.cs"/>
         <include name="Attributes/RandomAttribute.cs"/>
         <include name="Attributes/RangeAttribute.cs"/>

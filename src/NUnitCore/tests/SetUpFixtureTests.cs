@@ -103,6 +103,17 @@ namespace NUnit.Core.Tests
         }
         #endregion Simple
 
+        #region OneTimeSetUp and OneTimeTearDown
+        [NUnit.Framework.Test]
+        public void OneTimeSetUpAndTearDownAreRecognized()
+        {
+            Assert.IsTrue(runTests("NUnit.TestData.SetupFixture.Namespace1b").IsSuccess);
+            TestUtilities.SimpleEventRecorder.Verify("NamespaceSetup",
+                                    "FixtureSetup", "Setup", "Test", "TearDown", "FixtureTearDown",
+                                  "NamespaceTearDown");
+        }
+        #endregion Simple
+
         #region Static
         [Test]
         public void NamespaceSetUpMethodsMayBeStatic()

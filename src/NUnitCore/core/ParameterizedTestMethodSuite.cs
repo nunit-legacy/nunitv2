@@ -62,8 +62,8 @@ namespace NUnit.Core
                 TestSuite suite = this.Parent as TestSuite;
                 if (suite != null)
                 {
-                    this.setUpMethods = suite.GetSetUpMethods();
-                    this.tearDownMethods = suite.GetTearDownMethods();
+                    SetUpMethods = suite.SetUpMethods;
+                    TearDownMethods = suite.TearDownMethods;
                 }
             }
 
@@ -83,9 +83,9 @@ namespace NUnit.Core
                         : "All test cases were inconclusive",
                     null);
 
-			this.Fixture = null;
-			this.setUpMethods = null;
-			this.tearDownMethods = null;
+			Fixture = null;
+			SetUpMethods = null;
+			TearDownMethods = null;
 #if CLR_2_0 || CLR_4_0
             this.actions = null;
 #endif
