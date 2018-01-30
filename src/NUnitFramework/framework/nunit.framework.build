@@ -54,6 +54,7 @@
         <include name="CollectionAssert.cs"/>
         <include name="Contains.cs"/>
         <include name="DirectoryAssert.cs"/>
+        <include name="Does.cs"/>
         <include name="FileAssert.cs"/>
         <include name="GlobalSettings.cs"/>
         <include name="Guard.cs"/>
