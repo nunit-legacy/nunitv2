@@ -107,7 +107,7 @@ namespace NUnit.Util.Tests
 
         private static void WaitForTimerExpiration()
         {
-            System.Threading.Thread.Sleep(watcherDelayMs * 2);
+            System.Threading.Thread.Sleep(watcherDelayMs * 10);
         }
 
         private class CounterEventHandler
