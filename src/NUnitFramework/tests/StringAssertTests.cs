@@ -4,6 +4,8 @@
 // obtain a copy of the license at http://nunit.org.
 // ****************************************************************
 
+using System;
+
 namespace NUnit.Framework.Tests
 {
 	[TestFixture]
@@ -17,7 +19,7 @@ namespace NUnit.Framework.Tests
 			StringAssert.Contains( "abc", "**abc**" );
 		}
 
-        [Test, ExpectedException(typeof(AssertionException))]
+        [Test, ExpectedException(typeof(AssertionException)), Obsolete]
 		public void ContainsFails()
 		{
             expectedMessage =
