@@ -76,6 +76,12 @@
     <ErrorReport>prompt</ErrorReport>
     <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
+  <PropertyGroup>
+    <SignAssembly>true</SignAssembly>
+  </PropertyGroup>
+  <PropertyGroup>
+    <AssemblyOriginatorKeyFile>nunit.snk</AssemblyOriginatorKeyFile>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="System">
       <Name>System</Name>
@@ -109,7 +115,6 @@
       <Link>CommonAssemblyInfo.cs</Link>
     </Compile>
     <Compile Include="AggregatingTestRunner.cs" />
-    <Compile Include="AssemblyInfo.cs" />
     <Compile Include="AssemblyList.cs" />
     <Compile Include="AssemblyWatcher.cs">
     </Compile>
@@ -182,6 +187,7 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
+    <None Include="nunit.snk" />
     <None Include="nunit.util.build" />
   </ItemGroup>
   <ItemGroup>

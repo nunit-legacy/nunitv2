@@ -76,6 +76,12 @@
     <ErrorReport>prompt</ErrorReport>
     <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
+  <PropertyGroup>
+    <SignAssembly>true</SignAssembly>
+  </PropertyGroup>
+  <PropertyGroup>
+    <AssemblyOriginatorKeyFile>nunit.snk</AssemblyOriginatorKeyFile>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="System">
       <Name>System</Name>
@@ -124,7 +130,6 @@
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="AppContainer.cs" />
-    <Compile Include="AssemblyInfo.cs" />
     <Compile Include="ConfigurationEditor.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -374,6 +379,7 @@
     <Content Include="Images\Tree\Visual Studio\Success.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <None Include="nunit.snk" />
     <None Include="nunit.uikit.build" />
   </ItemGroup>
   <ItemGroup>
