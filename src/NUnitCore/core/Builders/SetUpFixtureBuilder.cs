@@ -49,8 +49,12 @@ namespace NUnit.Core.Builders
             }
 
             if (!NUnitFramework.CheckSetUpTearDownMethods(type, NUnitFramework.SetUpAttribute, ref reason) ||
-                !NUnitFramework.CheckSetUpTearDownMethods(type, NUnitFramework.TearDownAttribute, ref reason) )
-                    return false;
+                !NUnitFramework.CheckSetUpTearDownMethods(type, NUnitFramework.OneTimeSetUpAttribute, ref reason) ||
+                !NUnitFramework.CheckSetUpTearDownMethods(type, NUnitFramework.TearDownAttribute, ref reason) ||
+                !NUnitFramework.CheckSetUpTearDownMethods(type, NUnitFramework.OneTimeTearDownAttribute, ref reason))
+            {
+                return false;
+            }
 
             if ( Reflect.HasMethodWithAttribute(type, NUnitFramework.FixtureSetUpAttribute, true) )
             {

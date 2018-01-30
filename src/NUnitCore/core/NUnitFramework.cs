@@ -48,6 +48,8 @@ namespace NUnit.Core
         public static readonly string TearDownAttribute = "NUnit.Framework.TearDownAttribute";
         public static readonly string FixtureSetUpAttribute = "NUnit.Framework.TestFixtureSetUpAttribute";
         public static readonly string FixtureTearDownAttribute = "NUnit.Framework.TestFixtureTearDownAttribute";
+        public static readonly string OneTimeSetUpAttribute = "NUnit.Framework.OneTimeSetUpAttribute";
+        public static readonly string OneTimeTearDownAttribute = "NUnit.Framework.OneTimeTearDownAttribute";
         public static readonly string ExpectedExceptionAttribute = "NUnit.Framework.ExpectedExceptionAttribute";
 
         // Attributes that apply only to Properties
