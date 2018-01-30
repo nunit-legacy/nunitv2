@@ -102,6 +102,7 @@
     <Compile Include="ActionTargets.cs" />
     <Compile Include="AsyncInvocationRegion.cs" />
     <Compile Include="AsyncSynchronizationContext.cs" />
+    <Compile Include="Attributes\ApartmentAttribute.cs" />
     <Compile Include="Attributes\CategoryAttribute.cs" />
     <Compile Include="Attributes\DatapointAttributes.cs" />
     <Compile Include="Attributes\DescriptionAttribute.cs" />
