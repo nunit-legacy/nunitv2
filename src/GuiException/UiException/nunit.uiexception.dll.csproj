@@ -12,7 +12,7 @@
     <AssemblyName>nunit.uiexception</AssemblyName>
     <TargetFrameworkVersion>v2.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
-    <AssemblyOriginatorKeyFile>..\..\..\..\src\GuiException\UiException\stackSgKey.snk</AssemblyOriginatorKeyFile>
+    <AssemblyOriginatorKeyFile>nunit.snk</AssemblyOriginatorKeyFile>
     <FileUpgradeFlags>
     </FileUpgradeFlags>
     <OldToolsVersion>3.5</OldToolsVersion>
@@ -54,6 +54,9 @@
     <NoWarn>1699</NoWarn>
     <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
+  <PropertyGroup>
+    <SignAssembly>true</SignAssembly>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Data" />
@@ -65,7 +68,6 @@
     <Compile Include="..\..\CommonAssemblyInfo.cs">
       <Link>CommonAssemblyInfo.cs</Link>
     </Compile>
-    <Compile Include="AssemblyInfo.cs" />
     <Compile Include="CodeFormatters\CodeFormatterCollection.cs" />
     <Compile Include="CodeFormatters\GeneralCodeFormatter.cs" />
     <Compile Include="CodeFormatters\ICodeFormatter.cs" />
@@ -130,6 +132,7 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
+    <None Include="nunit.snk" />
     <None Include="nunit.uiexception.build" />
   </ItemGroup>
   <ItemGroup>

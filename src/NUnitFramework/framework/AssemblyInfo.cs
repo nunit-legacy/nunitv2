@@ -10,7 +10,3 @@ using System.Security;
 
 [assembly: CLSCompliant(true)]
 [assembly: AllowPartiallyTrustedCallers]
-
-[assembly: AssemblyDelaySign(false)]
-[assembly: AssemblyKeyFile("../../nunit.snk")]
-[assembly: AssemblyKeyName("")]
