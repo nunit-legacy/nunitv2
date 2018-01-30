@@ -4,6 +4,7 @@
   <patternset id="source-files">
         <include name="AsyncSynchronizationContext.cs" if="${runtime.version >= '2.0'}"/>
         <include name="AsyncInvocationRegion.cs" if="${runtime.version >= '2.0'}"/>
+        <include name="Attributes/ApartmentAttribute.cs"/>
         <include name="Attributes/CategoryAttribute.cs"/>
         <include name="Attributes/DatapointAttributes.cs"/>
         <include name="Attributes/DescriptionAttribute.cs"/>

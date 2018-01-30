@@ -112,6 +112,22 @@ namespace NUnit.Core.Tests
                 Assert.That(Thread.CurrentThread, Is.EqualTo(parentThread));
         }
 
+        [Test, Apartment(ApartmentState.STA)]
+        public void TestWithApartmentSTARunsInSTA()
+        {
+            Assert.That(Thread.CurrentThread.ApartmentState, Is.EqualTo(ApartmentState.STA));
+            if (parentThreadApartment == ApartmentState.STA)
+                Assert.That(Thread.CurrentThread, Is.EqualTo(parentThread));
+        }
+
+        [Test, Apartment(ApartmentState.MTA)]
+        public void TestWithApartmentMTARunsInMTA()
+        {
+            Assert.That(Thread.CurrentThread.ApartmentState, Is.EqualTo(ApartmentState.MTA));
+            if (parentThreadApartment == ApartmentState.MTA)
+                Assert.That(Thread.CurrentThread, Is.EqualTo(parentThread));
+        }
+
         [Test, RequiresThread]
         public void TestWithRequiresThreadRunsInSeparateThread()
         {
