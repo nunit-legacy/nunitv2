@@ -55,6 +55,16 @@ namespace NUnit.Core
 		/// </summary>
 		private Thread runThread;
 
+        /// <summary>
+        /// If true, compatibility checks are run
+        /// </summary>
+        private bool _compatibility;
+
+        /// <summary>
+        /// The work directory for this run
+        /// </summary>
+        private string _workDirectory;
+
 		#endregion
 
 		#region Constructor
@@ -108,8 +118,23 @@ namespace NUnit.Core
 
 			this.builder = new TestSuiteBuilder();
 
-			this.test = builder.Build( package );
-			if ( test == null ) return false;
+            _compatibility = package.GetSetting("NUnit3Compatibility", false);
+            _workDirectory = package.GetSetting("WorkDirectory", Environment.CurrentDirectory);
+
+            if (_compatibility)
+                Compatibility.BeginCollection(_workDirectory);
+
+            try
+            {
+                this.test = builder.Build(package);
+            }
+            finally
+            {
+                if (_compatibility)
+                    Compatibility.EndCollection();
+            }
+
+            if ( test == null ) return false;
 
 			test.SetRunnerID( this.runnerID, true );
             TestExecutionContext.CurrentContext.TestPackage = package;
@@ -144,7 +169,13 @@ namespace NUnit.Core
 				// Take note of the fact that we are running
 				this.runThread = Thread.CurrentThread;
 
-				listener.RunStarted( this.Test.TestName.FullName, test.CountTestCases( filter ) );
+                if (_compatibility)
+                {
+                    Compatibility.BeginCollection(_workDirectory);
+                    TestExecutionContext.CurrentContext.CompatibilityWriter = Compatibility.Writer;
+                }
+
+                listener.RunStarted( this.Test.TestName.FullName, test.CountTestCases( filter ) );
 				
 				testResult = test.Run( listener, filter );
 
@@ -165,6 +196,9 @@ namespace NUnit.Core
 			finally
 			{
 				runThread = null;
+
+                if (_compatibility)
+                    Compatibility.EndCollection();
 			}
 		}
 

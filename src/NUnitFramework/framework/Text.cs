@@ -24,10 +24,14 @@ namespace NUnit.Framework
         /// the following constraint to all members of a collection,
         /// succeeding if all of them succeed.
         /// </summary>
-        [Obsolete("Use Is.All")]
+        [Obsolete("Use Is.All or Has.All")]
         public static ConstraintExpression All
         {
-            get { return new ConstraintExpression().All; }
+            get
+            {
+                Incompatible("All", "Is.All or Has.All");
+                return new ConstraintExpression().All;
+            }
         }
         
         #endregion
@@ -38,9 +42,10 @@ namespace NUnit.Framework
         /// Returns a constraint that succeeds if the actual
         /// value contains the substring supplied as an argument.
         /// </summary>
-        [Obsolete("Use Is.StringContaining")]
+        [Obsolete("Use Does.Contain")]
         public static SubstringConstraint Contains(string expected)
         {
+            Incompatible("Contains", "Does.Contain");
             return new SubstringConstraint(expected);
         }
         
@@ -52,9 +57,10 @@ namespace NUnit.Framework
         /// Returns a constraint that fails if the actual
         /// value contains the substring supplied as an argument.
         /// </summary>
-        [Obsolete("Use Is.Not.StringContaining")]
+        [Obsolete("Use Does.Not.Contain")]
         public static SubstringConstraint DoesNotContain(string expected)
         {
+            Incompatible("DoesNotContain", "Does.Not.Contain");
             return new ConstraintExpression().Not.ContainsSubstring(expected);
         }
         
@@ -66,9 +72,10 @@ namespace NUnit.Framework
         /// Returns a constraint that succeeds if the actual
         /// value starts with the substring supplied as an argument.
         /// </summary>
-        [Obsolete("Use Is.StringStarting")]
+        [Obsolete("Use Does.StartWith")]
         public static StartsWithConstraint StartsWith(string expected)
         {
+            Incompatible("StartsWith", "Does.StartWith");
             return new StartsWithConstraint(expected);
         }
         
@@ -80,35 +87,40 @@ namespace NUnit.Framework
         /// Returns a constraint that fails if the actual
         /// value starts with the substring supplied as an argument.
         /// </summary>
+        [Obsolete("Use Does.Not.StartWith")]
         public static StartsWithConstraint DoesNotStartWith(string expected)
         {
+            Incompatible("DoesNotStartWith", "Does.Not.StartWith");
             return new ConstraintExpression().Not.StartsWith(expected);
         }
-        
+
         #endregion
-        
+
         #region EndsWith
-        
+
         /// <summary>
         /// Returns a constraint that succeeds if the actual
         /// value ends with the substring supplied as an argument.
         /// </summary>
-        [Obsolete("Use Is.StringEnding")]
+        [Obsolete("Use Does.EndWith")]
         public static EndsWithConstraint EndsWith(string expected)
         {
+            Incompatible("EndsWith", "Does.EndWith");
             return new EndsWithConstraint(expected);
         }
-        
+
         #endregion
-        
+
         #region DoesNotEndWith
-        
+
         /// <summary>
         /// Returns a constraint that fails if the actual
         /// value ends with the substring supplied as an argument.
         /// </summary>
+        [Obsolete("Use Does.Not.EndWith")]
         public static EndsWithConstraint DoesNotEndWith(string expected)
         {
+            Incompatible("DoesNotEndWith", "Does.Not.EndWith");
             return new ConstraintExpression().Not.EndsWith(expected);
         }
         
@@ -120,9 +132,10 @@ namespace NUnit.Framework
         /// Returns a constraint that succeeds if the actual
         /// value matches the Regex pattern supplied as an argument.
         /// </summary>
-        [Obsolete("Use Is.StringMatching")]
+        [Obsolete("Use Does.Match")]
         public static RegexConstraint Matches(string pattern)
         {
+            Incompatible("Matches", "Does.Match");
             return new RegexConstraint(pattern);
         }
         
@@ -134,13 +147,22 @@ namespace NUnit.Framework
         /// Returns a constraint that fails if the actual
         /// value matches the pattern supplied as an argument.
         /// </summary>
-        [Obsolete]
+        [Obsolete("Use Does.Not.Match")]
         public static RegexConstraint DoesNotMatch(string pattern)
         {
+            Incompatible("DoesNotMatch", "Does.Not.Match");
             return new ConstraintExpression().Not.Matches(pattern);
         }
-        
+
         #endregion
-        
+
+        #region Compatibility Error Message Helper
+
+        private static void Incompatible(string name, string replace)
+        {
+            TestContext.Compatibility.Error("Text." + name + " is not supported in NUnit 3. Use " + replace);
+        }
+
+        #endregion
     }
 }

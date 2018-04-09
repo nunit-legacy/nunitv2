@@ -68,9 +68,9 @@ namespace NUnit.Core.Builders
         {
             ArrayList parameterList = new ArrayList();
 
-            foreach (ProviderReference info in GetSourcesFor(method, parentSuite))
+            foreach (ProviderReference providerReference in GetSourcesFor(method, parentSuite))
             {
-                foreach (object source in info.GetInstance())
+                foreach (object source in providerReference.GetInstance())
                 {
                     ParameterSet parms;
 
@@ -116,8 +116,18 @@ namespace NUnit.Core.Builders
                         }
                     }
 
-                    if (info.Category != null)
-                        foreach (string cat in info.Category.Split(new char[] { ',' }))
+
+                    // This is the only point we can easily check the individual returned 
+                    // ParameterSet items from a TestCaseSourceAttribute.
+                    if (parms.ExpectedExceptionName != null)
+                        Compatibility.Error(providerReference.ProviderLocation, 
+                            "TestCaseSourceAttribute does not support ExpectedException in NUnit 3. Use Assert.Throws or ThrowsConstraint.");
+                    if (parms.RunState == RunState.Ignored && string.IsNullOrEmpty(parms.IgnoreReason))
+                        Compatibility.Error(providerReference.ProviderLocation, 
+                            "TestCaseSourceAttribute requires a reason when case is ignored in NUnit 3.");
+
+                    if (providerReference.ProviderCategory != null)
+                        foreach (string cat in providerReference.ProviderCategory.Split(new char[] { ',' }))
                             parms.Categories.Add(cat);
 
                     parameterList.Add(parms);

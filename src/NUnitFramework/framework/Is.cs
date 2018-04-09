@@ -311,6 +311,7 @@ namespace NUnit.Framework
         [Obsolete("Use InstanceOf(expectedType)")]
         public static InstanceOfTypeConstraint InstanceOfType(Type expectedType)
         {
+            TestContext.Compatibility.Error("Is.InstanceOfType is not supported in NUnit 3. Use Is.InstanceOf");
             return new InstanceOfTypeConstraint(expectedType);
         }
 
@@ -322,7 +323,7 @@ namespace NUnit.Framework
         [Obsolete("Use InstanceOf<T>()")]
         public static InstanceOfTypeConstraint InstanceOfType<T>()
         {
-            return new InstanceOfTypeConstraint(typeof(T));
+            return InstanceOfType(typeof(T));
         }
 #endif
 
@@ -424,6 +425,7 @@ namespace NUnit.Framework
         [Obsolete("Use Does.Contain")]
         public static SubstringConstraint StringContaining(string expected)
         {
+            TestContext.Compatibility.Error("Is.StringContaining is not supported in NUnit 3. Use Does.Contain");
             return new SubstringConstraint(expected);
         }
 
@@ -438,6 +440,7 @@ namespace NUnit.Framework
         [Obsolete("Use Does.StartWith")]
         public static StartsWithConstraint StringStarting(string expected)
         {
+            TestContext.Compatibility.Error("Is.StringStarting is not supported in NUnit 3. Use Does.StartWith");
             return new StartsWithConstraint(expected);
         }
 
@@ -452,6 +455,7 @@ namespace NUnit.Framework
         [Obsolete("Use Does.EndWith")]
         public static EndsWithConstraint StringEnding(string expected)
         {
+            TestContext.Compatibility.Error("Is.StringEnding is not supported in NUnit 3. Use Does.EndWith");
             return new EndsWithConstraint(expected);
         }
 
@@ -466,6 +470,7 @@ namespace NUnit.Framework
         [Obsolete("Use Does.Match")]
         public static RegexConstraint StringMatching(string pattern)
         {
+            TestContext.Compatibility.Error("Is.StringMatching is not supported in NUnit 3. Use Does.Match");
             return new RegexConstraint(pattern);
         }
 

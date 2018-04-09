@@ -34,6 +34,8 @@ namespace NUnit.Core
                         return _context.CurrentTest.TestName.Name;
                     case "Test.FullName":
                         return _context.CurrentTest.TestName.FullName;
+                    case "Test.ClassNamePlusMethodName":
+                        return _context.CurrentTest.ClassName + "." + _context.CurrentTest.MethodName;
                     case "Test.Properties":
                         return _context.CurrentTest.Properties;
                     case "Result.State":
@@ -44,6 +46,8 @@ namespace NUnit.Core
                         return _context.TestPackage.Settings.Contains("WorkDirectory")
                             ? _context.TestPackage.Settings["WorkDirectory"]
                             : Environment.CurrentDirectory;
+                    case "CompatibilityWriter":
+                        return _context.CompatibilityWriter;
                     default:
                         return _storage[key];
                 }

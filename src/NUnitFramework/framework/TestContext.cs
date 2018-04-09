@@ -5,6 +5,7 @@
 // ****************************************************************
 using System;
 using System.Collections;
+using System.IO;
 using System.Runtime.Remoting.Messaging;
 
 namespace NUnit.Framework
@@ -103,6 +104,17 @@ namespace NUnit.Framework
             }
         }
 
+        public static CompatibilityLogger Compatibility
+        {
+            get
+            {
+                var contextDictionary = CurrentContext._context;
+                return contextDictionary != null
+                    ? new CompatibilityLogger((TextWriter)contextDictionary["CompatibilityWriter"])
+                    : null;
+            }
+        }
+
         #endregion
 
         #region Nested TestAdapter Class
@@ -149,6 +161,14 @@ namespace NUnit.Framework
                 get
                 {
                     return _context["Test.FullName"] as string;
+                }
+            }
+
+            internal string ClassNamePlusMethodName
+            {
+                get
+                {
+                    return _context["Test.ClassNamePlusMethodName"] as string;
                 }
             }
 

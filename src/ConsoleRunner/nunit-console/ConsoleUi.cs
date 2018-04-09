@@ -95,6 +95,9 @@ namespace NUnit.ConsoleRunner
 
             using (TestRunner testRunner = new DefaultTestRunnerFactory().MakeTestRunner(package))
 			{
+                if (options.compatibility)
+                    Compatibility.Initialize(workDir);
+
                 testRunner.Load(package);
 
                 if (testRunner.Test == null)

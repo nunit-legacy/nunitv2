@@ -258,7 +258,7 @@ namespace NUnit.Core
                                         test.Properties.Add(key, value);
                                     }
                             }
-						}
+                        }
                         else if ( Reflect.InheritsFrom( attributeType, ExplicitAttribute ) )
                          {
                              if (isValid)
@@ -279,6 +279,7 @@ namespace NUnit.Core
                 }
             }
         }
+
 		#endregion
 
         #region ApplyExpectedExceptionAttribute
@@ -294,7 +295,9 @@ namespace NUnit.Core
                 method, NUnitFramework.ExpectedExceptionAttribute, false);
 
             if (attribute != null)
+            {
                 testMethod.ExceptionProcessor = new ExpectedExceptionProcessor(testMethod, attribute);
+            }
         }
 
         #endregion
@@ -327,6 +330,10 @@ namespace NUnit.Core
         public static bool IsAddinAvailable(string name)
         {
             foreach (Addin addin in CoreExtensions.Host.AddinRegistry.Addins)
+                if (addin.Name == name && addin.Status == AddinStatus.Loaded)
+                    return true;
+
+            foreach (Addin addin in CoreExtensions.Host.AdhocExtensions)
                 if (addin.Name == name && addin.Status == AddinStatus.Loaded)
                     return true;
 

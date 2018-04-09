@@ -152,12 +152,13 @@
     <Compile Include="Builders\NUnitTestFixtureBuilder.cs" />
     <Compile Include="Builders\PairwiseStrategy.cs" />
     <Compile Include="Builders\ProviderCache.cs" />
-    <Compile Include="Builders\ProviderInfo.cs" />
+    <Compile Include="Builders\ProviderReference.cs" />
     <Compile Include="Builders\SequentialStrategy.cs" />
     <Compile Include="Builders\SetUpFixtureBuilder.cs" />
     <Compile Include="Builders\TestAssemblyBuilder.cs" />
     <Compile Include="Builders\TestCaseParameterProvider.cs" />
     <Compile Include="Builders\TestCaseSourceProvider.cs" />
+    <Compile Include="Compatibility.cs" />
     <Compile Include="UnsupportedFrameworkException.cs" />
     <Compile Include="Builders\ValueSourceProvider.cs" />
     <Compile Include="ContextDictionary.cs" />

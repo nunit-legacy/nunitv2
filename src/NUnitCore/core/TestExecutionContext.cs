@@ -166,6 +166,8 @@ namespace NUnit.Core
             this.currentUICulture = CultureInfo.CurrentUICulture;
             this.currentPrincipal = Thread.CurrentPrincipal;
 
+            this.CompatibilityWriter = other.CompatibilityWriter;
+
             this.contextDictionary = new ContextDictionary(this);
         }
 
@@ -279,6 +281,8 @@ namespace NUnit.Core
             get { return logCapture.Writer; }
             set { logCapture.Writer = value; }
         }
+
+        public TextWriter CompatibilityWriter { get; set; }
 
         public LoggingThreshold LogLevel
         {

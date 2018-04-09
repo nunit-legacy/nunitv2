@@ -10,6 +10,7 @@ namespace NUnit.ConsoleRunner.Tests
 	using System.IO;
 	using System.Reflection;
 	using NUnit.Framework;
+    using NUnit.Core;
 
 	[TestFixture]
 	public class CommandLineTests
@@ -210,9 +211,9 @@ namespace NUnit.ConsoleRunner.Tests
             var options = new ConsoleOptions("tests.dll", opt, "--compat");
             Assert.IsTrue(options.Validate());
 
-            var issues = new List<string>(options.CompatibilityIssues);
+            var issues = new List<Compatibility.Issue>(options.CompatibilityIssues);
             Assert.That(issues.Count, Is.EqualTo(1));
-            Assert.That(issues[0], Does.Contain("option is no longer supported"));
+            Assert.That(issues[0].Message, Does.Contain("option is no longer supported"));
         }
 
         [Test]
@@ -221,7 +222,7 @@ namespace NUnit.ConsoleRunner.Tests
             ConsoleOptions options = new ConsoleOptions("tests.dll", "--compat");
             Assert.IsTrue(options.Validate());
 
-            var issues = new List<string>(options.CompatibilityIssues);
+            var issues = new List<Compatibility.Issue>(options.CompatibilityIssues);
             Assert.That(issues.Count == 0);
         }
     }

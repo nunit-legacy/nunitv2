@@ -20,6 +20,8 @@ namespace NUnit.Framework.Constraints
         public NullOrEmptyStringConstraint()
         {
             this.DisplayName = "nullorempty";
+
+            TestContext.Compatibility.Error("NullOrEmptyConstraint is not supported in NUnit 3.");
         }
 
         /// <summary>

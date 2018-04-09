@@ -52,6 +52,7 @@
         <include name="AssertionHelper.cs"/>
         <include name="Assume.cs"/>
         <include name="CollectionAssert.cs"/>
+        <include name="CompatibilityLogger.cs"/>
         <include name="Contains.cs"/>
         <include name="DirectoryAssert.cs"/>
         <include name="Does.cs"/>

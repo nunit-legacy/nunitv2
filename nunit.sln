@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 14
-VisualStudioVersion = 14.0.25420.1
+# Visual Studio 15
+VisualStudioVersion = 15.0.27130.2003
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{A65042E1-D8BC-48DD-8DE1-F0991F07EA77}"
 	ProjectSection(SolutionItems) = preProject
@@ -106,6 +106,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "test-assembly-net45", "src\tests\test-assembly-net45\test-assembly-net45.csproj", "{74CCEAEA-CDBF-4FE0-BF0D-914C3C44ECE9}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "nunit.framework.tests.net45", "src\NUnitFramework\tests-net45\nunit.framework.tests.net45.csproj", "{4E9322CE-CED7-42B4-B5DA-7837D9224EE6}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "compatibility-tests", "src\tests\compatibility-tests\compatibility-tests.csproj", "{495B8CD0-0B0A-4D15-BF8B-4FAFEB3D72C4}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -245,6 +247,10 @@ Global
 		{4E9322CE-CED7-42B4-B5DA-7837D9224EE6}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4E9322CE-CED7-42B4-B5DA-7837D9224EE6}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4E9322CE-CED7-42B4-B5DA-7837D9224EE6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{495B8CD0-0B0A-4D15-BF8B-4FAFEB3D72C4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{495B8CD0-0B0A-4D15-BF8B-4FAFEB3D72C4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{495B8CD0-0B0A-4D15-BF8B-4FAFEB3D72C4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{495B8CD0-0B0A-4D15-BF8B-4FAFEB3D72C4}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -284,6 +290,10 @@ Global
 		{689A54F0-2B54-4D15-96A7-D8B6E6FE32B1} = {AEAED2BD-F22D-42C8-9047-F293BEF70EAB}
 		{74CCEAEA-CDBF-4FE0-BF0D-914C3C44ECE9} = {6142B985-EA14-4DE0-884F-E62D89949E1D}
 		{4E9322CE-CED7-42B4-B5DA-7837D9224EE6} = {A2FF9F1B-1854-479A-859C-6ECEBF045E4C}
+		{495B8CD0-0B0A-4D15-BF8B-4FAFEB3D72C4} = {6142B985-EA14-4DE0-884F-E62D89949E1D}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {3AAEFC1E-03C9-42E1-8151-90AFD88F7CAB}
 	EndGlobalSection
 	GlobalSection(MonoDevelopProperties) = preSolution
 		StartupItem = src\ConsoleRunner\nunit-console-exe\nunit-console.exe.csproj

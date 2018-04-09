@@ -5,6 +5,7 @@
 // ****************************************************************
 
 using System;
+using System.IO;
 using System.Collections.Generic;
 using NUnit.Core;
 using NUnit.Util;
@@ -42,7 +43,7 @@ namespace NUnit.ConsoleRunner
                 WriteNotRunReport(_result);
 
             if (_options.compatibility)
-                WriteCompatibilityReport(_result, _options);
+                WriteCompatibilityReport(_options);
         }
 
         private static void WriteSummaryReport(ResultSummarizer summary)
@@ -118,33 +119,27 @@ namespace NUnit.ConsoleRunner
                     : result.StackTrace + Environment.NewLine);
         }
 
-        private static void WriteCompatibilityReport(TestResult result, ConsoleOptions options)
+        private static void WriteCompatibilityReport(ConsoleOptions options)
         {
-            int reportIndex = 0;
             Console.WriteLine("NUnit 3 Compatibility Issues:");
-            WriteCommandLineCompatibilityIssues(options, ref reportIndex);
-            WriteFrameworkCompatibilityIssues(result, ref reportIndex);
+
+            int reportIndex = 0;
+            WriteIssues(options.CompatibilityIssues, ref reportIndex);
+            WriteIssues(Compatibility.Issues, ref reportIndex);
 
             if (reportIndex == 0)
-                Console.WriteLine("   No issues found.");
+                Console.WriteLine("    No Issues Found.");
 
             Console.WriteLine();
         }
         
-        private static void WriteCommandLineCompatibilityIssues(ConsoleOptions options, ref int reportIndex)
+        private static void WriteIssues(IEnumerable<Compatibility.Issue> issues, ref int reportIndex)
         {
-            foreach (var issue in options.CompatibilityIssues)
-                WriteSingleIssue(issue, ref reportIndex);
-        }
-
-        private static void WriteSingleIssue(string message, ref int reportIndex)
-        {
-            Console.WriteLine("{0}) {1}", ++reportIndex, message);
-        }
-
-        private static void WriteFrameworkCompatibilityIssues(TestResult result, ref int reportIndex)
-        {
-
+            foreach (var issue in issues)
+            {
+                Console.WriteLine("{0}) {1}", ++reportIndex, issue.Location);
+                Console.WriteLine("   {0}: {1}", issue.Level, issue.Message);
+            }
         }
     }
 }

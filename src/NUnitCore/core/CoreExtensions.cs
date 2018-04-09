@@ -221,12 +221,22 @@ namespace NUnit.Core
 			}
 		}
 
+        public ArrayList AdhocExtensions = new ArrayList();
+
 		public void InstallAdhocExtensions( Assembly assembly )
 		{
+            AdhocExtensions.Clear();
+
 			foreach ( Type type in assembly.GetExportedTypes() )
 			{
-				if ( type.GetCustomAttributes(typeof(NUnitAddinAttribute), false).Length == 1 )
-					InstallAddin( type );
+                if (type.GetCustomAttributes(typeof(NUnitAddinAttribute), false).Length == 1)
+                {
+                    var addin = new Addin(type);
+                    addin.Status = InstallAddin(type)
+                        ? AddinStatus.Loaded
+                        : AddinStatus.Error;
+                    AdhocExtensions.Add(addin);
+                }
 			}
 		}
 		#endregion

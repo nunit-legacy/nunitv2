@@ -21,6 +21,17 @@ namespace NUnit.Framework
     [Obsolete("Not supported in NUnit 3")]
 	public class AssertionHelper : ConstraintFactory
     {
+        /// <summary>
+        /// Constructor is used to issue a compatibility warning, if needed
+        /// </summary>
+        public AssertionHelper()
+        {
+            // Check that there is a TestExecution context in order to avoid calling out the compatibility
+            // error if the class is intitialized during the discovery process rather than at execution.
+            if (System.Runtime.Remoting.Messaging.CallContext.GetData("NUnit.Framework.TestContext") != null)
+                TestContext.Compatibility.Error("AssertionHelper is not supported in NUnit 3.");
+        }
+
         #region Assert
         //private Assertions assert = new Assertions();
         //public virtual Assertions Assert

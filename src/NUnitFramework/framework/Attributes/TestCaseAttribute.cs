@@ -100,8 +100,14 @@ namespace NUnit.Framework
         public object Result
         {
             get { return ExpectedResult; }
-            set { ExpectedResult = value; }
+            set
+            {
+                ExpectedResult = value;
+                LegacyResultUsed = true;
+            }
         }
+
+        internal bool LegacyResultUsed { get; private set; }
 
         /// <summary>
         /// Gets or sets the expected result.

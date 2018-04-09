@@ -60,6 +60,7 @@ namespace NUnit.Core
 		{
 			bool autoNamespaceSuites = package.GetSetting( "AutoNamespaceSuites", true );
 			bool mergeAssemblies = package.GetSetting( "MergeAssemblies", false );
+            bool checkCompatibility = package.GetSetting("NUnit3Compatibility", false);
             TestExecutionContext.CurrentContext.TestCaseTimeout = package.GetSetting("DefaultTimeout", 0);
 
 			if ( package.IsSingleAssembly )
@@ -83,7 +84,7 @@ namespace NUnit.Core
 					TestAssemblyBuilder builder = new TestAssemblyBuilder();
 					builders.Add( builder );
 
-					Test testAssembly =  builder.Build( assemblyName, package.TestName, autoNamespaceSuites && !mergeAssemblies );
+					Test testAssembly =  builder.Build( assemblyName, package.TestName, autoNamespaceSuites && !mergeAssemblies, checkCompatibility );
 
 					if ( testAssembly != null )
 					{
@@ -121,7 +122,8 @@ namespace NUnit.Core
 
 			TestSuite suite = (TestSuite)builder.Build( 
 				package.FullName, 
-				package.TestName, package.GetSetting( "AutoNamespaceSuites", true ) );
+				package.TestName, package.GetSetting( "AutoNamespaceSuites", true ),
+                package.GetSetting("NUnit3Compatibility", false));
 
             ProviderCache.Clear();
 
