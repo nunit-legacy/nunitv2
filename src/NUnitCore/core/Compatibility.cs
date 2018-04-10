@@ -241,7 +241,8 @@ namespace NUnit.Core
                 case MemberTypes.Field:
                     return ((FieldInfo)member).IsStatic;
                 case MemberTypes.Property:
-                    return ((PropertyInfo)member).GetGetMethod().IsStatic;
+                    var getMethod = ((PropertyInfo)member).GetGetMethod();
+                    return getMethod != null && getMethod.IsStatic;
                 case MemberTypes.Method:
                     return ((MethodInfo)member).IsStatic;
                 default:
