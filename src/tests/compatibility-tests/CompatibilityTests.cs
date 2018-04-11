@@ -9,6 +9,16 @@ using NUnit.Framework;
 
 namespace NUnit.Tests
 {
+    [SetUpFixture]
+    public class IncompatibleSetUpFixture
+    {
+        [SetUp]
+        public void OneTimeSetUpMethod() { }
+
+        [TearDown]
+        public void OneTimeTearDownMethod() { }
+    }
+
     public class CompatibilityTests
     {
         #region Unsupported Attributes

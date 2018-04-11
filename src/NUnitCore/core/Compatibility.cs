@@ -136,6 +136,9 @@ namespace NUnit.Core
 
         public static void CheckAttributes(ICustomAttributeProvider provider, string location)
         {
+            var methodInfo = provider as MethodInfo;
+            var parameterInfo = provider as ParameterInfo;
+
             foreach (Attribute attribute in provider.GetCustomAttributes(true))
             {
                 Type attributeType = attribute.GetType();
@@ -161,6 +164,15 @@ namespace NUnit.Core
                     case "NUnit.Framework.SuiteAttribute":
                         Error(location, attributeName + " is not supported in NUnit 3.");
                         break;
+                    case "NUnit.Framework.SetUpAttribute":
+                    case "NUnit.Framework.TearDownAttribute":
+                        if (methodInfo != null && methodInfo.ReflectedType != null &&
+                            Reflect.HasAttribute(methodInfo.ReflectedType, "NUnit.Framework.SetUpFixtureAttribute", true))
+                        {
+                            var replacement = "OneTime" + attributeName;
+                            Error(location, attributeName + " is no longer allowed in a SetUpFixture in NUnit 3. Use " + replacement + ".");
+                        }
+                        break;
                     case "NUnit.Framework.TestCaseAttribute":
                         string expectedExceptionName = (string)Reflect.GetPropertyValue(attribute, "ExpectedExceptionName");
                         if (!string.IsNullOrEmpty(expectedExceptionName))
@@ -177,12 +189,8 @@ namespace NUnit.Core
                         if (!string.IsNullOrEmpty(sourceName))
                         {
                             Type sourceType = (Type)Reflect.GetPropertyValue(attribute, "SourceType");
-                            if (sourceType == null)
-                            {
-                                var methodInfo = provider as MethodInfo;
-                                if (methodInfo != null)
-                                    sourceType = methodInfo.ReflectedType;
-                            }
+                            if (sourceType == null && methodInfo != null)
+                                sourceType = methodInfo.ReflectedType;
                             if (sourceType != null)
                             {
                                 var members = sourceType.GetMember(sourceName, ALL_MEMBERS);
@@ -207,12 +215,8 @@ namespace NUnit.Core
                         if (!string.IsNullOrEmpty(sourceName))
                         {
                             Type sourceType = (Type)Reflect.GetPropertyValue(attribute, "SourceType");
-                            if (sourceType == null)
-                            {
-                                var parameterInfo = provider as ParameterInfo;
-                                if (parameterInfo != null)
-                                    sourceType = parameterInfo.Member.ReflectedType;
-                            }
+                            if (sourceType == null && parameterInfo != null)
+                                sourceType = parameterInfo.Member.ReflectedType;
                             if (sourceType != null)
                             {
                                 var members = sourceType.GetMember(sourceName, ALL_MEMBERS);
