@@ -208,7 +208,7 @@ namespace NUnit.ConsoleRunner.Tests
         [TestCase("--nodots")]
         public void CompatibilityReport(string opt)
         {
-            var options = new ConsoleOptions("tests.dll", opt, "--compat");
+            var options = new ConsoleOptions("tests.dll", opt, "--compat", "--process:Single", "--domain:Single");
             Assert.IsTrue(options.Validate());
 
             var issues = new List<Compatibility.Issue>(options.CompatibilityIssues);
@@ -219,11 +219,33 @@ namespace NUnit.ConsoleRunner.Tests
         [Test]
         public void CompatibilityReport_NoErrors()
         {
-            ConsoleOptions options = new ConsoleOptions("tests.dll", "--compat");
+            ConsoleOptions options = new ConsoleOptions("tests.dll", "--compat", "--process:Single", "--domain:Single");
             Assert.IsTrue(options.Validate());
 
             var issues = new List<Compatibility.Issue>(options.CompatibilityIssues);
             Assert.That(issues.Count == 0);
+        }
+
+        [Test]
+        public void CompatibilityReport_DefaultProcessModel()
+        {
+            ConsoleOptions options = new ConsoleOptions("tests.dll", "--compat");
+            Assert.IsTrue(options.Validate());
+
+            var issues = new List<Compatibility.Issue>(options.CompatibilityIssues);
+            Assert.That(issues.Count == 1);
+            Assert.That(issues[0].Message, Does.Contain("--process option defaults to Multiple"));
+        }
+
+        [Test]
+        public void CompatibilityReport_DefaultDomainUsage()
+        {
+            ConsoleOptions options = new ConsoleOptions("tests.dll", "--compat", "--process:Single");
+            Assert.IsTrue(options.Validate());
+
+            var issues = new List<Compatibility.Issue>(options.CompatibilityIssues);
+            Assert.That(issues.Count == 1);
+            Assert.That(issues[0].Message, Does.Contain("--domain option defaults to Multiple"));
         }
     }
 }
