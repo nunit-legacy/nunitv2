@@ -139,6 +139,12 @@ namespace NUnit.ConsoleRunner
         {
             get
             {
+                if (process == ProcessModel.Default)
+                    yield return new Issue("Warning", "The --process option defaults to Multiple in NUnit 3.");
+                else // No point in giving both warnings
+                if (domain == DomainUsage.Default)
+                    yield return new Issue("Warning", "The --domain option defaults to Multiple in NUnit 3.");               
+
                 if (fixture != null)
                     yield return new Issue("Error", "The --fixture option is no longer supported in NUnit 3. Use --test or --where to filter tests at the time of execution instead.");
 
