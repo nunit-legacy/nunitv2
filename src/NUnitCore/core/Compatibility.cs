@@ -153,7 +153,7 @@ namespace NUnit.Core
                     case "NUnit.Framework.IgnoreAttribute":
                         var reason = (string)Reflect.GetPropertyValue(attribute, "Reason");
                         if (string.IsNullOrEmpty(reason))
-                            Error(location, "IgnoreAttribute requires a reason to be specified in NUnit 3.");
+                            Error(location, "IgnoreAttribute must have a reason specified in NUnit 3.");
                         break;
                     case "NUnit.Framework.RequiresSTAAttribute":
                     case "NUnit.Framework.RequiresMTAAttribute":
@@ -161,8 +161,10 @@ namespace NUnit.Core
                         break;
                     case "NUnit.Core.Extensibility.NUnitAddinAttribute":
                     case "NUnit.Framework.RequiredAddinAttribute":
+                        Error(location, attributeName + " is not available in NUnit 3, which no longer supports Addins. After conversion, you can create custom attributes or engine extensions instead.");
+                        break;
                     case "NUnit.Framework.SuiteAttribute":
-                        Error(location, attributeName + " is not supported in NUnit 3.");
+                        Error(location, "SuiteAttribute is not supported in NUnit 3. You should restructure your tests to eliminate legacy Suites.");
                         break;
                     case "NUnit.Framework.SetUpAttribute":
                     case "NUnit.Framework.TearDownAttribute":
@@ -182,7 +184,7 @@ namespace NUnit.Core
                             Error(location, "TestCaseAttribute no longer supports Result property in NUnit 3. Use ExpectedResult.");
                         bool ignoreUsed = (bool)Reflect.GetPropertyValue(attribute, "Ignore");
                         if (ignoreUsed)
-                            Error(location, "TestCaseAttribute Ignore property has a string value in NUnit 3.");
+                            Error(location, "TestCaseAttribute Ignore property has a string value in NUnit 3. Fix after conversion.");
                         break;
                     case "NUnit.Framework.TestCaseSourceAttribute":
                         string sourceName = (string)Reflect.GetPropertyValue(attribute, "SourceName");
@@ -202,7 +204,7 @@ namespace NUnit.Core
                     case "NUnit.Framework.TestFixtureAttribute":
                         bool ignore = (bool)Reflect.GetPropertyValue(attribute, "Ignore");
                         if (ignore)
-                            Error(location, "TestFixtureAttribute Ignore property has a string value in NUnit 3.");
+                            Error(location, "TestFixtureAttribute Ignore property has a string value in NUnit 3. Fix after conversion.");
                         break;
                     case "NUnit.Framework.TestFixtureSetUpAttribute":
                         Error(location, "TestFixtureSetUpAttribute is not supported in NUnit 3. Use OneTimeSetUpAttribute.");
@@ -221,7 +223,7 @@ namespace NUnit.Core
                             {
                                 var members = sourceType.GetMember(sourceName, ALL_MEMBERS);
                                 if (members.Length > 0 && !IsStaticMember(members[0]))
-                                    Error(sourceType + "." + members[0].Name, "ValueSourceAttribute mst reference a static member.");
+                                    Error(sourceType + "." + members[0].Name, "ValueSourceAttribute must reference a static member.");
                             }
                         }
                         break;
