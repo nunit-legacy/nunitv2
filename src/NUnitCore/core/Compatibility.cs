@@ -33,7 +33,6 @@ namespace NUnit.Core
         /// This method is called once in each test AppDomain to
         /// begin collecting data.
         /// </summary>
-        /// <param name="workDirectory"></param>
         public static void BeginCollection(string workDirectory)
         {
             _workFilePath = Path.Combine(workDirectory, WORK_FILE);
@@ -148,7 +147,7 @@ namespace NUnit.Core
                 switch (attributeFullName)
                 {
                     case "NUnit.Framework.ExpectedExceptionAttribute":
-                        Error(location, "ExpectedExceptionAttribute is not supported in NUnit 3. Use Assert.Throws or ThrowsConstraint.");
+                        Error(location, "ExpectedExceptionAttribute is not supported in NUnit 3. Use Assert.Throws or Throws.InstanceOf.");
                         break;
                     case "NUnit.Framework.IgnoreAttribute":
                         var reason = (string)Reflect.GetPropertyValue(attribute, "Reason");
@@ -178,13 +177,13 @@ namespace NUnit.Core
                     case "NUnit.Framework.TestCaseAttribute":
                         string expectedExceptionName = (string)Reflect.GetPropertyValue(attribute, "ExpectedExceptionName");
                         if (!string.IsNullOrEmpty(expectedExceptionName))
-                            Error(location, "TestCaseAttribute does not support ExpectedException in NUnit 3. Use Assert.Throws or ThrowsConstraint.");
+                            Error(location, "TestCaseAttribute does not support ExpectedException in NUnit 3. Use Assert.Throws or Throws.InstanceOf.");
                         bool legacyResultUsed = (bool)Reflect.GetPropertyValue(attribute, "LegacyResultUsed", BindingFlags.Instance | BindingFlags.NonPublic);
                         if (legacyResultUsed)
                             Error(location, "TestCaseAttribute no longer supports Result property in NUnit 3. Use ExpectedResult.");
                         bool ignoreUsed = (bool)Reflect.GetPropertyValue(attribute, "Ignore");
                         if (ignoreUsed)
-                            Error(location, "TestCaseAttribute Ignore property has a string value in NUnit 3. Fix after conversion.");
+                            Error(location, "TestCaseAttribute Ignore property changes from bool to string in NUnit 3. Fix after conversion.");
                         break;
                     case "NUnit.Framework.TestCaseSourceAttribute":
                         string sourceName = (string)Reflect.GetPropertyValue(attribute, "SourceName");
@@ -204,7 +203,7 @@ namespace NUnit.Core
                     case "NUnit.Framework.TestFixtureAttribute":
                         bool ignore = (bool)Reflect.GetPropertyValue(attribute, "Ignore");
                         if (ignore)
-                            Error(location, "TestFixtureAttribute Ignore property has a string value in NUnit 3. Fix after conversion.");
+                            Error(location, "TestFixtureAttribute Ignore property changes from bool to string in NUnit 3. Fix after conversion.");
                         break;
                     case "NUnit.Framework.TestFixtureSetUpAttribute":
                         Error(location, "TestFixtureSetUpAttribute is not supported in NUnit 3. Use OneTimeSetUpAttribute.");
@@ -284,7 +283,7 @@ namespace NUnit.Core
                 Message = message;
             }
 
-            public static Issue FromRecord(string record)
+            internal static Issue FromRecord(string record)
             {
                 int delim1 = record.IndexOf(':');
                 int delim2 = record.IndexOf(':', delim1 + 1);

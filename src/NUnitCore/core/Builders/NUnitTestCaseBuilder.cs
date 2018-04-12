@@ -219,9 +219,7 @@ namespace NUnit.Core.Builders
                 }
 
                 if (parms.ExpectedExceptionName != null)
-                {
                     testMethod.exceptionProcessor = new ExpectedExceptionProcessor(testMethod, parms);
-                }
 
                 foreach (string key in parms.Properties.Keys)
                     testMethod.Properties[key] = parms.Properties[key];

@@ -71,6 +71,8 @@ namespace NUnit.Core
 		    extensions.Add(testcaseProviders);
             extensions.Add(dataPointProviders);
 
+            this.AdhocExtensions = new ArrayList();
+
 			this.supportedTypes = ExtensionType.Core;
 
 			// TODO: This should be somewhere central
@@ -221,7 +223,7 @@ namespace NUnit.Core
 			}
 		}
 
-        public ArrayList AdhocExtensions = new ArrayList();
+        internal ArrayList AdhocExtensions { get; private set; }
 
 		public void InstallAdhocExtensions( Assembly assembly )
 		{
@@ -229,7 +231,7 @@ namespace NUnit.Core
 
 			foreach ( Type type in assembly.GetExportedTypes() )
 			{
-                if (type.GetCustomAttributes(typeof(NUnitAddinAttribute), false).Length == 1)
+                if (type.IsDefined(typeof(NUnitAddinAttribute), false))
                 {
                     var addin = new Addin(type);
                     addin.Status = InstallAddin(type)

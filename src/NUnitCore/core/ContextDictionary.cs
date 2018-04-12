@@ -34,7 +34,7 @@ namespace NUnit.Core
                         return _context.CurrentTest.TestName.Name;
                     case "Test.FullName":
                         return _context.CurrentTest.TestName.FullName;
-                    case "Test.ClassNamePlusMethodName":
+                    case "Test.ClassAndMethodName":
                         return _context.CurrentTest.ClassName + "." + _context.CurrentTest.MethodName;
                     case "Test.Properties":
                         return _context.CurrentTest.Properties;

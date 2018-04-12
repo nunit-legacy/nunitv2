@@ -104,14 +104,16 @@ namespace NUnit.Framework
             }
         }
 
+        // Stati
         public static CompatibilityLogger Compatibility
         {
             get
             {
                 var contextDictionary = CurrentContext._context;
-                return contextDictionary != null
-                    ? new CompatibilityLogger((TextWriter)contextDictionary["CompatibilityWriter"])
+                var writer = contextDictionary != null
+                    ? contextDictionary["CompatibilityWriter"] as TextWriter
                     : null;
+                return new CompatibilityLogger(writer);
             }
         }
 
@@ -164,11 +166,11 @@ namespace NUnit.Framework
                 }
             }
 
-            internal string ClassNamePlusMethodName
+            internal string ClassAndMethodName
             {
                 get
                 {
-                    return _context["Test.ClassNamePlusMethodName"] as string;
+                    return _context["Test.ClassAndMethodName"] as string;
                 }
             }
 

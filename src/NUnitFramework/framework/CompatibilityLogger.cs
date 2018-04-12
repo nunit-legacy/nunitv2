@@ -52,7 +52,7 @@ namespace NUnit.Framework
         {
             if (_writer != null)
             {
-                string location = TestContext.CurrentContext.Test.ClassNamePlusMethodName;
+                string location = TestContext.CurrentContext.Test.ClassAndMethodName;
                 _writer.WriteLine(string.Format(REPORT_FORMAT, level, location, message));
             }
         }
