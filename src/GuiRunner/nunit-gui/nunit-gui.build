@@ -86,6 +86,7 @@
         <patternset refid="resource-files"/>
         <include name="nunit-gui.csproj"/>
         <include name="nunit-gui.build"/>
+        <include name="nunit.snk"/>
       </fileset>
     </copy>
   </target>

@@ -72,6 +72,7 @@
         <patternset refid="source-files"/>
         <include name="nunit.core.interfaces.dll.csproj"/>
         <include name="nunit.core.interfaces.build"/>
+        <include name="nunit.snk"/>
       </fileset>
     </copy>
   </target>

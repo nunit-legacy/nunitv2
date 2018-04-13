@@ -36,6 +36,7 @@
         <patternset refid="source-files"/>
         <include name="nunit-console.csproj"/>
         <include name="nunit-console.build"/>
+        <include name="nunit.snk"/>
         <include name="App.ico"/>
       </fileset>
     </copy>

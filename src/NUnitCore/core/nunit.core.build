@@ -124,6 +124,7 @@
         <include name="summary.xslt"/>    <!-- and this -->
         <include name="nunit.core.dll.csproj"/>
         <include name="nunit.core.build"/>
+        <include name="nunit.snk"/>
       </fileset>
     </copy>
   </target>

@@ -112,6 +112,7 @@
         <patternset refid="source-files"/>
         <include name="nunit.framework.build"/>
         <include name="nunit.framework.dll.csproj"/>
+        <include name="nunit.snk"/>
         <include name="SyntaxElements.txt"/>
       </fileset>
     </copy>

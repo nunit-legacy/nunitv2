@@ -105,6 +105,7 @@
         <patternset refid="resource-files"/>
         <include name="nunit.util.dll.csproj"/>
         <include name="nunit.util.build"/>
+        <include name="nunit.snk"/>
       </fileset>
     </copy>
   </target>
