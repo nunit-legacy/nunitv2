@@ -33,7 +33,7 @@ namespace NUnit.Core
         /// This method is called once in each test AppDomain to
         /// begin collecting data.
         /// </summary>
-        public static void BeginCollection(string workDirectory)
+        internal static void BeginCollection(string workDirectory)
         {
             _workFilePath = Path.Combine(workDirectory, WORK_FILE);
 
@@ -47,7 +47,7 @@ namespace NUnit.Core
         /// This method is called in each test AppDomain after all
         /// collection is complete.
         /// </summary>
-        public static void EndCollection()
+        internal static void EndCollection()
         {
             if (_writer != null)
             {
@@ -109,7 +109,7 @@ namespace NUnit.Core
 
         #region Compatibility Checks
 
-        public static void CheckAttributes(Assembly assembly)
+        internal static void CheckAttributes(Assembly assembly)
         {
             CheckAttributes(assembly, Path.GetFileName(assembly.Location));
 

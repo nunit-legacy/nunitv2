@@ -104,8 +104,7 @@ namespace NUnit.Framework
             }
         }
 
-        // Stati
-        public static CompatibilityLogger Compatibility
+        internal static CompatibilityLogger Compatibility
         {
             get
             {

@@ -9,7 +9,7 @@ namespace NUnit.Framework
     /// time from the framework, using the writer passed in by
     /// the core runners.
     /// </summary>
-    public class CompatibilityLogger
+    internal class CompatibilityLogger
     {
         private const string REPORT_FORMAT = "{0}:{1}:{2}";
 
