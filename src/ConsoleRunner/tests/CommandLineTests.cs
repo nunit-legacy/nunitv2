@@ -6,10 +6,11 @@
 
 namespace NUnit.ConsoleRunner.Tests
 {
-	using System;
+    using System.Collections.Generic;
 	using System.IO;
 	using System.Reflection;
 	using NUnit.Framework;
+    using NUnit.Core;
 
 	[TestFixture]
 	public class CommandLineTests
@@ -36,6 +37,8 @@ namespace NUnit.ConsoleRunner.Tests
 		[TestCase( "labels", "labels")]
 		[TestCase( "noshadow", "noshadow" )]
 		[TestCase( "nothread", "nothread" )]
+        [TestCase( "compatibility", "compatibility")]
+        [TestCase( "compatibility", "compat")]
 		public void BooleanOptionAreRecognized( string fieldName, string option )
 		{
 			FieldInfo field = typeof(ConsoleOptions).GetField( fieldName );
@@ -189,5 +192,60 @@ namespace NUnit.ConsoleRunner.Tests
 			expected = string.Format( "{0}out=", delim );
 			StringAssert.Contains( expected, helpText );
 		}
-	}
+
+        [TestCase("--fixture")]
+        [TestCase("--run")]
+        [TestCase("--runlist")]
+        [TestCase("--include")]
+        [TestCase("--exclude")]
+        [TestCase("--apartment:STA")]
+        [TestCase("--xml")]
+        [TestCase("--noxml")]
+        [TestCase("--xmlConsole")]
+        [TestCase("--basepath")]
+        [TestCase("--privatebinpath")]
+        [TestCase("--cleanup")]
+        [TestCase("--nodots")]
+        public void CompatibilityReport(string opt)
+        {
+            var options = new ConsoleOptions("tests.dll", opt, "--compat", "--process:Single", "--domain:Single");
+            Assert.IsTrue(options.Validate());
+
+            var issues = new List<Compatibility.Issue>(options.CompatibilityIssues);
+            Assert.That(issues.Count, Is.EqualTo(1));
+            Assert.That(issues[0].Message, Does.Contain("option is no longer supported"));
+        }
+
+        [Test]
+        public void CompatibilityReport_NoErrors()
+        {
+            ConsoleOptions options = new ConsoleOptions("tests.dll", "--compat", "--process:Single", "--domain:Single");
+            Assert.IsTrue(options.Validate());
+
+            var issues = new List<Compatibility.Issue>(options.CompatibilityIssues);
+            Assert.That(issues.Count == 0);
+        }
+
+        [Test]
+        public void CompatibilityReport_DefaultProcessModel()
+        {
+            ConsoleOptions options = new ConsoleOptions("tests.dll", "--compat");
+            Assert.IsTrue(options.Validate());
+
+            var issues = new List<Compatibility.Issue>(options.CompatibilityIssues);
+            Assert.That(issues.Count == 1);
+            Assert.That(issues[0].Message, Does.Contain("--process option defaults to Multiple"));
+        }
+
+        [Test]
+        public void CompatibilityReport_DefaultDomainUsage()
+        {
+            ConsoleOptions options = new ConsoleOptions("tests.dll", "--compat", "--process:Single");
+            Assert.IsTrue(options.Validate());
+
+            var issues = new List<Compatibility.Issue>(options.CompatibilityIssues);
+            Assert.That(issues.Count == 1);
+            Assert.That(issues[0].Message, Does.Contain("--domain option defaults to Multiple"));
+        }
+    }
 }

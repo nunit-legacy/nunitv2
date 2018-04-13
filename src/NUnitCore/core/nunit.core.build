@@ -10,6 +10,7 @@
     <include name="AssemblyHelper.cs"/>
     <include name="AssemblyReader.cs"/>
     <include name="AssemblyResolver.cs"/>
+    <include name="Compatibility.cs"/>
     <include name="ContextDictionary.cs"/>
     <include name="CoreExtensions.cs"/>
     <include name="CultureDetector.cs"/>
@@ -81,7 +82,7 @@
     <include name="Builders/NUnitTestFixtureBuilder.cs"/>
     <include name="Builders/PairwiseStrategy.cs"/>
     <include name="Builders/ProviderCache.cs"/>
-    <include name="Builders/ProviderInfo.cs"/>
+    <include name="Builders/ProviderReference.cs"/>
     <include name="Builders/SequentialStrategy.cs"/>
     <include name="Builders/SetUpFixtureBuilder.cs"/>
     <include name="Builders/TestAssemblyBuilder.cs"/>

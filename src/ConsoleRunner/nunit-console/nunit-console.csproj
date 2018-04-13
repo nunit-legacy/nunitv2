@@ -119,6 +119,7 @@
     <Compile Include="ConsoleOptions.cs" />
     <Compile Include="ConsoleUi.cs" />
     <Compile Include="EventCollector.cs" />
+    <Compile Include="ResultReporter.cs" />
     <Compile Include="Runner.cs" />
     <Compile Include="TestNameParser.cs" />
   </ItemGroup>

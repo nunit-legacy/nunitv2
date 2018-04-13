@@ -189,6 +189,7 @@
     <Compile Include="TestDelegates.cs" />
     <Compile Include="TestFixtureAttributeTests.cs" />
     <Compile Include="TextMessageWriterTests.cs" />
+    <Compile Include="Throws.cs" />
     <Compile Include="TypeAssertTest.cs" />
     <Compile Include="ValuesAttributeTests.cs" />
   </ItemGroup>

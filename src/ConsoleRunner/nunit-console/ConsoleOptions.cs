@@ -7,6 +7,7 @@
 namespace NUnit.ConsoleRunner
 {
 	using System;
+    using System.Collections.Generic;
 	using Codeblast;
 	using NUnit.Util;
     using NUnit.Core;
@@ -54,6 +55,9 @@ namespace NUnit.ConsoleRunner
 
 		[Option(Description = "List of categories to exclude")]
 		public string exclude;
+
+        [Option(Short = "compat", Description = "Produce NUnit3 Compatibility Report")]
+        public bool compatibility;
 
 #if CLR_2_0 || CLR_4_0
         [Option(Description = "Framework version to be used for tests")]
@@ -129,6 +133,69 @@ namespace NUnit.ConsoleRunner
             {
                 return ParameterCount == 1 && Services.ProjectService.CanLoadProject((string)Parameters[0]);
             }
+        }
+
+        public IEnumerable<Compatibility.Issue> CompatibilityIssues
+        {
+            get
+            {
+                if (process == ProcessModel.Default)
+                    yield return new Issue("Warning", "The --process option defaults to Multiple in NUnit 3.");
+                else // No point in giving both warnings
+                if (domain == DomainUsage.Default)
+                    yield return new Issue("Warning", "The --domain option defaults to Multiple in NUnit 3.");               
+
+                if (fixture != null)
+                    yield return new Issue("Error", "The --fixture option is no longer supported in NUnit 3. Use --test or --where to filter tests at the time of execution instead.");
+
+                if (run != null)
+                    yield return new Issue("Error", "The --run option is no longer supported in NUnit 3. Use --test or --where.");
+
+                if (runlist != null)
+                    yield return new Issue("Error", "The --runlist option is no longer supported in NUnit 3. Use --testlist.");
+
+                if (include != null)
+                    yield return new Issue("Error", "The --include option is no longer supported in NUnit 3. Use --where.");
+
+                if (exclude != null)
+                    yield return new Issue("Error", "The --exclude option is no longer supported in NUnit 3. Use --where.");
+
+                if (apartment != System.Threading.ApartmentState.Unknown)
+                    yield return new Issue("Error", "The --apartment option is no longer supported in NUnit 3. Use ApartmentAttribute");
+
+                if (result != null)
+                    yield return new Issue("Error", "The --xml option is no longer supported in NUnit 3. Use --result.");
+
+                if (noresult)
+                    yield return new Issue("Error", "The --noxml option is no longer supported in NUnit 3. Use --noresult.");
+
+                if (xmlConsole)
+                    yield return new Issue("Error", "The --xmlConsole option is no longer supported in NUnit 3.");
+
+                if (basepath != null)
+                    yield return new Issue("Error", "The --basepath option is no longer supported in NUnit 3.");
+
+                if (privatebinpath != null)
+                    yield return new Issue("Error", "The --privatebinpath option is no longer supported in NUnit 3.");
+
+                if (cleanup)
+                    yield return new Issue("Warning", "The --cleanup option is no longer supported or needed in NUnit 3.");
+
+                if (nodots)
+                    yield return new Issue("Warning", "The --nodots option is no longer supported or needed in NUnit 3.");
+
+            }
+        }
+
+        private class Issue : Compatibility.Issue
+        {
+            public Issue(string level, string message)
+                : base(level, "Console Command-line", message) { }
+        }
+
+        private string UnsupportedOption(string name)
+        {
+            return string.Format("Option --{0} not supported in NUnit 3.", name);
         }
 
 		public override void Help()

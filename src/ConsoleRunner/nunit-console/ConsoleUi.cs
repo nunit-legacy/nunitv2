@@ -95,6 +95,9 @@ namespace NUnit.ConsoleRunner
 
             using (TestRunner testRunner = new DefaultTestRunnerFactory().MakeTestRunner(package))
 			{
+                if (options.compatibility)
+                    Compatibility.Initialize(workDir);
+
                 testRunner.Load(package);
 
                 if (testRunner.Test == null)
@@ -143,29 +146,13 @@ namespace NUnit.ConsoleRunner
                 if (result != null)
                 {
                     string xmlOutput = CreateXmlOutput(result);
-                    ResultSummarizer summary = new ResultSummarizer(result);
-
                     if (options.xmlConsole)
                     {
                         Console.WriteLine(xmlOutput);
                     }
                     else
                     {
-                        WriteSummaryReport(summary);
-
-                        bool hasErrors = summary.Errors > 0 || summary.Failures > 0 || result.IsError || result.IsFailure;
-
-                        if (options.stoponerror && (hasErrors || summary.NotRunnable > 0))
-                        {
-                            Console.WriteLine("Test run was stopped after first error, as requested.");
-                            Console.WriteLine();
-                        }
-
-                        if (hasErrors)
-                            WriteErrorsAndFailuresReport(result);
-
-                        if (summary.TestsNotRun > 0)
-                            WriteNotRunReport(result);
+                        new ResultReporter(result, options).ReportResults();
 
                         if (!options.noresult)
                         {
@@ -180,6 +167,7 @@ namespace NUnit.ConsoleRunner
                         }
                     }
 
+                    ResultSummarizer summary = new ResultSummarizer(result);
                     returnCode = summary.Errors + summary.Failures + summary.NotRunnable;
                 }
 
@@ -193,7 +181,7 @@ namespace NUnit.ConsoleRunner
 			}
 		}
 
-		internal static bool CreateTestFilter(ConsoleOptions options, out TestFilter testFilter)
+        internal static bool CreateTestFilter(ConsoleOptions options, out TestFilter testFilter)
 		{
 			testFilter = TestFilter.Empty;
 
@@ -352,6 +340,7 @@ namespace NUnit.ConsoleRunner
             package.Settings["DefaultTimeout"] = options.timeout;
             package.Settings["WorkDirectory"] = this.workDir;
             package.Settings["StopOnError"] = options.stoponerror;
+            package.Settings["NUnit3Compatibility"] = options.compatibility;
 
             if (options.apartment != System.Threading.ApartmentState.Unknown)
                 package.Settings["ApartmentState"] = options.apartment;
@@ -367,80 +356,7 @@ namespace NUnit.ConsoleRunner
 			return builder.ToString();
 		}
 
-		private static void WriteSummaryReport( ResultSummarizer summary )
-		{
-            Console.WriteLine(
-                "Tests run: {0}, Errors: {1}, Failures: {2}, Inconclusive: {3}, Time: {4} seconds",
-                summary.TestsRun, summary.Errors, summary.Failures, summary.Inconclusive, summary.Time);
-            Console.WriteLine(
-                "  Not run: {0}, Invalid: {1}, Ignored: {2}, Skipped: {3}",
-                summary.TestsNotRun, summary.NotRunnable, summary.Ignored, summary.Skipped);
-            Console.WriteLine();
-        }
-
-        private void WriteErrorsAndFailuresReport(TestResult result)
-        {
-            reportIndex = 0;
-            Console.WriteLine("Errors and Failures:");
-            WriteErrorsAndFailures(result);
-            Console.WriteLine();
-        }
-
-        private void WriteErrorsAndFailures(TestResult result)
-        {
-            if (result.Executed)
-            {
-                if (result.HasResults)
-                {
-                    if (result.IsFailure || result.IsError)
-                        if (result.FailureSite == FailureSite.SetUp || result.FailureSite == FailureSite.TearDown)
-                            WriteSingleResult(result);
-
-                    foreach (TestResult childResult in result.Results)
-                        WriteErrorsAndFailures(childResult);
-                }
-                else if (result.IsFailure || result.IsError)
-                {
-                    WriteSingleResult(result);
-                }
-            }
-        }
-
-        private void WriteNotRunReport(TestResult result)
-        {
-	        reportIndex = 0;
-            Console.WriteLine("Tests Not Run:");
-	        WriteNotRunResults(result);
-            Console.WriteLine();
-        }
-
-	    private int reportIndex = 0;
-        private void WriteNotRunResults(TestResult result)
-        {
-            if (result.HasResults)
-                foreach (TestResult childResult in result.Results)
-                    WriteNotRunResults(childResult);
-            else if (!result.Executed)
-                WriteSingleResult( result );
-        }
-
-        private void WriteSingleResult( TestResult result )
-        {
-            string status = result.IsFailure || result.IsError
-                ? string.Format("{0} {1}", result.FailureSite, result.ResultState)
-                : result.ResultState.ToString();
-
-            Console.WriteLine("{0}) {1} : {2}", ++reportIndex, status, result.FullName);
-
-            if ( result.Message != null && result.Message != string.Empty )
-                 Console.WriteLine("   {0}", result.Message);
-
-            if (result.StackTrace != null && result.StackTrace != string.Empty)
-                Console.WriteLine( result.IsFailure
-                    ? StackTraceFilter.Filter(result.StackTrace)
-                    : result.StackTrace + Environment.NewLine );
-        }
-	    #endregion
-	}
+        #endregion
+    }
 }
 

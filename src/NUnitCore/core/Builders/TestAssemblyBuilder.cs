@@ -73,10 +73,10 @@ namespace NUnit.Core.Builders
         #endregion
 
         #region Build Methods
-        public Test Build(string assemblyName, string testName, bool autoSuites)
+        public Test Build(string assemblyName, string testName, bool autoSuites, bool checkCompatibility)
         {
             if(testName == null || testName == string.Empty)
-                return Build(assemblyName, autoSuites);
+                return Build(assemblyName, autoSuites, checkCompatibility);
 
             // Change currentDirectory in case assembly references unmanaged dlls
             // and so that any addins are able to access the directory easily.
@@ -84,6 +84,9 @@ namespace NUnit.Core.Builders
             {
                 this.assembly = Load(assemblyName);
                 if(assembly == null) return null;
+
+                if (checkCompatibility)
+                    Compatibility.CheckAttributes(assembly);
 
                 // If provided test name is actually the name of
                 // a type, we handle it specially
@@ -100,7 +103,7 @@ namespace NUnit.Core.Builders
             }
         }
 
-        public TestSuite Build(string assemblyName, bool autoSuites)
+        public TestSuite Build(string assemblyName, bool autoSuites, bool checkCompatibility)
         {
             // Change currentDirectory in case assembly references unmanaged dlls
             // and so that any addins are able to access the directory easily.
@@ -108,6 +111,9 @@ namespace NUnit.Core.Builders
             {
                 this.assembly = Load(assemblyName);
                 if(this.assembly == null) return null;
+
+                if (checkCompatibility)
+                    Compatibility.CheckAttributes(assembly);
 
                 IList fixtures = GetFixtures(assembly, null);
                 return BuildTestAssembly(this.assembly, assemblyName, fixtures, autoSuites);
