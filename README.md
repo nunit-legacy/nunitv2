@@ -1,27 +1,35 @@
-NUnit V2
-========
+# NUnit V2
 
-**NUnit V2 IS NO LONGER MAINTAINED OR UPDATED.**
+This project continues support for NUnit V2 beyond the 2.6.4 release, which was the last one produced by the NUnit Project itself. This README file replaces the original file which is available in the same directory as OLD_README.md.
 
-**Bugs should be reported in the main [NUnit 3.0 repository](https://github.com/nunit/nunit).**
+For general information about the NUnit Legacy project, see http://github.com/nunit-legacy/governance
 
-The final version of NUnit V2 is 2.6.4. That code is available here for anyone who needs it. Further NUnit
-development is taking place under a separate NUnit 3.0 project. That project used to be located on
-Launchpad at http://launchpad.net/nunit-3.0 but it was moved to GitHub at the end of October 2013.
+## Scope
 
-NUnit is a test framework for all .NET languages, running on Microsoft .NET and Mono.
+To be clear, first, we are __not__ going to do major or extensive revision to the features of NUnit V2. That's what NUnit 3 is about!
 
-NUnit is written in C# but can run tests written in any language that generates managed code. Initially ported 
-from JUnit, it has been completely redesigned to take advantage of the features of the common language runtime, 
-such as custom attributes, generics and lambda expressions.
+We will do a mix of the following:
 
-NUnit V2 was initially hosted on Sourceforge. The last Sourceforge release was NUnit 2.5.2. Beginning with NUnit 2.5.3, 
-releases were made on Launchpad, and may still be found there.
+ 1. Fix outstanding bugs in NUnit V2, where possible. (In a few cases, bugs were left in V2 because they could only be fixed after the NUnit 3 re-design.)
 
-Important note about using async/await
-----
-NUnit 2.6.3 introduced support for .NET 4.5's async/await. 2.6.3 support is limited to .NET 4.5 and won't work with the [Async Targeting Pack] that Microsoft released to backport async/await to .NET 4.0.
+ 2. Backport __selected, small__ features and enhancements from NUnit 3, with priority given to those that allow users to make their test code more compatible with (and convertible to) NUnit 3.
 
-NUnit 2.6.4 adds support for the [Async Targeting Pack]. You should use 2.6.4 if you are using async/await and targeting .NET 4.0.
+ 3. Provide new features to identify compatibility problems in the test code in order to help users move toward an eventual NUnit 3 conversion.
 
-[Async Targeting Pack]:http://blogs.msdn.com/b/bclteam/p/asynctargetingpackkb.aspx
+ 4. Restructure the project as needed to make it easier to continue to maintain it. The level of effort we put into this type of work will depend on how long we expect the project to last. For the first relaase or two, we will live with some of the inefficiencies involved in building the project with all components and using older technology, until we see how useful the project actually is to V2 users.
+
+## Versioning
+
+Because the community previews leading to NUnit 3 were versioned as 2.9.x, we only have versions from 2.6.5 through 2.8.x available to us.
+
+Small fixes (items 1-3 in the previous section) will therefore be versioned as 2.6.x. If we do a major reorganization of the code (item 4) that will start a new 2.7 series.
+ 
+## License
+
+The project continues to use the same NUnit license that was used by earlier releases. See license.txt in the root directory.
+
+<hr>
+<div align="right">
+Charlie Poole<br>
+April, 2018
+</div>
