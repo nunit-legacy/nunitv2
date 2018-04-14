@@ -6,9 +6,13 @@ MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{A65042E1-D8BC-48DD-8DE1-F0991F07EA77}"
 	ProjectSection(SolutionItems) = preProject
 		appveyor.yml = appveyor.yml
+		license.rtf = license.rtf
+		license.txt = license.txt
 		src\nunit.snk = src\nunit.snk
 		NUnitTests.v1.nunit = NUnitTests.v1.nunit
 		NUnitTests.v2.nunit = NUnitTests.v2.nunit
+		OLD_README.md = OLD_README.md
+		README.md = README.md
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Scripts", "Scripts", "{A785FC02-6044-4864-BE24-4593CAD23A97}"
