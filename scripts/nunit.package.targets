@@ -424,11 +424,11 @@
     <copy todir="${package.doc.dir}">
       <fileset basedir="${project.doc.dir}">
         <include name="*.html"/>
-	<include name="nunit.css"/>
+        <include name="nunit.css"/>
         <include name="codeFuncs.js"/>
         <include name="favicon.ico"/>
-	<include name="files/*"/>
-	<include name="img/*"/>
+        <include name="files/*"/>
+        <include name="img/*"/>
         <exclude name="img/thumbs.db"/>
       </fileset>
     </copy>
@@ -475,42 +475,42 @@
     <!-- Copy project top level files -->
     <copy todir="${package.working.dir}">
       <fileset basedir="${project.base.dir}">
-	<include name="build"/>
-	<include name="build.bat"/>
+        <include name="build"/>
+        <include name="build.bat"/>
         <include name="license.rtf"/>
-	<include name="license.txt"/>
-	<include name="nant"/>
-	<include name="nant.bat"/>
+        <include name="license.txt"/>
+        <include name="nant"/>
+        <include name="nant.bat"/>
         <include name="nunit.build"/>
         <include name="nunit.build.include"/>
-	<include name="nunit.sln"/>
-	<include name="nunit2012.sln"/>
-	<include name="nunit.snk"/>
+        <include name="nunitv2.sln"/>
+        <include name="nunit2012.sln"/>
+        <include name="nunit.snk"/>
         <include name="NUnitFitTests.html"/>
         <include name="NUnitTests.nunit"/>
         <include name="NUnitTests.config"/>
         <include name="NUnitTests.v1.nunit"/>
-	<include name="NUnitTests.v2.nunit"/>
-	<include name="package"/>
-	<include name="package.bat"/>
-	<include name="install/*.wxs" />
-	<include name="lib/**"/>
-	<include name="nuget/nunit.nuspec"/>
-	<include name="nuget/nunit.editor.nuspec"/>
-	<include name="nuget/nunit.mocks.nuspec"/>
-	<include name="nuget/nunit.runners.nuspec"/>
-	<include name="nuget/pnunit.nuspec"/>
-	<include name="scripts/nunit.build.targets"/>
-	<include name="scripts/nunit.common.targets"/>
-	<include name="scripts/nunit.package.targets"/>
-	<include name="src/nunit.snk"/>
-	<include name="src/CommonAssemblyInfo.cs"/>
-	<include name="src/nunit20under21.config"/>
-	<include name="src/nunit20under22.config"/>
-	<include name="src/nunit21under22.config"/>
-	<include name="src/PNUnit/*.conf"/>
-	<include name="src/PNUnit/runpnunit.bat"/>
-	<include name="tools/nant"/>
+        <include name="NUnitTests.v2.nunit"/>
+        <include name="package"/>
+        <include name="package.bat"/>
+        <include name="install/*.wxs" />
+        <include name="lib/**"/>
+        <include name="nuget/nunit.nuspec"/>
+        <include name="nuget/nunit.editor.nuspec"/>
+        <include name="nuget/nunit.mocks.nuspec"/>
+        <include name="nuget/nunit.runners.nuspec"/>
+        <include name="nuget/pnunit.nuspec"/>
+        <include name="scripts/nunit.build.targets"/>
+        <include name="scripts/nunit.common.targets"/>
+        <include name="scripts/nunit.package.targets"/>
+        <include name="src/nunit.snk"/>
+        <include name="src/CommonAssemblyInfo.cs"/>
+        <include name="src/nunit20under21.config"/>
+        <include name="src/nunit20under22.config"/>
+        <include name="src/nunit21under22.config"/>
+        <include name="src/PNUnit/*.conf"/>
+        <include name="src/PNUnit/runpnunit.bat"/>
+        <include name="tools/nant"/>
       </fileset>
     </copy>
 
