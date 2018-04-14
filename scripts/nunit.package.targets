@@ -43,10 +43,6 @@
       
     <call target="package-src"/>
 
-    <call target="package-docs"/>
-
-    <call target="package-samples"/>
-
     <call target="package-nuget"/>
 
     <foreach item="String" delim="," 
