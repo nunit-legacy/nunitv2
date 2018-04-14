@@ -125,6 +125,7 @@
         <patternset refid="content-files"/>
         <include name="nunit.uikit.dll.csproj"/>
         <include name="nunit.uikit.build"/>
+        <include name="nunit.snk"/>
       </fileset>
     </copy>
   </target>

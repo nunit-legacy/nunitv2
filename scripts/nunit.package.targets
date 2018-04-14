@@ -354,7 +354,7 @@
 
     <exec program="NuGet.exe"
       workingdir="${project.nuget.dir}"
-      commandline="pack _${nuget.package.name}.nuspec -o ${project.package.dir}" />
+      commandline="pack _${nuget.package.name}.nuspec -OutputDirectory ${project.package.dir}" />
 
   </target>
 
@@ -560,6 +560,7 @@
     <include name="PNUnit/launcher/pnunit-launcher.build"/>
 
     <!-- Test Utilities and Dummy Projects -->
+    <include name="tests/compatibility-tests/compatibility-tests.build" />
     <include name="tests/mock-assembly/mock-assembly.build" />
     <include name="tests/nonamespace-assembly/nonamespace-assembly.build" />
     <include name="tests/test-assembly/test-assembly.build" />

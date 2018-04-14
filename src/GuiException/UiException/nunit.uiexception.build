@@ -88,6 +88,7 @@
         <patternset refid="content-files"/>
         <include name="nunit.uiexception.dll.csproj"/>
         <include name="nunit.uiexception.build"/>
+        <include name="nunit.snk"/>
       </fileset>
     </copy>
   </target>

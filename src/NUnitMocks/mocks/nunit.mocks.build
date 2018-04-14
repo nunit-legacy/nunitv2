@@ -39,6 +39,7 @@
         <patternset refid="source-files"/>
         <include name="nunit.mocks.csproj"/>
         <include name="nunit.mocks.build"/>
+        <include name="nunit.snk"/>
       </fileset>
     </copy>
   </target>
