@@ -51,9 +51,9 @@
     value="net-3.5,net-4.0,net-4.5,net-1.1,mono-3.5,mono-4.0"/>
 
   <!-- Packages we normally create -->
-  <property name="standard.packages" value="net-3.5,net-1.1" 
+  <property name="standard.packages" value="net-3.5" 
       if="${platform::is-windows()}"/>
-  <property name="standard.packages" value="mono-3.5,mono-1.0"
+  <property name="standard.packages" value="mono-3.5"
       unless="${platform::is-windows()}"/>
 
   <!-- NuGet packages we create -->

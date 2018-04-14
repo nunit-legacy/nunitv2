@@ -354,7 +354,7 @@
 
     <exec program="NuGet.exe"
       workingdir="${project.nuget.dir}"
-      commandline="pack _${nuget.package.name}.nuspec -o ${project.package.dir}" />
+      commandline="pack _${nuget.package.name}.nuspec -OutputDirectory ${project.package.dir}" />
 
   </target>
 
