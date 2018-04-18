@@ -154,11 +154,15 @@ namespace NUnit.ConsoleRunner
                     {
                         new ResultReporter(result, options).ReportResults();
 
-                        if (!options.noresult)
+                        // Check both new and old option forms
+                        if (!options.noresult && !options.noxml)
                         {
                             // Write xml output here
-                            string xmlResultFile = options.result == null || options.result == string.Empty
-                                ? "TestResult.xml" : options.result;
+                            string xmlResultFile = !string.IsNullOrEmpty(options.result)
+                                ? options.result
+                                : !string.IsNullOrEmpty(options.xml)
+                                    ? options.xml
+                                    : "TestResult.xml";
 
                             using (StreamWriter writer = new StreamWriter(Path.Combine(workDir, xmlResultFile)))
                             {
@@ -197,13 +201,18 @@ namespace NUnit.ConsoleRunner
 				testFilter = nameFilter;
 			}
 
-			if (options.runlist != null && options.runlist != string.Empty)
+            // Check both new and old options
+            var testList = options.testlist;
+            if (string.IsNullOrEmpty(testList))
+                testList = options.runlist;
+
+			if (!string.IsNullOrEmpty(testList))
 			{
-				Console.WriteLine("Run list: " + options.runlist);
+				Console.WriteLine("Run list: " + testList);
 				
 				try
 				{
-					using (StreamReader rdr = new StreamReader(options.runlist))
+					using (StreamReader rdr = new StreamReader(testList))
 					{
 						// NOTE: We can't use rdr.EndOfStream because it's
 						// not present in .NET 1.x.
@@ -220,7 +229,7 @@ namespace NUnit.ConsoleRunner
 				{
 					if (e is FileNotFoundException || e is DirectoryNotFoundException)
 					{
-						Console.WriteLine("Unable to locate file: " + options.runlist);
+						Console.WriteLine("Unable to locate file: " + testList);
 						return false;
 					}
 					throw;

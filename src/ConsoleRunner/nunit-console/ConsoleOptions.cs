@@ -17,23 +17,40 @@ namespace NUnit.ConsoleRunner
 		[Option(Short="load", Description = "Test fixture or namespace to be loaded (Deprecated)")]
 		public string fixture;
 
-		[Option(Description = "Name of the test case(s), fixture(s) or namespace(s) to run")]
+        // NOTE: Here and further below we are using a trick to allow use of both old and
+        // new versions of the option. The option with the OptionAttribute will be listed
+        // in the help and is the official, new option. The option that is simply defined
+        // as a public field, without an attribute, will be used if found but not shown
+        // in any help message. This allows us to separate the two forms and produce a
+        // compatibility issue if the old form is used.
+        //
+        // We are doing this for:
+        //    test vs run
+        //    testlist vs runlist
+        //    result vs xml
+        //    noresult vs noxml
+
+        [Option(Description = "Name of the test case(s), fixture(s) or namespace(s) to run")]
+        public string test;
 		public string run;
 
         [Option(Description = "Name of a file containing a list of the tests to run, one per line")]
+        public string testlist;
         public string runlist;
 
 		[Option(Description = "Project configuration (e.g.: Debug) to load")]
 		public string config;
 
-		[Option(Short="xml", Description = "Name of XML result file (Default: TestResult.xml)")]
+		[Option(Description = "Name of XML result file (Default: TestResult.xml)")]
 		public string result;
+        public string xml;
 
 		[Option(Description = "Display XML to the console (Deprecated)")]
 		public bool xmlConsole;
 
-        [Option(Short="noxml", Description = "Suppress XML result output")]
+        [Option(Description = "Suppress XML result output")]
         public bool noresult;
+        public bool noxml;
 
 		[Option(Short="out", Description = "File to receive test output")]
 		public string output;
@@ -163,10 +180,10 @@ namespace NUnit.ConsoleRunner
                 if (apartment != System.Threading.ApartmentState.Unknown)
                     yield return new Issue("Error", "The --apartment option is no longer supported in NUnit 3. Use ApartmentAttribute");
 
-                if (result != null)
+                if (xml != null)
                     yield return new Issue("Error", "The --xml option is no longer supported in NUnit 3. Use --result.");
 
-                if (noresult)
+                if (noxml)
                     yield return new Issue("Error", "The --noxml option is no longer supported in NUnit 3. Use --noresult.");
 
                 if (xmlConsole)

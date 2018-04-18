@@ -39,6 +39,8 @@ namespace NUnit.ConsoleRunner.Tests
 		[TestCase( "nothread", "nothread" )]
         [TestCase( "compatibility", "compatibility")]
         [TestCase( "compatibility", "compat")]
+        [TestCase( "noresult", "noresult")]
+        [TestCase( "noxml", "noxml")]
 		public void BooleanOptionAreRecognized( string fieldName, string option )
 		{
 			FieldInfo field = typeof(ConsoleOptions).GetField( fieldName );
@@ -58,13 +60,15 @@ namespace NUnit.ConsoleRunner.Tests
 		[TestCase( "fixture", "fixture" )]
 		[TestCase( "config", "config")]
         [TestCase( "result", "result")]
-		[TestCase( "result", "xml" )]
+		[TestCase( "xml", "xml" )]
 		[TestCase( "output", "output" )]
 		[TestCase( "output", "out" )]
 		[TestCase( "err", "err" )]
         [TestCase( "include", "include" )]
 		[TestCase( "exclude", "exclude" )]
+        [TestCase( "test", "test")]
         [TestCase("run", "run")]
+        [TestCase("testlist", "testlist")]
         [TestCase("runlist", "runlist")]
         [TestCase("basepath", "basepath")]
         [TestCase("privatebinpath", "privatebinpath")]
@@ -138,22 +142,31 @@ namespace NUnit.ConsoleRunner.Tests
 			Assert.IsFalse(options.Validate());
 		}
 
-		[Test]
-		public void XmlParameter()
-		{
-			ConsoleOptions options = new ConsoleOptions( "tests.dll", "-xml:results.xml" );
-			Assert.IsTrue(options.ParameterCount == 1, "assembly should be set");
-			Assert.AreEqual("tests.dll", options.Parameters[0]);
-			Assert.AreEqual("results.xml", options.result);
-		}
+        [Test]
+        public void XmlParameter()
+        {
+            ConsoleOptions options = new ConsoleOptions("tests.dll", "-xml:results.xml");
+            Assert.IsTrue(options.ParameterCount == 1, "assembly should be set");
+            Assert.AreEqual("tests.dll", options.Parameters[0]);
+            Assert.AreEqual("results.xml", options.xml);
+        }
 
-		[Test]
+        [Test]
+        public void ResultParameter()
+        {
+            ConsoleOptions options = new ConsoleOptions("tests.dll", "-result:results.xml");
+            Assert.IsTrue(options.ParameterCount == 1, "assembly should be set");
+            Assert.AreEqual("tests.dll", options.Parameters[0]);
+            Assert.AreEqual("results.xml", options.result);
+        }
+
+        [Test]
 		public void XmlParameterWithFullPath()
 		{
 			ConsoleOptions options = new ConsoleOptions( "tests.dll", "-xml:C:/nunit/tests/bin/Debug/console-test.xml" );
 			Assert.IsTrue(options.ParameterCount == 1, "assembly should be set");
 			Assert.AreEqual("tests.dll", options.Parameters[0]);
-			Assert.AreEqual("C:/nunit/tests/bin/Debug/console-test.xml", options.result);
+			Assert.AreEqual("C:/nunit/tests/bin/Debug/console-test.xml", options.xml);
 		}
 
 		[Test]
@@ -162,7 +175,7 @@ namespace NUnit.ConsoleRunner.Tests
 			ConsoleOptions options = new ConsoleOptions( "tests.dll", "-xml=C:/nunit/tests/bin/Debug/console-test.xml" );
 			Assert.IsTrue(options.ParameterCount == 1, "assembly should be set");
 			Assert.AreEqual("tests.dll", options.Parameters[0]);
-			Assert.AreEqual("C:/nunit/tests/bin/Debug/console-test.xml", options.result);
+			Assert.AreEqual("C:/nunit/tests/bin/Debug/console-test.xml", options.xml);
 		}
 
 		[Test]
@@ -193,27 +206,30 @@ namespace NUnit.ConsoleRunner.Tests
 			StringAssert.Contains( expected, helpText );
 		}
 
-        [TestCase("--fixture")]
-        [TestCase("--run")]
-        [TestCase("--runlist")]
-        [TestCase("--include")]
-        [TestCase("--exclude")]
-        [TestCase("--apartment:STA")]
-        [TestCase("--xml")]
-        [TestCase("--noxml")]
-        [TestCase("--xmlConsole")]
-        [TestCase("--basepath")]
-        [TestCase("--privatebinpath")]
-        [TestCase("--cleanup")]
-        [TestCase("--nodots")]
-        public void CompatibilityReport(string opt)
+        [TestCase("--fixture", 1)]
+        [TestCase("--run", 1)]
+        [TestCase("--runlist", 1)]
+        [TestCase("--include", 1)]
+        [TestCase("--exclude", 1)]
+        [TestCase("--apartment:STA", 1)]
+        [TestCase("--result", 0)]
+        [TestCase("--xml", 1)]
+        [TestCase("--noresult", 0)]
+        [TestCase("--noxml", 1)]
+        [TestCase("--xmlConsole", 1)]
+        [TestCase("--basepath", 1)]
+        [TestCase("--privatebinpath", 1)]
+        [TestCase("--cleanup", 1)]
+        [TestCase("--nodots", 1)]
+        public void CompatibilityReport(string opt, int expected)
         {
             var options = new ConsoleOptions("tests.dll", opt, "--compat", "--process:Single", "--domain:Single");
             Assert.IsTrue(options.Validate());
 
             var issues = new List<Compatibility.Issue>(options.CompatibilityIssues);
-            Assert.That(issues.Count, Is.EqualTo(1));
-            Assert.That(issues[0].Message, Does.Contain("option is no longer supported"));
+            Assert.That(issues.Count, Is.EqualTo(expected));
+            foreach (var issue in issues)
+                Assert.That(issue.Message, Does.Contain("option is no longer supported"));
         }
 
         [Test]
