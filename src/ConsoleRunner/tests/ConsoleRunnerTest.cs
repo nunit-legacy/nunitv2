@@ -73,19 +73,31 @@ namespace NUnit.ConsoleRunner.Tests
 			Assert.AreEqual(0, resultCode);
 		}
 
-		[Test]
-		public void XmlResult() 
-		{
-			FileInfo info = new FileInfo(xmlFile);
-			info.Delete();
+        [Test]
+        public void XmlResultUsingResultOption()
+        {
+            FileInfo info = new FileInfo(xmlFile);
+            info.Delete();
 
-			int resultCode = runFixture(typeof(SuccessTest), "-xml:" + xmlFile);
+            int resultCode = runFixture(typeof(SuccessTest), "-result:" + xmlFile);
 
-			Assert.AreEqual(0, resultCode);
-			Assert.AreEqual(true, info.Exists);
-		}
+            Assert.AreEqual(0, resultCode);
+            Assert.AreEqual(true, info.Exists);
+        }
 
-		[Test]
+        [Test]
+        public void XmlResultUsingXmlOption()
+        {
+            FileInfo info = new FileInfo(xmlFile);
+            info.Delete();
+
+            int resultCode = runFixture(typeof(SuccessTest), "-xml:" + xmlFile);
+
+            Assert.AreEqual(0, resultCode);
+            Assert.AreEqual(true, info.Exists);
+        }
+
+        [Test]
 		public void InvalidFixture()
 		{
 			int resultCode = executeConsole( new string[] { MockAssembly.AssemblyPath, "-fixture:NUnit.Tests.BogusTest", "-noxml" });
