@@ -84,10 +84,6 @@
     value="${path::combine(project.base.dir,'packages')}"/>
   <property name="project.src.dir"
     value="${path::combine(project.base.dir, 'src')}"/>
-  <property name="project.doc.dir"
-    value="${path::combine(project.base.dir,'doc')}"/>
-  <property name="project.samples.dir"
-    value="${path::combine(project.base.dir,'samples')}"/>
   <property name="project.solutions.dir"
     value="${path::combine(project.base.dir,'solutions')}"/>
   <property name="project.tools.dir"
@@ -104,10 +100,6 @@
     value="${path::combine(project.package.dir,package.base.name)}"/>
   <property name="package.bin.dir" 
     value="${path::combine(package.working.dir,'bin')}"/>
-  <property name="package.doc.dir" 
-    value="${path::combine(package.working.dir,'doc')}"/>
-  <property name="package.samples.dir" 
-    value="${path::combine(package.working.dir,'samples')}"/>
   <property name="package.src.dir" 
     value="${path::combine(package.working.dir,'src')}"/>
   <property name="package.lib.dir" 
@@ -385,8 +377,6 @@
 
     <echo>Project Directories</echo>
     <echo>  Base:      ${project.base.dir}</echo>
-    <echo>   Doc:      ${project.doc.dir}</echo>
-    <echo>   Samples:  ${project.samples.dir}</echo>
     <echo>   Source:   ${project.src.dir}</echo>
     <echo>   Build:    ${project.build.dir}</echo>
     <echo>   Package:  ${project.package.dir}</echo>
@@ -427,8 +417,6 @@
     <echo>  Version:   ${package.version}</echo>
     <echo>  Work Dir:  ${package.working.dir}</echo>
     <echo>   Bin:      ${package.bin.dir}</echo>
-    <echo>   Doc:      ${package.doc.dir}</echo>
-    <echo>   Samples:  ${package.samples.dir}</echo>
     <echo>   Source:   ${package.src.dir}</echo>
     <echo></echo>
     <echo>Current Framework and SDK Directories</echo>

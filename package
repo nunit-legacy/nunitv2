@@ -37,7 +37,7 @@ do
       runtime="mono-4.0"
       ;;
 
-    src|docs|samples|zip|all)
+    src|docs|zip|all)
       commands="$commands package-$arg"
       ;;
 

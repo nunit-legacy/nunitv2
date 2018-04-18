@@ -358,35 +358,6 @@
 
 
 <!-- ***************************************************************** -->
-<!-- *       Build the NUnit samples - not part of normal build    *** -->
-<!-- ***************************************************************** -->
-
-  <property name="samples.bin.dir"
-    value="${path::combine(project.samples.dir, 'bin')}"/>
-
-  <target name="clean-samples" description="Removes the samples build directory">
-    <delete dir="${samples.bin.dir}" />
-  </target>
-
-  <target name="build-samples" depends="build"
-     description="Build the NUnit samples">
-    
-    <mkdir dir="${samples.bin.dir}" unless="${directory::exists(samples.bin.dir)}" />
-
-    <copy todir="${samples.bin.dir}"
-      file="${path::combine(current.framework.dir,'nunit.framework.dll')}" />
-    <copy todir="${samples.bin.dir}"
-      file="${path::combine(current.lib.dir,'nunit.core.interfaces.dll')}" />
-    <copy todir="${samples.bin.dir}"
-      file="${path::combine(current.lib.dir,'nunit.core.dll')}" />
-
-    <nant target="build">
-      <buildfiles refid="sample.buildfiles" />
-    </nant>
-
-  </target>
-
-<!-- ***************************************************************** -->
 <!-- ******              Targets used internally              ******** -->
 <!-- ***************************************************************** -->
 
@@ -468,37 +439,6 @@
     <!-- Project Editor Tests -->
     <include name="ProjectEditor/tests/nunit-editor.tests.build" />
     
-  </fileset>
-
-  <!-- BuildFiles for Samples -->
-  <!-- Note: For each sample, sample.buildfile includes sample.build.
-       The distribution includes sample.build, but not sample.buildfile,
-       because the latter is used by NUnit for packaging. -->
-  <fileset id="sample.buildfiles" basedir="${project.samples.dir}">
-
-    <!-- CSharp Samples -->
-    <include name="csharp/failures/cs-failures.build" />
-    <include name="csharp/money/cs-money.build" />
-    <include name="csharp/syntax/cs-syntax.build" />
-
-    <!-- VB Samples -->
-    <include name="vb/failures/vb-failures.build"
-      if="${task::exists('vbc') and platform::is-windows()}" />
-    <include name="vb/money/vb-money.build"
-      if="${task::exists('vbc') and platform::is-windows()}" />
-    <include name="vb/syntax/vb-syntax.build"
-      if="${task::exists('vbc') and platform::is-windows()}" />
-
-    <!-- C++/CLI Samples -->
-    <include name="cpp/failures/cpp-cli-failures.build"
-      if="${platform::is-windows()}" />
-    <include name="cpp/syntax/cpp-cli-syntax.build"
-      if="${platform::is-windows()}" />
-
-    <!-- Extensibility Samples -->
-    <include name="Extensibility/Core/Minimal/Minimal.build" />
-    <include name="Extensibility/Core/SampleFixtureExtension/SampleFixtureExtension.build" />
-    <include name="Extensibility/Core/SampleSuiteExtension/SampleSuiteExtension.build" />
   </fileset>
 
 </project>
