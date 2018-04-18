@@ -192,7 +192,6 @@
         <include name="${work.dir}/tests.wixobj" />
         <include name="${work.dir}/pnunit.wixobj" />
         <include name="${work.dir}/doc.wixobj"  if="${runtime.version >= '2.0'}"/>
-        <include name="${work.dir}/samples.wixobj"  if="${runtime.version >= '2.0'}"/>
         <include name="${work.dir}/nunit-gui.wixobj" if="${runtime.version >= '2.0'}"/>
         <include name="${work.dir}/net45-tests.wixobj" if="${runtime.version >= '2.0'}"/>
         <include name="${work.dir}/NSubstitute.wixobj" if="${runtime.version >= '2.0'}"/>
@@ -210,7 +209,6 @@
     description="Create full source package for developer use">
 
     <call target="copy-docs"/>
-    <call target="copy-samples"/>
     <call target="copy-src"/>
 
     <copy file="license.txt" todir="${package.working.dir}" />
@@ -243,25 +241,6 @@
     
   </target>
   
-<!-- ***************************************************************** -->
-<!-- ***                     Package samples                       *** -->
-<!-- ***************************************************************** -->
-
-  <target name="package-samples" depends="clean-package-dir"
-      description="Create a zip file of the samples.">
-
-    <call target="copy-samples"/>
-
-    <!-- Create the zip file -->
-    <zip ziplevel="9"
-        zipfile="${project.package.dir}/${package.base.name}-samples.zip">
-      <fileset basedir="${package.working.dir}" prefix="${package.base.name}">
-        <include name="**"/>
-      </fileset>
-    </zip>
-    
-  </target>
-
 <!-- ***************************************************************** -->
 <!-- ***                    Package resources                      *** -->
 <!-- ***************************************************************** -->
@@ -431,36 +410,6 @@
   </target>
 
 <!-- ***************************************************************** -->
-<!-- ***            Copy sample programs for a package             *** -->
-<!-- ***************************************************************** -->
-
-  <target name="copy-samples">
-
-    <mkdir dir="${package.samples.dir}"/>
-
-    <!-- Copy files that are not part of an individual project -->
-    <copy todir="${package.samples.dir}">
-      <fileset basedir="${project.samples.dir}">
-        <include name="ReadMe.txt" />
-        <include name="samples.common" />
-        <include name="csharp/CSharp.sln" />
-        <include name="fsharp/FSharp.sln" />
-        <include name="vb/vb-samples.sln" />
-        <include name="cpp/cpp-cli.sln" />
-        <include name="Extensibility/Core/CoreExtensibility.sln" />
-        <include name="Extensibility/Core/Install.bat" />
-      </fileset>
-    </copy>
-
-    <!-- Copy each project's files -->
-    <nant target="package">
-      <buildfiles refid="sample.buildfiles"  failonerror="true" />
-    </nant>
-
-  </target>
-
-
-<!-- ***************************************************************** -->
 <!-- ***            Copy the source code for a package             *** -->
 <!-- ***************************************************************** -->
 
@@ -594,42 +543,6 @@
     <include name="GuiRunner/tests/nunit-gui.tests.build" />
     <include name="ProjectEditor/tests/nunit-editor.tests.build" />
 
-  </fileset>
-
-  <!-- BuildFiles for Samples -->
-  <!-- Note: For each sample, sample.buildfile includes sample.build.
-       The distribution includes sample.build, but not sample.buildfile,
-       because the latter is used by NUnit for packaging. -->
-  <fileset id="sample.buildfiles" basedir="${project.samples.dir}">
-
-    <!-- C# Samples -->
-    <include name="csharp/failures/cs-failures.build" />
-    <include name="csharp/money/cs-money.build" />
-    <include name="csharp/syntax/cs-syntax.build" />
-
-    <!-- F# Samples -->
-    <include name="fsharp/failures/fs-failures.build" />
-    <include name="fsharp/money/fs-money.build" />
-    <include name="fsharp/syntax/fs-syntax.build" />
-
-	  <!-- VB Samples -->
-    <include name="vb/failures/vb-failures.build"
-      if="${task::exists('vbc') and platform::is-windows()}" />
-    <include name="vb/money/vb-money.build"
-      if="${task::exists('vbc') and platform::is-windows()}" />
-    <include name="vb/syntax/vb-syntax.build"
-      if="${task::exists('vbc') and platform::is-windows()}" />
-
-    <!-- C++/CLI Samples -->
-    <include name="cpp/failures/cpp-cli-failures.build"
-      if="${platform::is-windows()}" />
-    <include name="cpp/syntax/cpp-cli-syntax.build"
-      if="${platform::is-windows()}" />
-
-    <!-- Extensibility Samples -->
-    <include name="Extensibility/Core/Minimal/Minimal.build" />
-    <include name="Extensibility/Core/SampleFixtureExtension/SampleFixtureExtension.build" />
-    <include name="Extensibility/Core/SampleSuiteExtension/SampleSuiteExtension.build" />
   </fileset>
 
 </project>

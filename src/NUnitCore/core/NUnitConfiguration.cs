@@ -226,7 +226,7 @@ namespace NUnit.Core
         {
             get
             {
-                string helpUrl = "http://nunit.org";
+                string helpUrl = "http://nunitsoftware.com/nunitv2";
 
                 string dir = Path.GetDirectoryName(NUnitBinDirectory);
                 string docDir = null;

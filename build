@@ -46,7 +46,7 @@ do
       clean="clean-all"
       ;;
 
-    samples|tools|all)
+    tools|all)
       commands="$commands build-$arg"
       ;;
 
