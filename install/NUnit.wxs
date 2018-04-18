@@ -86,11 +86,6 @@
 
           </Directory>
 
-          <Directory Id="doc" Name="doc">
-            <Directory Id="files" Name="files" />
-            <Directory Id="img" Name="img" />
-          </Directory>
-
         </Directory>
 
       </Directory>
@@ -192,16 +187,6 @@
 
         <!-- Defined in nunit-gui.wxs -->
         <ComponentRef Id="gui_tests" />
-
-      </Feature>
-
-      <Feature Id="DocumentationFeature" Level="1" Title="Documentation" Display="expand" Description="Installs the NUnit documentation.">
-
-        <!-- Defined in doc.wxs -->
-        <ComponentRef Id="HtmlDocs" />
-        <ComponentRef Id="DocFiles" />
-        <ComponentRef Id="DocImages" />
-        <ComponentRef Id="MenuShortcut_NUnitHelp"/>
 
       </Feature>
 

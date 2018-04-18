@@ -173,7 +173,6 @@
         <include name="base-net-1.1.wxs" unless="${runtime.version >= '2.0'}"/>
         <include name="tests.wxs" />
         <include name="pnunit.wxs" />
-        <include name="doc.wxs"  if="${runtime.version >= '2.0'}"/>
         <include name="nunit-gui.wxs" if="${runtime.version >= '2.0'}"/>
         <include name="net45-tests.wxs" if="${runtime.version >= '2.0'}"/>
         <include name="NSubstitute.wxs" if="${runtime.version >= '2.0'}"/>
@@ -191,7 +190,6 @@
         <include name="${work.dir}/base-net-1.1.wixobj" unless="${runtime.version >= '2.0'}"/>
         <include name="${work.dir}/tests.wixobj" />
         <include name="${work.dir}/pnunit.wixobj" />
-        <include name="${work.dir}/doc.wixobj"  if="${runtime.version >= '2.0'}"/>
         <include name="${work.dir}/nunit-gui.wixobj" if="${runtime.version >= '2.0'}"/>
         <include name="${work.dir}/net45-tests.wixobj" if="${runtime.version >= '2.0'}"/>
         <include name="${work.dir}/NSubstitute.wixobj" if="${runtime.version >= '2.0'}"/>
@@ -208,7 +206,6 @@
   <target name="package-src" depends="clean-package-dir"
     description="Create full source package for developer use">
 
-    <call target="copy-docs"/>
     <call target="copy-src"/>
 
     <copy file="license.txt" todir="${package.working.dir}" />
@@ -222,25 +219,6 @@
     </zip>
   </target>
 
-<!-- ***************************************************************** -->
-<!-- ***                      Package docs                         *** -->
-<!-- ***************************************************************** -->
-
-  <target name="package-docs" depends="clean-package-dir"
-      description="Create a zip of the docs only">
-
-    <call target="copy-docs"/>
-
-    <!-- Create the zip file -->
-    <zip ziplevel="9"
-        zipfile="${project.package.dir}/${package.base.name}-docs.zip">
-      <fileset basedir="${package.working.dir}" prefix="${package.base.name}">
-        <include name="**"/>
-      </fileset>
-    </zip>
-    
-  </target>
-  
 <!-- ***************************************************************** -->
 <!-- ***                    Package resources                      *** -->
 <!-- ***************************************************************** -->
@@ -357,7 +335,6 @@
     <call target="copy-top-level-files" />
 
     <call target="copy-bins" />
-    <call target="copy-docs" />
 
   </target>
 
@@ -390,25 +367,6 @@
 
   </target>
   
-<!-- ***************************************************************** -->
-<!-- ***           Copy the documentation for a package            *** -->
-<!-- ***************************************************************** -->
-
-  <target name="copy-docs">
-    <mkdir dir="${package.doc.dir}"/>
-    <copy todir="${package.doc.dir}">
-      <fileset basedir="${project.doc.dir}">
-        <include name="*.html"/>
-        <include name="nunit.css"/>
-        <include name="codeFuncs.js"/>
-        <include name="favicon.ico"/>
-        <include name="files/*"/>
-        <include name="img/*"/>
-        <exclude name="img/thumbs.db"/>
-      </fileset>
-    </copy>
-  </target>
-
 <!-- ***************************************************************** -->
 <!-- ***            Copy the source code for a package             *** -->
 <!-- ***************************************************************** -->
