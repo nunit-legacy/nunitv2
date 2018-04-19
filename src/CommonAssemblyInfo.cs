@@ -1,7 +1,7 @@
 // ****************************************************************
-// This is free software licensed under the NUnit license. You
-// may obtain a copy of the license as well as information regarding
-// copyright ownership at http://nunit.org.
+// This is free software licensed under the NUnit license, a copy
+// of which should be included with this software. If not, you may
+// obtain a copy at https://github.com/nunit-legacy/nunitv2.
 // ****************************************************************
 
 using System.Reflection;
@@ -16,7 +16,7 @@ using System.Reflection;
 //
 [assembly: AssemblyCompany("NUnit.org")]
 [assembly: AssemblyProduct("NUnit")]
-[assembly: AssemblyCopyright("Copyright (C) 2002-2012 Charlie Poole.\r\nCopyright (C) 2002-2004 James W. Newkirk, Michael C. Two, Alexei A. Vorontsov.\r\nCopyright (C) 2000-2002 Philip Craig.\r\nAll Rights Reserved.")]
+[assembly: AssemblyCopyright("Copyright (C) 2002-2014, 2018 Charlie Poole.\r\nCopyright (C) 2002-2004 James W. Newkirk, Michael C. Two, Alexei A. Vorontsov.\r\nCopyright (C) 2000-2002 Philip Craig.\r\nAll Rights Reserved.")]
 [assembly: AssemblyTrademark("NUnit is a trademark of NUnit.org")]
 
 //
