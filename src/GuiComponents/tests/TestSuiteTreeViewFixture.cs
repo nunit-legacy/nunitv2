@@ -1,7 +1,8 @@
 // ****************************************************************
 // Copyright 2002-2003, Charlie Poole
-// This is free software licensed under the NUnit license. You may
-// obtain a copy of the license at http://nunit.org
+// This is free software licensed under the NUnit license, a copy
+// of which should be included with this software. If not, you may
+// obtain a copy at https://github.com/nunit-legacy/nunitv2.
 // ****************************************************************
 
 namespace NUnit.UiKit.Tests

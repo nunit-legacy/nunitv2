@@ -1,7 +1,8 @@
 // ****************************************************************
-// This is free software licensed under the NUnit license. You
-// may obtain a copy of the license as well as information regarding
-// copyright ownership at http://nunit.org.
+// Copyright 2002-2018, Charlie Poole
+// This is free software licensed under the NUnit license, a copy
+// of which should be included with this software. If not, you may
+// obtain a copy at https://github.com/nunit-legacy/nunitv2.
 // ****************************************************************
 
 using System;
@@ -58,7 +59,7 @@ namespace NUnit.Gui
 				    versionText += string.Format(" ({0})",configText);
 			}
 			
-			string copyrightText = "Copyright (C) 2002-2012 Charlie Poole.\r\nCopyright (C) 2002-2004 James W. Newkirk, Michael C. Two, Alexei A. Vorontsov.\r\nCopyright (C) 2000-2002 Philip Craig.\r\nAll Rights Reserved.";
+			string copyrightText = "Copyright (C) 2002-2014, 2018 Charlie Poole.\r\nCopyright (C) 2002-2004 James W. Newkirk, Michael C. Two, Alexei A. Vorontsov.\r\nCopyright (C) 2000-2002 Philip Craig.\r\nAll Rights Reserved.";
 			objectAttrs = executingAssembly.GetCustomAttributes(typeof(AssemblyCopyrightAttribute), false);
 			if ( objectAttrs.Length > 0 )
 				copyrightText = ((AssemblyCopyrightAttribute)objectAttrs[0]).Copyright;
