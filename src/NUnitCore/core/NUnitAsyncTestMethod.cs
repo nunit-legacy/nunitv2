@@ -8,6 +8,8 @@ namespace NUnit.Core
     {
 	    public NUnitAsyncTestMethod(MethodInfo method) : base(method)
         {
+            if (method.ReturnType == typeof(void))
+                Compatibility.Error(method.ReflectedType + "." + method.Name, "Async void test methods are no longer supported. Use async Task instead.");
         }
 
         protected override object RunTestMethod()

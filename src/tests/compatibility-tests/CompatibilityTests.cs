@@ -111,6 +111,15 @@ namespace NUnit.Tests
 
         #endregion
 
+        #region Async void test method
+
+        [Test]
+        public async void AsyncVoidTestMethod()
+        {
+        }
+
+        #endregion
+
         #region Assertions
 
         [Test]
