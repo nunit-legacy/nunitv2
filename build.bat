@@ -30,14 +30,11 @@ IF /I "%1" EQU "debug" set CONFIG=debug&goto shift
 IF /I "%1" EQU "release" set CONFIG=release&goto shift
 
 IF /I "%1" EQU "net" set RUNTIME=net&goto shift
-IF /I "%1" EQU "net-2.0" set RUNTIME=net-2.0&goto shift
-IF /I "%1" EQU "net-3.0" set RUNTIME=net-3.0&goto shift
 IF /I "%1" EQU "net-3.5" set RUNTIME=net-3.5&goto shift
 IF /I "%1" EQU "net-4.0" set RUNTIME=net-4.0&goto shift
 IF /I "%1" EQU "net-4.5" set RUNTIME=net-4.5&goto shift
 
 IF /I "%1" EQU "mono" set RUNTIME=mono&goto shift
-IF /I "%1" EQU "mono-2.0" set RUNTIME=mono-2.0&goto shift
 IF /I "%1" EQU "mono-3.5" set RUNTIME=mono-3.5&goto shift
 IF /I "%1" EQU "mono-4.0" set RUNTIME=mono-4.0&goto shift
 
@@ -83,13 +80,8 @@ echo.
 echo   net-4.5        Builds using .NET 4.5 framework (future)
 echo   net-4.0        Builds using .NET 4.0 framework (future)
 echo   net-3.5        Builds using .NET 3.5 framework (default)
-echo   net-2.0        Builds using .NET 2.0 framework
-echo   net-1.1        Builds using .NET 1.1 framework
-echo   net-1.0        Builds using .NET 1.0 framework
 echo   mono-4.0       Builds using Mono 4.0 profile (future)
 echo   mono-3.5       Builds using Mono 3.5 profile (default)
-echo   mono-2.0       Builds using Mono 2.0 profile
-echo   mono-1.0       Builds using Mono 1.0 profile
 echo.
 echo   net            Builds using default .NET version
 echo   mono           Builds using default Mono profile

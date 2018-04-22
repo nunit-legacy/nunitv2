@@ -22,10 +22,6 @@ do
       config="$arg"
       ;;
 
-    mono-2.0|2.0)
-      runtime="mono-2.0"
-      ;;
-
     mono-3.5|3.5)
       runtime="mono-3.5"
       ;;
@@ -62,7 +58,6 @@ do
       echo
       echo "  mono-4.0, 4.0  Builds using Mono 4.0 profile (future)"
       echo "  mono-3.5, 3.5  Builds using Mono 3.5 profile (default)"
-      echo "  mono-2.0, 2.0  Builds using Mono 2.0 profile"
       echo
       echo "  clean          Cleans the output directory before building"
       echo "  clean-all      Removes output directories for all runtimes"

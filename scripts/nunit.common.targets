@@ -180,16 +180,6 @@
 
   </target>
 
-  <!--<target name="set-net-2.0-runtime-config">
-
-    <property name="runtime.platform" value="net"/>
-    <property name="runtime.version" value="2.0"/>
-    <property name="target.version" value="2.0"/>
-    <property name="runtime.defines" value="MSNET,CLR_2_0,NET_2_0"/>
-    <property name="supported.test.platforms" value="net-2.0,mono-2.0"/>
-
-  </target>-->
-   
   <target name="set-net-3.5-runtime-config">
 
     <property name="runtime.platform" value="net"/>
@@ -220,16 +210,6 @@
 
   </target>
  	
-  <target name="set-mono-2.0-runtime-config">
-
-    <property name="runtime.platform" value="mono"/>
-    <property name="runtime.version" value="2.0"/>
-    <property name="target.version" value="2.0"/>
-    <property name="runtime.defines" value="MONO,CLR_2_0,NET_2_0"/>
-    <property name="supported.test.platforms" value="mono-2.0,net-2.0"/>
-
-  </target>-->
-
 	<target name="set-mono-3.5-runtime-config">
 
 		<property name="runtime.platform" value="mono"/>
@@ -246,7 +226,7 @@
 		<property name="runtime.version" value="4.0"/>
 		<property name="target.version" value="2.0"/>
 		<property name="runtime.defines" value="MONO,CLR_4_0,NET_4_0,CS_4_0"/>
-		<property name="supported.test.platforms" value="mono-4.0,net-4.0,mono-3.5,net-3.5,mono-2.0,net-2.0"/>
+		<property name="supported.test.platforms" value="mono-4.0,net-4.0,mono-3.5,net-3.5"/>
 
 	</target>
 

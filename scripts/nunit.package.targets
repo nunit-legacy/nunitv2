@@ -8,10 +8,6 @@
 <!-- In order to build the msi, WiX 2.0 and the WiX tasks for NAnt     -->
 <!-- are required. To run the test coverage target, NCover is          -->
 <!-- required.                                                         -->
-<!--                                                                   -->
-<!-- Currently, the .NET 1.0 builds of the GUI runner cannot be run    -->
-<!-- successfully. However, the .NET 1.1 builds may be run under 1.0.  -->
-<!--                                                                   -->
 <!-- ***************************************************************** -->
 
 <!-- ***************************************************************** -->
