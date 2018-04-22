@@ -30,14 +30,6 @@ do
       clean="clean"
       ;;
 
-    clean-all)
-      clean="clean-all"
-      ;;
-
-    tools|all)
-      commands="$commands build-$arg"
-      ;;
-
     test|test45|gui-test|gen-syntax)
       commands="$commands $arg"
       ;;
@@ -56,9 +48,6 @@ do
       echo
       echo "  clean          Cleans the output directory before building"
       echo "  clean-all      Removes output directories for all runtimes"
-      echo
-      echo "  samples        Builds the NUnit samples"
-      echo "  tools          Builds the NUnit tools"
       echo
       echo "  test           Runs tests for a build using the console runner"
       echo "  test45         Run the .NET 4.5 async test assembly tests"

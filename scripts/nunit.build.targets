@@ -8,10 +8,6 @@
 <!-- In order to build the msi, WiX 2.0 and the WiX tasks for NAnt     -->
 <!-- are required. To run the test coverage target, NCover is          -->
 <!-- required.                                                         -->
-<!--                                                                   -->
-<!-- Currently, the .NET 1.0 builds of the GUI runner cannot be run    -->
-<!-- successfully. However, the .NET 1.1 builds may be run under 1.0.  -->
-<!--                                                                   -->
 <!-- ***************************************************************** -->
 
 <!-- ***************************************************************** -->
@@ -37,17 +33,6 @@
 
   </target>
 
-  <target name="clean-all" 
-      description="Removes output created by all build configs">
- 
-    <delete dir="${project.build.dir}" 
-      if="${directory::exists( project.build.dir )}"/>
-
-    <delete file="src/GeneratedAssemblyInfo.cs"
-      if="${file::exists( 'src/GeneratedAssemblyInfo.cs' )}"/>
-
-  </target>
-
 <!-- ***************************************************************** -->
 <!-- ***              Targets that generate code                   *** -->
 <!-- ***************************************************************** -->
@@ -63,7 +48,7 @@
         <attribute type="AssemblyCompanyAttribute" value="NUnit.org"/>
         <attribute type="AssemblyProductAttribute" value="NUnit"/>
         <attribute type="AssemblyCopyrightAttribute"
-          value="Copyright (C) 2002-2014, Charlie Poole.&#xD;&#xA;Copyright (C) 2002-2004 James W. Newkirk, Michael C. Two, Alexei A. Vorontsov.&#xD;&#xA;Copyright (C) 2000-2002 Philip Craig.&#xD;&#xA;All Rights Reserved."/>
+          value="Copyright (C) 2002-2014, 2018 Charlie Poole.&#xD;&#xA;Copyright (C) 2002-2004 James W. Newkirk, Michael C. Two, Alexei A. Vorontsov.&#xD;&#xA;Copyright (C) 2000-2002 Philip Craig.&#xD;&#xA;All Rights Reserved."/>
         <attribute type="AssemblyTrademarkAttribute" value="NUnit is a trademark of NUnit.org"/>
         <attribute type="AssemblyVersionAttribute" value="${internal.version}"/>
         <attribute type="AssemblyInformationalVersionAttribute" value="${internal.version}"/>
@@ -143,20 +128,6 @@
 
   </target>
 
-  <!-- Build current config for all available runtimes -->
-  <target name="build-all"
-      description="Build current config for all available runtimes">
-
-    <foreach item="String" delim="," 
-        property="framework" in="${installed.frameworks}">
-
-      <call target="set-${framework}-runtime-config"/>
-      <call target="build"/>
-
-    </foreach>
-
-  </target>
-
 <!-- ***************************************************************** -->
 <!-- ***                 Targets for running tests                 *** -->
 <!-- ***************************************************************** -->
@@ -211,113 +182,6 @@
 
   </target>
 
-  <target name="test-coverage" depends="build"
-    description="Run tests for a build under NCover to get coverage results">
-
-    <echo message="*"/>
-    <echo message="* Starting ${runtime.config} ${build.config} test coverage run"/>
-    <echo message="*"/>
-
-    <property name="ncover.options" 
-      value="//a nunit.framework;nunit.core;nunit.extensions;nunit.util;nunit.console;nunit.uikit;nunit-gui-runner"/>
-
-    <!-- We use exec rather than the nunit2 task because we are testing
-         a new build of NUnit which is likely not to be included in the Nant build -->
-    <exec basedir="${ncover.dir}"
-          workingdir="${current.build.dir}" 
-	  program="NCover.Console.exe" 
-      managed="strict"
-	  commandline="nunit-console.exe NUnitTests.nunit ${nunit.options} ${ncover.options}"
-	if="${build.win32}" />
-
-    <!-- Mono currently has a SIGSEGV fault if we run in a single AppDomain -->
-         a new build of NUnit which is likely not to be included in the Nant build -->
-    <exec basedir="${ncover.dir}"
-          workingdir="${current.build.dir}" 
-	  program="NCover.Console.exe" 
-          managed="strict"
-	  commandline="nunit-console.exe NUnitTests.nunit ${nunit.options}"
-	unless="${build.win32}" />
-
-  </target>
-
-  <target name="test-all"
-      description="Build and test all runtimes for current config">
-
-    <foreach item="String" delim="," 
-        property="framework" in="${installed.frameworks}">
-
-      <call target="set-${framework}-runtime-config"/>
-      <call target="test" />
-
-    </foreach>
-
-  </target>
-
-  <target name="test-each-runtime" depends="build"
-      description="Run tests for the current build under each runtime">
-
-    <foreach item="String" delim=","
-        property="framework" in="${supported.test.platforms}">
-
-      <if test="${framework::exists( framework )}">
-        <property name="nant.settings.currentframework"
-            value="${framework}" />
-        <call target="run-test" failonerror="false" />
-      </if>
-
-    </foreach>
-
-    <property name="nant.settings.currentframework" value="${runtime.config}" />
-
-    <echo message="*" />
-    <echo message="* Restored runtime to ${nant.settings.currentframework}" />
-    <echo message="*" />
-
-  </target>
-
-  <target name="test-all-under-each"
-      description="Build all runtimes and test the builds under each runtime.">
-
-    <foreach item="String" delim="," 
-        property="framework" in="${installed.frameworks}">
-
-      <call target="set-${framework}-runtime-config"/>
-      <call target="test-each-runtime" failonerror="false"/>
-
-    </foreach>
-
-  </target>
-
-  <target name="nunit2-test" depends="build"
-    description="Run tests for a build using the nunit2 task">
-
-    <echo message="*"/>
-    <echo message="* Starting ${runtime.config} ${build.config} test run"/>
-    <echo message="*"/>
-
-    <nunit2>
-      <formatter type="Plain"/>
-      <test assemblyname="${current.build.dir}/nunit.framework.tests.dll"/>
-    </nunit2>
-  </target>
-
-  <target name="timing-test" depends="build"
-    description="Run timing tests (long)">
-
-    <echo message="*"/>
-    <echo message="* Starting ${runtime.config} ${build.config} timing tests"/>
-    <echo message="*"/>
-    <echo message="* WARNING: Test may take some time to run"/>
-    <echo message="*"/>
-
-    <exec basedir="${current.build.dir}" 
-      workingdir="${current.build.dir}" 
-      program="nunit-console.exe" 
-      commandline="timing-tests.dll"/>
-
-  </target>
-
   <target name="gui-test" depends="build"
     description="Run tests for a build using gui runner">
 
@@ -332,22 +196,6 @@
       commandline="NUnitTests.nunit -run"/>
 
   </target>
-
-  <target name="fit-tests" depends="build"
-    description="Run Fit Acceptance tests on the build">
-
-    <echo message="*"/>
-    <echo message="* Starting ${runtime.config} ${build.config} Fit Tests"/>
-    <echo message="*"/>
-
-    <exec basedir="${current.build.dir}" 
-      workingdir="${current.build.dir}" 
-      program="runfile.exe" 
-      managed="strict"
-      commandline="NUnitFitTests.html TestResults.html ." />
-
-  </target>
-
 
 <!-- ***************************************************************** -->
 <!-- ******              Targets used internally              ******** -->

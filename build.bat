@@ -36,12 +36,9 @@ IF /I "%1" EQU "mono" set RUNTIME=mono&goto shift
 IF /I "%1" EQU "mono-3.5" set RUNTIME=mono-3.5&goto shift
 
 if /I "%1" EQU "clean" set CLEAN=clean&goto shift
-if /I "%1" EQU "clean-all" set CLEAN=clean-all&goto shift
-IF /I "%1" EQU "tools" set COMMANDS=%COMMANDS% build-tools&goto shift
 IF /I "%1" EQU "test" set COMMANDS=%COMMANDS% test&goto shift
 IF /I "%1" EQU "test45" set COMMANDS=%COMMANDS% test45&goto shift
 IF /I "%1" EQU "gui-test" set COMMANDS=%COMMANDS% gui-test&goto shift
-IF /I "%1" EQU "gen-syntax" set COMMANDS=%COMMANDS% gen-syntax&goto shift
 
 IF "%1" EQU "--" set PASSTHRU=TRUE&goto shift
 

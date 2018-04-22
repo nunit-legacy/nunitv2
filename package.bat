@@ -30,10 +30,7 @@ IF /I "%1" EQU "debug"	set CONFIG=debug&goto shift
 IF /I "%1" EQU "release" set CONFIG=release&goto shift
 
 IF /I "%1" EQU "net-3.5" set RUNTIME=net-3.5&goto shift
-IF /I "%1" EQU "net-4.0" set RUNTIME=net-4.0&goto shift
-
 IF /I "%1" EQU "mono-3.5" set RUNTIME=mono-3.5&goto shift
-IF /I "%1" EQU "mono-4.0" set RUNTIME=mono-4.0&goto shift
 
 IF /I "%1" EQU "check" set CHECK=1&goto shift
 
@@ -76,15 +73,13 @@ echo.
 echo   debug          Builds debug packages (default)
 echo   release        Builds release packages
 echo.
-echo   net-4.0        Builds package using .NET 4.0 build (future)
 echo   net-3.5        Builds package using .NET 3.5 build (default)
-echo   mono-4.0       Builds package using Mono 4.0 profile (future)
 echo   mono-3.5       Builds package using Mono 3.5 profile (default)
 echo.
 echo   src, source    Builds the source package
 echo   zip            Builds a binary package in zipped form
 echo   msi            Builds a windows installer (msi) package
-echo   all            Builds source, documentation, 3.5 and 1.1 packages
+echo   all            Builds source, documentation, zip, msi and nuget packages
 echo.
 echo   check          Causes all ICE verifications to run when building
 echo                  the msi, including those normally suppressed.

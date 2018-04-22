@@ -25,10 +25,6 @@ do
       runtime="mono-3.5"
       ;;
 
-    mono-4.0|4.0)
-      runtime="mono-4.0"
-      ;;
-
     src|zip|all)
       commands="$commands package-$arg"
       ;;
