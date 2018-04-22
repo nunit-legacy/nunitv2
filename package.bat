@@ -29,14 +29,11 @@ IF /I "%1" EQU "/help"	goto usage
 IF /I "%1" EQU "debug"	set CONFIG=debug&goto shift
 IF /I "%1" EQU "release" set CONFIG=release&goto shift
 
-IF /I "%1" EQU "net-1.0" set RUNTIME=net-1.0&goto shift
-IF /I "%1" EQU "net-1.1" set RUNTIME=net-1.1&goto shift
 IF /I "%1" EQU "net-2.0" set RUNTIME=net-2.0&goto shift
 IF /I "%1" EQU "net-3.0" set RUNTIME=net-3.0&goto shift
 IF /I "%1" EQU "net-3.5" set RUNTIME=net-3.5&goto shift
 IF /I "%1" EQU "net-4.0" set RUNTIME=net-4.0&goto shift
 
-IF /I "%1" EQU "mono-1.0" set RUNTIME=mono-1.0&goto shift
 IF /I "%1" EQU "mono-2.0" set RUNTIME=mono-2.0&goto shift
 IF /I "%1" EQU "mono-3.5" set RUNTIME=mono-3.5&goto shift
 IF /I "%1" EQU "mono-4.0" set RUNTIME=mono-4.0&goto shift
@@ -44,7 +41,6 @@ IF /I "%1" EQU "mono-4.0" set RUNTIME=mono-4.0&goto shift
 IF /I "%1" EQU "check" set CHECK=1&goto shift
 
 IF /I "%1" EQU "all"		set COMMANDS=%COMMANDS% package-all&goto shift
-IF /I "%1" EQU "docs"		set COMMANDS=%COMMANDS% package-docs&goto shift
 IF /I "%1" EQU "source"		set COMMANDS=%COMMANDS% package-src&goto shift
 IF /I "%1" EQU "src"		set COMMANDS=%COMMANDS% package-src&goto shift
 IF /I "%1" EQU "zip"		set COMMANDS=%COMMANDS% package-zip&goto shift
@@ -86,15 +82,11 @@ echo.
 echo   net-4.0        Builds package using .NET 4.0 build (future)
 echo   net-3.5        Builds package using .NET 3.5 build (default)
 echo   net-2.0        Builds package using .NET 2.0 build
-echo   net-1.1        Builds package using .NET 1.1 build
-echo   net-1.0        Builds package using .NET 1.0 build
 echo   mono-4.0       Builds package using Mono 4.0 profile (future)
 echo   mono-3.5       Builds package using Mono 3.5 profile (default)
 echo   mono-2.0       Builds package using Mono 2.0 profile
-echo   mono-1.0       Builds package using Mono 1.0 profile
 echo.
 echo   src, source    Builds the source package
-echo   docs           Builds the documentation package
 echo   zip            Builds a binary package in zipped form
 echo   msi            Builds a windows installer (msi) package
 echo   all            Builds source, documentation, 3.5 and 1.1 packages

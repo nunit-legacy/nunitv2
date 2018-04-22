@@ -276,14 +276,6 @@
 
   </target>
 
-  <target name="test-under-net-1.0">
-    <if test="${framework::exists('net-1.0')}">
-      <property name="nant.settings.currentframework" value="net-1.0"/>
-      <call target="run-test"/>
-      <property name="nant.settings.currentframework" value="${runtime.config}" />
-    </if>
-  </target>
-
   <target name="test-all-under-each"
       description="Build all runtimes and test the builds under each runtime.">
 

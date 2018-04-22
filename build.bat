@@ -30,8 +30,6 @@ IF /I "%1" EQU "debug" set CONFIG=debug&goto shift
 IF /I "%1" EQU "release" set CONFIG=release&goto shift
 
 IF /I "%1" EQU "net" set RUNTIME=net&goto shift
-IF /I "%1" EQU "net-1.0" set RUNTIME=net-1.0&goto shift
-IF /I "%1" EQU "net-1.1" set RUNTIME=net-1.1&goto shift
 IF /I "%1" EQU "net-2.0" set RUNTIME=net-2.0&goto shift
 IF /I "%1" EQU "net-3.0" set RUNTIME=net-3.0&goto shift
 IF /I "%1" EQU "net-3.5" set RUNTIME=net-3.5&goto shift
@@ -39,7 +37,6 @@ IF /I "%1" EQU "net-4.0" set RUNTIME=net-4.0&goto shift
 IF /I "%1" EQU "net-4.5" set RUNTIME=net-4.5&goto shift
 
 IF /I "%1" EQU "mono" set RUNTIME=mono&goto shift
-IF /I "%1" EQU "mono-1.0" set RUNTIME=mono-1.0&goto shift
 IF /I "%1" EQU "mono-2.0" set RUNTIME=mono-2.0&goto shift
 IF /I "%1" EQU "mono-3.5" set RUNTIME=mono-3.5&goto shift
 IF /I "%1" EQU "mono-4.0" set RUNTIME=mono-4.0&goto shift
