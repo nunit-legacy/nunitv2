@@ -26,10 +26,6 @@ do
       runtime="mono-3.5"
       ;;
 
-    mono-4.0|4.0)
-      runtime="mono-4.0"
-      ;;
-
     clean)
       clean="clean"
       ;;
@@ -56,7 +52,6 @@ do
       echo "  debug          Builds debug configuration (default)"
       echo "  release        Builds release configuration"
       echo
-      echo "  mono-4.0, 4.0  Builds using Mono 4.0 profile (future)"
       echo "  mono-3.5, 3.5  Builds using Mono 3.5 profile (default)"
       echo
       echo "  clean          Cleans the output directory before building"
@@ -73,12 +68,8 @@ do
       echo
       echo "Notes:"
       echo
-      echo "  1. The default Mono profile to be used is selected automatically"
-      echo "     by the NAnt script based on the version of Mono installed"
-      echo
-      echo "  2. When building under the 3.5 or higher profile, the 2.0"
-      echo "     runtime version is targeted for NUnit itself. Tests use"
-      echo "     the specified higher level framework."
+      echo "  1. Tne 2.0 runtime version is targeted for NUnit itself." 
+	  echo "     Tests use 3.5 or in some cases 4.5."
       echo   
       exit;
       ;;
