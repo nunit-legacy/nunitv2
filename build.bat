@@ -30,27 +30,15 @@ IF /I "%1" EQU "debug" set CONFIG=debug&goto shift
 IF /I "%1" EQU "release" set CONFIG=release&goto shift
 
 IF /I "%1" EQU "net" set RUNTIME=net&goto shift
-IF /I "%1" EQU "net-1.0" set RUNTIME=net-1.0&goto shift
-IF /I "%1" EQU "net-1.1" set RUNTIME=net-1.1&goto shift
-IF /I "%1" EQU "net-2.0" set RUNTIME=net-2.0&goto shift
-IF /I "%1" EQU "net-3.0" set RUNTIME=net-3.0&goto shift
 IF /I "%1" EQU "net-3.5" set RUNTIME=net-3.5&goto shift
-IF /I "%1" EQU "net-4.0" set RUNTIME=net-4.0&goto shift
-IF /I "%1" EQU "net-4.5" set RUNTIME=net-4.5&goto shift
 
 IF /I "%1" EQU "mono" set RUNTIME=mono&goto shift
-IF /I "%1" EQU "mono-1.0" set RUNTIME=mono-1.0&goto shift
-IF /I "%1" EQU "mono-2.0" set RUNTIME=mono-2.0&goto shift
 IF /I "%1" EQU "mono-3.5" set RUNTIME=mono-3.5&goto shift
-IF /I "%1" EQU "mono-4.0" set RUNTIME=mono-4.0&goto shift
 
 if /I "%1" EQU "clean" set CLEAN=clean&goto shift
-if /I "%1" EQU "clean-all" set CLEAN=clean-all&goto shift
-IF /I "%1" EQU "tools" set COMMANDS=%COMMANDS% build-tools&goto shift
 IF /I "%1" EQU "test" set COMMANDS=%COMMANDS% test&goto shift
 IF /I "%1" EQU "test45" set COMMANDS=%COMMANDS% test45&goto shift
 IF /I "%1" EQU "gui-test" set COMMANDS=%COMMANDS% gui-test&goto shift
-IF /I "%1" EQU "gen-syntax" set COMMANDS=%COMMANDS% gen-syntax&goto shift
 
 IF "%1" EQU "--" set PASSTHRU=TRUE&goto shift
 
@@ -83,16 +71,8 @@ echo.
 echo   debug          Builds debug configuration (default)
 echo   release        Builds release configuration
 echo.
-echo   net-4.5        Builds using .NET 4.5 framework (future)
-echo   net-4.0        Builds using .NET 4.0 framework (future)
 echo   net-3.5        Builds using .NET 3.5 framework (default)
-echo   net-2.0        Builds using .NET 2.0 framework
-echo   net-1.1        Builds using .NET 1.1 framework
-echo   net-1.0        Builds using .NET 1.0 framework
-echo   mono-4.0       Builds using Mono 4.0 profile (future)
 echo   mono-3.5       Builds using Mono 3.5 profile (default)
-echo   mono-2.0       Builds using Mono 2.0 profile
-echo   mono-1.0       Builds using Mono 1.0 profile
 echo.
 echo   net            Builds using default .NET version
 echo   mono           Builds using default Mono profile
@@ -111,14 +91,10 @@ echo   ?, /h, /help   Displays this help message
 echo.
 echo Notes:
 echo.
-echo   1. The default .NET or Mono version to be used is selected
-echo      automatically by the NAnt script from those installed.
+echo   1. The 2.0 framework is targeted for NUnit itself. Tests use
+echo      .NET 3.5 or (in some cases) 4.5.
 echo.
-echo   2. When building under a framework version of 3.5 or higher,
-echo      the 2.0 framework is targeted for NUnit itself. Tests use
-echo      the specified higher level framework.
-echo.
-echo   3. Any arguments following '--' on the command line are passed
+echo   2. Any arguments following '--' on the command line are passed
 echo      directly to the NAnt script.
 echo.
 
