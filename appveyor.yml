@@ -1,5 +1,5 @@
 build_script: 
-  msbuild nunitv2.sln /p:Configuration=Release /t:Rebuild
+  - ps: ./build.ps1 -Target AppVeyor -Configuration Release
   
-test_script:
-  - bin\Release\nunit-console NUnitTests.nunit --config=Release
+# disable built-in tests.
+test: off
