@@ -28,6 +28,7 @@ var NUNIT_CONSOLE = BIN_DIR + "nunit-console.exe";
 
 var PACKAGE_DIR = PROJECT_DIR + "packages/";
 var PACKAGE_WORK_DIR = PACKAGE_DIR + PACKAGE_BASE_NAME + "/";
+var PACKAGE_BIN_DIR = PACKAGE_WORK_DIR + "bin/";
 
 //////////////////////////////////////////////////////////////////////
 // CLEAN
@@ -108,13 +109,51 @@ Task("Net45Tests")
 //////////////////////////////////////////////////////////////////////
 
 Task("PackageSource")
-	.Description("CreateSourcePackage")
+	.Description("Create Source Package")
+	.Does(() =>
+	{
+		string zipOutput = PACKAGE_DIR + PACKAGE_BASE_NAME + "-src.zip";
+		int rc = StartProcess("git", "archive --format=zip --output=" + zipOutput + " HEAD");
+	});
+
+Task("BuildInstallImage")
+	.Description("Build the install image for zip or msi")
 	.IsDependentOn("CleanPackageWorkDir")
 	.Does(() =>
 	{
-		string outfile = PACKAGE_DIR + PACKAGE_BASE_NAME + "-src.zip";
-		int rc = StartProcess("git", "archive --format=zip --output=" + outfile + " HEAD");
+		CopyFiles(
+			new FilePath[] {
+				"license.txt",
+				"src/GuiRunner/nunit-gui/Logo.ico"
+			},
+			PACKAGE_WORK_DIR);
+
+		CopyFilesToDirectory(BIN_DIR + "*", PACKAGE_BIN_DIR);
+		CopyFilesToDirectory(BIN_DIR + "lib/*", PACKAGE_BIN_DIR + "lib/");
+		CopyFilesToDirectory(BIN_DIR + "tests/*", PACKAGE_BIN_DIR + "tests/");
+		CopyFilesToDirectory(BIN_DIR + "framework/*", PACKAGE_BIN_DIR + "framework/");
 	});
+
+Task("PackageZip")
+	.Description("Create Binary Zip Package")
+	.IsDependentOn("BuildInstallImage")
+	.Does(() =>
+	{
+		var zipOutput = PACKAGE_DIR + PACKAGE_BASE_NAME + ".zip";
+		Zip(PACKAGE_WORK_DIR, zipOutput);
+	});
+
+//////////////////////////////////////////////////////////////////////
+// HELPER METHODS
+//////////////////////////////////////////////////////////////////////
+
+void CopyFilesToDirectory(string pattern, string toDir)
+{
+	if (!DirectoryExists(toDir))
+		CreateDirectory(toDir);
+
+	CopyFiles(pattern, toDir);
+}
 
 //////////////////////////////////////////////////////////////////////
 // TASK TARGETS
@@ -125,11 +164,13 @@ Task("Test")
 	.IsDependentOn("Net45Tests");
 
 Task("Package")
-	.IsDependentOn("PackageSource");
+	.IsDependentOn("PackageSource")
+	.IsDependentOn("PackageZip");
 
 Task("AppVeyor")
 	.IsDependentOn("Build")
-	.IsDependentOn("Test");
+	.IsDependentOn("Test")
+	.IsDependentOn("Package");
 
 Task("Default")
 	.IsDependentOn("Build");
