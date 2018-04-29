@@ -64,6 +64,7 @@
     <Reference Include="System.Xml" />
     <Reference Include="NSubstitute">
       <HintPath>..\..\..\lib\3.5\NSubstitute.dll</HintPath>
+      <Private>False</Private>
     </Reference>
   </ItemGroup>
   <ItemGroup>
@@ -78,6 +79,7 @@
     <ProjectReference Include="..\UiException\nunit.uiexception.dll.csproj">
       <Project>{3E87A106-EB20-4147-84C8-95B0BB43A1D4}</Project>
       <Name>nunit.uiexception.dll</Name>
+      <Private>False</Private>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

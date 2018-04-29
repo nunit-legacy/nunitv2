@@ -63,6 +63,7 @@
     <Reference Include="System.Xml" />
     <Reference Include="NSubstitute">
       <HintPath>..\..\..\lib\3.5\NSubstitute.dll</HintPath>
+      <Private>False</Private>
     </Reference>
   </ItemGroup>
   <ItemGroup>
@@ -99,6 +100,7 @@
     <ProjectReference Include="..\editor\nunit-editor.csproj">
       <Project>{ED57DCEC-3C16-4A90-BD3C-4D5BE5AD70FB}</Project>
       <Name>nunit-editor</Name>
+      <Private>False</Private>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

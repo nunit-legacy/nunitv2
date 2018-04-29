@@ -105,6 +105,7 @@
     <ProjectReference Include="..\..\PNUnit\pnunit.framework\pnunit.framework.csproj">
       <Project>{5261ABA1-98E6-4603-A4F0-59CAC307AC68}</Project>
       <Name>pnunit.framework</Name>
+      <Private>False</Private>
     </ProjectReference>
     <ProjectReference Include="..\nonamespace-assembly\nonamespace-assembly.csproj">
       <Project>{5110F0D2-8E50-46F8-9E17-7C8EBFECCA9D}</Project>

@@ -89,6 +89,7 @@
     <ProjectReference Include="..\..\NUnitCore\core\nunit.core.dll.csproj">
       <Project>{EBD43A7F-AFCA-4281-BB53-5CDD91F966A3}</Project>
       <Name>nunit.core.dll</Name>
+      <Private>False</Private>
     </ProjectReference>
     <ProjectReference Include="..\..\NUnitFramework\framework\nunit.framework.dll.csproj">
       <Name>nunit.framework.dll</Name>
