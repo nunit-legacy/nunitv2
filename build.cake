@@ -125,8 +125,16 @@ Task("Net45Tests")
 // Package
 //////////////////////////////////////////////////////////////////////
 
+Task("CreatePackageDir")
+	.Description("Creates the package directory")
+	.Does(() =>
+	{
+		CreateDirectory(PACKAGE_DIR);
+	});
+
 Task("PackageSource")
 	.Description("Create Source Package")
+	.IsDependentOn("CreatePackageDir")
 	.Does(() =>
 	{
 		string zipOutput = PACKAGE_DIR + PACKAGE_BASE_NAME + "-src.zip";
@@ -135,6 +143,7 @@ Task("PackageSource")
 
 Task("BuildInstallImage")
 	.Description("Build the install image for zip or msi")
+	.IsDependentOn("CreatePackageDir")
 	.IsDependentOn("CleanPackageWorkDir")
 	.Does(() =>
 	{
