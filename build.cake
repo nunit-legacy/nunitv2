@@ -153,13 +153,6 @@ Task("BuildInstallImage")
 		CopyFilesToDirectory(BIN_DIR + "lib/Images/Tree/Visual Studio/*", PACKAGE_BIN_DIR + "lib/Images/Tree/Visual Studio/");
 		CopyFilesToDirectory(BIN_DIR + "tests/*", PACKAGE_BIN_DIR + "tests/");
 		CopyFilesToDirectory(BIN_DIR + "framework/*", PACKAGE_BIN_DIR + "framework/");
-
-		// Extra copies
-		CopyFileToDirectory(BIN_DIR + "log4net.dll", PACKAGE_BIN_DIR + "lib/");
-		CopyFileToDirectory(BIN_DIR + "tests/NSubstitute.dll", PACKAGE_BIN_DIR + "lib/");
-		CopyFileToDirectory(BIN_DIR + "pnunit.framework.dll", PACKAGE_BIN_DIR + "framework/");
-		CopyFileToDirectory(PROJECT_DIR + "NUnitTests.config", PACKAGE_BIN_DIR);
-		CopyFileToDirectory(PROJECT_DIR + "NUnitTests.nunit", PACKAGE_BIN_DIR);
 	});
 
 Task("PackageZip")
@@ -229,7 +222,8 @@ Task("Test")
 
 Task("Package")
 	.IsDependentOn("PackageSource")
-	.IsDependentOn("PackageZip");
+	.IsDependentOn("PackageZip")
+	.IsDependentOn("PackageMsi");
 
 Task("AppVeyor")
 	.IsDependentOn("Build")
