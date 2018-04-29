@@ -2,7 +2,7 @@
 <package xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
 	<metadata xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
 		<id>NUnit</id>
-		<version>${package.version}</version>
+		<version>$version$</version>
 		<title>NUnit</title>
 		<authors>Charlie Poole</authors>
 		<owners>Charlie Poole</owners>
@@ -17,8 +17,8 @@
 		<tags>nunit test testing tdd framework fluent assert theory plugin addin</tags>
 	</metadata>
 	<files>
-		<file src="${project.base.dir}\license.txt" />
-		<file src="${current.build.dir}\framework\nunit.framework.dll" target="lib" />
-		<file src="${current.build.dir}\framework\nunit.framework.xml" target="lib" />
+		<file src="license.txt" />
+		<file src="bin\framework\nunit.framework.dll" target="lib" />
+		<file src="bin\framework\nunit.framework.xml" target="lib" />
 	</files>
 </package>

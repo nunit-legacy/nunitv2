@@ -32,6 +32,8 @@ var LIB_DIR = PROJECT_DIR + "lib/";
 
 var INSTALL_DIR = PROJECT_DIR + "install/";
 
+var NUGET_DIR = PROJECT_DIR + "nuget/";
+
 var PACKAGE_DIR = PROJECT_DIR + "packages/";
 var PACKAGE_WORK_DIR = PACKAGE_DIR + PACKAGE_BASE_NAME + "/";
 var PACKAGE_BIN_DIR = PACKAGE_WORK_DIR + "bin/";
@@ -196,6 +198,21 @@ Task("PackageMsi")
 			});
 	});
 
+Task("PackageNuGet")
+	.Description("Create the nuget packages")
+	.IsDependentOn("BuildInstallImage")
+	.Does(() =>
+	{
+		foreach (var nuspecFile in GetFiles(NUGET_DIR + "*.nuspec"))
+			NuGetPack(nuspecFile, new NuGetPackSettings()
+			{
+				Version = PACKAGE_VERSION,
+				BasePath = PACKAGE_WORK_DIR,
+				OutputDirectory = PACKAGE_DIR,
+				NoPackageAnalysis = true
+			});
+	});
+
 //////////////////////////////////////////////////////////////////////
 // HELPER METHODS
 //////////////////////////////////////////////////////////////////////
@@ -223,7 +240,8 @@ Task("Test")
 Task("Package")
 	.IsDependentOn("PackageSource")
 	.IsDependentOn("PackageZip")
-	.IsDependentOn("PackageMsi");
+	.IsDependentOn("PackageMsi")
+	.IsDependentOn("PackageNuGet");
 
 Task("AppVeyor")
 	.IsDependentOn("Build")
