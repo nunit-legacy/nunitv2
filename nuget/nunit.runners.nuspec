@@ -2,7 +2,7 @@
 <package xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
 	<metadata xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
 		<id>NUnit.Runners</id>
-		<version>${package.version}</version>
+		<version>$version$</version>
 		<title>NUnit.Runners</title>
 		<authors>Charlie Poole</authors>
 		<owners>Charlie Poole</owners>
@@ -16,41 +16,41 @@
 		<tags>nunit test testing tdd runner</tags>
 	</metadata>
 	<files>
-		<file src="${project.base.dir}\license.txt" />
-		<file src="${current.build.dir}\agent.conf" target="tools" />
-		<file src="${current.build.dir}\agent.log.conf" target="tools" />
-		<file src="${current.build.dir}\launcher.log.conf" target="tools" />
-		<file src="${current.build.dir}\nunit.exe" target="tools" />
-		<file src="${current.build.dir}\nunit.exe.config" target="tools" />
-		<file src="${current.build.dir}\nunit.framework.dll" target="tools" />
-		<file src="${current.build.dir}\nunit-agent.exe" target="tools" />
-		<file src="${current.build.dir}\nunit-agent.exe.config" target="tools" />
-		<file src="${current.build.dir}\nunit-agent-x86.exe" target="tools" />
-		<file src="${current.build.dir}\nunit-agent-x86.exe.config" target="tools" />
-		<file src="${current.build.dir}\nunit-console.exe" target="tools" />
-		<file src="${current.build.dir}\nunit-console.exe.config" target="tools" />
-		<file src="${current.build.dir}\nunit-console-x86.exe" target="tools" />
-		<file src="${current.build.dir}\nunit-console-x86.exe.config" target="tools" />
-		<file src="${current.build.dir}\nunit-editor.exe" target="tools" />
-		<file src="${current.build.dir}\nunit-x86.exe" target="tools" />
-		<file src="${current.build.dir}\nunit-x86.exe.config" target="tools" />
-		<file src="${current.build.dir}\pnunit.framework.dll" target="tools" />
-		<file src="${current.build.dir}\pnunit.tests.dll" target="tools" />
-		<file src="${current.build.dir}\pnunit-agent.exe" target="tools" />
-		<file src="${current.build.dir}\pnunit-agent.exe.config" target="tools" />
-		<file src="${current.build.dir}\pnunit-launcher.exe" target="tools" />
-		<file src="${current.build.dir}\pnunit-launcher.exe.config" target="tools" />
-		<file src="${current.build.dir}\runpnunit.bat" target="tools" />
-		<file src="${current.build.dir}\test.conf" target="tools" />
-		<file src="${current.build.dir}\lib\log4net.dll" target="tools\lib" />
-		<file src="${current.build.dir}\lib\nunit.core.dll" target="tools\lib" />
-		<file src="${current.build.dir}\lib\nunit.core.interfaces.dll" target="tools\lib" />
-		<file src="${current.build.dir}\lib\nunit.uiexception.dll" target="tools\lib" />
-		<file src="${current.build.dir}\lib\nunit.uikit.dll" target="tools\lib" />
-		<file src="${current.build.dir}\lib\nunit.util.dll" target="tools\lib" />
-		<file src="${current.build.dir}\lib\nunit-console-runner.dll" target="tools\lib" />
-		<file src="${current.build.dir}\lib\nunit-gui-runner.dll" target="tools\lib" />
-		<file src="${current.build.dir}\lib\Images\**\*.jpg" target="tools\lib\Images" />
-		<file src="${current.build.dir}\lib\Images\**\*.png" target="tools\lib\Images" />
+		<file src="license.txt" />
+		<file src="bin\agent.conf" target="tools" />
+		<file src="bin\agent.log.conf" target="tools" />
+		<file src="bin\launcher.log.conf" target="tools" />
+		<file src="bin\nunit.exe" target="tools" />
+		<file src="bin\nunit.exe.config" target="tools" />
+		<file src="bin\nunit.framework.dll" target="tools" />
+		<file src="bin\nunit-agent.exe" target="tools" />
+		<file src="bin\nunit-agent.exe.config" target="tools" />
+		<file src="bin\nunit-agent-x86.exe" target="tools" />
+		<file src="bin\nunit-agent-x86.exe.config" target="tools" />
+		<file src="bin\nunit-console.exe" target="tools" />
+		<file src="bin\nunit-console.exe.config" target="tools" />
+		<file src="bin\nunit-console-x86.exe" target="tools" />
+		<file src="bin\nunit-console-x86.exe.config" target="tools" />
+		<file src="bin\nunit-editor.exe" target="tools" />
+		<file src="bin\nunit-x86.exe" target="tools" />
+		<file src="bin\nunit-x86.exe.config" target="tools" />
+		<file src="bin\pnunit.framework.dll" target="tools" />
+		<file src="bin\pnunit.tests.dll" target="tools" />
+		<file src="bin\pnunit-agent.exe" target="tools" />
+		<file src="bin\pnunit-agent.exe.config" target="tools" />
+		<file src="bin\pnunit-launcher.exe" target="tools" />
+		<file src="bin\pnunit-launcher.exe.config" target="tools" />
+		<file src="bin\runpnunit.bat" target="tools" />
+		<file src="bin\test.conf" target="tools" />
+		<file src="bin\lib\log4net.dll" target="tools\lib" />
+		<file src="bin\lib\nunit.core.dll" target="tools\lib" />
+		<file src="bin\lib\nunit.core.interfaces.dll" target="tools\lib" />
+		<file src="bin\lib\nunit.uiexception.dll" target="tools\lib" />
+		<file src="bin\lib\nunit.uikit.dll" target="tools\lib" />
+		<file src="bin\lib\nunit.util.dll" target="tools\lib" />
+		<file src="bin\lib\nunit-console-runner.dll" target="tools\lib" />
+		<file src="bin\lib\nunit-gui-runner.dll" target="tools\lib" />
+		<file src="bin\lib\Images\**\*.jpg" target="tools\lib\Images" />
+		<file src="bin\lib\Images\**\*.png" target="tools\lib\Images" />
 	</files>
 </package>

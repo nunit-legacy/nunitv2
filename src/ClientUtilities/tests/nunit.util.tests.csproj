@@ -129,6 +129,7 @@
     <ProjectReference Include="..\util\nunit.util.dll.csproj">
       <Name>nunit.util.dll</Name>
       <Project>{61CE9CE5-943E-44D4-A381-814DC1406767}</Project>
+      <Private>False</Private>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

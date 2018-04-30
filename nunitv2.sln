@@ -6,9 +6,13 @@ MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{A65042E1-D8BC-48DD-8DE1-F0991F07EA77}"
 	ProjectSection(SolutionItems) = preProject
 		appveyor.yml = appveyor.yml
+		build.cake = build.cake
+		build.ps1 = build.ps1
 		license.rtf = license.rtf
 		license.txt = license.txt
+		scripts\nunit.package.targets = scripts\nunit.package.targets
 		src\nunit.snk = src\nunit.snk
+		NUnitTests.nunit = NUnitTests.nunit
 		NUnitTests.v1.nunit = NUnitTests.v1.nunit
 		NUnitTests.v2.nunit = NUnitTests.v2.nunit
 		OLD_README.md = OLD_README.md
@@ -113,6 +117,32 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "nunit.framework.tests.net45", "src\NUnitFramework\tests-net45\nunit.framework.tests.net45.csproj", "{4E9322CE-CED7-42B4-B5DA-7837D9224EE6}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "compatibility-tests", "src\tests\compatibility-tests\compatibility-tests.csproj", "{495B8CD0-0B0A-4D15-BF8B-4FAFEB3D72C4}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "nunit-agent-x86.exe", "src\NUnitTestServer\nunit-agent-exe\nunit-agent-x86.exe.csproj", "{939D2968-3333-4BFC-A173-BE192CB2C5CD}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "nunit-console-x86.exe", "src\ConsoleRunner\nunit-console-exe\nunit-console-x86.exe.csproj", "{EF03B429-02FE-4836-B63B-7B1262F6139B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "nunit-gui-x86.exe", "src\GuiRunner\nunit-gui-exe\nunit-gui-x86.exe.csproj", "{AF2B1BCC-FAFF-465A-A5E7-D93D2761871C}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "nuget", "nuget", "{62A4E026-5E59-4E47-BA1E-53EFE6FA95EC}"
+	ProjectSection(SolutionItems) = preProject
+		nuget\nunit.editor.nuspec = nuget\nunit.editor.nuspec
+		nuget\nunit.mocks.nuspec = nuget\nunit.mocks.nuspec
+		nuget\nunit.nuspec = nuget\nunit.nuspec
+		nuget\nunit.runners.nuspec = nuget\nunit.runners.nuspec
+		nuget\pnunit.nuspec = nuget\pnunit.nuspec
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "install", "install", "{DF3BF58E-6947-4F52-80D4-2F7B749C5372}"
+	ProjectSection(SolutionItems) = preProject
+		install\base.wxs = install\base.wxs
+		install\net45-tests.wxs = install\net45-tests.wxs
+		install\NSubstitute.wxs = install\NSubstitute.wxs
+		install\nunit-gui.wxs = install\nunit-gui.wxs
+		install\NUnit.wxs = install\NUnit.wxs
+		install\pnunit.wxs = install\pnunit.wxs
+		install\tests.wxs = install\tests.wxs
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -256,6 +286,18 @@ Global
 		{495B8CD0-0B0A-4D15-BF8B-4FAFEB3D72C4}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{495B8CD0-0B0A-4D15-BF8B-4FAFEB3D72C4}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{495B8CD0-0B0A-4D15-BF8B-4FAFEB3D72C4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{939D2968-3333-4BFC-A173-BE192CB2C5CD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{939D2968-3333-4BFC-A173-BE192CB2C5CD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{939D2968-3333-4BFC-A173-BE192CB2C5CD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{939D2968-3333-4BFC-A173-BE192CB2C5CD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EF03B429-02FE-4836-B63B-7B1262F6139B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EF03B429-02FE-4836-B63B-7B1262F6139B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EF03B429-02FE-4836-B63B-7B1262F6139B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EF03B429-02FE-4836-B63B-7B1262F6139B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AF2B1BCC-FAFF-465A-A5E7-D93D2761871C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AF2B1BCC-FAFF-465A-A5E7-D93D2761871C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AF2B1BCC-FAFF-465A-A5E7-D93D2761871C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AF2B1BCC-FAFF-465A-A5E7-D93D2761871C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -296,6 +338,11 @@ Global
 		{74CCEAEA-CDBF-4FE0-BF0D-914C3C44ECE9} = {6142B985-EA14-4DE0-884F-E62D89949E1D}
 		{4E9322CE-CED7-42B4-B5DA-7837D9224EE6} = {A2FF9F1B-1854-479A-859C-6ECEBF045E4C}
 		{495B8CD0-0B0A-4D15-BF8B-4FAFEB3D72C4} = {6142B985-EA14-4DE0-884F-E62D89949E1D}
+		{939D2968-3333-4BFC-A173-BE192CB2C5CD} = {D029F8FD-84E3-4AD3-8F1B-CCA0C856E659}
+		{EF03B429-02FE-4836-B63B-7B1262F6139B} = {1DBAF726-8009-41CC-B82A-4EFE94CBEEFC}
+		{AF2B1BCC-FAFF-465A-A5E7-D93D2761871C} = {77D10207-CB02-4C3A-8734-5A5173E3C506}
+		{62A4E026-5E59-4E47-BA1E-53EFE6FA95EC} = {A65042E1-D8BC-48DD-8DE1-F0991F07EA77}
+		{DF3BF58E-6947-4F52-80D4-2F7B749C5372} = {A65042E1-D8BC-48DD-8DE1-F0991F07EA77}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {3AAEFC1E-03C9-42E1-8151-90AFD88F7CAB}

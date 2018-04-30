@@ -130,6 +130,7 @@
     </ProjectReference>
     <Reference Include="NSubstitute">
       <HintPath>..\..\..\lib\3.5\NSubstitute.dll</HintPath>
+      <Private>False</Private>
     </Reference>
   </ItemGroup>
   <ItemGroup>

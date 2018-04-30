@@ -1,5 +1,19 @@
 build_script: 
-  msbuild nunitv2.sln /p:Configuration=Release /t:Rebuild
+  - ps: ./build.ps1 -Target AppVeyor -Configuration Release
   
-test_script:
-  - bin\Release\nunit-console NUnitTests.nunit --config=Release
+# disable built-in tests.
+test: off
+
+artifacts:
+- path: packages/*.nupkg
+- path: packages/*.msi
+- path: packages/*.zip
+
+deploy:
+  - provider: NuGet
+    server: https://www.myget.org/F/nunit/api/v2
+    api_key:
+      secure: wtAvJDVl2tfwiVcyLExFHLvZVfUWiQRHsfdHBFCNEATeCHo1Nd8JP642PfY8xhji
+    skip_symbols: true
+    on:
+      branch: master
