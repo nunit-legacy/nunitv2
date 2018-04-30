@@ -14,13 +14,14 @@ var configuration = Argument("configuration", "Release");
 var version = "2.6.6";
 var modifier = ""; // for example "-beta2"
 
+var dbgSuffix = configuration == "Debug" ? "-dbg" : "";
+
+// Package version may be changed in Setup on AppVeyor
+var packageVersion = version + modifier + dbgSuffix;
+
 //////////////////////////////////////////////////////////////////////
 // DEFINE RUN CONSTANTS
 //////////////////////////////////////////////////////////////////////
-
-var DBG_SUFFIX = configuration == "Debug" ? "-dbg" : "";
-var PACKAGE_VERSION = version + modifier + DBG_SUFFIX;
-var PACKAGE_BASE_NAME = "NUnit-" + PACKAGE_VERSION;
 
 var PROJECT_DIR = Context.Environment.WorkingDirectory.FullPath + "/";
 var SOLUTION_FILE = PROJECT_DIR + "nunitv2.sln";
@@ -35,9 +36,63 @@ var INSTALL_DIR = PROJECT_DIR + "install/";
 var NUGET_DIR = PROJECT_DIR + "nuget/";
 
 var PACKAGE_DIR = PROJECT_DIR + "packages/";
-var PACKAGE_WORK_DIR = PACKAGE_DIR + PACKAGE_BASE_NAME + "/";
-var PACKAGE_BIN_DIR = PACKAGE_WORK_DIR + "bin/";
-var PACKAGE_LIB_DIR = PACKAGE_WORK_DIR + "lib/";
+
+//////////////////////////////////////////////////////////////////////
+// SETUP
+//////////////////////////////////////////////////////////////////////
+
+// These are properties because SetUp can change packageVersion
+
+string PackageBaseName
+{
+	get { return "NUnit-" + packageVersion; }
+}
+
+string PackageWorkDir
+{
+	get { return PACKAGE_DIR + PackageBaseName + "/"; }
+}
+
+//////////////////////////////////////////////////////////////////////
+// SETUP
+//////////////////////////////////////////////////////////////////////
+
+Setup(context =>
+{
+    if (BuildSystem.IsRunningOnAppVeyor)
+    {
+        var buildNumber = AppVeyor.Environment.Build.Number.ToString("00000");
+        var branch = AppVeyor.Environment.Repository.Branch;
+        var isPullRequest = AppVeyor.Environment.PullRequest.IsPullRequest;
+
+        if (branch == "master" && !isPullRequest)
+        {
+            packageVersion = version + "-dev-" + buildNumber + dbgSuffix;
+        }
+        else
+        {
+            var suffix = "-ci-" + buildNumber + dbgSuffix;
+
+            if (isPullRequest)
+                suffix += "-pr-" + AppVeyor.Environment.PullRequest.Number;
+            else if (AppVeyor.Environment.Repository.Branch.StartsWith("release", StringComparison.OrdinalIgnoreCase))
+                suffix += "-pre-" + buildNumber;
+            else
+                suffix += "-" + branch;
+
+            // Nuget limits "special version part" to 20 chars. Add one for the hyphen.
+            if (suffix.Length > 21)
+                suffix = suffix.Substring(0, 21);
+
+            packageVersion = version + suffix;
+        }
+
+        AppVeyor.UpdateBuildVersion(packageVersion);
+    }
+
+    // Executed BEFORE the first task.
+    Information("Building {0} version {1} of NUnit.", configuration, packageVersion);
+});
 
 //////////////////////////////////////////////////////////////////////
 // CLEAN
@@ -54,7 +109,7 @@ Task("CleanPackageWorkDir")
 	.Description("Deletes all files in the package work directory")
 	.Does(() =>
 	{
-		CleanDirectory(PACKAGE_WORK_DIR);
+		CleanDirectory(PackageWorkDir);
 	});
 
 //////////////////////////////////////////////////////////////////////
@@ -137,7 +192,7 @@ Task("PackageSource")
 	.IsDependentOn("CreatePackageDir")
 	.Does(() =>
 	{
-		string zipOutput = PACKAGE_DIR + PACKAGE_BASE_NAME + "-src.zip";
+		string zipOutput = PACKAGE_DIR + PackageBaseName + "-src.zip";
 		int rc = StartProcess("git", "archive --format=zip --output=" + zipOutput + " HEAD");
 	});
 
@@ -152,18 +207,20 @@ Task("BuildInstallImage")
 				"license.txt",
 				"src/GuiRunner/nunit-gui/Logo.ico"
 			},
-			PACKAGE_WORK_DIR);
+			PackageWorkDir);
+		
+		var binDir = PackageWorkDir + "bin/";
 
 		// TODO: Create a method to handle wildcard directories
-		CopyFilesToDirectory(BIN_DIR + "*", PACKAGE_BIN_DIR);
-		CopyFilesToDirectory(BIN_DIR + "lib/*", PACKAGE_BIN_DIR + "lib/");
-		CopyFilesToDirectory(BIN_DIR + "lib/Images/*", PACKAGE_BIN_DIR + "lib/Images/");
-		CopyFilesToDirectory(BIN_DIR + "lib/Images/Tree/Circles/*", PACKAGE_BIN_DIR + "lib/Images/Tree/Circles/");
-		CopyFilesToDirectory(BIN_DIR + "lib/Images/Tree/Classic/*", PACKAGE_BIN_DIR + "lib/Images/Tree/Classic/");
-		CopyFilesToDirectory(BIN_DIR + "lib/Images/Tree/Default/*", PACKAGE_BIN_DIR + "lib/Images/Tree/Default/");
-		CopyFilesToDirectory(BIN_DIR + "lib/Images/Tree/Visual Studio/*", PACKAGE_BIN_DIR + "lib/Images/Tree/Visual Studio/");
-		CopyFilesToDirectory(BIN_DIR + "tests/*", PACKAGE_BIN_DIR + "tests/");
-		CopyFilesToDirectory(BIN_DIR + "framework/*", PACKAGE_BIN_DIR + "framework/");
+		CopyFilesToDirectory(BIN_DIR + "*", binDir);
+		CopyFilesToDirectory(BIN_DIR + "lib/*", binDir + "lib/");
+		CopyFilesToDirectory(BIN_DIR + "lib/Images/*", binDir + "lib/Images/");
+		CopyFilesToDirectory(BIN_DIR + "lib/Images/Tree/Circles/*", binDir + "lib/Images/Tree/Circles/");
+		CopyFilesToDirectory(BIN_DIR + "lib/Images/Tree/Classic/*", binDir + "lib/Images/Tree/Classic/");
+		CopyFilesToDirectory(BIN_DIR + "lib/Images/Tree/Default/*", binDir + "lib/Images/Tree/Default/");
+		CopyFilesToDirectory(BIN_DIR + "lib/Images/Tree/Visual Studio/*", binDir + "lib/Images/Tree/Visual Studio/");
+		CopyFilesToDirectory(BIN_DIR + "tests/*", binDir + "tests/");
+		CopyFilesToDirectory(BIN_DIR + "framework/*", binDir + "framework/");
 	});
 
 Task("PackageZip")
@@ -171,8 +228,8 @@ Task("PackageZip")
 	.IsDependentOn("BuildInstallImage")
 	.Does(() =>
 	{
-		var zipOutput = PACKAGE_DIR + PACKAGE_BASE_NAME + ".zip";
-		Zip(PACKAGE_WORK_DIR, zipOutput);
+		var zipOutput = PACKAGE_DIR + PackageBaseName + ".zip";
+		Zip(PackageWorkDir, zipOutput);
 	});
 
 Task("PackageMsi")
@@ -188,22 +245,22 @@ Task("PackageMsi")
 				Defines = new Dictionary<string, string>()
 				{
 					{"ProductVersion", version},
-					{"NominalVersion", PACKAGE_VERSION},
+					{"NominalVersion", packageVersion},
 					{"TargetRuntime", "net-3.5"},
-					{"InstallImage", PACKAGE_WORK_DIR}
+					{"InstallImage", PackageWorkDir}
 				},
 
-				OutputDirectory = PACKAGE_WORK_DIR
+				OutputDirectory = PackageWorkDir
 			});
 
 		WiXLight(
-			PACKAGE_WORK_DIR + "*.wixobj", 
+			PackageWorkDir + "*.wixobj", 
 
 			new LightSettings()
 			{
 				Extensions = new [] { "WixUiExtension" },
 
-				OutputFile = PACKAGE_DIR + PACKAGE_BASE_NAME + ".msi"
+				OutputFile = PACKAGE_DIR + PackageBaseName + ".msi"
 			});
 	});
 
@@ -215,8 +272,8 @@ Task("PackageNuGet")
 		foreach (var nuspecFile in GetFiles(NUGET_DIR + "*.nuspec"))
 			NuGetPack(nuspecFile, new NuGetPackSettings()
 			{
-				Version = PACKAGE_VERSION,
-				BasePath = PACKAGE_WORK_DIR,
+				Version = packageVersion,
+				BasePath = PackageWorkDir,
 				OutputDirectory = PACKAGE_DIR,
 				NoPackageAnalysis = true
 			});
