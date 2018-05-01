@@ -191,6 +191,15 @@ Task("Net45Tests")
 // Package
 //////////////////////////////////////////////////////////////////////
 
+// NOTE:
+//
+// The Package targets do NOT depend on the Build! It is necessary to ensure
+// that the build is updated before running any of these targets.
+//
+// Furthermore, it is not sufficient to just run the build in the IDE. Rather,
+// it must be done using this script, which copies additional files to the
+// directories where they need to be in order for packaging to work.
+
 Task("CreatePackageDir")
 	.Description("Creates the package directory")
 	.Does(() =>
