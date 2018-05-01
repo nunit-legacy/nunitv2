@@ -5,9 +5,9 @@ build_script:
 test: off
 
 artifacts:
-- path: packages/*.nupkg
-- path: packages/*.msi
-- path: packages/*.zip
+- path: package/*.nupkg
+- path: package/*.msi
+- path: package/*.zip
 
 deploy:
   - provider: NuGet
