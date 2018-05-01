@@ -6,13 +6,14 @@
 		<title>NUnit.Runners</title>
 		<authors>Charlie Poole</authors>
 		<owners>Charlie Poole</owners>
-		<licenseUrl>http://nunit.org/nuget/license.html</licenseUrl>
-		<projectUrl>http://nunit.org</projectUrl>
-		<iconUrl>http://nunit.org/nuget/nunit_32x32.png</iconUrl>
-		<requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <licenseUrl>http://nunitsoftware.com/nunitv2/nuget/license.html</licenseUrl>
+    <projectUrl>http://nunitsoftware.com/nunitv2</projectUrl>
+    <iconUrl>http://nunitsoftware.com/nunitv2/nuget/nunit_32x32.png</iconUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
 		<summary>NUnit is a unit-testing framework for all .Net languages with a strong TDD focus.</summary>
 		<description>NUnit features a fluent assert syntax, parameterized, generic and theory tests and is user-extensible. A number of runners, both from the NUnit project and by third parties, are able to execute NUnit tests.&#10;&#13;Version 2.6 is the seventh major release of this well-known and well-tested programming tool.&#10;&#13;This package includes the NUnit console, gui and pnunit runners and is compatible with all NUnit framework versions 2.0 through 2.6. The NUnit project editor is also included.</description>
-		<language>en-US</language>
+    <releaseNotes>Beginning with NUnit 2.6.5, NUnit V2 packages are published by the NUnit Legacy project.</releaseNotes>
+    <language>en-US</language>
 		<tags>nunit test testing tdd runner</tags>
 	</metadata>
 	<files>
