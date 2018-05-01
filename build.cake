@@ -29,13 +29,11 @@ var SOLUTION_FILE = PROJECT_DIR + "nunitv2.sln";
 var BIN_DIR = PROJECT_DIR + "bin/" + configuration + "/";
 var NUNIT_CONSOLE = BIN_DIR + "nunit-console.exe";
 
-var LIB_DIR = PROJECT_DIR + "lib/";
-
 var INSTALL_DIR = PROJECT_DIR + "install/";
 
 var NUGET_DIR = PROJECT_DIR + "nuget/";
 
-var PACKAGE_DIR = PROJECT_DIR + "packages/";
+var PACKAGE_DIR = PROJECT_DIR + "package/";
 
 //////////////////////////////////////////////////////////////////////
 // SETUP
@@ -113,23 +111,36 @@ Task("CleanPackageWorkDir")
 	});
 
 //////////////////////////////////////////////////////////////////////
+// NUGET RESTORE
+//////////////////////////////////////////////////////////////////////
+
+Task("NuGetRestore")
+    .Description("Restores NuGet Packages")
+    .Does(() =>
+    {
+        NuGetRestore(SOLUTION_FILE);
+    });
+
+//////////////////////////////////////////////////////////////////////
 // Build
 //////////////////////////////////////////////////////////////////////
 
 Task("Build")
 	.Description("Builds the Solution")
+	.IsDependentOn("NuGetRestore")
 	.Does(() =>
 	{
-		// Copy down library files 
-		// TODO: Replace with packages
-		CopyFilesToDirectory(LIB_DIR + "**/*", BIN_DIR + "lib/");
-
 		MSBuild(SOLUTION_FILE, new MSBuildSettings()
 			.SetConfiguration(configuration)
 			.SetVerbosity(Verbosity.Minimal));
 
-		// Extra copy of pnunit.framework
+		// Extra copies of some files are needed for backward compatibility
+		// and to avoid changing the structure of the MSI directories.
+		CopyFileToDirectory(BIN_DIR + "log4net.dll", BIN_DIR + "lib/");
+		CopyFileToDirectory(BIN_DIR + "tests/NSubstitute.dll", BIN_DIR + "lib/");
 		CopyFileToDirectory(BIN_DIR + "pnunit.framework.dll", BIN_DIR + "framework/");
+
+		// Copy in NUnit project files
 		CopyFile(PROJECT_DIR + "NUnitTests.v2.nunit", BIN_DIR + "NUnitTests.nunit");
 		CopyFile(PROJECT_DIR + "NUnitTests.config", BIN_DIR + "NUnitTests.config");
 	});
@@ -179,6 +190,15 @@ Task("Net45Tests")
 //////////////////////////////////////////////////////////////////////
 // Package
 //////////////////////////////////////////////////////////////////////
+
+// NOTE:
+//
+// The Package targets do NOT depend on the Build! It is necessary to ensure
+// that the build is updated before running any of these targets.
+//
+// Furthermore, it is not sufficient to just run the build in the IDE. Rather,
+// it must be done using this script, which copies additional files to the
+// directories where they need to be in order for packaging to work.
 
 Task("CreatePackageDir")
 	.Description("Creates the package directory")
