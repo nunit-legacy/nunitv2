@@ -35,7 +35,7 @@ var INSTALL_DIR = PROJECT_DIR + "install/";
 
 var NUGET_DIR = PROJECT_DIR + "nuget/";
 
-var PACKAGE_DIR = PROJECT_DIR + "packages/";
+var PACKAGE_DIR = PROJECT_DIR + "package/";
 
 //////////////////////////////////////////////////////////////////////
 // SETUP
