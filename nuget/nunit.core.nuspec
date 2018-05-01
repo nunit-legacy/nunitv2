@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+<package xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+	<metadata xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
+		<id>NUnit.Core</id>
+		<version>$version$</version>
+		<title>NUnit.Core</title>
+		<authors>Charlie Poole</authors>
+		<owners>Charlie Poole</owners>
+    <licenseUrl>http://nunitsoftware.com/nunitv2/nuget/license.html</licenseUrl>
+    <projectUrl>http://nunitsoftware.com/nunitv2</projectUrl>
+    <iconUrl>http://nunitsoftware.com/nunitv2/nuget/nunit_32x32.png</iconUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+		<summary>Packages the nunit.core and nunit.core.interfaces assemblies.</summary>
+		<description>The Nunit.Core package is aimed at third-party test runners that will normally include the assemblies directly in their own packages. It allows loading and running tests at a fairly low level.</description>
+    <releaseNotes>This is the first release of the core assemblies as a separate package.</releaseNotes>
+    <language>en-US</language>
+		<tags>nunit test testing tdd runner</tags>
+	</metadata>
+	<files>
+		<file src="license.txt" />
+		<file src="bin\lib\nunit.core.dll" target="lib" />
+		<file src="bin\lib\nunit.core.interfaces.dll" target="lib" />
+	</files>
+</package>
