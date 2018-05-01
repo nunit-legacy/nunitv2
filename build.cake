@@ -113,11 +113,23 @@ Task("CleanPackageWorkDir")
 	});
 
 //////////////////////////////////////////////////////////////////////
+// NUGET RESTORE
+//////////////////////////////////////////////////////////////////////
+
+Task("NuGetRestore")
+    .Description("Restores NuGet Packages")
+    .Does(() =>
+    {
+        NuGetRestore(SOLUTION_FILE);
+    });
+
+//////////////////////////////////////////////////////////////////////
 // Build
 //////////////////////////////////////////////////////////////////////
 
 Task("Build")
 	.Description("Builds the Solution")
+	.IsDependentOn("NuGetRestore")
 	.Does(() =>
 	{
 		// Copy down library files 
@@ -127,6 +139,9 @@ Task("Build")
 		MSBuild(SOLUTION_FILE, new MSBuildSettings()
 			.SetConfiguration(configuration)
 			.SetVerbosity(Verbosity.Minimal));
+
+		// Extra copy of log4net for backward compatibility
+		CopyFileToDirectory(BIN_DIR + "log4net.dll", BIN_DIR + "lib/");
 
 		// Extra copy of pnunit.framework
 		CopyFileToDirectory(BIN_DIR + "pnunit.framework.dll", BIN_DIR + "framework/");
