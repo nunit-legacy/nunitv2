@@ -141,7 +141,6 @@
   <ItemGroup>
     <None Include="App.config" />
     <None Include="packages.config" />
-    <None Include="pnunit-launcher.build" />
     <None Include="Ship.config" />
   </ItemGroup>
   <ItemGroup>

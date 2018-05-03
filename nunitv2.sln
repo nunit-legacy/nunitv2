@@ -13,7 +13,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		scripts\nunit.package.targets = scripts\nunit.package.targets
 		src\nunit.snk = src\nunit.snk
 		NUnitTests.nunit = NUnitTests.nunit
-		NUnitTests.v1.nunit = NUnitTests.v1.nunit
 		NUnitTests.v2.nunit = NUnitTests.v2.nunit
 		OLD_README.md = OLD_README.md
 		README.md = README.md
@@ -126,6 +125,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "nunit-gui-x86.exe", "src\Gu
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "nuget", "nuget", "{62A4E026-5E59-4E47-BA1E-53EFE6FA95EC}"
 	ProjectSection(SolutionItems) = preProject
+		nuget\nunit.core.nuspec = nuget\nunit.core.nuspec
 		nuget\nunit.editor.nuspec = nuget\nunit.editor.nuspec
 		nuget\nunit.mocks.nuspec = nuget\nunit.mocks.nuspec
 		nuget\nunit.nuspec = nuget\nunit.nuspec

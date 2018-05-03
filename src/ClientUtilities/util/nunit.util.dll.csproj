@@ -190,7 +190,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="nunit.snk" />
-    <None Include="nunit.util.build" />
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include="Microsoft.Net.Client.3.5">

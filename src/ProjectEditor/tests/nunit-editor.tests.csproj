@@ -108,7 +108,6 @@
     <EmbeddedResource Include="resources\NUnitTests.nunit" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="nunit-editor.tests.build" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>

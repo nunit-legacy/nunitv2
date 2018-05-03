@@ -148,7 +148,6 @@
     <Compile Include="LoggingThreshold.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="nunit.core.interfaces.build" />
     <None Include="nunit.snk" />
   </ItemGroup>
   <ItemGroup>

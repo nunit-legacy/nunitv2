@@ -139,7 +139,6 @@
   <ItemGroup>
     <None Include="App.config" />
     <None Include="packages.config" />
-    <None Include="pnunit-agent.build" />
     <None Include="Ship.config" />
   </ItemGroup>
   <ItemGroup>

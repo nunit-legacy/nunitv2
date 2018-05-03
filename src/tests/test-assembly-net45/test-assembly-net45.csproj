@@ -46,11 +46,6 @@
     <Compile Include="AsyncRealFixture.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="test-assembly-net45.build">
-      <SubType>Designer</SubType>
-    </None>
-  </ItemGroup>
-  <ItemGroup>
     <ProjectReference Include="..\..\NUnitFramework\framework\nunit.framework.dll.csproj">
       <Project>{83DD7E12-A705-4DBA-9D71-09C8973D9382}</Project>
       <Name>nunit.framework.dll</Name>

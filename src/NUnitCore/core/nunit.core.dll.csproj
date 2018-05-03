@@ -231,9 +231,6 @@
     <Compile Include="TypeHelper.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="nunit.core.build">
-      <SubType>Designer</SubType>
-    </None>
     <None Include="nunit.snk" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />

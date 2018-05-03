@@ -125,7 +125,6 @@
     <EmbeddedResource Include="data\TextCode.txt" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="nunit.uiexception.tests.build" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
