@@ -135,7 +135,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="nunit.snk" />
-    <None Include="nunit.uiexception.build" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="data\" />

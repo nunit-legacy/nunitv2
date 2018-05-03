@@ -178,9 +178,6 @@
     <Compile Include="UnhandledExceptions.cs" />
     <Compile Include="DirectoryChangeFixture.cs" />
   </ItemGroup>
-  <ItemGroup>
-    <None Include="test-assembly.build" />
-  </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PreBuildEvent>

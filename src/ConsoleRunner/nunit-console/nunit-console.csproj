@@ -126,7 +126,6 @@
     <Compile Include="TestNameParser.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="nunit-console.build" />
     <None Include="nunit.snk" />
   </ItemGroup>
   <ItemGroup>

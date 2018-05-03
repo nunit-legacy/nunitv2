@@ -46,11 +46,6 @@
     <Compile Include="NUnitTestCaseBuilderTests.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="nunit.core.tests.net45.build">
-      <SubType>Designer</SubType>
-    </None>
-  </ItemGroup>
-  <ItemGroup>
     <Folder Include="Properties\" />
   </ItemGroup>
   <ItemGroup>

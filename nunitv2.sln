@@ -13,7 +13,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		scripts\nunit.package.targets = scripts\nunit.package.targets
 		src\nunit.snk = src\nunit.snk
 		NUnitTests.nunit = NUnitTests.nunit
-		NUnitTests.v1.nunit = NUnitTests.v1.nunit
 		NUnitTests.v2.nunit = NUnitTests.v2.nunit
 		OLD_README.md = OLD_README.md
 		README.md = README.md

@@ -118,7 +118,6 @@
     <None Include="launcher.log.conf">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="pnunit.tests.build" />
     <None Include="runpnunit.bat">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>

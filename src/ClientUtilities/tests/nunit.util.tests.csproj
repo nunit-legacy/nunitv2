@@ -203,9 +203,6 @@
     <Compile Include="XmlResultWriterTest.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="nunit.util.tests.build" />
-  </ItemGroup>
-  <ItemGroup>
     <EmbeddedResource Include="resources\DisabledProject.sln" />
   </ItemGroup>
   <ItemGroup>
