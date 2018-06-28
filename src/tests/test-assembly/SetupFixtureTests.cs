@@ -46,7 +46,7 @@ namespace NUnit.TestUtilities
             foreach (string expected in expectedEvents)
             {
                 string actual = _events.Count > 0 ? _events.Dequeue() as string : null;
-				Assert.AreEqual( expected, actual );
+                Assert.AreEqual( expected, actual );
             }
         }
 
@@ -456,31 +456,31 @@ namespace NUnit.TestData.SetupFixture
         }
     }
 
-	namespace Namespace5
-	{
-		[SetUpFixture]
-		public class CurrentDirectoryRecordingSetUpFixture
-		{
-			[SetUp]
-			public void DoSetUp()
-			{
-				TestUtilities.SimpleEventRecorder.RegisterEvent("SetUp:" + Environment.CurrentDirectory);
-			}
+    namespace Namespace5
+    {
+        [SetUpFixture]
+        public class CurrentDirectoryRecordingSetUpFixture
+        {
+            [SetUp]
+            public void DoSetUp()
+            {
+                TestUtilities.SimpleEventRecorder.RegisterEvent("SetUp:" + Environment.CurrentDirectory);
+            }
 
-			[TearDown]
-			public void DoTearDown()
-			{
-				TestUtilities.SimpleEventRecorder.RegisterEvent("TearDown:" + Environment.CurrentDirectory);
-			}
-		}
+            [TearDown]
+            public void DoTearDown()
+            {
+                TestUtilities.SimpleEventRecorder.RegisterEvent("TearDown:" + Environment.CurrentDirectory);
+            }
+        }
 
-		[TestFixture]
-		public class SomeFixture
-		{
-			[Test]
-			public void SomeMethod() { }				
-		}
-	}
+        [TestFixture]
+        public class SomeFixture
+        {
+            [Test]
+            public void SomeMethod() { }				
+        }
+    }
 
     namespace Namespace5
     {

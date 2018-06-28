@@ -61,43 +61,43 @@ namespace NUnit.TestData.FixtureSetUpTearDown
     }
 
     [TestFixture, Explicit]
-	public class ExplicitSetUpAndTearDownFixture
-	{
-		public int setUpCount = 0;
-		public int tearDownCount = 0;
+    public class ExplicitSetUpAndTearDownFixture
+    {
+        public int setUpCount = 0;
+        public int tearDownCount = 0;
 
-		[TestFixtureSetUp]
-		public virtual void Init()
-		{
-			setUpCount++;
-		}
+        [TestFixtureSetUp]
+        public virtual void Init()
+        {
+            setUpCount++;
+        }
 
-		[TestFixtureTearDown]
-		public virtual void Destroy()
-		{
-			tearDownCount++;
-		}
+        [TestFixtureTearDown]
+        public virtual void Destroy()
+        {
+            tearDownCount++;
+        }
 
-		[Test]
-		public void Success(){}
+        [Test]
+        public void Success(){}
 
-		[Test]
-		public void EvenMoreSuccess(){}
-	}
+        [Test]
+        public void EvenMoreSuccess(){}
+    }
 
-	[TestFixture]
-	public class InheritSetUpAndTearDown : SetUpAndTearDownFixture
-	{
-		[Test]
-		public void AnotherTest(){}
+    [TestFixture]
+    public class InheritSetUpAndTearDown : SetUpAndTearDownFixture
+    {
+        [Test]
+        public void AnotherTest(){}
 
-		[Test]
-		public void YetAnotherTest(){}
-	}
+        [Test]
+        public void YetAnotherTest(){}
+    }
 
-	[TestFixture]
-	public class DefineInheritSetUpAndTearDown : SetUpAndTearDownFixture
-	{
+    [TestFixture]
+    public class DefineInheritSetUpAndTearDown : SetUpAndTearDownFixture
+    {
         public int derivedSetUpCount;
         public int derivedTearDownCount;
 
@@ -216,142 +216,142 @@ namespace NUnit.TestData.FixtureSetUpTearDown
 #endif
     
     [TestFixture]
-	public class MisbehavingFixture 
-	{
-		public bool blowUpInSetUp = false;
-		public bool blowUpInTearDown = false;
+    public class MisbehavingFixture 
+    {
+        public bool blowUpInSetUp = false;
+        public bool blowUpInTearDown = false;
 
-		public int setUpCount = 0;
-		public int tearDownCount = 0;
+        public int setUpCount = 0;
+        public int tearDownCount = 0;
 
-		public void Reinitialize()
-		{
-			setUpCount = 0;
-			tearDownCount = 0;
+        public void Reinitialize()
+        {
+            setUpCount = 0;
+            tearDownCount = 0;
 
-			blowUpInSetUp = false;
-			blowUpInTearDown = false;
-		}
+            blowUpInSetUp = false;
+            blowUpInTearDown = false;
+        }
 
-		[TestFixtureSetUp]
-		public void BlowUpInSetUp() 
-		{
-			setUpCount++;
-			if (blowUpInSetUp)
-				throw new Exception("This was thrown from fixture setup");
-		}
+        [TestFixtureSetUp]
+        public void BlowUpInSetUp() 
+        {
+            setUpCount++;
+            if (blowUpInSetUp)
+                throw new Exception("This was thrown from fixture setup");
+        }
 
-		[TestFixtureTearDown]
-		public void BlowUpInTearDown()
-		{
-			tearDownCount++;
-			if ( blowUpInTearDown )
-				throw new Exception("This was thrown from fixture teardown");
-		}
+        [TestFixtureTearDown]
+        public void BlowUpInTearDown()
+        {
+            tearDownCount++;
+            if ( blowUpInTearDown )
+                throw new Exception("This was thrown from fixture teardown");
+        }
 
-		[Test]
-		public void nothingToTest() 
-		{
-		}
-	}
+        [Test]
+        public void nothingToTest() 
+        {
+        }
+    }
 
-	[TestFixture]
-	public class ExceptionInConstructor
-	{
-		public ExceptionInConstructor()
-		{
-			throw new Exception( "This was thrown in constructor" );
-		}
+    [TestFixture]
+    public class ExceptionInConstructor
+    {
+        public ExceptionInConstructor()
+        {
+            throw new Exception( "This was thrown in constructor" );
+        }
 
-		[Test]
-		public void nothingToTest()
-		{
-		}
-	}
+        [Test]
+        public void nothingToTest()
+        {
+        }
+    }
 
-	[TestFixture]
-	public class IgnoreInFixtureSetUp
-	{
-		[TestFixtureSetUp]
-		public void SetUpCallsIgnore() 
-		{
-			Assert.Ignore( "TestFixtureSetUp called Ignore" );
-		}
+    [TestFixture]
+    public class IgnoreInFixtureSetUp
+    {
+        [TestFixtureSetUp]
+        public void SetUpCallsIgnore() 
+        {
+            Assert.Ignore( "TestFixtureSetUp called Ignore" );
+        }
 
-		[Test]
-		public void nothingToTest() 
-		{
-		}
-	}
+        [Test]
+        public void nothingToTest() 
+        {
+        }
+    }
 
-	[TestFixture]
-	public class SetUpAndTearDownWithTestInName
-	{
-		public int setUpCount = 0;
-		public int tearDownCount = 0;
+    [TestFixture]
+    public class SetUpAndTearDownWithTestInName
+    {
+        public int setUpCount = 0;
+        public int tearDownCount = 0;
 
-		[TestFixtureSetUp]
-		public virtual void TestFixtureSetUp()
-		{
-			setUpCount++;
-		}
+        [TestFixtureSetUp]
+        public virtual void TestFixtureSetUp()
+        {
+            setUpCount++;
+        }
 
-		[TestFixtureTearDown]
-		public virtual void TestFixtureTearDown()
-		{
-			tearDownCount++;
-		}
+        [TestFixtureTearDown]
+        public virtual void TestFixtureTearDown()
+        {
+            tearDownCount++;
+        }
 
-		[Test]
-		public void Success(){}
+        [Test]
+        public void Success(){}
 
-		[Test]
-		public void EvenMoreSuccess(){}
-	}
+        [Test]
+        public void EvenMoreSuccess(){}
+    }
 
-	[TestFixture, Ignore( "Do Not Run This" )]
-	public class IgnoredFixture
-	{
-		public bool setupCalled = false;
-		public bool teardownCalled = false;
+    [TestFixture, Ignore( "Do Not Run This" )]
+    public class IgnoredFixture
+    {
+        public bool setupCalled = false;
+        public bool teardownCalled = false;
 
-		[TestFixtureSetUp]
-		public virtual void ShouldNotRun()
-		{
-			setupCalled = true;
-		}
+        [TestFixtureSetUp]
+        public virtual void ShouldNotRun()
+        {
+            setupCalled = true;
+        }
 
-		[TestFixtureTearDown]
-		public virtual void NeitherShouldThis()
-		{
-			teardownCalled = true;
-		}
+        [TestFixtureTearDown]
+        public virtual void NeitherShouldThis()
+        {
+            teardownCalled = true;
+        }
 
-		[Test]
-		public void Success(){}
+        [Test]
+        public void Success(){}
 
-		[Test]
-		public void EvenMoreSuccess(){}
-	}
+        [Test]
+        public void EvenMoreSuccess(){}
+    }
 
-	[TestFixture]
-	public class FixtureWithNoTests
-	{
-		public bool setupCalled = false;
-		public bool teardownCalled = false;
+    [TestFixture]
+    public class FixtureWithNoTests
+    {
+        public bool setupCalled = false;
+        public bool teardownCalled = false;
 
-		[TestFixtureSetUp]
-		public virtual void Init()
-		{
-			setupCalled = true;
-		}
+        [TestFixtureSetUp]
+        public virtual void Init()
+        {
+            setupCalled = true;
+        }
 
-		[TestFixtureTearDown]
-		public virtual void Destroy()
-		{
-			teardownCalled = true;
-		}
-	}
+        [TestFixtureTearDown]
+        public virtual void Destroy()
+        {
+            teardownCalled = true;
+        }
+    }
 
     [TestFixture]
     public class DisposableFixture : IDisposable
