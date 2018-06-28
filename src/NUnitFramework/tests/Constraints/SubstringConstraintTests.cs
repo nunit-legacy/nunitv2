@@ -12,7 +12,7 @@ namespace NUnit.Framework.Constraints
     [TestFixture]
     public class SubstringTest : ConstraintTestBase, IExpectException
     {
-		[SetUp]
+        [SetUp]
         public void SetUp()
         {
             theConstraint = new SubstringConstraint("hello");
@@ -37,7 +37,7 @@ namespace NUnit.Framework.Constraints
     [TestFixture]
     public class SubstringTestIgnoringCase : ConstraintTestBase
     {
-		[SetUp]
+        [SetUp]
         public void SetUp()
         {
             theConstraint = new SubstringConstraint("hello").IgnoreCase;

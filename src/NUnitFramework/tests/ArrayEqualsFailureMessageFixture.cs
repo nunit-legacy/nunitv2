@@ -10,9 +10,9 @@ using System.Collections;
 
 namespace NUnit.Framework.Tests
 {
-	/// <summary>
-	/// Summary description for ArrayEqualsFailureMessageFixture.
-	/// </summary>
+    /// <summary>
+    /// Summary description for ArrayEqualsFailureMessageFixture.
+    /// </summary>
     [TestFixture]
     public class ArrayEqualsFailureMessageFixture : MessageChecker
     {

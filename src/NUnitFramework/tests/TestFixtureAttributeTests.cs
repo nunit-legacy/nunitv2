@@ -71,5 +71,5 @@ namespace NUnit.Framework.Tests
             Assert.That(attr.TypeArgs, Is.Null);
         }
 #endif
-	}
+    }
 }

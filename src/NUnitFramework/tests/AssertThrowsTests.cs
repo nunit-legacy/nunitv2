@@ -9,9 +9,9 @@ using System;
 
 namespace NUnit.Framework.Tests
 {
-	[TestFixture]
-	public class AssertThrowsTests : MessageChecker
-	{
+    [TestFixture]
+    public class AssertThrowsTests : MessageChecker
+    {
         [Test]
         public void CanCatchUnspecifiedException()
         {
@@ -49,7 +49,7 @@ namespace NUnit.Framework.Tests
         }
 
         [Test]
-		public void CorrectExceptionThrown()
+        public void CorrectExceptionThrown()
         {
 #if CLR_2_0 || CLR_4_0
             Assert.Throws(typeof(ArgumentException), TestDelegates.ThrowsArgumentException);
@@ -66,15 +66,15 @@ namespace NUnit.Framework.Tests
             //Assert.Throws( Is.TypeOf(typeof(ArgumentException)),
             //        delegate { throw new ArgumentException(); } );
 #else
-			Assert.Throws(typeof(ArgumentException),
-				new TestDelegate( TestDelegates.ThrowsArgumentException ) );
+            Assert.Throws(typeof(ArgumentException),
+                new TestDelegate( TestDelegates.ThrowsArgumentException ) );
 #endif
         }
 
-		[Test]
-		public void CorrectExceptionIsReturnedToMethod()
-		{
-			ArgumentException ex = Assert.Throws(typeof(ArgumentException),
+        [Test]
+        public void CorrectExceptionIsReturnedToMethod()
+        {
+            ArgumentException ex = Assert.Throws(typeof(ArgumentException),
                 new TestDelegate(TestDelegates.ThrowsArgumentException)) as ArgumentException;
 
             Assert.IsNotNull(ex, "No ArgumentException thrown");
@@ -89,7 +89,7 @@ namespace NUnit.Framework.Tests
             Assert.That(ex.Message, StartsWith("myMessage"));
             Assert.That(ex.ParamName, Is.EqualTo("myParam"));
 
-			ex = Assert.Throws(typeof(ArgumentException), 
+            ex = Assert.Throws(typeof(ArgumentException), 
                 delegate { throw new ArgumentException("myMessage", "myParam"); } ) as ArgumentException;
 
             Assert.IsNotNull(ex, "No ArgumentException thrown");
@@ -102,21 +102,21 @@ namespace NUnit.Framework.Tests
             Assert.That(ex.Message, StartsWith("myMessage"));
             Assert.That(ex.ParamName, Is.EqualTo("myParam"));
 #endif
-		}
+        }
 
-		[Test, ExpectedException(typeof(AssertionException))]
-		public void NoExceptionThrown()
-		{
-			expectedMessage =
-				"  Expected: <System.ArgumentException>" + Environment.NewLine +
-				"  But was:  null" + Environment.NewLine;
+        [Test, ExpectedException(typeof(AssertionException))]
+        public void NoExceptionThrown()
+        {
+            expectedMessage =
+                "  Expected: <System.ArgumentException>" + Environment.NewLine +
+                "  But was:  null" + Environment.NewLine;
 #if CLR_2_0 || CLR_4_0
             Assert.Throws<ArgumentException>(TestDelegates.ThrowsNothing);
 #else
-			Assert.Throws( typeof(ArgumentException),
-				new TestDelegate( TestDelegates.ThrowsNothing ) );
+            Assert.Throws( typeof(ArgumentException),
+                new TestDelegate( TestDelegates.ThrowsNothing ) );
 #endif
-		}
+        }
 
         [Test, ExpectedException(typeof(AssertionException))]
         public void UnrelatedExceptionThrown()
@@ -129,8 +129,8 @@ namespace NUnit.Framework.Tests
 #if CLR_2_0 || CLR_4_0
             Assert.Throws<ArgumentException>(TestDelegates.ThrowsApplicationException);
 #else
-			Assert.Throws( typeof(ArgumentException),
-				new TestDelegate(TestDelegates.ThrowsApplicationException) );
+            Assert.Throws( typeof(ArgumentException),
+                new TestDelegate(TestDelegates.ThrowsApplicationException) );
 #endif
         }
 
@@ -163,7 +163,7 @@ namespace NUnit.Framework.Tests
             Assert.Throws<Exception>(TestDelegates.ThrowsArgumentException);
 #else
             Assert.Throws( typeof(Exception),
-				new TestDelegate( TestDelegates.ThrowsArgumentException) );
+                new TestDelegate( TestDelegates.ThrowsArgumentException) );
 #endif
         }
 
@@ -175,7 +175,7 @@ namespace NUnit.Framework.Tests
 #else
             Assert.DoesNotThrow( new TestDelegate( TestDelegates.ThrowsNothing ) );
 
-			Assert.That( new TestDelegate( TestDelegates.ThrowsNothing ), Throws.Nothing );
+            Assert.That( new TestDelegate( TestDelegates.ThrowsNothing ), Throws.Nothing );
 #endif
         }
 

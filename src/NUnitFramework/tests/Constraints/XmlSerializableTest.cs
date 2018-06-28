@@ -30,8 +30,8 @@ namespace NUnit.Framework.Constraints
         internal object[] FailureData = new object[] { new Dictionary<string, string>(), new InternalClass(), new InternalWithSerializableAttributeClass() };
         internal string[] ActualValues = new string[] { "<Dictionary`2>", "<InternalClass>", "<InternalWithSerializableAttributeClass>" };
 #else
-		internal object[] FailureData = new object[] { new InternalClass(), new InternalWithSerializableAttributeClass() };
-		internal string[] ActualValues = new string[] { "<InternalClass>", "<InternalWithSerializableAttributeClass>" };
+        internal object[] FailureData = new object[] { new InternalClass(), new InternalWithSerializableAttributeClass() };
+        internal string[] ActualValues = new string[] { "<InternalClass>", "<InternalWithSerializableAttributeClass>" };
 #endif
 
 

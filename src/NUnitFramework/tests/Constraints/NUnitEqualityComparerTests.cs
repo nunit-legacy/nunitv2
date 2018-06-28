@@ -41,8 +41,8 @@ namespace NUnit.Framework.Constraints
         {
             var a1 = new object[1];
             var a2 = new object[1];
-			a1[0] = a1;
-			a2[0] = a2;
+            a1[0] = a1;
+            a2[0] = a2;
 
             Assert.False(comparer.AreEqual(a1, a2, ref tolerance));
         }
@@ -58,16 +58,16 @@ namespace NUnit.Framework.Constraints
             Assert.False(comparer.AreEqual(a1, a2, ref tolerance));
         }
 
-		[Test]
-		public void RecursionCheckDoesNotRelyOnValueEquality()
-		{
-			var a1 = new StructEnumerable<int>[2];
-			var a2 = new StructEnumerable<int>[2];
+        [Test]
+        public void RecursionCheckDoesNotRelyOnValueEquality()
+        {
+            var a1 = new StructEnumerable<int>[2];
+            var a2 = new StructEnumerable<int>[2];
 
-			a1[0] = a2[0] = a1[1] = a2[1] = new StructEnumerable<int>(1);
+            a1[0] = a2[0] = a1[1] = a2[1] = new StructEnumerable<int>(1);
 
-			Assert.True(comparer.AreEqual(a1, a2, ref tolerance));
-		}
+            Assert.True(comparer.AreEqual(a1, a2, ref tolerance));
+        }
 
         [Test]
         public void IEquatableSuccess()
@@ -176,24 +176,24 @@ namespace NUnit.Framework.Constraints
         }
     }
 
-	struct StructEnumerable<T> : IEnumerable<T>
-	{
-		public readonly T Value;
+    struct StructEnumerable<T> : IEnumerable<T>
+    {
+        public readonly T Value;
 
-		public StructEnumerable(T value)
-		{
-			Value = value;
-		}
+        public StructEnumerable(T value)
+        {
+            Value = value;
+        }
 
-		public IEnumerator<T> GetEnumerator()
-		{
-			yield return Value;
-		}
+        public IEnumerator<T> GetEnumerator()
+        {
+            yield return Value;
+        }
 
-		IEnumerator IEnumerable.GetEnumerator()
-		{
-			return GetEnumerator();
-		}
-	}
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return GetEnumerator();
+        }
+    }
 #endif
 }
