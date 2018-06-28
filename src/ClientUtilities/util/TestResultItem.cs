@@ -9,46 +9,46 @@ using System;
 
 namespace NUnit.Util
 {
-	using NUnit.Core;
+    using NUnit.Core;
 
-	/// <summary>
-	/// Summary description for TestResultItem.
-	/// </summary>
-	public class TestResultItem
-	{
-		private string testName;
-		private string message;
-		private string stackTrace;
+    /// <summary>
+    /// Summary description for TestResultItem.
+    /// </summary>
+    public class TestResultItem
+    {
+        private string testName;
+        private string message;
+        private string stackTrace;
 
-		public TestResultItem(TestResult result )
-		{
-			testName = result.Test.TestName.FullName;
-			message = result.Message;
-			stackTrace = result.StackTrace;
+        public TestResultItem(TestResult result )
+        {
+            testName = result.Test.TestName.FullName;
+            message = result.Message;
+            stackTrace = result.StackTrace;
 
-			if ( result.Test.IsSuite && result.FailureSite == FailureSite.SetUp )
-				testName += " (TestFixtureSetUp)";
-		}
+            if ( result.Test.IsSuite && result.FailureSite == FailureSite.SetUp )
+                testName += " (TestFixtureSetUp)";
+        }
 
-		public TestResultItem( string testName, string message, string stackTrace )
-		{
-			this.testName = testName;
-			this.message = message;
-			this.stackTrace = stackTrace;
-		}
+        public TestResultItem( string testName, string message, string stackTrace )
+        {
+            this.testName = testName;
+            this.message = message;
+            this.stackTrace = stackTrace;
+        }
 
-		public override string ToString()
-		{
-			if ( message.Length > 64000 )
-				return string.Format( "{0}:{1}{2}", testName, Environment.NewLine, message.Substring( 0, 64000 ) );
+        public override string ToString()
+        {
+            if ( message.Length > 64000 )
+                return string.Format( "{0}:{1}{2}", testName, Environment.NewLine, message.Substring( 0, 64000 ) );
 
-			return GetMessage();
-		}
+            return GetMessage();
+        }
 
-		public string GetMessage()
-		{
-			return String.Format("{0}:{1}{2}", testName, Environment.NewLine, message);
-		}
+        public string GetMessage()
+        {
+            return String.Format("{0}:{1}{2}", testName, Environment.NewLine, message);
+        }
 
         public string GetToolTipMessage()   //NRG 05/28/03 - Substitute spaces for tab characters
         {
@@ -62,10 +62,10 @@ namespace NUnit.Util
             return(strOriginal.Replace("\t", strSpaces));
         }
 
-		public string StackTrace
-		{
-			get 
-			{
+        public string StackTrace
+        {
+            get 
+            {
                 return stackTrace == null ? null : StackTraceFilter.Filter(stackTrace);
 
                 //string trace = "No stack trace is available";
@@ -73,7 +73,7 @@ namespace NUnit.Util
                 //    trace = StackTraceFilter.Filter(stackTrace);
 
                 //return trace;
-			}
-		}
-	}
+            }
+        }
+    }
 }

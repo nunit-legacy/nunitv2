@@ -9,56 +9,56 @@ using System;
 
 namespace NUnit.Util
 {
-	using System.Diagnostics;
-	using System.Security.Policy;
-	using System.Reflection;
-	using System.Collections;
-	using System.Configuration;
-	using System.IO;
+    using System.Diagnostics;
+    using System.Security.Policy;
+    using System.Reflection;
+    using System.Collections;
+    using System.Configuration;
+    using System.IO;
 
-	using NUnit.Core;
+    using NUnit.Core;
 
-	public class TestDomain : ProxyTestRunner, TestRunner
-	{
+    public class TestDomain : ProxyTestRunner, TestRunner
+    {
         static Logger log = InternalTrace.GetLogger(typeof(TestDomain));
 
-		#region Instance Variables
+        #region Instance Variables
 
-		/// <summary>
-		/// The appdomain used  to load tests
-		/// </summary>
-		private AppDomain domain; 
+        /// <summary>
+        /// The appdomain used  to load tests
+        /// </summary>
+        private AppDomain domain; 
 
-		/// <summary>
-		/// The TestAgent in the domain
-		/// </summary>
-		private DomainAgent agent;
+        /// <summary>
+        /// The TestAgent in the domain
+        /// </summary>
+        private DomainAgent agent;
 
-		#endregion
+        #endregion
 
-		#region Constructors
-		public TestDomain() : base( 0 ) { }
+        #region Constructors
+        public TestDomain() : base( 0 ) { }
 
-		public TestDomain( int runnerID ) : base( runnerID ) { }
-		#endregion
+        public TestDomain( int runnerID ) : base( runnerID ) { }
+        #endregion
 
-		#region Properties
-		public AppDomain AppDomain
-		{
-			get { return domain; }
-		}
-		#endregion
+        #region Properties
+        public AppDomain AppDomain
+        {
+            get { return domain; }
+        }
+        #endregion
 
-		#region Loading and Unloading Tests
-		public override bool Load( TestPackage package )
-		{
-			Unload();
+        #region Loading and Unloading Tests
+        public override bool Load( TestPackage package )
+        {
+            Unload();
 
             log.Info("Loading " + package.Name);
-			try
-			{
-				if ( this.domain == null )
-					this.domain = Services.DomainManager.CreateDomain( package );
+            try
+            {
+                if ( this.domain == null )
+                    this.domain = Services.DomainManager.CreateDomain( package );
 
                 if (this.agent == null)
                 {
@@ -66,26 +66,26 @@ namespace NUnit.Util
                     this.agent.Start();
                 }
             
-				if ( this.TestRunner == null )
-					this.TestRunner = this.agent.CreateRunner( this.ID );
+                if ( this.TestRunner == null )
+                    this.TestRunner = this.agent.CreateRunner( this.ID );
 
                 log.Info(
                     "Loading tests in AppDomain, see {0}_{1}.log", 
                     domain.FriendlyName, 
                     Process.GetCurrentProcess().Id);
 
-				return TestRunner.Load( package );
-			}
-			catch
-			{
+                return TestRunner.Load( package );
+            }
+            catch
+            {
                 log.Error("Load failure");
-				Unload();
-				throw;
-			}
-		}
+                Unload();
+                throw;
+            }
+        }
 
-		public override void Unload()
-		{
+        public override void Unload()
+        {
             if (this.TestRunner != null)
             {
                 log.Info("Unloading");
@@ -100,14 +100,14 @@ namespace NUnit.Util
                 this.agent = null;
             }
 
-			if(domain != null) 
-			{
+            if(domain != null) 
+            {
                 log.Info("Unloading AppDomain " + domain.FriendlyName);
-				Services.DomainManager.Unload(domain);
-				domain = null;
-			}
-		}
-		#endregion
+                Services.DomainManager.Unload(domain);
+                domain = null;
+            }
+        }
+        #endregion
 
         #region Running Tests
         public override void BeginRun(EventListener listener, ITestFilter filter, bool tracing, LoggingThreshold logLevel)

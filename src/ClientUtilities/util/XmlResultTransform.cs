@@ -13,10 +13,10 @@ using System.Xml.XPath;
 
 namespace NUnit.Util
 {
-	/// <summary>
-	/// Summary description for XmlResultTransform.
-	/// </summary>
-	public class XmlResultTransform
+    /// <summary>
+    /// Summary description for XmlResultTransform.
+    /// </summary>
+    public class XmlResultTransform
     {
 #if CLR_2_0 || CLR_4_0
         private XslCompiledTransform xslTransform = new XslCompiledTransform();
@@ -26,45 +26,45 @@ namespace NUnit.Util
 
         public XmlResultTransform() { }
 
-		public XmlResultTransform( string stylesheet )
-		{
-			Load( stylesheet );
-		}
+        public XmlResultTransform( string stylesheet )
+        {
+            Load( stylesheet );
+        }
 
-		public XmlResultTransform( XmlReader reader )
-		{
-			Load( reader );
-		}
+        public XmlResultTransform( XmlReader reader )
+        {
+            Load( reader );
+        }
 
-		public void Load( string stylesheet )
-		{
-			xslTransform.Load( stylesheet );				
-		}
+        public void Load( string stylesheet )
+        {
+            xslTransform.Load( stylesheet );				
+        }
 
-		public void Load( XmlReader reader )
-		{
-			// NOTE: Not compatable with .NET 1.0.
-			// xslTransform.Load(reader, null, null);
+        public void Load( XmlReader reader )
+        {
+            // NOTE: Not compatable with .NET 1.0.
+            // xslTransform.Load(reader, null, null);
 
-			xslTransform.Load(reader);
-	        }
+            xslTransform.Load(reader);
+            }
 
-		public void Transform( string inputFile, string outputFile )
-		{
-			Transform( new StreamReader( inputFile ), new StreamWriter( outputFile ) );
-		}
+        public void Transform( string inputFile, string outputFile )
+        {
+            Transform( new StreamReader( inputFile ), new StreamWriter( outputFile ) );
+        }
 
-		public void Transform( TextReader reader, TextWriter writer )
-		{
-			Transform( new XPathDocument( reader ), writer );
-		}
+        public void Transform( TextReader reader, TextWriter writer )
+        {
+            Transform( new XPathDocument( reader ), writer );
+        }
 
-		public void Transform( IXPathNavigable xpnav, TextWriter writer )
-		{
-			// NOTE: Not compatable with .NET 1.0.
-			// xslTransform.Transform(xpnav, null, writer, null);
+        public void Transform( IXPathNavigable xpnav, TextWriter writer )
+        {
+            // NOTE: Not compatable with .NET 1.0.
+            // xslTransform.Transform(xpnav, null, writer, null);
 
-			xslTransform.Transform(xpnav, null, writer);
-		}
-	}
+            xslTransform.Transform(xpnav, null, writer);
+        }
+    }
 }

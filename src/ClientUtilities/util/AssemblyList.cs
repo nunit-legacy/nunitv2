@@ -11,49 +11,49 @@ using System.Collections;
 
 namespace NUnit.Util
 {
-	/// <summary>
-	/// Represents a list of assemblies. It stores paths 
-	/// that are added and fires an event whenevever it
-	/// changes. All paths must be added as absolute paths.
-	/// </summary>
-	public class AssemblyList : CollectionBase
-	{
-		#region Properties and Events
-		public string this[int index]
-		{
-			get { return (string)List[index]; }
-			set 
-			{ 
-				if ( !Path.IsPathRooted( value ) )
-					throw new ArgumentException( "Assembly path must be absolute" );
-				List[index] = value; 
-			}
-		}
+    /// <summary>
+    /// Represents a list of assemblies. It stores paths 
+    /// that are added and fires an event whenevever it
+    /// changes. All paths must be added as absolute paths.
+    /// </summary>
+    public class AssemblyList : CollectionBase
+    {
+        #region Properties and Events
+        public string this[int index]
+        {
+            get { return (string)List[index]; }
+            set 
+            { 
+                if ( !Path.IsPathRooted( value ) )
+                    throw new ArgumentException( "Assembly path must be absolute" );
+                List[index] = value; 
+            }
+        }
 
-		public event EventHandler Changed;
-		#endregion
+        public event EventHandler Changed;
+        #endregion
 
-		#region Methods
-		public string[] ToArray()
-		{
-			return (string[])InnerList.ToArray( typeof( string ) );
-		}
+        #region Methods
+        public string[] ToArray()
+        {
+            return (string[])InnerList.ToArray( typeof( string ) );
+        }
 
-		public void Add( string assemblyPath )
-		{
-			if ( !Path.IsPathRooted( assemblyPath ) )
-				throw new ArgumentException( "Assembly path must be absolute" );
-			List.Add( assemblyPath );
-		}
+        public void Add( string assemblyPath )
+        {
+            if ( !Path.IsPathRooted( assemblyPath ) )
+                throw new ArgumentException( "Assembly path must be absolute" );
+            List.Add( assemblyPath );
+        }
 
-		public void Remove( string assemblyPath )
-		{
-			for( int index = 0; index < this.Count; index++ )
-			{
-				if ( this[index] == assemblyPath )
-					RemoveAt( index );
-			}
-		}
+        public void Remove( string assemblyPath )
+        {
+            for( int index = 0; index < this.Count; index++ )
+            {
+                if ( this[index] == assemblyPath )
+                    RemoveAt( index );
+            }
+        }
 
         public bool Contains(string assemblyPath)
         {
@@ -67,25 +67,25 @@ namespace NUnit.Util
         }
 
         protected override void OnRemoveComplete(int index, object value)
-		{
-			FireChangedEvent();
-		}
+        {
+            FireChangedEvent();
+        }
 
-		protected override void OnInsertComplete(int index, object value)
-		{
-			FireChangedEvent();
-		}
+        protected override void OnInsertComplete(int index, object value)
+        {
+            FireChangedEvent();
+        }
 
-		protected override void OnSetComplete(int index, object oldValue, object newValue)
-		{
-			FireChangedEvent();
-		}
+        protected override void OnSetComplete(int index, object oldValue, object newValue)
+        {
+            FireChangedEvent();
+        }
 
-		private void FireChangedEvent()
-		{
-			if ( Changed != null )
-				Changed( this, EventArgs.Empty );
-		}
-		#endregion
-	}
+        private void FireChangedEvent()
+        {
+            if ( Changed != null )
+                Changed( this, EventArgs.Empty );
+        }
+        #endregion
+    }
 }

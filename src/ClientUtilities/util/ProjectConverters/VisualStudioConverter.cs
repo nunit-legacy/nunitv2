@@ -13,39 +13,39 @@ using NUnit.Util.Extensibility;
 
 namespace NUnit.Util.ProjectConverters
 {
-	/// <summary>
-	/// Summary description for VSProjectLoader.
-	/// </summary>
-	public class VisualStudioConverter : IProjectConverter
-	{
-		#region IProjectConverter Members
+    /// <summary>
+    /// Summary description for VSProjectLoader.
+    /// </summary>
+    public class VisualStudioConverter : IProjectConverter
+    {
+        #region IProjectConverter Members
 
-		public bool CanConvertFrom(string path)
-		{
-			return VSProject.IsProjectFile(path)|| VSProject.IsSolutionFile(path);
-		}
+        public bool CanConvertFrom(string path)
+        {
+            return VSProject.IsProjectFile(path)|| VSProject.IsSolutionFile(path);
+        }
 
-		public NUnitProject ConvertFrom(string path)
-		{
-			if ( VSProject.IsProjectFile(path) )
-			{
+        public NUnitProject ConvertFrom(string path)
+        {
+            if ( VSProject.IsProjectFile(path) )
+            {
                 return ConvertVSProject(path);
-			}
-			else if ( VSProject.IsSolutionFile(path) )
-			{
+            }
+            else if ( VSProject.IsSolutionFile(path) )
+            {
                 return Services.UserSettings.GetSetting("Options.TestLoader.VisualStudio.UseSolutionConfigs", true)
                     ? ConvertVSSolution(path)
                     : LegacyConvertVSSolution(path);
-			}
+            }
 
-			return null;
-		}
+            return null;
+        }
 
         private static NUnitProject ConvertVSProject(string path)
         {
             NUnitProject project = new NUnitProject(Path.GetFullPath(path));
             project.Add(new VSProject(path));
-			project.IsDirty = false;
+            project.IsDirty = false;
             return project;
         }
 
@@ -150,6 +150,6 @@ namespace NUnit.Util.ProjectConverters
             }
         }
 
-		#endregion
-	}
+        #endregion
+    }
 }
