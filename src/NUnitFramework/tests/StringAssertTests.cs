@@ -114,7 +114,7 @@ namespace NUnit.Framework.Tests
             StringAssert.AreEqualIgnoringCase("Name", "NAMES");
         }
 
-        [Test]		
+        [Test]
         public void IsMatch()
         {
             StringAssert.IsMatch( "a?bc", "12a3bc45" );

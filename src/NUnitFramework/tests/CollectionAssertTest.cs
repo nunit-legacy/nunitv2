@@ -90,7 +90,7 @@ namespace NUnit.Framework.Tests
         [Test]
         public void Unique_WithNull()
         {
-            CollectionAssert.AllItemsAreUnique(	new ICollectionAdapter( "x", "y", null, "z" ) );
+           CollectionAssert.AllItemsAreUnique( new ICollectionAdapter( "x", "y", null, "z" ) );
         }
 
         [Test,ExpectedException(typeof(AssertionException))]

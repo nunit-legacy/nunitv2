@@ -81,7 +81,7 @@ namespace NUnit.Framework.Tests
 
         [Test]
         public void MixedTypes()
-        {	
+        {
             Assert.LessOrEqual( 5, 8L, "int to long");
             Assert.LessOrEqual( 5, 8.2f, "int to float" );
             Assert.LessOrEqual( 5, 8.2d, "int to double" );

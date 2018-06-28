@@ -15,7 +15,7 @@ namespace NUnit.Framework
     public enum MessageMatch
     {
         /// Expect an exact match
-        Exact,	
+        Exact,
         /// Expect a message containing the parameter string
         Contains,
         /// Match the regular expression provided as a parameter

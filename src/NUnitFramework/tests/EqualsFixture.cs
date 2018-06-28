@@ -126,7 +126,7 @@ namespace NUnit.Framework.Tests
             Assert.AreEqual(Double.PositiveInfinity, Double.NegativeInfinity, 0.0);
         }
 
-        [Test,ExpectedException(typeof(AssertionException))]	
+        [Test,ExpectedException(typeof(AssertionException))]
         public void SinglePosInfinityNotEqualsNegInfinity() 
         {
             expectedMessage =

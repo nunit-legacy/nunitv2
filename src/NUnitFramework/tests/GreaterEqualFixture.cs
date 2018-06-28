@@ -80,7 +80,7 @@ namespace NUnit.Framework.Tests
 
         [Test]
         public void MixedTypes()
-        {	
+        {
             Assert.GreaterOrEqual( 5, 3L, "int to long");
             Assert.GreaterOrEqual( 5, 3.5f, "int to float" );
             Assert.GreaterOrEqual( 5, 3.5d, "int to double" );

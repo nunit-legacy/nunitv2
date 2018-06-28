@@ -167,18 +167,18 @@ namespace NUnit.Framework.Tests
             Expect(actual, EqualTo(expected).AsCollection);
         }
 
-        //		[Test,ExpectedException(typeof(AssertionException))]
-        //		public void ExpectedArrayIsLonger()
-        //		{
-        //			string[] array1 = { "one", "two", "three" };
-        //			string[] array2 = { "one", "two", "three", "four", "five" };
+        //      [Test,ExpectedException(typeof(AssertionException))]
+        //      public void ExpectedArrayIsLonger()
+        //      {
+        //          string[] array1 = { "one", "two", "three" };
+        //          string[] array2 = { "one", "two", "three", "four", "five" };
         //
-        //			expectedMessage =
-        //				"  Expected is <System.String[5]>, actual is <System.String[3]>" + Environment.NewLine +
-        //				"  Values differ at index [3]" + Environment.NewLine +
-        //				"  Missing:  < \"four\", \"five\" >";
-        //			Expect(array1, EqualTo(array2));
-        //		}
+        //          expectedMessage =
+        //              "  Expected is <System.String[5]>, actual is <System.String[3]>" + Environment.NewLine +
+        //              "  Values differ at index [3]" + Environment.NewLine +
+        //              "  Missing:  < \"four\", \"five\" >";
+        //          Expect(array1, EqualTo(array2));
+        //      }
 
         [Test, ExpectedException(typeof(AssertionException))]
         public void SameLengthDifferentContent()
