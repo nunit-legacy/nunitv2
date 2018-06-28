@@ -9,12 +9,12 @@ using System;
 
 namespace NUnit.Mocks
 {
-	/// <summary>
-	/// The IVerify interface is implemented by objects capable of self-verification.
-	/// </summary>
+    /// <summary>
+    /// The IVerify interface is implemented by objects capable of self-verification.
+    /// </summary>
     [Obsolete("NUnit now uses NSubstitute")]
     public interface IVerify
-	{
-		void Verify();
-	}
+    {
+        void Verify();
+    }
 }

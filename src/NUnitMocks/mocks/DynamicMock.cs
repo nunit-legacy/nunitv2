@@ -9,41 +9,41 @@ using System;
 
 namespace NUnit.Mocks
 {
-	/// <summary>
-	/// Summary description for DynamicMock.
-	/// </summary>
+    /// <summary>
+    /// Summary description for DynamicMock.
+    /// </summary>
     [Obsolete("NUnit now uses NSubstitute")]
-	public class DynamicMock : Mock
-	{
-		private Type type;
+    public class DynamicMock : Mock
+    {
+        private Type type;
 
-		private object mockInstance;
+        private object mockInstance;
 
-		public object MockInstance
-		{
-			get 
-			{ 
-				if ( mockInstance == null )
-				{
-					MockInterfaceHandler handler = new MockInterfaceHandler( type, this );
-					mockInstance = handler.GetTransparentProxy();
-				}
+        public object MockInstance
+        {
+            get 
+            { 
+                if ( mockInstance == null )
+                {
+                    MockInterfaceHandler handler = new MockInterfaceHandler( type, this );
+                    mockInstance = handler.GetTransparentProxy();
+                }
 
-				return mockInstance; 
-			}
-		}
+                return mockInstance; 
+            }
+        }
 
-		#region Constructors
+        #region Constructors
 
-		public DynamicMock( Type type ) : this( "Mock" + type.Name, type ) { }
+        public DynamicMock( Type type ) : this( "Mock" + type.Name, type ) { }
 
-		public DynamicMock( string name, Type type ) : base( name )
-		{
+        public DynamicMock( string name, Type type ) : base( name )
+        {
 //			if ( !type.IsInterface )
 //				throw new VerifyException( "DynamicMock constructor requires an interface type" );
-			this.type = type;
-		}
+            this.type = type;
+        }
 
-		#endregion
-	}
+        #endregion
+    }
 }

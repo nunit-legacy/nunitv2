@@ -11,111 +11,111 @@ using NUnit.Framework;
 
 namespace NUnit.Mocks
 {
-	/// <summary>
-	/// The MockMethod object represents one named method on a mock object.
-	/// All overloads are represented by one MockMethod. A method may return
-	/// a fixed value, throw a fixed exception or have an expected sequence
-	/// of calls. If it has a call sequence, then the signature must match and
-	/// each call provides it's own return value or exception.
-	/// </summary>
+    /// <summary>
+    /// The MockMethod object represents one named method on a mock object.
+    /// All overloads are represented by one MockMethod. A method may return
+    /// a fixed value, throw a fixed exception or have an expected sequence
+    /// of calls. If it has a call sequence, then the signature must match and
+    /// each call provides it's own return value or exception.
+    /// </summary>
     [Obsolete("NUnit now uses NSubstitute")]
     public class MockMethod : IMethod
-	{
-		#region Private Fields
+    {
+        #region Private Fields
 
-		/// <summary>
-		/// Name of this method
-		/// </summary>
-		private string methodName;
-		
-		/// <summary>
-		/// Fixed return value
-		/// </summary>
-		private object returnVal;
-		
-		/// <summary>
-		/// Exception to be thrown
-		/// </summary>
-		private Exception exception;
+        /// <summary>
+        /// Name of this method
+        /// </summary>
+        private string methodName;
+        
+        /// <summary>
+        /// Fixed return value
+        /// </summary>
+        private object returnVal;
+        
+        /// <summary>
+        /// Exception to be thrown
+        /// </summary>
+        private Exception exception;
 
-		/// <summary>
-		/// Expected call sequence. If null, this method has no expectations
-		/// and simply provides a fixed return value or exception.
-		/// </summary>
-		private ArrayList expectedCalls = null;
-		
-		/// <summary>
-		/// Actual sequence of calls... currently not used
-		/// </summary>
-		//private ArrayList actualCalls = null;
+        /// <summary>
+        /// Expected call sequence. If null, this method has no expectations
+        /// and simply provides a fixed return value or exception.
+        /// </summary>
+        private ArrayList expectedCalls = null;
+        
+        /// <summary>
+        /// Actual sequence of calls... currently not used
+        /// </summary>
+        //private ArrayList actualCalls = null;
 
-		#endregion
+        #endregion
 
-		#region Constructors
+        #region Constructors
 
-		public MockMethod( string methodName ) 
-			: this( methodName, null, null ) { }
+        public MockMethod( string methodName ) 
+            : this( methodName, null, null ) { }
 
-		public MockMethod( string methodName, object returnVal ) 
-			: this( methodName, returnVal, null ) { }
+        public MockMethod( string methodName, object returnVal ) 
+            : this( methodName, returnVal, null ) { }
 
-		public MockMethod( string methodName, object returnVal, Exception exception )
-		{
-			this.methodName = methodName;
-			this.returnVal = returnVal;
-			this.exception = exception;
-		}
+        public MockMethod( string methodName, object returnVal, Exception exception )
+        {
+            this.methodName = methodName;
+            this.returnVal = returnVal;
+            this.exception = exception;
+        }
 
-		#endregion
+        #endregion
 
-		#region IMethod Members
+        #region IMethod Members
 
-		public string Name
-		{
-			get { return methodName; }
-		}
+        public string Name
+        {
+            get { return methodName; }
+        }
 
-		public void Expect( ICall call )
-		{
-			if ( expectedCalls == null )
-				expectedCalls = new ArrayList();
+        public void Expect( ICall call )
+        {
+            if ( expectedCalls == null )
+                expectedCalls = new ArrayList();
 
-			expectedCalls.Add( call );
-		}
+            expectedCalls.Add( call );
+        }
 
-		#endregion
+        #endregion
 
-		#region ICall Members
+        #region ICall Members
 
-		public object Call( object[] args )
-		{
-			if ( expectedCalls == null )
-			{
-				if ( exception != null )
-					throw exception;
+        public object Call( object[] args )
+        {
+            if ( expectedCalls == null )
+            {
+                if ( exception != null )
+                    throw exception;
 
-				return returnVal;
-			}
-			else
-			{
-				//actualCalls.Add( new MethodCall( methodName, null, null, args ) );
-				Assert.IsTrue( expectedCalls.Count > 0, "Too many calls to " + Name );
-				MockCall mockCall = (MockCall)expectedCalls[0];
-				expectedCalls.RemoveAt( 0 );
-				return mockCall.Call( args );
-			}
-		}
+                return returnVal;
+            }
+            else
+            {
+                //actualCalls.Add( new MethodCall( methodName, null, null, args ) );
+                Assert.IsTrue( expectedCalls.Count > 0, "Too many calls to " + Name );
+                MockCall mockCall = (MockCall)expectedCalls[0];
+                expectedCalls.RemoveAt( 0 );
+                return mockCall.Call( args );
+            }
+        }
 
-		#endregion
+        #endregion
 
-		#region IVerify Members
+        #region IVerify Members
 
-		public void Verify()
-		{
-			if ( expectedCalls != null )
-				Assert.IsTrue( expectedCalls.Count == 0, "Not all methods were called" );
-		}
+        public void Verify()
+        {
+            if ( expectedCalls != null )
+                Assert.IsTrue( expectedCalls.Count == 0, "Not all methods were called" );
+        }
 
-		#endregion
-	}
+        #endregion
+    }
 }
