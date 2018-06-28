@@ -14,11 +14,11 @@ namespace NUnit.Core.Extensibility
     /// accept more than one at the same time.
     /// </summary>
     public interface IExtensionPoint
-	{
-		/// <summary>
-		/// Get the name of this extension point
-		/// </summary>
-		string Name { get; }
+    {
+        /// <summary>
+        /// Get the name of this extension point
+        /// </summary>
+        string Name { get; }
 
         /// <summary>
         /// Get the host that provides this extension point
@@ -34,13 +34,13 @@ namespace NUnit.Core.Extensibility
         void Install(object extension);
 
         /// <summary>
-		/// Removes an extension from this extension point. If the
-		/// extension object is not present, the method returns
-		/// without error.
+        /// Removes an extension from this extension point. If the
+        /// extension object is not present, the method returns
+        /// without error.
         /// </summary>
         /// <param name="extension"></param>
-		void Remove( object extension );
-	}
+        void Remove( object extension );
+    }
 
     /// <summary>
     /// Represents a single point of extension for NUnit. Some extension

@@ -9,17 +9,17 @@ using System.Collections;
 
 namespace NUnit.Core.Filters
 {
-	/// <summary>
-	/// SimpleName filter selects tests based on their name
-	/// </summary>
+    /// <summary>
+    /// SimpleName filter selects tests based on their name
+    /// </summary>
     [Serializable]
     public class SimpleNameFilter : TestFilter
     {
         private ArrayList names = new ArrayList();
 
-		/// <summary>
-		/// Construct an empty SimpleNameFilter
-		/// </summary>
+        /// <summary>
+        /// Construct an empty SimpleNameFilter
+        /// </summary>
         public SimpleNameFilter() { }
 
         /// <summary>
@@ -60,17 +60,17 @@ namespace NUnit.Core.Filters
         }
 
         /// <summary>
-		/// Check whether the filter matches a test
-		/// </summary>
-		/// <param name="test">The test to be matched</param>
-		/// <returns>True if it matches, otherwise false</returns>
-		public override bool Match( ITest test )
-		{
-			foreach( string name in names )
-				if ( test.TestName.FullName == name )
-					return true;
+        /// Check whether the filter matches a test
+        /// </summary>
+        /// <param name="test">The test to be matched</param>
+        /// <returns>True if it matches, otherwise false</returns>
+        public override bool Match( ITest test )
+        {
+            foreach( string name in names )
+                if ( test.TestName.FullName == name )
+                    return true;
 
-			return false;
-		}
-	}
+            return false;
+        }
+    }
 }

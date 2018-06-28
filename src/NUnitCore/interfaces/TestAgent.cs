@@ -10,26 +10,26 @@ using System;
 namespace NUnit.Core
 {
     /// <summary>
-	/// Abstract base for all types of TestAgents.
+    /// Abstract base for all types of TestAgents.
     /// A TestAgent provides services of locating,
     /// loading and running tests in a particular
     /// context such as an AppDomain or Process.
-	/// </summary>
-	public abstract class TestAgent : MarshalByRefObject, IDisposable
-	{
-		#region Fields
-		/// <summary>
-		/// Reference to the TestAgency that controls this agent
-		/// </summary>
-		private IAgency agency;
+    /// </summary>
+    public abstract class TestAgent : MarshalByRefObject, IDisposable
+    {
+        #region Fields
+        /// <summary>
+        /// Reference to the TestAgency that controls this agent
+        /// </summary>
+        private IAgency agency;
 
-		/// <summary>
-		/// This agent's assigned id
-		/// </summary>
-		private Guid agentId;
-		#endregion
+        /// <summary>
+        /// This agent's assigned id
+        /// </summary>
+        private Guid agentId;
+        #endregion
 
-		#region Constructors
+        #region Constructors
         /// <summary>
         /// Constructs a TestAgent
         /// </summary>
@@ -45,33 +45,33 @@ namespace NUnit.Core
         /// </summary>
         /// <param name="agentId"></param>
         /// <param name="agency"></param>
-		public TestAgent( Guid agentId, IAgency agency )
-		{
-			this.agency = agency;
-			this.agentId = agentId;
-		}
-		#endregion
+        public TestAgent( Guid agentId, IAgency agency )
+        {
+            this.agency = agency;
+            this.agentId = agentId;
+        }
+        #endregion
 
-		#region Properties
+        #region Properties
         /// <summary>
         /// The TestAgency with which this agent is asssociated,
         /// or null if the agent is not tied to an agency.
         /// </summary>
-		public IAgency Agency
-		{
-			get { return agency; }
-		}
+        public IAgency Agency
+        {
+            get { return agency; }
+        }
 
         /// <summary>
         /// A Guid that uniquely identifies this agent.
         /// </summary>
-		public Guid Id
-		{
-			get { return agentId; }
-		}
-		#endregion
+        public Guid Id
+        {
+            get { return agentId; }
+        }
+        #endregion
 
-		#region Absract Methods
+        #region Absract Methods
         /// <summary>
         /// Starts the agent, performing any required initialization
         /// </summary>
@@ -83,11 +83,11 @@ namespace NUnit.Core
         /// </summary>
         public abstract void Stop();
 
-		/// <summary>
-		///  Creates a runner using a given runner id
-		/// </summary>
+        /// <summary>
+        ///  Creates a runner using a given runner id
+        /// </summary>
         public abstract TestRunner CreateRunner(int runnerId);
-		#endregion
+        #endregion
 
         #region IDisposable Members
         /// <summary>

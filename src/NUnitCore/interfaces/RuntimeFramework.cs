@@ -13,30 +13,30 @@ using Microsoft.Win32;
 
 namespace NUnit.Core
 {
-	/// <summary>
-	/// Enumeration identifying a common language 
-	/// runtime implementation.
-	/// </summary>
-	public enum RuntimeType
-	{
+    /// <summary>
+    /// Enumeration identifying a common language 
+    /// runtime implementation.
+    /// </summary>
+    public enum RuntimeType
+    {
         /// <summary>Any supported runtime framework</summary>
         Any,
-		/// <summary>Microsoft .NET Framework</summary>
-		Net,
-		/// <summary>Microsoft .NET Compact Framework</summary>
-		NetCF,
-		/// <summary>Microsoft Shared Source CLI</summary>
-		SSCLI,
-		/// <summary>Mono</summary>
-		Mono
-	}
+        /// <summary>Microsoft .NET Framework</summary>
+        Net,
+        /// <summary>Microsoft .NET Compact Framework</summary>
+        NetCF,
+        /// <summary>Microsoft Shared Source CLI</summary>
+        SSCLI,
+        /// <summary>Mono</summary>
+        Mono
+    }
 
-	/// <summary>
-	/// RuntimeFramework represents a particular version
-	/// of a common language runtime implementation.
-	/// </summary>
+    /// <summary>
+    /// RuntimeFramework represents a particular version
+    /// of a common language runtime implementation.
+    /// </summary>
     [Serializable]
-	public sealed class RuntimeFramework
+    public sealed class RuntimeFramework
     {
         #region Static and Instance Fields
 
@@ -58,7 +58,7 @@ namespace NUnit.Core
         private RuntimeType runtime;
         private Version frameworkVersion;
         private Version clrVersion;
-		private string displayName;
+        private string displayName;
         #endregion
 
         #region Constructor
@@ -72,7 +72,7 @@ namespace NUnit.Core
         /// <param name="runtime">The runtime type of the framework</param>
         /// <param name="version">The version of the framework</param>
         public RuntimeFramework(RuntimeType runtime, Version version)
-		{
+        {
             this.runtime = runtime;
 
             if (version.Build < 0)
@@ -171,20 +171,20 @@ namespace NUnit.Core
                     int minor = Environment.Version.Minor;
 
                     if (isMono)
-					{
-						switch (major)
-						{
-						case 1:
-                        	minor = 0;
-							break;
-						case 2:
-							major = 3;
-							minor = 5;
-							break;
-						}
-					}
-					else /* It's windows */
-					if (major == 2)
+                    {
+                        switch (major)
+                        {
+                        case 1:
+                            minor = 0;
+                            break;
+                        case 2:
+                            major = 3;
+                            minor = 5;
+                            break;
+                        }
+                    }
+                    else /* It's windows */
+                    if (major == 2)
                     {
                         RegistryKey key = Registry.LocalMachine.OpenSubKey(@"SOFTWARE\Microsoft\.NETFramework");
                         if (key != null)
@@ -381,8 +381,8 @@ namespace NUnit.Core
         /// Overridden to return the short name of the framework
         /// </summary>
         /// <returns></returns>
-		public override string ToString()
-		{
+        public override string ToString()
+        {
             if (this.AllowAnyVersion)
             {
                 return runtime.ToString().ToLower();
@@ -395,7 +395,7 @@ namespace NUnit.Core
                 else
                     return runtime.ToString().ToLower() + "-" + vstring;
             }
-		}
+        }
 
         /// <summary>
         /// Returns true if this framework's supports executing under the 
