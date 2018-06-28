@@ -31,8 +31,8 @@ namespace NUnit.Core.Tests
         private TestResult runTests(string nameSpace, TestFilter filter)
         {
             TestSuiteBuilder builder = new TestSuiteBuilder();
-			TestPackage package = new TestPackage( testAssembly );
-			package.TestName = nameSpace;
+            TestPackage package = new TestPackage( testAssembly );
+            package.TestName = nameSpace;
             Test suite = builder.Build( package );
             return suite.Run(new NullListener(),filter);
         }
@@ -47,9 +47,9 @@ namespace NUnit.Core.Tests
         {
             string nameSpace = "NUnit.TestData.SetupFixture.Namespace1";
             TestSuiteBuilder builder = new TestSuiteBuilder();
-			TestPackage package = new TestPackage( testAssembly );
-			package.TestName = nameSpace;
-			Test suite= builder.Build( package );
+            TestPackage package = new TestPackage( testAssembly );
+            package.TestName = nameSpace;
+            Test suite= builder.Build( package );
 
             Assert.IsNotNull(suite);
 

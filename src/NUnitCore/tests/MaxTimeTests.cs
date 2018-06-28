@@ -11,16 +11,16 @@ using NUnit.TestData;
 
 namespace NUnit.Core.Tests
 {
-	/// <summary>
-	/// Tests for MaxTime decoration.
-	/// </summary>
+    /// <summary>
+    /// Tests for MaxTime decoration.
+    /// </summary>
     [TestFixture]
     public class MaxTimeTests
-	{
-		[Test,MaxTime(1000)]
-		public void MaxTimeNotExceeded()
-		{
-		}
+    {
+        [Test,MaxTime(1000)]
+        public void MaxTimeNotExceeded()
+        {
+        }
 
         // TODO: We need a way to simulate the clock reliably
         [Test]
@@ -42,7 +42,7 @@ namespace NUnit.Core.Tests
 
         [Test]
         public void FailureReportHasPriorityOverMaxTime()
-		{
+        {
             Test test = TestFixtureBuilder.BuildFrom(typeof(MaxTimeFixtureWithFailure));
             TestResult result = test.Run(NullListener.NULL, TestFilter.Empty);
             Assert.AreEqual(ResultState.Failure, result.ResultState);

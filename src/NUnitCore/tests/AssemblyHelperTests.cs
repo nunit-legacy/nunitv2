@@ -30,7 +30,7 @@ namespace NUnit.Core.Tests
             Assert.That(Path.GetFileName(path), Is.EqualTo("nunit.core.tests.dll").IgnoreCase);
             Assert.That(File.Exists(path));
         }
-		
+        
         // The following tests are only useful to the extent that the test cases
         // match what will actually be provided to the method in production.
         // As currently used, NUnit's codebase can only use the file: schema,

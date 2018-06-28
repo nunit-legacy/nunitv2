@@ -16,28 +16,28 @@ using NUnit.Core.Filters;
 namespace NUnit.Core.Tests
 {
     [TestFixture, Platform("Net-3.5,Mono-3.5,Net-4.0")]
-	public class TestRunnerThreadTests
-	{
-		private TestRunner mockRunner;
-		private TestRunnerThread runnerThread;
+    public class TestRunnerThreadTests
+    {
+        private TestRunner mockRunner;
+        private TestRunnerThread runnerThread;
         private EventListener listener;
 
-		[SetUp]
-		public void CreateRunnerThread()
-		{
+        [SetUp]
+        public void CreateRunnerThread()
+        {
             mockRunner = Substitute.For<TestRunner>();
-			runnerThread = new TestRunnerThread( mockRunner, ApartmentState.Unknown, ThreadPriority.Normal );
+            runnerThread = new TestRunnerThread( mockRunner, ApartmentState.Unknown, ThreadPriority.Normal );
             listener = NullListener.NULL;
-		}
+        }
 
-		[Test]
-		public void RunTestSuite()
-		{
-			runnerThread.StartRun(listener, TestFilter.Empty, false, LoggingThreshold.Off);
-			runnerThread.Wait();
+        [Test]
+        public void RunTestSuite()
+        {
+            runnerThread.StartRun(listener, TestFilter.Empty, false, LoggingThreshold.Off);
+            runnerThread.Wait();
 
             mockRunner.Received().Run(listener, TestFilter.Empty, false, LoggingThreshold.Off);
-		}
+        }
 
         [Test]
         public void RunNamedTest()
@@ -61,6 +61,6 @@ namespace NUnit.Core.Tests
 
             mockRunner.Received().Run(listener, filter, false, LoggingThreshold.Off);
         }
-	}
+    }
 }
 #endif

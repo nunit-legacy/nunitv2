@@ -336,9 +336,9 @@ namespace NUnit.Core.Tests
                         new TestCaseData( 0, 0, 0)
                             .SetName("ThisOneShouldThrow")
                             .SetDescription("Demonstrates use of ExpectedException")
-							.SetCategory("Junk")
-							.SetProperty("MyProp", "zip")
-							.Throws( typeof (System.DivideByZeroException) ));
+                            .SetCategory("Junk")
+                            .SetProperty("MyProp", "zip")
+                            .Throws( typeof (System.DivideByZeroException) ));
                     list.Add(new object[] { 100, 20, 5 });
                     list.Add(new object[] {100, 4, 25});
                     return list;

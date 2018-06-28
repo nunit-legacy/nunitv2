@@ -13,17 +13,17 @@ using NUnit.Framework;
 
 namespace NUnit.Core.Tests
 {
-	/// <summary>
+    /// <summary>
     /// Summary description for TestExecutionContextTests.
-	/// </summary>
-	[TestFixture][Property("Question", "Why?")]
+    /// </summary>
+    [TestFixture][Property("Question", "Why?")]
     public class TestExecutionContextTests
-	{
+    {
         TestExecutionContext fixtureContext;
         TestExecutionContext setupContext;
 
-		string currentDirectory;
-		CultureInfo currentCulture;
+        string currentDirectory;
+        CultureInfo currentCulture;
         CultureInfo currentUICulture;
         IPrincipal currentPrincipal;
 
@@ -47,25 +47,25 @@ namespace NUnit.Core.Tests
         }
 
         /// <summary>
-		/// Since we are testing the mechanism that saves and
-		/// restores contexts, we save manually here
-		/// </summary>
-		[SetUp]
-		public void SaveContext()
-		{
+        /// Since we are testing the mechanism that saves and
+        /// restores contexts, we save manually here
+        /// </summary>
+        [SetUp]
+        public void SaveContext()
+        {
             setupContext = TestExecutionContext.CurrentContext;
 
-			currentDirectory = Environment.CurrentDirectory;
-			currentCulture = CultureInfo.CurrentCulture;
+            currentDirectory = Environment.CurrentDirectory;
+            currentCulture = CultureInfo.CurrentCulture;
             currentUICulture = CultureInfo.CurrentUICulture;
             currentPrincipal = Thread.CurrentPrincipal;
-		}
+        }
 
-		[TearDown]
-		public void RestoreContext()
-		{
-			Environment.CurrentDirectory = currentDirectory;
-			Thread.CurrentThread.CurrentCulture = currentCulture;
+        [TearDown]
+        public void RestoreContext()
+        {
+            Environment.CurrentDirectory = currentDirectory;
+            Thread.CurrentThread.CurrentCulture = currentCulture;
             Thread.CurrentThread.CurrentUICulture = currentUICulture;
             Thread.CurrentPrincipal = currentPrincipal;
 
@@ -135,8 +135,8 @@ namespace NUnit.Core.Tests
         }
 
         [Test]
-		public void SetAndRestoreCurrentDirectory()
-		{
+        public void SetAndRestoreCurrentDirectory()
+        {
             Assert.AreEqual(currentDirectory, TestExecutionContext.CurrentContext.CurrentDirectory, "Directory not in initial context");
 
             TestExecutionContext.Save();
@@ -155,13 +155,13 @@ namespace NUnit.Core.Tests
                 TestExecutionContext.Restore();
             }
 
-			Assert.AreEqual( currentDirectory, Environment.CurrentDirectory, "Directory was not restored" );
+            Assert.AreEqual( currentDirectory, Environment.CurrentDirectory, "Directory was not restored" );
             Assert.AreEqual(currentDirectory, TestExecutionContext.CurrentContext.CurrentDirectory, "Directory not in final context");
-		}
-		
-		[Test]
-		public void SetAndRestoreCurrentCulture()
-		{
+        }
+        
+        [Test]
+        public void SetAndRestoreCurrentCulture()
+        {
             Assert.AreEqual(currentCulture, TestExecutionContext.CurrentContext.CurrentCulture, "Culture not in initial context");
 
             TestExecutionContext.Save();
@@ -179,9 +179,9 @@ namespace NUnit.Core.Tests
                 TestExecutionContext.Restore();
             }
 
-			Assert.AreEqual( currentCulture, CultureInfo.CurrentCulture, "Culture was not restored" );
+            Assert.AreEqual( currentCulture, CultureInfo.CurrentCulture, "Culture was not restored" );
             Assert.AreEqual(currentCulture, TestExecutionContext.CurrentContext.CurrentCulture, "Culture not in final context");
-		}
+        }
 
         [Test]
         public void SetAndRestoreCurrentUICulture()

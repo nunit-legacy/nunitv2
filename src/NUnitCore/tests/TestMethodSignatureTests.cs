@@ -14,35 +14,35 @@ using NUnit.TestData;
 
 namespace NUnit.Core.Tests
 {
-	[TestFixture]
-	public class TestMethodSignatureTests
-	{
+    [TestFixture]
+    public class TestMethodSignatureTests
+    {
         private static Type fixtureType = typeof(TestMethodSignatureFixture);
-		private Test fixture;
+        private Test fixture;
 
-		[SetUp]
-		public void CreateFixture()
-		{
-			fixture = TestBuilder.MakeFixture( typeof( TestMethodSignatureFixture ) );
-		}
+        [SetUp]
+        public void CreateFixture()
+        {
+            fixture = TestBuilder.MakeFixture( typeof( TestMethodSignatureFixture ) );
+        }
 
         [Test]
-		public void InstanceTestMethodIsRunnable()
-		{
-			TestAssert.IsRunnable( fixtureType, "InstanceTestMethod" );
-		}
+        public void InstanceTestMethodIsRunnable()
+        {
+            TestAssert.IsRunnable( fixtureType, "InstanceTestMethod" );
+        }
 
-		[Test]
-		public void StaticTestMethodIsRunnable()
-		{
-			TestAssert.IsRunnable( fixtureType, "StaticTestMethod" );
-		}
+        [Test]
+        public void StaticTestMethodIsRunnable()
+        {
+            TestAssert.IsRunnable( fixtureType, "StaticTestMethod" );
+        }
 
-		[Test]
-		public void TestMethodWithoutParametersWithArgumentsProvidedIsNotRunnable()
-		{
-			TestAssert.ChildNotRunnable(fixtureType, "TestMethodWithoutParametersWithArgumentsProvided");
-		}
+        [Test]
+        public void TestMethodWithoutParametersWithArgumentsProvidedIsNotRunnable()
+        {
+            TestAssert.ChildNotRunnable(fixtureType, "TestMethodWithoutParametersWithArgumentsProvided");
+        }
 
         [Test]
         public void TestMethodWithArgumentsNotProvidedIsNotRunnable()
@@ -105,33 +105,33 @@ namespace NUnit.Core.Tests
         }
 
         [Test]
-		public void ProtectedTestMethodIsNotRunnable()
-		{
-			TestAssert.IsNotRunnable( fixtureType, "ProtectedTestMethod" );
-		}
+        public void ProtectedTestMethodIsNotRunnable()
+        {
+            TestAssert.IsNotRunnable( fixtureType, "ProtectedTestMethod" );
+        }
 
-		[Test]
-		public void PrivateTestMethodIsNotRunnable()
-		{
-			TestAssert.IsNotRunnable( fixtureType, "PrivateTestMethod" );
-		}
+        [Test]
+        public void PrivateTestMethodIsNotRunnable()
+        {
+            TestAssert.IsNotRunnable( fixtureType, "PrivateTestMethod" );
+        }
 
-		[Test]
-		public void TestMethodWithReturnTypeIsNotRunnable()
-		{
-			TestAssert.IsNotRunnable( fixtureType, "TestMethodWithReturnType" );
-		}
+        [Test]
+        public void TestMethodWithReturnTypeIsNotRunnable()
+        {
+            TestAssert.IsNotRunnable( fixtureType, "TestMethodWithReturnType" );
+        }
 
-		[Test]
-		public void TestMethodWithMultipleTestCasesExecutesMultipleTimes()
-		{
-			Test test = TestFinder.Find( "TestMethodWithMultipleTestCases", fixture, false );
-			Assert.That( test.RunState, Is.EqualTo( RunState.Runnable ) );
+        [Test]
+        public void TestMethodWithMultipleTestCasesExecutesMultipleTimes()
+        {
+            Test test = TestFinder.Find( "TestMethodWithMultipleTestCases", fixture, false );
+            Assert.That( test.RunState, Is.EqualTo( RunState.Runnable ) );
             TestResult result = test.Run(NullListener.NULL, TestFilter.Empty);
-			Assert.That( result.ResultState, Is.EqualTo(ResultState.Success) );
+            Assert.That( result.ResultState, Is.EqualTo(ResultState.Success) );
             ResultSummarizer summary = new ResultSummarizer(result);
-		    Assert.That(summary.TestsRun, Is.EqualTo(3));
-		}
+            Assert.That(summary.TestsRun, Is.EqualTo(3));
+        }
 
         [Test]
         public void TestMethodWithMultipleTestCasesUsesCorrectNames()
@@ -192,19 +192,19 @@ namespace NUnit.Core.Tests
 
         [Test]
         public void RunningTestsThroughFixtureGivesCorrectResults()
-		{
+        {
             TestResult result = fixture.Run(NullListener.NULL, TestFilter.Empty);
-			ResultSummarizer summary = new ResultSummarizer( result );
+            ResultSummarizer summary = new ResultSummarizer( result );
 
-			Assert.That( 
-				summary.ResultCount, 
-				Is.EqualTo( TestMethodSignatureFixture.Tests ) );
-			Assert.That( 
-				summary.TestsRun, 
-				Is.EqualTo( TestMethodSignatureFixture.Runnable ) );
-			Assert.That( 
-				summary.NotRunnable, 
-				Is.EqualTo( TestMethodSignatureFixture.NotRunnable ) );
+            Assert.That( 
+                summary.ResultCount, 
+                Is.EqualTo( TestMethodSignatureFixture.Tests ) );
+            Assert.That( 
+                summary.TestsRun, 
+                Is.EqualTo( TestMethodSignatureFixture.Runnable ) );
+            Assert.That( 
+                summary.NotRunnable, 
+                Is.EqualTo( TestMethodSignatureFixture.NotRunnable ) );
             Assert.That(
                 summary.Errors,
                 Is.EqualTo(TestMethodSignatureFixture.Errors));
@@ -212,8 +212,8 @@ namespace NUnit.Core.Tests
                 summary.Failures,
                 Is.EqualTo(TestMethodSignatureFixture.Failures));
             Assert.That( 
-				summary.TestsNotRun, 
-				Is.EqualTo( TestMethodSignatureFixture.NotRunnable ) );
-		}
+                summary.TestsNotRun, 
+                Is.EqualTo( TestMethodSignatureFixture.NotRunnable ) );
+        }
     }
 }

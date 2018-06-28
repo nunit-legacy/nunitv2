@@ -11,45 +11,45 @@ using NUnit.TestData.CategoryAttributeTests;
 
 namespace NUnit.Core.Tests
 {
-	/// <summary>
-	/// Summary description for CategoryAttributeTests.
-	/// </summary>
-	[TestFixture]
-	public class CategoryAttributeTests
-	{
-		TestSuite fixture;
+    /// <summary>
+    /// Summary description for CategoryAttributeTests.
+    /// </summary>
+    [TestFixture]
+    public class CategoryAttributeTests
+    {
+        TestSuite fixture;
 
-		[SetUp]
-		public void CreateFixture()
-		{
-			fixture = TestBuilder.MakeFixture( typeof( FixtureWithCategories ) );
-		}
+        [SetUp]
+        public void CreateFixture()
+        {
+            fixture = TestBuilder.MakeFixture( typeof( FixtureWithCategories ) );
+        }
 
-		[Test]
-		public void CategoryOnFixture()
-		{
-			Assert.Contains( "DataBase", fixture.Categories );
-		}
+        [Test]
+        public void CategoryOnFixture()
+        {
+            Assert.Contains( "DataBase", fixture.Categories );
+        }
 
-		[Test]
-		public void CategoryOnTestCase()
-		{
-			Test test1 = (Test)fixture.Tests[0];
-			Assert.Contains( "Long", test1.Categories );
-		}
+        [Test]
+        public void CategoryOnTestCase()
+        {
+            Test test1 = (Test)fixture.Tests[0];
+            Assert.Contains( "Long", test1.Categories );
+        }
 
-		[Test]
-		public void CanDeriveFromCategoryAttribute()
-		{
-			Test test2 = (Test)fixture.Tests[1];
-			Assert.Contains( "Critical", test2.Categories );
-		}
-		
-		[Test]
-		public void DerivedCategoryMayBeInherited()
-		{
-			Assert.Contains("MyCategory", fixture.Categories);
-		}
+        [Test]
+        public void CanDeriveFromCategoryAttribute()
+        {
+            Test test2 = (Test)fixture.Tests[1];
+            Assert.Contains( "Critical", test2.Categories );
+        }
+        
+        [Test]
+        public void DerivedCategoryMayBeInherited()
+        {
+            Assert.Contains("MyCategory", fixture.Categories);
+        }
 
         [Test]
         public void CountTestsWithoutCategoryFilter()
