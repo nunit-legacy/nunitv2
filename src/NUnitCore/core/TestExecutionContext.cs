@@ -14,25 +14,25 @@ using System.Threading;
 
 namespace NUnit.Core
 {
-	/// <summary>
-	/// Helper class used to save and restore certain static or
-	/// singleton settings in the environment that affect tests 
-	/// or which might be changed by the user tests.
-	/// 
-	/// An internal class is used to hold settings and a stack
-	/// of these objects is pushed and popped as Save and Restore
-	/// are called.
-	/// 
-	/// Static methods for each setting forward to the internal 
-	/// object on the top of the stack.
-	/// </summary>
-	public class TestExecutionContext
-	{
-		#region Static Fields
+    /// <summary>
+    /// Helper class used to save and restore certain static or
+    /// singleton settings in the environment that affect tests 
+    /// or which might be changed by the user tests.
+    /// 
+    /// An internal class is used to hold settings and a stack
+    /// of these objects is pushed and popped as Save and Restore
+    /// are called.
+    /// 
+    /// Static methods for each setting forward to the internal 
+    /// object on the top of the stack.
+    /// </summary>
+    public class TestExecutionContext
+    {
+        #region Static Fields
 
-		/// <summary>
-		/// The current context, head of the list of saved contexts.
-		/// </summary>
+        /// <summary>
+        /// The current context, head of the list of saved contexts.
+        /// </summary>
         private static TestExecutionContext current = new TestExecutionContext();
 
         #endregion
@@ -400,11 +400,11 @@ namespace NUnit.Core
         /// </summary>
         public static void Save()
         {
-	        current = new TestExecutionContext(current);
-	        SaveInCallContext();
+            current = new TestExecutionContext(current);
+            SaveInCallContext();
         }
 
-		/// <summary>
+        /// <summary>
         /// Restores the last saved context and puts
         /// any saved settings back into effect.
         /// </summary>
@@ -420,7 +420,7 @@ namespace NUnit.Core
             CallContext.SetData("NUnit.Framework.TestContext", current.contextDictionary);
         }
 
-		#endregion
+        #endregion
 
         #region Instance Methods
 
@@ -455,5 +455,5 @@ namespace NUnit.Core
         }
 
         #endregion
-	}
+    }
 }

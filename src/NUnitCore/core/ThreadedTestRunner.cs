@@ -6,27 +6,27 @@
 // ****************************************************************
 namespace NUnit.Core
 {
-	using System;
-	using System.Threading;
-	using System.Collections.Specialized;
+    using System;
+    using System.Threading;
+    using System.Collections.Specialized;
 
-	/// <summary>
-	/// ThreadedTestRunner overrides the Run and BeginRun methods 
-	/// so that they are always run on a separate thread. The actual
-	/// </summary>
-	public class ThreadedTestRunner : ProxyTestRunner
-	{
+    /// <summary>
+    /// ThreadedTestRunner overrides the Run and BeginRun methods 
+    /// so that they are always run on a separate thread. The actual
+    /// </summary>
+    public class ThreadedTestRunner : ProxyTestRunner
+    {
         static Logger log = InternalTrace.GetLogger(typeof(ThreadedTestRunner));
 
-		#region Instance Variables
+        #region Instance Variables
 
-		private TestRunnerThread testRunnerThread;
+        private TestRunnerThread testRunnerThread;
         private ApartmentState apartmentState;
         private ThreadPriority priority;
 
-		#endregion
+        #endregion
 
-		#region Constructor
+        #region Constructor
 
         public ThreadedTestRunner(TestRunner testRunner) 
             : this(testRunner, ApartmentState.Unknown, ThreadPriority.Normal) { }
@@ -38,9 +38,9 @@ namespace NUnit.Core
             this.priority = priority;
         }
 
-		#endregion
+        #endregion
 
-		#region Overrides
+        #region Overrides
 
         public override TestResult Run(EventListener listener, ITestFilter filter, bool tracing, LoggingThreshold logLevel)
         {
@@ -56,24 +56,24 @@ namespace NUnit.Core
         }
 
         public override TestResult EndRun()
-		{
+        {
             log.Info("EndRun");
             this.Wait();
-			return this.TestRunner.TestResult;
-		}
+            return this.TestRunner.TestResult;
+        }
 
-		public override void Wait()
-		{
-			if ( testRunnerThread != null )
-				testRunnerThread.Wait();
-		}
+        public override void Wait()
+        {
+            if ( testRunnerThread != null )
+                testRunnerThread.Wait();
+        }
 
-		public override void CancelRun()
-		{
-			if ( testRunnerThread != null )
-				testRunnerThread.Cancel();
-		}
+        public override void CancelRun()
+        {
+            if ( testRunnerThread != null )
+                testRunnerThread.Cancel();
+        }
 
-		#endregion
-	}
+        #endregion
+    }
 }

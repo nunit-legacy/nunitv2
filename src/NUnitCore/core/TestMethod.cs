@@ -10,51 +10,51 @@ using System.Diagnostics;
 
 namespace NUnit.Core
 {
-	using System;
+    using System;
     using System.Collections;
     using System.Runtime.Remoting.Messaging;
     using System.Threading;
-	using System.Text;
-	using System.Text.RegularExpressions;
-	using System.Reflection;
+    using System.Text;
+    using System.Text.RegularExpressions;
+    using System.Reflection;
 
 #if CLR_2_0 || CLR_4_0
     using System.Collections.Generic;
 #endif
 
-	/// <summary>
-	/// The TestMethod class represents a Test implemented as a method.
-	/// 
-	/// Because of how exceptions are handled internally, this class
-	/// must incorporate processing of expected exceptions. A change to
-	/// the Test interface might make it easier to process exceptions
-	/// in an object that aggregates a TestMethod in the future.
-	/// </summary>
-	public abstract class TestMethod : Test
-	{
+    /// <summary>
+    /// The TestMethod class represents a Test implemented as a method.
+    /// 
+    /// Because of how exceptions are handled internally, this class
+    /// must incorporate processing of expected exceptions. A change to
+    /// the Test interface might make it easier to process exceptions
+    /// in an object that aggregates a TestMethod in the future.
+    /// </summary>
+    public abstract class TestMethod : Test
+    {
         static Logger log = InternalTrace.GetLogger(typeof(TestMethod));
         
-		#region Fields
-		/// <summary>
-		/// The test method
-		/// </summary>
-		internal MethodInfo method;
+        #region Fields
+        /// <summary>
+        /// The test method
+        /// </summary>
+        internal MethodInfo method;
 
-		/// <summary>
-		/// The SetUp method.
-		/// </summary>
-		protected IList<MethodInfo> setUpMethods;
+        /// <summary>
+        /// The SetUp method.
+        /// </summary>
+        protected IList<MethodInfo> setUpMethods;
 
-		/// <summary>
-		/// The teardown method
-		/// </summary>
-		protected IList<MethodInfo> tearDownMethods;
+        /// <summary>
+        /// The teardown method
+        /// </summary>
+        protected IList<MethodInfo> tearDownMethods;
 
 #if CLR_2_0 || CLR_4_0
         /// <summary>
         /// The actions
         /// </summary>
-	    protected TestAction[] actions;
+        protected TestAction[] actions;
 
         /// <summary>
         /// The parent suite's actions
@@ -70,12 +70,12 @@ namespace NUnit.Core
         /// <summary>
         /// Arguments to be used in invoking the method
         /// </summary>
-	    internal object[] arguments;
+        internal object[] arguments;
 
         /// <summary>
         /// The expected result of the method return value
         /// </summary>
-	    internal object expectedResult;
+        internal object expectedResult;
 
         /// <summary>
         /// Indicates whether expectedResult was set - thereby allowing null as a value
@@ -89,30 +89,30 @@ namespace NUnit.Core
 
         private Exception builderException;
 
-		#endregion
+        #endregion
 
-		#region Constructors
-		public TestMethod( MethodInfo method ) 
-			: base( method.ReflectedType.FullName, method.Name ) 
-		{
+        #region Constructors
+        public TestMethod( MethodInfo method ) 
+            : base( method.ReflectedType.FullName, method.Name ) 
+        {
             if( method.DeclaringType != method.ReflectedType)
                 this.TestName.Name = method.DeclaringType.Name + "." + method.Name;
 
             this.method = method;
-		}
-		#endregion
+        }
+        #endregion
 
-		#region Properties
+        #region Properties
 
         public override string TestType
         {
             get { return "TestMethod"; }
         }
 
-		public MethodInfo Method
-		{
-			get { return method; }
-		}
+        public MethodInfo Method
+        {
+            get { return method; }
+        }
 
         public override Type FixtureType
         {
@@ -130,10 +130,10 @@ namespace NUnit.Core
             set { exceptionProcessor = value; }
         }
 
-		public bool ExceptionExpected
-		{
+        public bool ExceptionExpected
+        {
             get { return exceptionProcessor != null; }
-		}
+        }
 
         public override object Fixture
         {
@@ -150,14 +150,14 @@ namespace NUnit.Core
                     : TestExecutionContext.CurrentContext.TestCaseTimeout;
             }
         }
-		
-		protected override bool ShouldRunOnOwnThread 
-		{
-			get 
-			{
+        
+        protected override bool ShouldRunOnOwnThread 
+        {
+            get 
+            {
                 return base.ShouldRunOnOwnThread || Timeout > 0;
-			}
-		}
+            }
+        }
 
         public Exception BuilderException
         {
@@ -166,7 +166,7 @@ namespace NUnit.Core
         }
         #endregion
 
-		#region Run Methods
+        #region Run Methods
         public override TestResult Run(EventListener listener, ITestFilter filter)
         {
             log.Debug("Test Starting: " + this.TestName.FullName);
@@ -178,9 +178,9 @@ namespace NUnit.Core
 #endif
 
             TestResult testResult = this.RunState == RunState.Runnable || this.RunState == RunState.Explicit
-				? RunTestInContext() : SkipTest();
+                ? RunTestInContext() : SkipTest();
 
-			log.Debug("Test result = " + testResult.ResultState);
+            log.Debug("Test result = " + testResult.ResultState);
 
 #if CLR_2_0 || CLR_4_0
             long stopTime = Stopwatch.GetTimestamp();
@@ -194,11 +194,11 @@ namespace NUnit.Core
             listener.TestFinished(testResult);
             return testResult;
         }
-		      
-		private TestResult SkipTest()
-		{
-			TestResult testResult = new TestResult(this);
-			
+              
+        private TestResult SkipTest()
+        {
+            TestResult testResult = new TestResult(this);
+            
             switch (this.RunState)
             {
                 case RunState.Skipped:
@@ -215,13 +215,13 @@ namespace NUnit.Core
                     testResult.Ignore(IgnoreReason);
                     break;
             }
-			
-			return testResult;
-		}
-		
+            
+            return testResult;
+        }
+        
         private TestResult RunTestInContext()
-		{
-			TestExecutionContext.Save();
+        {
+            TestExecutionContext.Save();
 
             TestExecutionContext.CurrentContext.CurrentTest = this;
 
@@ -263,19 +263,19 @@ namespace NUnit.Core
                     TestExecutionContext.CurrentContext.CurrentUICulture =
                         new System.Globalization.CultureInfo((string)Properties["SetUICulture"]);
 
-				return RunRepeatedTest();
+                return RunRepeatedTest();
             }
             catch (Exception ex)
             {
-				log.Debug("TestMethod: Caught " + ex.GetType().Name);
-				
+                log.Debug("TestMethod: Caught " + ex.GetType().Name);
+                
                 if (ex is ThreadAbortException)
                     Thread.ResetAbort();
 
-				TestResult testResult = new TestResult(this);
+                TestResult testResult = new TestResult(this);
                 RecordException(ex, testResult, FailureSite.Test);
-				
-				return testResult;
+                
+                return testResult;
             }
             finally
             {
@@ -283,18 +283,18 @@ namespace NUnit.Core
 
                 TestExecutionContext.Restore();
             }
-		}
-		
-		// TODO: Repeated tests need to be implemented as separate tests
-		// in the tree of tests. Once that is done, this method will no
-		// longer be needed and RunTest can be called directly.
-		private TestResult RunRepeatedTest()
-		{
-			TestResult testResult = null;
-			
-			int repeatCount = this.Properties.Contains("Repeat")
-				? (int)this.Properties["Repeat"] : 1;
-			
+        }
+        
+        // TODO: Repeated tests need to be implemented as separate tests
+        // in the tree of tests. Once that is done, this method will no
+        // longer be needed and RunTest can be called directly.
+        private TestResult RunRepeatedTest()
+        {
+            TestResult testResult = null;
+            
+            int repeatCount = this.Properties.Contains("Repeat")
+                ? (int)this.Properties["Repeat"] : 1;
+            
             while (repeatCount-- > 0)
             {
                 testResult = ShouldRunOnOwnThread
@@ -308,56 +308,56 @@ namespace NUnit.Core
                     break;
                 }
             }
-			
-			return testResult;
-		}
+            
+            return testResult;
+        }
 
-		/// <summary>
-		/// The doRun method is used to run a test internally.
-		/// It assumes that the caller is taking care of any 
-		/// TestFixtureSetUp and TestFixtureTearDown needed.
-		/// </summary>
-		/// <param name="testResult">The result in which to record success or failure</param>
-		public virtual TestResult RunTest()
-		{
-			DateTime start = DateTime.Now;
+        /// <summary>
+        /// The doRun method is used to run a test internally.
+        /// It assumes that the caller is taking care of any 
+        /// TestFixtureSetUp and TestFixtureTearDown needed.
+        /// </summary>
+        /// <param name="testResult">The result in which to record success or failure</param>
+        public virtual TestResult RunTest()
+        {
+            DateTime start = DateTime.Now;
 
-			TestResult testResult = new TestResult(this);
-			TestExecutionContext.CurrentContext.CurrentResult =  testResult;
-			
-			try
-			{
+            TestResult testResult = new TestResult(this);
+            TestExecutionContext.CurrentContext.CurrentResult =  testResult;
+            
+            try
+            {
                 RunSetUp();
 #if CLR_2_0 || CLR_4_0
-			    RunBeforeActions(testResult);
+                RunBeforeActions(testResult);
 #endif
 
-				RunTestCase( testResult );
-			}
-			catch(Exception ex)
-			{
+                RunTestCase( testResult );
+            }
+            catch(Exception ex)
+            {
                 // doTestCase handles its own exceptions so
                 // if we're here it's a setup exception
                 if (ex is ThreadAbortException)
                     Thread.ResetAbort();
 
                 RecordException(ex, testResult, FailureSite.SetUp);
-			}
-			finally 
-			{
+            }
+            finally 
+            {
 #if CLR_2_0 || CLR_4_0
                 RunAfterActions(testResult);
 #endif
-				RunTearDown( testResult );
+                RunTearDown( testResult );
 
-				DateTime stop = DateTime.Now;
-				TimeSpan span = stop.Subtract(start);
-				testResult.Time = (double)span.Ticks / (double)TimeSpan.TicksPerSecond;
+                DateTime stop = DateTime.Now;
+                TimeSpan span = stop.Subtract(start);
+                testResult.Time = (double)span.Ticks / (double)TimeSpan.TicksPerSecond;
 
                 if (testResult.IsSuccess)
-				{
-					if (this.Properties.Contains("MaxTime"))
-                	{
+                {
+                    if (this.Properties.Contains("MaxTime"))
+                    {
                     int elapsedTime = (int)Math.Round(testResult.Time * 1000.0);
                     int maxTime = (int)this.Properties["MaxTime"];
 
@@ -366,24 +366,24 @@ namespace NUnit.Core
                             string.Format("Elapsed time of {0}ms exceeds maximum of {1}ms",
                                 elapsedTime, maxTime),
                             null);
-					}
-					
-					if (testResult.IsSuccess && testResult.Message == null && 
-					    Environment.CurrentDirectory != TestExecutionContext.CurrentContext.prior.CurrentDirectory)
-					{
-						// TODO: Introduce a warning result state in NUnit 3.0
-						testResult.SetResult(ResultState.Success, "Warning: Test changed the CurrentDirectory", null);
-					}
-				}
-			}
-			
-			log.Debug("Test result = " + testResult.ResultState);
-				
-			return testResult;
-		}
-		#endregion
+                    }
+                    
+                    if (testResult.IsSuccess && testResult.Message == null && 
+                        Environment.CurrentDirectory != TestExecutionContext.CurrentContext.prior.CurrentDirectory)
+                    {
+                        // TODO: Introduce a warning result state in NUnit 3.0
+                        testResult.SetResult(ResultState.Success, "Warning: Test changed the CurrentDirectory", null);
+                    }
+                }
+            }
+            
+            log.Debug("Test result = " + testResult.ResultState);
+                
+            return testResult;
+        }
+        #endregion
 
-		#region Invoke Methods by Reflection, Recording Errors
+        #region Invoke Methods by Reflection, Recording Errors
 
 #if CLR_2_0 || CLR_4_0
 
@@ -437,35 +437,35 @@ namespace NUnit.Core
         }
 #endif
 
-	    private void RunSetUp()
+        private void RunSetUp()
         {
             if (setUpMethods != null)
                 foreach( MethodInfo setUpMethod in setUpMethods )
                     Reflect.InvokeMethod(setUpMethod, setUpMethod.IsStatic ? null : this.Fixture);
         }
 
-		private void RunTearDown( TestResult testResult )
-		{
-			try
-			{
+        private void RunTearDown( TestResult testResult )
+        {
+            try
+            {
                 if (tearDownMethods != null)
                 {
                     int index = tearDownMethods.Count;
                     while (--index >= 0)
                         Reflect.InvokeMethod(tearDownMethods[index], tearDownMethods[index].IsStatic ? null : this.Fixture);
                 }
-			}
-			catch(Exception ex)
-			{
-				if ( ex is NUnitException )
-					ex = ex.InnerException;
+            }
+            catch(Exception ex)
+            {
+                if ( ex is NUnitException )
+                    ex = ex.InnerException;
 
                 RecordException(ex, testResult, FailureSite.TearDown);
-			}
-		}
+            }
+        }
 
-		private void RunTestCase( TestResult testResult )
-		{
+        private void RunTestCase( TestResult testResult )
+        {
             try
             {
                 object result = RunTestMethod();
@@ -488,20 +488,20 @@ namespace NUnit.Core
                 else
                     exceptionProcessor.ProcessException(ex, testResult);
             }
-		}
+        }
 
-	    protected virtual object RunTestMethod()
-		{
+        protected virtual object RunTestMethod()
+        {
             object fixture = this.method.IsStatic ? null : this.Fixture;
             
             return Reflect.InvokeMethod(this.method, fixture, this.arguments);
         }
 
-	    #endregion
+        #endregion
 
-		#region Record Info About An Exception
-		protected virtual void RecordException( Exception exception, TestResult testResult, FailureSite failureSite )
-		{
+        #region Record Info About An Exception
+        protected virtual void RecordException( Exception exception, TestResult testResult, FailureSite failureSite )
+        {
             if (exception is NUnitException)
                 exception = exception.InnerException;
 
@@ -511,7 +511,7 @@ namespace NUnit.Core
                 : NUnitFramework.GetResultState(exception);
 
             testResult.SetResult(finalResultState, exception, failureSite);
-		}
-		#endregion
+        }
+        #endregion
     }
 }

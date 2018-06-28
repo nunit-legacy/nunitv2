@@ -27,7 +27,7 @@ namespace NUnit.Core.Builders
 #if CLR_2_0 || CLR_4_0
             List<ParameterSet> testCases = new List<ParameterSet>();
 #else
-			ArrayList testCases = new ArrayList();
+            ArrayList testCases = new ArrayList();
 #endif
 
             for (; ; )
@@ -36,7 +36,7 @@ namespace NUnit.Core.Builders
                 {
                     enumerators[index] = Sources[index].GetEnumerator();
                     if (!enumerators[index].MoveNext())
-						return testCases;
+                        return testCases;
                 }
 
                 object[] testdata = new object[Sources.Length];
@@ -46,7 +46,7 @@ namespace NUnit.Core.Builders
 
                 ParameterSet testCase = new ParameterSet();
                 testCase.Arguments = testdata;
-				testCases.Add(testCase);
+                testCases.Add(testCase);
 
                 index = Sources.Length;
 
@@ -55,7 +55,7 @@ namespace NUnit.Core.Builders
                 if (index < 0) break;
             }
 
-			return testCases;
+            return testCases;
         }
     }
 }

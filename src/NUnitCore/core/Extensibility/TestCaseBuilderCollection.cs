@@ -10,20 +10,20 @@ using System.Reflection;
 
 namespace NUnit.Core.Extensibility
 {
-	/// <summary>
-	/// TestCaseBuilderCollection is an ExtensionPoint for TestCaseBuilders 
-	/// and implements the ITestCaseBuilder interface itself, passing calls 
-	/// on to the individual builders.
-	/// 
-	/// The builders are added to the collection by inserting them at
-	/// the start, as to take precedence over those added earlier. 
-	/// </summary>
-	public class TestCaseBuilderCollection : ExtensionPoint, ITestCaseBuilder2
-	{
-		#region Constructor
-		public TestCaseBuilderCollection(IExtensionHost host)
-			: base("TestCaseBuilders", host) { }
-		#endregion
+    /// <summary>
+    /// TestCaseBuilderCollection is an ExtensionPoint for TestCaseBuilders 
+    /// and implements the ITestCaseBuilder interface itself, passing calls 
+    /// on to the individual builders.
+    /// 
+    /// The builders are added to the collection by inserting them at
+    /// the start, as to take precedence over those added earlier. 
+    /// </summary>
+    public class TestCaseBuilderCollection : ExtensionPoint, ITestCaseBuilder2
+    {
+        #region Constructor
+        public TestCaseBuilderCollection(IExtensionHost host)
+            : base("TestCaseBuilders", host) { }
+        #endregion
 
         #region ITestCaseBuilder Members
         /// <summary>
@@ -106,10 +106,10 @@ namespace NUnit.Core.Extensibility
         #endregion
 
         #region ExtensionPoint Overrides
-		protected override bool IsValidExtension(object extension)
-		{
-			return extension is ITestCaseBuilder; 
-		}
-		#endregion
-	}
+        protected override bool IsValidExtension(object extension)
+        {
+            return extension is ITestCaseBuilder; 
+        }
+        #endregion
+    }
 }

@@ -8,12 +8,12 @@
 
 namespace NUnit.Core
 {
-	using System;
+    using System;
     using System.Text;
     using System.Threading;
-	using System.Collections;
-	using System.Reflection;
-	using NUnit.Core.Filters;
+    using System.Collections;
+    using System.Reflection;
+    using NUnit.Core.Filters;
     using System.Runtime.Remoting.Messaging;
 
 #if CLR_2_0 || CLR_4_0
@@ -21,26 +21,26 @@ namespace NUnit.Core
 using System.Diagnostics;
 #endif
 
-	/// <summary>
-	/// Summary description for TestSuite.
-	/// </summary>
-	/// 
-	[Serializable]
-	public class TestSuite : Test
-	{
-		#region Fields
+    /// <summary>
+    /// Summary description for TestSuite.
+    /// </summary>
+    /// 
+    [Serializable]
+    public class TestSuite : Test
+    {
+        #region Fields
         static Logger log = InternalTrace.GetLogger(typeof(TestSuite));
 
-		/// <summary>
-		/// Our collection of child tests
-		/// </summary>
-		private ArrayList tests = new ArrayList();
+        /// <summary>
+        /// Our collection of child tests
+        /// </summary>
+        private ArrayList tests = new ArrayList();
 
 #if CLR_2_0 || CLR_4_0
         /// <summary>
         /// The actions for this suite
         /// </summary>
-	    protected TestAction[] actions;
+        protected TestAction[] actions;
 #endif
 
         /// <summary>
@@ -65,12 +65,12 @@ using System.Diagnostics;
 
         #endregion
 
-		#region Constructors
-		public TestSuite( string name ) 
-			: base( name ) { }
+        #region Constructors
+        public TestSuite( string name ) 
+            : base( name ) { }
 
-		public TestSuite( string parentSuiteName, string name ) 
-			: base( parentSuiteName, name ) { }
+        public TestSuite( string parentSuiteName, string name ) 
+            : base( parentSuiteName, name ) { }
 
         public TestSuite(Type fixtureType)
             : this(fixtureType, null) { }
@@ -91,8 +91,8 @@ using System.Diagnostics;
         #endregion
 
         #region Public Methods
-		public void Sort()
-		{
+        public void Sort()
+        {
             if (!maintainTestOrder)
             {
                 this.tests.Sort();
@@ -104,63 +104,63 @@ using System.Diagnostics;
                         suite.Sort();
                 }
             }
-		}
+        }
 
-		public void Sort(IComparer comparer)
-		{
-			this.tests.Sort(comparer);
+        public void Sort(IComparer comparer)
+        {
+            this.tests.Sort(comparer);
 
-			foreach( Test test in Tests )
-			{
-				TestSuite suite = test as TestSuite;
-				if ( suite != null )
-					suite.Sort(comparer);
-			}
-		}
+            foreach( Test test in Tests )
+            {
+                TestSuite suite = test as TestSuite;
+                if ( suite != null )
+                    suite.Sort(comparer);
+            }
+        }
 
-		public void Add( Test test ) 
-		{
+        public void Add( Test test ) 
+        {
 //			if( test.RunState == RunState.Runnable )
 //			{
 //				test.RunState = this.RunState;
 //				test.IgnoreReason = this.IgnoreReason;
 //			}
-			test.Parent = this;
-			tests.Add(test);
-		}
+            test.Parent = this;
+            tests.Add(test);
+        }
 
-		public void Add( object fixture )
-		{
-			Test test = TestFixtureBuilder.BuildFrom( fixture );
-			if ( test != null )
-				Add( test );
-		}
-		#endregion
+        public void Add( object fixture )
+        {
+            Test test = TestFixtureBuilder.BuildFrom( fixture );
+            if ( test != null )
+                Add( test );
+        }
+        #endregion
 
-		#region Properties
-		public override IList Tests 
-		{
-			get { return tests; }
-		}
+        #region Properties
+        public override IList Tests 
+        {
+            get { return tests; }
+        }
 
-		public override bool IsSuite
-		{
-			get { return true; }
-		}
+        public override bool IsSuite
+        {
+            get { return true; }
+        }
 
-		public override int TestCount
-		{
-			get
-			{
-				int count = 0;
+        public override int TestCount
+        {
+            get
+            {
+                int count = 0;
 
-				foreach(Test test in Tests)
-				{
-					count += test.TestCount;
-				}
-				return count;
-			}
-		}
+                foreach(Test test in Tests)
+                {
+                    count += test.TestCount;
+                }
+                return count;
+            }
+        }
 
         public override Type FixtureType
         {
@@ -216,22 +216,22 @@ using System.Diagnostics;
             get { return "TestSuite"; }
         }
 
-		public override int CountTestCases(ITestFilter filter)
-		{
-			int count = 0;
+        public override int CountTestCases(ITestFilter filter)
+        {
+            int count = 0;
 
-			if(filter.Pass(this)) 
-			{
-				foreach(Test test in Tests)
-				{
-					count += test.CountTestCases(filter);
-				}
-			}
-			return count;
-		}
+            if(filter.Pass(this)) 
+            {
+                foreach(Test test in Tests)
+                {
+                    count += test.CountTestCases(filter);
+                }
+            }
+            return count;
+        }
 
-		public override TestResult Run(EventListener listener, ITestFilter filter)
-		{
+        public override TestResult Run(EventListener listener, ITestFilter filter)
+        {
             listener.SuiteStarted(this.TestName);
 #if CLR_2_0 || CLR_4_0
             long startTime = Stopwatch.GetTimestamp();
@@ -239,10 +239,10 @@ using System.Diagnostics;
             long startTime = DateTime.Now.Ticks;
 #endif
 
-			TestResult suiteResult = this.RunState == RunState.Runnable || this.RunState == RunState.Explicit
-				? RunSuiteInContext(listener, filter)
-				: SkipSuite(listener, filter);
-			
+            TestResult suiteResult = this.RunState == RunState.Runnable || this.RunState == RunState.Explicit
+                ? RunSuiteInContext(listener, filter)
+                : SkipSuite(listener, filter);
+            
 #if CLR_2_0 || CLR_4_0
             long stopTime = Stopwatch.GetTimestamp();
             double time = ((double)(stopTime - startTime)) / (double)Stopwatch.Frequency;
@@ -254,12 +254,12 @@ using System.Diagnostics;
 
             listener.SuiteFinished(suiteResult);
             return suiteResult;
-		}
-		
-		private TestResult SkipSuite(EventListener listener, ITestFilter filter)
-		{
-			TestResult suiteResult = new TestResult(this);
-			
+        }
+        
+        private TestResult SkipSuite(EventListener listener, ITestFilter filter)
+        {
+            TestResult suiteResult = new TestResult(this);
+            
             switch (this.RunState)
             {
                 default:
@@ -274,32 +274,32 @@ using System.Diagnostics;
                     break;
             }
 
-			return suiteResult;
-		}
+            return suiteResult;
+        }
 
-		private TestResult RunSuiteInContext(EventListener listener, ITestFilter filter)
-		{
+        private TestResult RunSuiteInContext(EventListener listener, ITestFilter filter)
+        {
             TestExecutionContext.Save();
 
             TestExecutionContext.CurrentContext.CurrentTest = this;
 
             try
             {
-				return ShouldRunOnOwnThread
-	                ? new TestSuiteThread(this).Run(listener, filter)
-	                : RunSuite(listener, filter);
+                return ShouldRunOnOwnThread
+                    ? new TestSuiteThread(this).Run(listener, filter)
+                    : RunSuite(listener, filter);
             }
             finally
             {
                 TestExecutionContext.Restore();
             }
-		}
+        }
 
         public TestResult RunSuite(EventListener listener, ITestFilter filter)
         {
-			TestResult suiteResult = new TestResult(this);
+            TestResult suiteResult = new TestResult(this);
             TestExecutionContext.CurrentContext.CurrentResult = suiteResult;
-			
+            
             DoOneTimeSetUp(suiteResult);
 #if CLR_2_0 || CLR_4_0
             DoOneTimeBeforeTestSuiteActions(suiteResult);
@@ -342,21 +342,21 @@ using System.Diagnostics;
                     }
                     break;
             }
-			
-			return suiteResult;
+            
+            return suiteResult;
         }
-		#endregion
+        #endregion
 
-		#region Virtual Methods
+        #region Virtual Methods
         protected virtual void DoOneTimeSetUp(TestResult suiteResult)
         {
             if (FixtureType != null)
             {
                 try
                 {
-					// In case TestFixture was created with fixture object
-					if (Fixture == null && !IsStaticClass( FixtureType ) )
-						CreateUserFixture();
+                    // In case TestFixture was created with fixture object
+                    if (Fixture == null && !IsStaticClass( FixtureType ) )
+                        CreateUserFixture();
 
                     if (this.FixtureSetUpMethods != null)
                         foreach( MethodInfo fixtureSetUp in FixtureSetUpMethods )
@@ -433,13 +433,13 @@ using System.Diagnostics;
         }
 #endif
 
-		protected virtual void CreateUserFixture()
-		{
+        protected virtual void CreateUserFixture()
+        {
             if (arguments != null && arguments.Length > 0)
                 Fixture = Reflect.Construct(FixtureType, arguments);
             else
-			    Fixture = Reflect.Construct(FixtureType);
-		}
+                Fixture = Reflect.Construct(FixtureType);
+        }
 
         protected virtual void DoOneTimeTearDown(TestResult suiteResult)
         {
@@ -457,22 +457,22 @@ using System.Diagnostics;
                         }
                     }
 
-					IDisposable disposable = Fixture as IDisposable;
-					if (disposable != null)
-						disposable.Dispose();
-				}
+                    IDisposable disposable = Fixture as IDisposable;
+                    if (disposable != null)
+                        disposable.Dispose();
+                }
                 catch (Exception ex)
                 {
-					// Error in TestFixtureTearDown or Dispose causes the
-					// suite to be marked as a failure, even if
-					// all the contained tests passed.
-					NUnitException nex = ex as NUnitException;
-					if (nex != null)
-						ex = nex.InnerException;
+                    // Error in TestFixtureTearDown or Dispose causes the
+                    // suite to be marked as a failure, even if
+                    // all the contained tests passed.
+                    NUnitException nex = ex as NUnitException;
+                    if (nex != null)
+                        ex = nex.InnerException;
 
 
-					suiteResult.Failure(ex.Message, ex.StackTrace, FailureSite.TearDown);
-				}
+                    suiteResult.Failure(ex.Message, ex.StackTrace, FailureSite.TearDown);
+                }
 
                 this.Fixture = null;
             }
@@ -519,7 +519,7 @@ using System.Diagnostics;
         }
 
         private void RunAllTests(TestResult suiteResult, EventListener listener, ITestFilter filter )
-		{
+        {
             if (Properties.Contains("Timeout"))
                 TestExecutionContext.CurrentContext.TestCaseTimeout = (int)Properties["Timeout"];
 
@@ -540,11 +540,11 @@ using System.Diagnostics;
 
                     TestResult result = test.Run(listener, filter);
 
-					log.Debug("Test result = " + result.ResultState);
-					
+                    log.Debug("Test result = " + result.ResultState);
+                    
                     suiteResult.AddResult(result);
-					
-					log.Debug("Suite result = " + suiteResult.ResultState);
+                    
+                    log.Debug("Suite result = " + suiteResult.ResultState);
 
                     if (saveRunState != test.RunState)
                     {
@@ -559,7 +559,7 @@ using System.Diagnostics;
                         break;
                 }
             }
-		}
+        }
 
         private void SkipAllTests(TestResult suiteResult, EventListener listener, ITestFilter filter)
         {
@@ -596,7 +596,7 @@ using System.Diagnostics;
             {
                 listener.SuiteStarted(test.TestName);
                 TestResult result = new TestResult( new TestInfo(test) );
-				result.SetResult( resultState, ignoreReason, null );
+                result.SetResult( resultState, ignoreReason, null );
                 MarkTestsNotRun(test.Tests, resultState, ignoreReason, result, listener, filter);
                 suiteResult.AddResult(result);
                 listener.SuiteFinished(result);
@@ -626,11 +626,11 @@ using System.Diagnostics;
             {
                 listener.SuiteStarted(test.TestName);
                 TestResult result = new TestResult( new TestInfo(test) );
-				string msg = this.FixtureType == null
+                string msg = this.FixtureType == null
                     ? "Parent SetUp failed"
                     : string.Format( "Parent SetUp failed in {0}", this.FixtureType.Name );
 
-				result.Failure(msg, null, FailureSite.Parent);
+                result.Failure(msg, null, FailureSite.Parent);
                 MarkTestsFailed(test.Tests, result, listener, filter);
                 suiteResult.AddResult(result);
                 listener.SuiteFinished(result);
@@ -639,11 +639,11 @@ using System.Diagnostics;
             {
                 listener.TestStarted(test.TestName);
                 TestResult result = new TestResult( new TestInfo(test) );
-				string msg = this.FixtureType == null
+                string msg = this.FixtureType == null
                     ? "TestFixtureSetUp failed"
                     : string.Format( "TestFixtureSetUp failed in {0}", this.FixtureType.Name );
-				result.Failure(msg, null, FailureSite.Parent);
-				suiteResult.AddResult(result);
+                result.Failure(msg, null, FailureSite.Parent);
+                suiteResult.AddResult(result);
                 listener.TestFinished(result);
             }
         }

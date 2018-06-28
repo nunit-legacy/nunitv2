@@ -12,10 +12,10 @@ namespace NUnit.Core.Extensibility
 {
     public class FrameworkRegistry : ExtensionPoint, IFrameworkRegistry
     {
-		#region Constructor
-		public FrameworkRegistry( IExtensionHost host )
-			: base( "FrameworkRegistry", host ) { }
-		#endregion Constructor
+        #region Constructor
+        public FrameworkRegistry( IExtensionHost host )
+            : base( "FrameworkRegistry", host ) { }
+        #endregion Constructor
 
         #region Instance Fields
         /// <summary>
@@ -35,17 +35,17 @@ namespace NUnit.Core.Extensibility
         {
             testFrameworks[frameworkName] = new TestFramework(frameworkName, assemblyName);
         }
-		#endregion
+        #endregion
 
-		#region ExtensionPoint overrides
+        #region ExtensionPoint overrides
         protected override bool IsValidExtension(object extension)
-		{
-			return extension is TestFramework;
-		}
+        {
+            return extension is TestFramework;
+        }
 
-		#endregion
+        #endregion
 
-		#region Other Methods
+        #region Other Methods
         /// <summary>
         /// Get a list of known frameworks referenced by an assembly
         /// </summary>

@@ -7,35 +7,35 @@
 
 namespace NUnit.Core
 {
-	using System;
+    using System;
     using System.Collections;
     using System.Diagnostics;
     using System.Reflection;
     using System.Threading;
 
-	/// <summary>
-	/// RemoteTestRunner is tailored for use as the initial runner to
-	/// receive control in a remote domain. It provides isolation for the return
-	/// value by using a ThreadedTestRunner and for the events through use of
-	/// an EventPump.
-	/// </summary>
-	public class RemoteTestRunner : ProxyTestRunner
-	{
-		/// <summary>
-		/// Returns a RemoteTestRunner in the target domain. This method
-		/// is used in the domain that wants to get a reference to 
-		/// a RemoteTestRunnner and not in the test domain itself.
-		/// </summary>
-		/// <param name="targetDomain">AppDomain in which to create the runner</param>
-		/// <param name="ID">Id for the new runner to use</param>
-		/// <returns></returns>
+    /// <summary>
+    /// RemoteTestRunner is tailored for use as the initial runner to
+    /// receive control in a remote domain. It provides isolation for the return
+    /// value by using a ThreadedTestRunner and for the events through use of
+    /// an EventPump.
+    /// </summary>
+    public class RemoteTestRunner : ProxyTestRunner
+    {
+        /// <summary>
+        /// Returns a RemoteTestRunner in the target domain. This method
+        /// is used in the domain that wants to get a reference to 
+        /// a RemoteTestRunnner and not in the test domain itself.
+        /// </summary>
+        /// <param name="targetDomain">AppDomain in which to create the runner</param>
+        /// <param name="ID">Id for the new runner to use</param>
+        /// <returns></returns>
         public static RemoteTestRunner CreateInstance(AppDomain targetDomain, int ID)
         {
 #if CLR_2_0 || CLR_4_0
             System.Runtime.Remoting.ObjectHandle oh = Activator.CreateInstance(
                 targetDomain,
 #else
-			System.Runtime.Remoting.ObjectHandle oh = targetDomain.CreateInstance(
+            System.Runtime.Remoting.ObjectHandle oh = targetDomain.CreateInstance(
 #endif
                 Assembly.GetExecutingAssembly().FullName,
                 typeof(RemoteTestRunner).FullName,
@@ -45,29 +45,29 @@ namespace NUnit.Core
             return (RemoteTestRunner)obj;
         }
 
-		static Logger log = InternalTrace.GetLogger("RemoteTestRunner");
+        static Logger log = InternalTrace.GetLogger("RemoteTestRunner");
 
-		#region Constructors
-		public RemoteTestRunner() : this( 0 ) { }
+        #region Constructors
+        public RemoteTestRunner() : this( 0 ) { }
 
-		public RemoteTestRunner( int runnerID ) : base( runnerID ) { }
-		#endregion
+        public RemoteTestRunner( int runnerID ) : base( runnerID ) { }
+        #endregion
 
-		#region Method Overrides
+        #region Method Overrides
 
-		public override bool Load(TestPackage package)
-		{
-			log.Info("Loading Test Package " + package.Name );
+        public override bool Load(TestPackage package)
+        {
+            log.Info("Loading Test Package " + package.Name );
 
-			// Initialize ExtensionHost if not already done
-			if ( !CoreExtensions.Host.Initialized )
-				CoreExtensions.Host.InitializeService();
+            // Initialize ExtensionHost if not already done
+            if ( !CoreExtensions.Host.Initialized )
+                CoreExtensions.Host.InitializeService();
 
-			// Delayed creation of downstream runner allows us to
-			// use a different runner type based on the package
-			bool useThreadedRunner = package.GetSetting( "UseThreadedRunner", true );
-			
-			TestRunner runner = new SimpleTestRunner( this.runnerID );
+            // Delayed creation of downstream runner allows us to
+            // use a different runner type based on the package
+            bool useThreadedRunner = package.GetSetting( "UseThreadedRunner", true );
+            
+            TestRunner runner = new SimpleTestRunner( this.runnerID );
             if (useThreadedRunner)
             {
                 ApartmentState apartmentState = (ApartmentState)package.GetSetting("ApartmentState", ApartmentState.Unknown);
@@ -75,19 +75,19 @@ namespace NUnit.Core
                 runner = new ThreadedTestRunner(runner, apartmentState, priority);
             }
 
-			this.TestRunner = runner;
+            this.TestRunner = runner;
 
-			if( base.Load (package) )
-			{
-				log.Info("Loaded package successfully" );
-				return true;
-			}
-			else
-			{
-				log.Info("Package load failed" );
-				return false;
-			}
-		}
+            if( base.Load (package) )
+            {
+                log.Info("Loaded package successfully" );
+                return true;
+            }
+            else
+            {
+                log.Info("Package load failed" );
+                return false;
+            }
+        }
 
         public override void Unload()
         {
@@ -96,38 +96,38 @@ namespace NUnit.Core
             base.Unload();
         }
 
-		public override TestResult Run( EventListener listener, ITestFilter filter, bool tracing, LoggingThreshold logLevel )
-		{
+        public override TestResult Run( EventListener listener, ITestFilter filter, bool tracing, LoggingThreshold logLevel )
+        {
             log.Debug("Run");
 
             QueuingEventListener queue = new QueuingEventListener();
 
-			StartTextCapture( queue, tracing, logLevel );
+            StartTextCapture( queue, tracing, logLevel );
 
-			using( EventPump pump = new EventPump( listener, queue.Events, true ) )
-			{
-				pump.Start();
-				return base.Run( queue, filter, tracing, logLevel );
-			}
-		}
+            using( EventPump pump = new EventPump( listener, queue.Events, true ) )
+            {
+                pump.Start();
+                return base.Run( queue, filter, tracing, logLevel );
+            }
+        }
 
-		public override void BeginRun( EventListener listener, ITestFilter filter, bool tracing, LoggingThreshold logLevel )
-		{
+        public override void BeginRun( EventListener listener, ITestFilter filter, bool tracing, LoggingThreshold logLevel )
+        {
             log.Debug("BeginRun");
 
-			QueuingEventListener queue = new QueuingEventListener();
+            QueuingEventListener queue = new QueuingEventListener();
 
-			StartTextCapture( queue, tracing, logLevel );
+            StartTextCapture( queue, tracing, logLevel );
 
-			EventPump pump = new EventPump( listener, queue.Events, true);
-			pump.Start(); // Will run till RunFinished is received
-			// TODO: Make sure the thread is cleaned up if we abort the run
-		
-			base.BeginRun( queue, filter, tracing, logLevel );
-		}
+            EventPump pump = new EventPump( listener, queue.Events, true);
+            pump.Start(); // Will run till RunFinished is received
+            // TODO: Make sure the thread is cleaned up if we abort the run
+        
+            base.BeginRun( queue, filter, tracing, logLevel );
+        }
 
-		private void StartTextCapture( EventListener queue, bool tracing, LoggingThreshold logLevel )
-		{
+        private void StartTextCapture( EventListener queue, bool tracing, LoggingThreshold logLevel )
+        {
             TestExecutionContext.CurrentContext.Out = new EventListenerTextWriter(queue, TestOutputType.Out);
             TestExecutionContext.CurrentContext.Error = new EventListenerTextWriter(queue, TestOutputType.Error);
 
@@ -146,12 +146,12 @@ namespace NUnit.Core
             }
         }
 
-		#endregion
+        #endregion
 
-		private void CurrentDomain_DomainUnload(object sender, EventArgs e)
-		{
-			log.Debug(AppDomain.CurrentDomain.FriendlyName + " unloaded");
-			InternalTrace.Flush();
-		}
-	}
+        private void CurrentDomain_DomainUnload(object sender, EventArgs e)
+        {
+            log.Debug(AppDomain.CurrentDomain.FriendlyName + " unloaded");
+            InternalTrace.Flush();
+        }
+    }
 }

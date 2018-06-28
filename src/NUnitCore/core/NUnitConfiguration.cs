@@ -31,7 +31,7 @@ namespace NUnit.Core
 #if DEBUG
                     return "Debug";
 #else
-					return "Release";
+                    return "Release";
 #endif
             }
         }

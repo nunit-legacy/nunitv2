@@ -12,34 +12,34 @@ using System.Collections.Specialized;
 
 namespace NUnit.Core
 {
-	/// <summary>
-	/// TestRunnerThread encapsulates running a test on a thread.
-	/// It knows how to create the thread based on configuration
-	/// settings and can cancel abort the test if necessary.
-	/// </summary>
-	public class TestRunnerThread
-	{
-		#region Private Fields
+    /// <summary>
+    /// TestRunnerThread encapsulates running a test on a thread.
+    /// It knows how to create the thread based on configuration
+    /// settings and can cancel abort the test if necessary.
+    /// </summary>
+    public class TestRunnerThread
+    {
+        #region Private Fields
 
-		/// <summary>
-		/// The Test runner to be used in running tests on the thread
-		/// </summary>
-		private TestRunner runner;
+        /// <summary>
+        /// The Test runner to be used in running tests on the thread
+        /// </summary>
+        private TestRunner runner;
 
-		/// <summary>
-		/// The System.Threading.Thread created by the object
-		/// </summary>
-		private Thread thread;
+        /// <summary>
+        /// The System.Threading.Thread created by the object
+        /// </summary>
+        private Thread thread;
 
-		/// <summary>
-		/// The EventListener interface to receive test events
-		/// </summary>
-		private NUnit.Core.EventListener listener;
+        /// <summary>
+        /// The EventListener interface to receive test events
+        /// </summary>
+        private NUnit.Core.EventListener listener;
 
-		/// <summary>
-		/// The Test filter used in selecting the tests
-		//private string[] testNames;
-		private ITestFilter filter;
+        /// <summary>
+        /// The Test filter used in selecting the tests
+        //private string[] testNames;
+        private ITestFilter filter;
 
         /// <summary>
         /// Indicates whether trace output should be captured
@@ -50,42 +50,42 @@ namespace NUnit.Core
         /// The logging threshold for which output should be captured
         /// </summary>
         private LoggingThreshold logLevel;
-			
-		/// <summary>
-		/// Array of returned results
-		/// </summary>
-		private TestResult[] results;
+            
+        /// <summary>
+        /// Array of returned results
+        /// </summary>
+        private TestResult[] results;
 
-		#endregion
+        #endregion
 
-		#region Properties
+        #region Properties
 
-		/// <summary>
-		/// True if the thread is executing
-		/// </summary>
-		public bool IsAlive
-		{
-			get	{ return this.thread.IsAlive; }
-		}
+        /// <summary>
+        /// True if the thread is executing
+        /// </summary>
+        public bool IsAlive
+        {
+            get	{ return this.thread.IsAlive; }
+        }
 
-		/// <summary>
-		/// Array of returned results
-		/// </summary>
-		public TestResult[] Results
-		{
-			get { return results; }
-		}
+        /// <summary>
+        /// Array of returned results
+        /// </summary>
+        public TestResult[] Results
+        {
+            get { return results; }
+        }
 
-		#endregion
+        #endregion
 
-		#region Constructor
+        #region Constructor
 
-		public TestRunnerThread( TestRunner runner, ApartmentState apartmentState, ThreadPriority priority ) 
-		{ 
-			this.runner = runner;
-			this.thread = new Thread( new ThreadStart( TestRunnerThreadProc ) );
-			thread.IsBackground = true;
-			thread.Name = "TestRunnerThread";
+        public TestRunnerThread( TestRunner runner, ApartmentState apartmentState, ThreadPriority priority ) 
+        { 
+            this.runner = runner;
+            this.thread = new Thread( new ThreadStart( TestRunnerThreadProc ) );
+            thread.IsBackground = true;
+            thread.Name = "TestRunnerThread";
             thread.Priority = priority;
             if (apartmentState != ApartmentState.Unknown)
 #if CLR_2_0 || CLR_4_0
@@ -93,22 +93,22 @@ namespace NUnit.Core
 #else
                 thread.ApartmentState = apartmentState;
 #endif
-		}
+        }
 
-		#endregion
+        #endregion
 
-		#region Public Methods
+        #region Public Methods
 
-		public void Wait()
-		{
-			if ( this.thread.IsAlive )
-				this.thread.Join();
-		}
+        public void Wait()
+        {
+            if ( this.thread.IsAlive )
+                this.thread.Join();
+        }
 
-		public void Cancel()
-		{
+        public void Cancel()
+        {
             ThreadUtility.Kill(this.thread);
-		}
+        }
 
         public void StartRun(EventListener listener, ITestFilter filter, bool tracing, LoggingThreshold logLevel)
         {
@@ -120,14 +120,14 @@ namespace NUnit.Core
             thread.Start();
         }
 
-		#endregion
+        #endregion
 
-		#region Thread Proc
-		/// <summary>
-		/// The thread proc for our actual test run
-		/// </summary>
-		private void TestRunnerThreadProc()
-		{
+        #region Thread Proc
+        /// <summary>
+        /// The thread proc for our actual test run
+        /// </summary>
+        private void TestRunnerThreadProc()
+        {
             try
             {
                 results = new TestResult[] { runner.Run(this.listener, this.filter, this.tracing, this.logLevel) };
@@ -137,7 +137,7 @@ namespace NUnit.Core
                 if ( !(ex is ThreadAbortException) )
                     throw new ApplicationException("Exception in TestRunnerThread", ex);
             }
-		}
-		#endregion
-	}
+        }
+        #endregion
+    }
 }

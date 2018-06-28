@@ -19,26 +19,26 @@ namespace NUnit.Core
     {
         static Logger log = InternalTrace.GetLogger(typeof(TestThread));
 
-		private Test test;
-		
+        private Test test;
+        
         #region Protected Fields
         /// <summary>
         /// The Thread object used to run tests
         /// </summary>
         protected Thread thread;
 
-		/// <summary>
-		/// The result of running the test, which must be kept
-		/// separate from the returned TestResult while the thread
+        /// <summary>
+        /// The result of running the test, which must be kept
+        /// separate from the returned TestResult while the thread
         /// is running to avoid race conditions.
-		/// </summary>
-		protected TestResult threadResult;
-		
+        /// </summary>
+        protected TestResult threadResult;
+        
         protected EventListener listener;
 
         protected ITestFilter filter;
-		
-		protected ContextDictionary contextDictionary;
+        
+        protected ContextDictionary contextDictionary;
 
         /// <summary>
         /// Unexpected exception thrown by test thread
@@ -49,8 +49,8 @@ namespace NUnit.Core
         #region Constructor
         protected TestThread(Test test)
         {
-			this.test = test;
-			
+            this.test = test;
+            
             this.thread = new Thread(new ThreadStart(RunTestProc));
             thread.CurrentCulture = Thread.CurrentThread.CurrentCulture;
             thread.CurrentUICulture = Thread.CurrentThread.CurrentUICulture;
@@ -87,12 +87,12 @@ namespace NUnit.Core
         /// </summary>
         public TestResult Run(EventListener listener, ITestFilter filter)
         {
-			TestResult testResult = new TestResult(test);
-			
+            TestResult testResult = new TestResult(test);
+            
             this.thrownException = null;
             this.listener = listener;
             this.filter = filter;
-			this.contextDictionary = (ContextDictionary)CallContext.GetData("NUnit.Framework.TestContext");
+            this.contextDictionary = (ContextDictionary)CallContext.GetData("NUnit.Framework.TestContext");
 
             log.Debug("Starting test in separate thread");
             thread.Start();
@@ -101,7 +101,7 @@ namespace NUnit.Core
             // Timeout?
             if (thread.IsAlive)
             {
-				log.Debug("Test timed out - aborting thread");
+                log.Debug("Test timed out - aborting thread");
                 ThreadUtility.Kill(thread);
 
                 // NOTE: Without the use of Join, there is a race condition here.
@@ -114,18 +114,18 @@ namespace NUnit.Core
                 thread.Join();
                 testResult.Failure(string.Format("Test exceeded Timeout value of {0}ms", Timeout), null);
             }
-			else if (thrownException != null)
-			{
-				log.Debug("Test threw " + thrownException.GetType().Name);
-				throw thrownException;
-			}
-			else
-			{
-				log.Debug("Test completed normally");
+            else if (thrownException != null)
+            {
+                log.Debug("Test threw " + thrownException.GetType().Name);
+                throw thrownException;
+            }
+            else
+            {
+                log.Debug("Test completed normally");
                 testResult = threadResult;
             }
-			
-			return testResult;
+            
+            return testResult;
         }
 
         /// <summary>
@@ -134,8 +134,8 @@ namespace NUnit.Core
         /// </summary>
         private void RunTestProc()
         {
-			CallContext.SetData("NUnit.Framework.TestContext", contextDictionary);
-			
+            CallContext.SetData("NUnit.Framework.TestContext", contextDictionary);
+            
             try
             {
                 RunTest();
@@ -144,10 +144,10 @@ namespace NUnit.Core
             {
                 thrownException = e;
             }
-			finally
-			{
-				CallContext.FreeNamedDataSlot("NUnit.Framework.TestContext");
-			}
+            finally
+            {
+                CallContext.FreeNamedDataSlot("NUnit.Framework.TestContext");
+            }
         }
 
         protected abstract int Timeout { get; }
@@ -176,7 +176,7 @@ namespace NUnit.Core
 
         protected override void RunTest()
         {
-			this.threadResult = testMethod.RunTest();
+            this.threadResult = testMethod.RunTest();
         }
     }
 
@@ -197,7 +197,7 @@ namespace NUnit.Core
 
         protected override void RunTest()
         {
-			this.threadResult = suite.RunSuite(listener, filter);
+            this.threadResult = suite.RunSuite(listener, filter);
         }
     }
 }

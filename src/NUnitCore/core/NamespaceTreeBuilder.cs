@@ -9,58 +9,58 @@ using System.Collections;
 
 namespace NUnit.Core
 {
-	/// <summary>
-	/// Class that can build a tree of automatic namespace
-	/// suites from a group of fixtures.
-	/// </summary>
-	public class NamespaceTreeBuilder
-	{
-		#region Instance Variables
+    /// <summary>
+    /// Class that can build a tree of automatic namespace
+    /// suites from a group of fixtures.
+    /// </summary>
+    public class NamespaceTreeBuilder
+    {
+        #region Instance Variables
 
-		/// <summary>
-		/// Hashtable of all test suites we have created to represent namespaces.
-		/// Used to locate namespace parent suites for fixtures.
-		/// </summary>
-		Hashtable namespaceSuites  = new Hashtable();
+        /// <summary>
+        /// Hashtable of all test suites we have created to represent namespaces.
+        /// Used to locate namespace parent suites for fixtures.
+        /// </summary>
+        Hashtable namespaceSuites  = new Hashtable();
 
-		/// <summary>
-		/// The root of the test suite being created by this builder.
-		/// </summary>
-		TestSuite rootSuite;
+        /// <summary>
+        /// The root of the test suite being created by this builder.
+        /// </summary>
+        TestSuite rootSuite;
 
-		#endregion
+        #endregion
 
-		#region Constructor
+        #region Constructor
 
-		public NamespaceTreeBuilder( TestSuite rootSuite )
-		{
-			this.rootSuite = rootSuite;
-		}
+        public NamespaceTreeBuilder( TestSuite rootSuite )
+        {
+            this.rootSuite = rootSuite;
+        }
 
-		#endregion
+        #endregion
 
-		#region Properties
+        #region Properties
 
-		public TestSuite RootSuite
-		{
-			get { return rootSuite; }
-		}
+        public TestSuite RootSuite
+        {
+            get { return rootSuite; }
+        }
 
-		#endregion
+        #endregion
 
-		#region Public Methods
+        #region Public Methods
 
-		public void Add( IList fixtures )
-		{
+        public void Add( IList fixtures )
+        {
             foreach (TestSuite fixture in fixtures)
                 //if (fixture is SetUpFixture)
                 //    Add(fixture as SetUpFixture);
                 //else
                     Add( fixture );
-		}
+        }
 
-		public void Add( TestSuite fixture )
-		{
+        public void Add( TestSuite fixture )
+        {
             if (fixture != null)
             {
                 string ns = fixture.TestName.FullName;
@@ -100,7 +100,7 @@ namespace NUnit.Core
                 else
                     containingSuite.Add(fixture);
             }
-		}
+        }
 
         //public void Add( SetUpFixture fixture )
         //{
@@ -131,40 +131,40 @@ namespace NUnit.Core
         //    namespaceSuites[ns] = fixture;
         //}
 
-		#endregion
+        #endregion
 
-		#region Helper Method
+        #region Helper Method
 
-		private TestSuite BuildFromNameSpace( string nameSpace )
-		{
-			if( nameSpace == null || nameSpace  == "" ) return rootSuite;
-			TestSuite suite = (TestSuite)namespaceSuites[nameSpace];
-			if(suite!=null) return suite;
+        private TestSuite BuildFromNameSpace( string nameSpace )
+        {
+            if( nameSpace == null || nameSpace  == "" ) return rootSuite;
+            TestSuite suite = (TestSuite)namespaceSuites[nameSpace];
+            if(suite!=null) return suite;
             
-			int index = nameSpace.LastIndexOf(".");
-			//string prefix = string.Format( "[{0}]" );
-			if( index == -1 )
-			{
-				suite = new NamespaceSuite( nameSpace );
-				if ( rootSuite == null )
-					rootSuite = suite;
-				else
-					rootSuite.Add(suite);
-				namespaceSuites[nameSpace]=suite;
-			}
-			else
-			{
-				string parentNameSpace = nameSpace.Substring( 0,index );
-				TestSuite parent = BuildFromNameSpace( parentNameSpace );
-				string suiteName = nameSpace.Substring( index+1 );
-				suite = new NamespaceSuite( parentNameSpace, suiteName );
-				parent.Add( suite );
-				namespaceSuites[nameSpace] = suite;
-			}
+            int index = nameSpace.LastIndexOf(".");
+            //string prefix = string.Format( "[{0}]" );
+            if( index == -1 )
+            {
+                suite = new NamespaceSuite( nameSpace );
+                if ( rootSuite == null )
+                    rootSuite = suite;
+                else
+                    rootSuite.Add(suite);
+                namespaceSuites[nameSpace]=suite;
+            }
+            else
+            {
+                string parentNameSpace = nameSpace.Substring( 0,index );
+                TestSuite parent = BuildFromNameSpace( parentNameSpace );
+                string suiteName = nameSpace.Substring( index+1 );
+                suite = new NamespaceSuite( parentNameSpace, suiteName );
+                parent.Add( suite );
+                namespaceSuites[nameSpace] = suite;
+            }
 
-			return suite;
-		}
+            return suite;
+        }
 
-		#endregion
-	}
+        #endregion
+    }
 }
