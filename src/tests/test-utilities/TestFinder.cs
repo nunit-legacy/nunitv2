@@ -11,17 +11,17 @@ using NUnit.Framework;
 
 namespace NUnit.TestUtilities
 {
-	/// <summary>
-	/// Utility class used to locate tests by name in a test tree
-	/// </summary>
-	public class TestFinder
-	{
-		public static Test Find(string name, Test test, bool recursive)
-		{
-			if (test.Tests != null)
-			{
-				foreach(Test child in test.Tests) 
-				{
+    /// <summary>
+    /// Utility class used to locate tests by name in a test tree
+    /// </summary>
+    public class TestFinder
+    {
+        public static Test Find(string name, Test test, bool recursive)
+        {
+            if (test.Tests != null)
+            {
+                foreach(Test child in test.Tests) 
+                {
                     if (child.TestName.Name == name)
                         return child;
                     if (recursive)
@@ -30,18 +30,18 @@ namespace NUnit.TestUtilities
                         if (grandchild != null)
                             return grandchild;
                     }
-				}
-			}
+                }
+            }
 
-			return null;
-		}
-		
-		public static TestResult Find(string name, TestResult result, bool recursive) 
-		{
-			if ( result.HasResults )
-			{
+            return null;
+        }
+        
+        public static TestResult Find(string name, TestResult result, bool recursive) 
+        {
+            if ( result.HasResults )
+            {
                 foreach (TestResult childResult in result.Results) 
-				{
+                {
                     if (childResult.Test.TestName.Name == name)
                         return childResult;
 
@@ -51,12 +51,12 @@ namespace NUnit.TestUtilities
                         if (r != null)
                             return r;
                     }
-				}
-			}
+                }
+            }
 
-			return null;
-		}
+            return null;
+        }
 
         private TestFinder() { }
-	}
+    }
 }
