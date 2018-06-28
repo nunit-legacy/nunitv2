@@ -14,7 +14,7 @@ using NUnit.ProjectEditor.ViewElements;
 
 namespace NUnit.ProjectEditor
 {
-	/// <summary>
+    /// <summary>
     /// Displays a dialog for creation of a new configuration.
     /// The dialog collects and validates the name and the
     /// name of a configuration to be copied and then adds the
@@ -23,22 +23,22 @@ namespace NUnit.ProjectEditor
     /// A DialogResult of DialogResult.OK indicates that the
     /// configuration was added successfully.
     /// </summary>
-	public partial class AddConfigurationDialog : System.Windows.Forms.Form, IAddConfigurationDialog
-	{
+    public partial class AddConfigurationDialog : System.Windows.Forms.Form, IAddConfigurationDialog
+    {
         private static readonly string NONE_SELECTED = "<none>";
 
-		#region Constructor
+        #region Constructor
 
-		public AddConfigurationDialog()
-		{ 
-			InitializeComponent();
+        public AddConfigurationDialog()
+        { 
+            InitializeComponent();
 
             okButtonWrapper = new ButtonElement(okButton);
         }
 
-		#endregion
+        #endregion
 
-		#region Properties
+        #region Properties
 
         private MessageDisplay mbox = new MessageDisplay("Add Configuration");
         public IMessageDisplay MessageDisplay { get { return mbox; } }
@@ -60,12 +60,12 @@ namespace NUnit.ProjectEditor
             } 
         }
 
-		public string ConfigToCreate 
+        public string ConfigToCreate 
         {
             get { return configurationNameTextBox.Text; }
         }
 
-		public string ConfigToCopy 
+        public string ConfigToCopy 
         {
             get 
             { 
@@ -85,7 +85,7 @@ namespace NUnit.ProjectEditor
             get { return okButtonWrapper; }
         }
 
-		#endregion
+        #endregion
     }
 
     public interface IAddConfigurationDialog : IDialog

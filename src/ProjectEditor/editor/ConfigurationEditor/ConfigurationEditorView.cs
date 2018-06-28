@@ -15,11 +15,11 @@ using NUnit.ProjectEditor.ViewElements;
 
 namespace NUnit.ProjectEditor
 {
-	/// <summary>
-	/// ConfigurationEditor form is designed for adding, deleting
-	/// and renaming configurations from a doc.
-	/// </summary>
-	public partial class ConfigurationEditorDialog : System.Windows.Forms.Form, IConfigurationEditorDialog
+    /// <summary>
+    /// ConfigurationEditor form is designed for adding, deleting
+    /// and renaming configurations from a doc.
+    /// </summary>
+    public partial class ConfigurationEditorDialog : System.Windows.Forms.Form, IConfigurationEditorDialog
     {
         #region Instance Variables
 
@@ -37,8 +37,8 @@ namespace NUnit.ProjectEditor
         #region Constructor
 
         public ConfigurationEditorDialog()
-		{
-			InitializeComponent();
+        {
+            InitializeComponent();
 
             addCommand = new ButtonElement(addButton);
             removeCommand = new ButtonElement(removeButton);
@@ -48,9 +48,9 @@ namespace NUnit.ProjectEditor
             configList = new ListBoxElement(configListBox);
 
             messageDisplay = new MessageDisplay("NUnit Configuration Editor");
-		}
+        }
 
-		#endregion
+        #endregion
 
         #region IConfigurationEditorDialog Members
 

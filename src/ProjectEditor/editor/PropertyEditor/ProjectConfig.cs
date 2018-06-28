@@ -12,35 +12,35 @@ using System.Xml;
 
 namespace NUnit.ProjectEditor
 {
-	public enum BinPathType
-	{
-		Auto,
-		Manual,
-		None
-	}
+    public enum BinPathType
+    {
+        Auto,
+        Manual,
+        None
+    }
 
-	public class ProjectConfig : IProjectConfig
-	{
-		#region Instance Variables
+    public class ProjectConfig : IProjectConfig
+    {
+        #region Instance Variables
 
         /// <summary>
         /// The XmlNode representing this config
         /// </summary>
         private XmlNode configNode;
         
-		/// <summary>
-		/// IProject interface of containing doc
-		/// </summary>
-		private IProjectModel project;
+        /// <summary>
+        /// IProject interface of containing doc
+        /// </summary>
+        private IProjectModel project;
 
         /// <summary>
         /// List of the test assemblies in this config
         /// </summary>
         private AssemblyList assemblies;
 
-		#endregion
+        #endregion
 
-		#region Constructor
+        #region Constructor
 
         public ProjectConfig(IProjectModel project, XmlNode configNode)
         {
@@ -49,9 +49,9 @@ namespace NUnit.ProjectEditor
             this.assemblies = new AssemblyList(configNode);
         }
 
-		#endregion
+        #endregion
 
-		#region Properties
+        #region Properties
 
         public string Name
         {
@@ -164,7 +164,7 @@ namespace NUnit.ProjectEditor
             set { SetAttribute("runtimeFramework", value); }
         }
 
-		#endregion
+        #endregion
 
         #region Helper Methods
 
