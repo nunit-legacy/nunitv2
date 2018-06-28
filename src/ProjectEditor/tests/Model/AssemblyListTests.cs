@@ -11,35 +11,35 @@ using NUnit.Framework;
 
 namespace NUnit.ProjectEditor.Tests.Model
 {
-	/// <summary>
-	/// This fixture tests AssemblyList
-	/// </summary>
-	[TestFixture]
-	public class AssemblyListTests
-	{
-		private AssemblyList assemblies;
+    /// <summary>
+    /// This fixture tests AssemblyList
+    /// </summary>
+    [TestFixture]
+    public class AssemblyListTests
+    {
+        private AssemblyList assemblies;
 
         private string path1;
         private string path2;
         private string path3;
 
-		[SetUp]
-		public void CreateAssemblyList()
-		{
+        [SetUp]
+        public void CreateAssemblyList()
+        {
             XmlDocument doc = new XmlDocument();
             doc.LoadXml("<Config/>");
-			assemblies = new AssemblyList(doc.FirstChild);
+            assemblies = new AssemblyList(doc.FirstChild);
 
             path1 = CleanPath("/tests/bin/debug/assembly1.dll");
             path2 = CleanPath("/tests/bin/debug/assembly2.dll");
             path3 = CleanPath("/tests/bin/debug/assembly3.dll");
         }
 
-		[Test]
-		public void EmptyList()
-		{
-			Assert.AreEqual( 0, assemblies.Count );
-		}
+        [Test]
+        public void EmptyList()
+        {
+            Assert.AreEqual( 0, assemblies.Count );
+        }
 
         [Test]
         public void CanAddAssemblies()
@@ -133,5 +133,5 @@ namespace NUnit.ProjectEditor.Tests.Model
         {
             return path.Replace( '/', System.IO.Path.DirectorySeparatorChar );
         }
-	}
+    }
 }

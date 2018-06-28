@@ -10,19 +10,19 @@ using System.IO;
 
 namespace NUnit.ProjectEditor.Tests
 {
-	/// <summary>
-	/// Summary description for NUnitProjectXml.
-	/// </summary>
-	public class NUnitProjectXml
-	{
-		public static readonly string EmptyProject = "<NUnitProject />";
-		
-		public static readonly string EmptyConfigs = 
-			"<NUnitProject>" + System.Environment.NewLine +
-			"  <Settings activeconfig=\"Debug\" />" + System.Environment.NewLine +
-			"  <Config name=\"Debug\" binpathtype=\"Auto\" />" + System.Environment.NewLine +
-			"  <Config name=\"Release\" binpathtype=\"Auto\" />" + System.Environment.NewLine +
-			"</NUnitProject>";
+    /// <summary>
+    /// Summary description for NUnitProjectXml.
+    /// </summary>
+    public class NUnitProjectXml
+    {
+        public static readonly string EmptyProject = "<NUnitProject />";
+        
+        public static readonly string EmptyConfigs = 
+            "<NUnitProject>" + System.Environment.NewLine +
+            "  <Settings activeconfig=\"Debug\" />" + System.Environment.NewLine +
+            "  <Config name=\"Debug\" binpathtype=\"Auto\" />" + System.Environment.NewLine +
+            "  <Config name=\"Release\" binpathtype=\"Auto\" />" + System.Environment.NewLine +
+            "</NUnitProject>";
 
         public static readonly string NormalProject =
             "<NUnitProject>" + System.Environment.NewLine +
@@ -38,10 +38,10 @@ namespace NUnit.ProjectEditor.Tests
             "</NUnitProject>";
 
         public static readonly string ManualBinPathProject =
-			"<NUnitProject>" + System.Environment.NewLine +
-			"  <Settings activeconfig=\"Debug\" />" + System.Environment.NewLine +
-			"  <Config name=\"Debug\" binpath=\"bin_path_value\"  /> " + System.Environment.NewLine +
-			"</NUnitProject>";
+            "<NUnitProject>" + System.Environment.NewLine +
+            "  <Settings activeconfig=\"Debug\" />" + System.Environment.NewLine +
+            "  <Config name=\"Debug\" binpath=\"bin_path_value\"  /> " + System.Environment.NewLine +
+            "</NUnitProject>";
 
         public static readonly string ComplexSettingsProject =
         "<NUnitProject>" + System.Environment.NewLine +
