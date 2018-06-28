@@ -7,195 +7,195 @@
 
 namespace NUnit.UiKit.Tests
 {
-	using System;
-	using System.Reflection;
-	using System.Windows.Forms;
-	using NUnit.Framework;
-	using NUnit.Core;
-	using NUnit.Util;
-	using NUnit.Tests.Assemblies;
+    using System;
+    using System.Reflection;
+    using System.Windows.Forms;
+    using NUnit.Framework;
+    using NUnit.Core;
+    using NUnit.Util;
+    using NUnit.Tests.Assemblies;
 
-	/// <summary>
-	/// Summary description for TestSuiteFixture.
-	/// </summary>
-	/// 
-	public class TestSuiteTreeViewFixture
-	{
-		protected string testsDll = MockAssembly.AssemblyPath;
-		protected Test suite;
+    /// <summary>
+    /// Summary description for TestSuiteFixture.
+    /// </summary>
+    /// 
+    public class TestSuiteTreeViewFixture
+    {
+        protected string testsDll = MockAssembly.AssemblyPath;
+        protected Test suite;
         protected TestSuiteTreeView treeView;
 
-		[SetUp]
-		public void SetUp() 
-		{
-			TestSuiteBuilder builder = new TestSuiteBuilder();
-			suite = builder.Build( new TestPackage( testsDll ) );
+        [SetUp]
+        public void SetUp() 
+        {
+            TestSuiteBuilder builder = new TestSuiteBuilder();
+            suite = builder.Build( new TestPackage( testsDll ) );
 
-			treeView = new TestSuiteTreeView();
+            treeView = new TestSuiteTreeView();
             treeView.Load(new TestNode(suite));
-		}
+        }
     }
 
     [TestFixture]
     public class TestSuiteTreeViewTests : TestSuiteTreeViewFixture
     {
-		private bool AllExpanded( TreeNode node)
-		{
-			if ( node.Nodes.Count == 0 )
-				return true;
-			
-			if ( !node.IsExpanded )
-				return false;
-			
-			return AllExpanded( node.Nodes );
-		}
+        private bool AllExpanded( TreeNode node)
+        {
+            if ( node.Nodes.Count == 0 )
+                return true;
+            
+            if ( !node.IsExpanded )
+                return false;
+            
+            return AllExpanded( node.Nodes );
+        }
 
-		private bool AllExpanded( TreeNodeCollection nodes )
-		{
-			foreach( TestSuiteTreeNode node in nodes )
-				if ( !AllExpanded( node ) )
-					return false;
+        private bool AllExpanded( TreeNodeCollection nodes )
+        {
+            foreach( TestSuiteTreeNode node in nodes )
+                if ( !AllExpanded( node ) )
+                    return false;
 
-			return true;
-		}
-
-		[Test]
-		public void BuildTreeView()
-		{
-			Assert.IsNotNull( treeView.Nodes[0] );
-			Assert.AreEqual( MockAssembly.Nodes, treeView.GetNodeCount( true ) );
-			Assert.AreEqual( testsDll, treeView.Nodes[0].Text );	
-			Assert.AreEqual( "NUnit", treeView.Nodes[0].Nodes[0].Text );
-			Assert.AreEqual( "Tests", treeView.Nodes[0].Nodes[0].Nodes[0].Text );
-		}
-
-		[Test]
-		public void BuildFromResult()
-		{
-            TestResult result = suite.Run(new NullListener(), TestFilter.Empty);
-			treeView.Load( result );
-			Assert.AreEqual( MockAssembly.Nodes - MockAssembly.Explicit - MockAssembly.ExplicitFixtures, 
-				treeView.GetNodeCount( true ) );
-			
-			TestSuiteTreeNode node = treeView.Nodes[0] as TestSuiteTreeNode;
-			Assert.AreEqual( testsDll, node.Text );
-			Assert.IsNotNull( node.Result, "No Result on top-level Node" );
-	
-			node = node.Nodes[0].Nodes[0] as TestSuiteTreeNode;
-			Assert.AreEqual( "Tests", node.Text );
-			Assert.IsNotNull( node.Result, "No Result on TestSuite" );
-
-			foreach( TestSuiteTreeNode child in node.Nodes )
-			{
-				if ( child.Text == "Assemblies" )
-				{
-					node = child.Nodes[0] as TestSuiteTreeNode;
-					Assert.AreEqual( "MockTestFixture", node.Text );
-					Assert.IsNotNull( node.Result, "No Result on TestFixture" );
-					Assert.AreEqual( true, node.Result.Executed, "MockTestFixture: Executed" );
-
-					TestSuiteTreeNode test1 = node.Nodes[2] as TestSuiteTreeNode;
-					Assert.AreEqual( "MockTest1", test1.Text );
-					Assert.IsNotNull( test1.Result, "No Result on TestCase" );
-					Assert.AreEqual( true, test1.Result.Executed, "MockTest1: Executed" );
-					Assert.AreEqual( false, test1.Result.IsFailure, "MockTest1: IsFailure");
-					Assert.AreEqual( TestSuiteTreeNode.SuccessIndex, test1.ImageIndex );
-
-					TestSuiteTreeNode test4 = node.Nodes[5] as TestSuiteTreeNode;
-					Assert.AreEqual( false, test4.Result.Executed, "MockTest4: Executed" );
-					Assert.AreEqual( TestSuiteTreeNode.IgnoredIndex, test4.ImageIndex );
-					return;
-				}
-			}
-
-			Assert.Fail( "Cannot locate NUnit.Tests.Assemblies node" );
-		}
-
-		/// <summary>
-		/// Return the MockTestFixture node from a tree built
-		/// from the mock-assembly dll.
-		/// </summary>
-		private TestSuiteTreeNode FixtureNode( TestSuiteTreeView treeView )
-		{
-			return (TestSuiteTreeNode)treeView.Nodes[0].Nodes[0].Nodes[0].Nodes[0].Nodes[0];
-		}
-
-		/// <summary>
-		/// The tree view CollapseAll method doesn't seem to work in
-		/// this test environment. This replaces it.
-		/// </summary>
-		private void CollapseAll( TreeNode node )
-		{
-			node.Collapse();
-			CollapseAll( node.Nodes );
-		}
-
-		private void CollapseAll( TreeNodeCollection nodes )
-		{
-			foreach( TreeNode node in nodes )
-				CollapseAll( node );
-		}
-
-		[Test]
-		public void ClearTree()
-		{
-            //treeView.Load( new TestNode( suite ) );
-			
-			treeView.Clear();
-			Assert.AreEqual( 0, treeView.Nodes.Count );
-		}
-
-		[Test]
-		public void SetTestResult()
-		{
-			TestSuite fixture = (TestSuite)findTest( "MockTestFixture", suite );		
-			TestResult result = new TestResult( new TestInfo( fixture ) );
-			treeView.SetTestResult( result );
-
-			TestSuiteTreeNode fixtureNode = FixtureNode( treeView );
-			Assert.IsNotNull(fixtureNode.Result,  "Result not set" );
-			Assert.AreEqual( fixture.TestName.Name, fixtureNode.Result.Name );
-			Assert.AreEqual( fixtureNode.Test.TestName.FullName, fixtureNode.Result.Test.TestName.FullName );
-		}
-
-		private Test findTest(string name, Test test) 
-		{
-			Test result = null;
-			if (test.TestName.Name == name)
-				result = test;
-			else if (test.Tests != null)
-			{
-				foreach(Test t in test.Tests) 
-				{
-					result = findTest(name, t);
-					if (result != null)
-						break;
-				}
-			}
-
-			return result;
-		}
+            return true;
+        }
 
         [Test]
-		public void ProcessChecks()
-		{
-			Assert.AreEqual(0, treeView.CheckedTests.Length);
-			Assert.IsFalse(Checked(treeView.Nodes));
+        public void BuildTreeView()
+        {
+            Assert.IsNotNull( treeView.Nodes[0] );
+            Assert.AreEqual( MockAssembly.Nodes, treeView.GetNodeCount( true ) );
+            Assert.AreEqual( testsDll, treeView.Nodes[0].Text );	
+            Assert.AreEqual( "NUnit", treeView.Nodes[0].Nodes[0].Text );
+            Assert.AreEqual( "Tests", treeView.Nodes[0].Nodes[0].Nodes[0].Text );
+        }
 
-			treeView.Nodes[0].Checked = true;
+        [Test]
+        public void BuildFromResult()
+        {
+            TestResult result = suite.Run(new NullListener(), TestFilter.Empty);
+            treeView.Load( result );
+            Assert.AreEqual( MockAssembly.Nodes - MockAssembly.Explicit - MockAssembly.ExplicitFixtures, 
+                treeView.GetNodeCount( true ) );
+            
+            TestSuiteTreeNode node = treeView.Nodes[0] as TestSuiteTreeNode;
+            Assert.AreEqual( testsDll, node.Text );
+            Assert.IsNotNull( node.Result, "No Result on top-level Node" );
+    
+            node = node.Nodes[0].Nodes[0] as TestSuiteTreeNode;
+            Assert.AreEqual( "Tests", node.Text );
+            Assert.IsNotNull( node.Result, "No Result on TestSuite" );
 
-			treeView.Nodes[0].Nodes[0].Checked = true;
+            foreach( TestSuiteTreeNode child in node.Nodes )
+            {
+                if ( child.Text == "Assemblies" )
+                {
+                    node = child.Nodes[0] as TestSuiteTreeNode;
+                    Assert.AreEqual( "MockTestFixture", node.Text );
+                    Assert.IsNotNull( node.Result, "No Result on TestFixture" );
+                    Assert.AreEqual( true, node.Result.Executed, "MockTestFixture: Executed" );
 
-			Assert.AreEqual(2, treeView.CheckedTests.Length);
-			Assert.AreEqual(1, treeView.SelectedTests.Length);
+                    TestSuiteTreeNode test1 = node.Nodes[2] as TestSuiteTreeNode;
+                    Assert.AreEqual( "MockTest1", test1.Text );
+                    Assert.IsNotNull( test1.Result, "No Result on TestCase" );
+                    Assert.AreEqual( true, test1.Result.Executed, "MockTest1: Executed" );
+                    Assert.AreEqual( false, test1.Result.IsFailure, "MockTest1: IsFailure");
+                    Assert.AreEqual( TestSuiteTreeNode.SuccessIndex, test1.ImageIndex );
 
-			Assert.IsTrue(Checked(treeView.Nodes));
+                    TestSuiteTreeNode test4 = node.Nodes[5] as TestSuiteTreeNode;
+                    Assert.AreEqual( false, test4.Result.Executed, "MockTest4: Executed" );
+                    Assert.AreEqual( TestSuiteTreeNode.IgnoredIndex, test4.ImageIndex );
+                    return;
+                }
+            }
 
-			treeView.ClearCheckedNodes();
+            Assert.Fail( "Cannot locate NUnit.Tests.Assemblies node" );
+        }
 
-			Assert.AreEqual(0, treeView.CheckedTests.Length);
-			Assert.IsFalse(Checked(treeView.Nodes));
-		}
+        /// <summary>
+        /// Return the MockTestFixture node from a tree built
+        /// from the mock-assembly dll.
+        /// </summary>
+        private TestSuiteTreeNode FixtureNode( TestSuiteTreeView treeView )
+        {
+            return (TestSuiteTreeNode)treeView.Nodes[0].Nodes[0].Nodes[0].Nodes[0].Nodes[0];
+        }
+
+        /// <summary>
+        /// The tree view CollapseAll method doesn't seem to work in
+        /// this test environment. This replaces it.
+        /// </summary>
+        private void CollapseAll( TreeNode node )
+        {
+            node.Collapse();
+            CollapseAll( node.Nodes );
+        }
+
+        private void CollapseAll( TreeNodeCollection nodes )
+        {
+            foreach( TreeNode node in nodes )
+                CollapseAll( node );
+        }
+
+        [Test]
+        public void ClearTree()
+        {
+            //treeView.Load( new TestNode( suite ) );
+            
+            treeView.Clear();
+            Assert.AreEqual( 0, treeView.Nodes.Count );
+        }
+
+        [Test]
+        public void SetTestResult()
+        {
+            TestSuite fixture = (TestSuite)findTest( "MockTestFixture", suite );		
+            TestResult result = new TestResult( new TestInfo( fixture ) );
+            treeView.SetTestResult( result );
+
+            TestSuiteTreeNode fixtureNode = FixtureNode( treeView );
+            Assert.IsNotNull(fixtureNode.Result,  "Result not set" );
+            Assert.AreEqual( fixture.TestName.Name, fixtureNode.Result.Name );
+            Assert.AreEqual( fixtureNode.Test.TestName.FullName, fixtureNode.Result.Test.TestName.FullName );
+        }
+
+        private Test findTest(string name, Test test) 
+        {
+            Test result = null;
+            if (test.TestName.Name == name)
+                result = test;
+            else if (test.Tests != null)
+            {
+                foreach(Test t in test.Tests) 
+                {
+                    result = findTest(name, t);
+                    if (result != null)
+                        break;
+                }
+            }
+
+            return result;
+        }
+
+        [Test]
+        public void ProcessChecks()
+        {
+            Assert.AreEqual(0, treeView.CheckedTests.Length);
+            Assert.IsFalse(Checked(treeView.Nodes));
+
+            treeView.Nodes[0].Checked = true;
+
+            treeView.Nodes[0].Nodes[0].Checked = true;
+
+            Assert.AreEqual(2, treeView.CheckedTests.Length);
+            Assert.AreEqual(1, treeView.SelectedTests.Length);
+
+            Assert.IsTrue(Checked(treeView.Nodes));
+
+            treeView.ClearCheckedNodes();
+
+            Assert.AreEqual(0, treeView.CheckedTests.Length);
+            Assert.IsFalse(Checked(treeView.Nodes));
+        }
 // TODO: Unused Tests
 //		[Test]
 //		public void CheckCategory() 
@@ -228,20 +228,20 @@ namespace NUnit.UiKit.Tests
 //			Assert.AreEqual(0, treeView.CheckedTests.Length);
 //		}
 
-		private bool Checked(TreeNodeCollection nodes) 
-		{
-			bool result = false;
+        private bool Checked(TreeNodeCollection nodes) 
+        {
+            bool result = false;
 
-			foreach (TreeNode node in nodes) 
-			{
-				result |= node.Checked;
-				if (node.Nodes != null)
-					result |= Checked(node.Nodes);
-			}
+            foreach (TreeNode node in nodes) 
+            {
+                result |= node.Checked;
+                if (node.Nodes != null)
+                    result |= Checked(node.Nodes);
+            }
 
-			return result;
-		}
-	}
+            return result;
+        }
+    }
 
     [TestFixture]
     public class TestSuiteTreeViewReloadTests : TestSuiteTreeViewFixture
