@@ -7,95 +7,95 @@
 
 namespace NUnit.UiKit
 {
-	using System;
-	using System.Windows.Forms;
-	using System.Drawing;
-	using NUnit.Core;
-	using NUnit.Util;
+    using System;
+    using System.Windows.Forms;
+    using System.Drawing;
+    using NUnit.Core;
+    using NUnit.Util;
 
     /// <summary>
-	/// Type safe TreeNode for use in the TestSuiteTreeView. 
-	/// NOTE: Hides some methods and properties of base class.
-	/// </summary>
-	public class TestSuiteTreeNode : TreeNode
-	{
-		#region Instance variables and constant definitions
+    /// Type safe TreeNode for use in the TestSuiteTreeView. 
+    /// NOTE: Hides some methods and properties of base class.
+    /// </summary>
+    public class TestSuiteTreeNode : TreeNode
+    {
+        #region Instance variables and constant definitions
 
-		/// <summary>
-		/// The testcase or testsuite represented by this node
-		/// </summary>
-		private ITest test;
+        /// <summary>
+        /// The testcase or testsuite represented by this node
+        /// </summary>
+        private ITest test;
 
-		/// <summary>
-		/// The result from the last run of the test
-		/// </summary>
-		private TestResult result;
+        /// <summary>
+        /// The result from the last run of the test
+        /// </summary>
+        private TestResult result;
 
-		/// <summary>
-		/// Private field used for inclusion by category
-		/// </summary>
-		private bool included = true;
+        /// <summary>
+        /// Private field used for inclusion by category
+        /// </summary>
+        private bool included = true;
 
         private bool showFailedAssumptions = false;
 
-		/// <summary>
-		/// Image indices for various test states - the values 
-		/// must match the indices of the image list used
-		/// </summary>
-		public const int InitIndex = 0;
-		public const int SkippedIndex = 0; 
-		public const int FailureIndex = 1;
-		public const int SuccessIndex = 2;
-		public const int IgnoredIndex = 3;
-	    public const int InconclusiveIndex = 4;
+        /// <summary>
+        /// Image indices for various test states - the values 
+        /// must match the indices of the image list used
+        /// </summary>
+        public const int InitIndex = 0;
+        public const int SkippedIndex = 0; 
+        public const int FailureIndex = 1;
+        public const int SuccessIndex = 2;
+        public const int IgnoredIndex = 3;
+        public const int InconclusiveIndex = 4;
 
-		#endregion
+        #endregion
 
-		#region Constructors
+        #region Constructors
 
-		/// <summary>
-		/// Construct a TestNode given a test
-		/// </summary>
-		public TestSuiteTreeNode( TestInfo test ) : base(test.TestName.Name)
-		{
-			this.test = test;
-			UpdateImageIndex();
-		}
+        /// <summary>
+        /// Construct a TestNode given a test
+        /// </summary>
+        public TestSuiteTreeNode( TestInfo test ) : base(test.TestName.Name)
+        {
+            this.test = test;
+            UpdateImageIndex();
+        }
 
-		/// <summary>
-		/// Construct a TestNode given a TestResult
-		/// </summary>
-		public TestSuiteTreeNode( TestResult result ) : base( result.Test.TestName.Name )
-		{
-			this.test = result.Test;
-			this.result = result;
-			UpdateImageIndex();
-		}
+        /// <summary>
+        /// Construct a TestNode given a TestResult
+        /// </summary>
+        public TestSuiteTreeNode( TestResult result ) : base( result.Test.TestName.Name )
+        {
+            this.test = result.Test;
+            this.result = result;
+            UpdateImageIndex();
+        }
 
-		#endregion
+        #endregion
 
-		#region Properties	
-		/// <summary>
-		/// Test represented by this node
-		/// </summary>
-		public ITest Test
-		{
-			get { return this.test; }
-			set	{ this.test = value; }
-		}
+        #region Properties	
+        /// <summary>
+        /// Test represented by this node
+        /// </summary>
+        public ITest Test
+        {
+            get { return this.test; }
+            set	{ this.test = value; }
+        }
 
-		/// <summary>
-		/// Test result for this node
-		/// </summary>
-		public TestResult Result
-		{
-			get { return this.result; }
-			set 
-			{ 
-				this.result = value;
-				UpdateImageIndex();
-			}
-		}
+        /// <summary>
+        /// Test result for this node
+        /// </summary>
+        public TestResult Result
+        {
+            get { return this.result; }
+            set 
+            { 
+                this.result = value;
+                UpdateImageIndex();
+            }
+        }
 
         /// <summary>
         /// Return true if the node has a result, otherwise false.
@@ -105,31 +105,31 @@ namespace NUnit.UiKit
             get { return this.result != null; }
         }
 
-		public string TestType
-		{
-			get { return test.TestType; }
-		}
+        public string TestType
+        {
+            get { return test.TestType; }
+        }
 
-		public string StatusText
-		{
-			get
-			{
-				if ( result == null )
-					return test.RunState.ToString();
+        public string StatusText
+        {
+            get
+            {
+                if ( result == null )
+                    return test.RunState.ToString();
 
-				return result.ResultState.ToString();
-			}
-		}
+                return result.ResultState.ToString();
+            }
+        }
 
-		public bool Included
-		{
-			get { return included; }
-			set
-			{ 
-				included = value;
-				this.ForeColor = included ? SystemColors.WindowText : Color.LightBlue;
-			}
-		}
+        public bool Included
+        {
+            get { return included; }
+            set
+            { 
+                included = value;
+                this.ForeColor = included ? SystemColors.WindowText : Color.LightBlue;
+            }
+        }
 
         public bool ShowFailedAssumptions
         {
@@ -164,29 +164,29 @@ namespace NUnit.UiKit
             }
         }
 
-		#endregion
+        #endregion
 
-		#region Methods
+        #region Methods
 
-		/// <summary>
-		/// UPdate the image index based on the result field
-		/// </summary>
-		public void UpdateImageIndex()
-		{
-			ImageIndex = SelectedImageIndex = CalcImageIndex();
-		}
+        /// <summary>
+        /// UPdate the image index based on the result field
+        /// </summary>
+        public void UpdateImageIndex()
+        {
+            ImageIndex = SelectedImageIndex = CalcImageIndex();
+        }
 
-		/// <summary>
-		/// Clear the result of this node and all its children
-		/// </summary>
-		public void ClearResults()
-		{
-			this.result = null;
-			ImageIndex = SelectedImageIndex = CalcImageIndex();
+        /// <summary>
+        /// Clear the result of this node and all its children
+        /// </summary>
+        public void ClearResults()
+        {
+            this.result = null;
+            ImageIndex = SelectedImageIndex = CalcImageIndex();
 
-			foreach(TestSuiteTreeNode node in Nodes)
-				node.ClearResults();
-		}
+            foreach(TestSuiteTreeNode node in Nodes)
+                node.ClearResults();
+        }
 
         /// <summary>
         /// Gets the Theory node associated with the current
@@ -226,11 +226,11 @@ namespace NUnit.UiKit
         }
 
         /// <summary>
-		/// Calculate the image index based on the node contents
-		/// </summary>
-		/// <returns>Image index for this node</returns>
-		private int CalcImageIndex()
-		{
+        /// Calculate the image index based on the node contents
+        /// </summary>
+        /// <returns>Image index for this node</returns>
+        private int CalcImageIndex()
+        {
             if (this.result == null)
             {
                 switch (this.test.RunState)
@@ -272,23 +272,23 @@ namespace NUnit.UiKit
                         return InitIndex;
                 }
             }
-		}
+        }
 
-		internal void Accept(TestSuiteTreeNodeVisitor visitor) 
-		{
-			visitor.Visit(this);
-			foreach (TestSuiteTreeNode node in this.Nodes) 
-			{
-				node.Accept(visitor);
-			}
-		}
+        internal void Accept(TestSuiteTreeNodeVisitor visitor) 
+        {
+            visitor.Visit(this);
+            foreach (TestSuiteTreeNode node in this.Nodes) 
+            {
+                node.Accept(visitor);
+            }
+        }
 
-		#endregion
-	}
+        #endregion
+    }
 
-	public abstract class TestSuiteTreeNodeVisitor 
-	{
-		public abstract void Visit(TestSuiteTreeNode node);
-	}
+    public abstract class TestSuiteTreeNodeVisitor 
+    {
+        public abstract void Visit(TestSuiteTreeNode node);
+    }
 }
 

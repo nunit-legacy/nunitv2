@@ -208,8 +208,8 @@ namespace NUnit.UiKit
         {
             if (clientWidth != this.ClientSize.Width)
             {
-				if (this.node != null)
-                	this.DisplayProperties();
+                if (this.node != null)
+                    this.DisplayProperties();
                 clientWidth = this.ClientSize.Width;
             }
         }
