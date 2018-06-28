@@ -14,13 +14,13 @@ using NUnit.Util;
 
 namespace NUnit.Gui.SettingsPages
 {
-	public class AdvancedLoaderSettingsPage : NUnit.UiKit.SettingsPage
-	{
-		private System.Windows.Forms.Label label3;
-		private System.Windows.Forms.GroupBox groupBox3;
+    public class AdvancedLoaderSettingsPage : NUnit.UiKit.SettingsPage
+    {
+        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.GroupBox groupBox3;
         private System.Windows.Forms.CheckBox enableShadowCopyCheckBox;
-		private System.Windows.Forms.Label label2;
-		private System.Windows.Forms.HelpProvider helpProvider1;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.HelpProvider helpProvider1;
         private Label label4;
         private TextBox shadowCopyPathTextBox;
         private CheckBox principalPolicyCheckBox;
@@ -29,38 +29,38 @@ namespace NUnit.Gui.SettingsPages
         private GroupBox groupBox1;
         private ListBox principalPolicyListBox;
         private Label label1;
-		private System.ComponentModel.IContainer components = null;
+        private System.ComponentModel.IContainer components = null;
 
-		public AdvancedLoaderSettingsPage( string key ) : base( key )
-		{
-			// This call is required by the Windows Form Designer.
-			InitializeComponent();
+        public AdvancedLoaderSettingsPage( string key ) : base( key )
+        {
+            // This call is required by the Windows Form Designer.
+            InitializeComponent();
 
-			// TODO: Add any initialization after the InitializeComponent call
-		}
+            // TODO: Add any initialization after the InitializeComponent call
+        }
 
-		/// <summary>
-		/// Clean up any resources being used.
-		/// </summary>
-		protected override void Dispose( bool disposing )
-		{
-			if( disposing )
-			{
-				if (components != null) 
-				{
-					components.Dispose();
-				}
-			}
-			base.Dispose( disposing );
-		}
+        /// <summary>
+        /// Clean up any resources being used.
+        /// </summary>
+        protected override void Dispose( bool disposing )
+        {
+            if( disposing )
+            {
+                if (components != null) 
+                {
+                    components.Dispose();
+                }
+            }
+            base.Dispose( disposing );
+        }
 
-		#region Designer generated code
-		/// <summary>
-		/// Required method for Designer support - do not modify
-		/// the contents of this method with the code editor.
-		/// </summary>
-		private void InitializeComponent()
-		{
+        #region Designer generated code
+        /// <summary>
+        /// Required method for Designer support - do not modify
+        /// the contents of this method with the code editor.
+        /// </summary>
+        private void InitializeComponent()
+        {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(AdvancedLoaderSettingsPage));
             this.label3 = new System.Windows.Forms.Label();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
@@ -213,24 +213,24 @@ namespace NUnit.Gui.SettingsPages
             this.ResumeLayout(false);
             this.PerformLayout();
 
-		}
-		#endregion
+        }
+        #endregion
 
-		public override void LoadSettings()
-		{
-			this.settings = Services.UserSettings;
+        public override void LoadSettings()
+        {
+            this.settings = Services.UserSettings;
 
-			enableShadowCopyCheckBox.Checked = settings.GetSetting( "Options.TestLoader.ShadowCopyFiles", true );
+            enableShadowCopyCheckBox.Checked = settings.GetSetting( "Options.TestLoader.ShadowCopyFiles", true );
             shadowCopyPathTextBox.Text = settings.GetSetting("Options.TestLoader.ShadowCopyPath", "");
 
             principalPolicyCheckBox.Checked = principalPolicyListBox.Enabled =
                 settings.GetSetting( "Options.TestLoader.SetPrincipalPolicy", false );
             principalPolicyListBox.SelectedIndex = (int)(PrincipalPolicy)settings.GetSetting("Options.TestLoader.PrincipalPolicy", PrincipalPolicy.UnauthenticatedPrincipal);
-		}
+        }
 
-		public override void ApplySettings()
-		{
-			settings.SaveSetting( "Options.TestLoader.ShadowCopyFiles", enableShadowCopyCheckBox.Checked );
+        public override void ApplySettings()
+        {
+            settings.SaveSetting( "Options.TestLoader.ShadowCopyFiles", enableShadowCopyCheckBox.Checked );
 
             if (shadowCopyPathTextBox.Text != "")
                 settings.SaveSetting("Options.TestLoader.ShadowCopyPath", shadowCopyPathTextBox.Text);
@@ -243,13 +243,13 @@ namespace NUnit.Gui.SettingsPages
                 settings.SaveSetting("Options.TestLoader.PrincipalPolicy", (PrincipalPolicy)principalPolicyListBox.SelectedIndex);
             else
                 settings.RemoveSetting("Options.TestLoader.PrincipalPolicy");
-		}
+        }
 
-		public override bool HasChangesRequiringReload
-		{
-			get
-			{
-				bool oldShadowCopyFiles = settings.GetSetting( "Options.TestLoader.ShadowCopyFiles", true );
+        public override bool HasChangesRequiringReload
+        {
+            get
+            {
+                bool oldShadowCopyFiles = settings.GetSetting( "Options.TestLoader.ShadowCopyFiles", true );
                 string oldShadowCopyPath = settings.GetSetting("Options.TestLoader.ShadowCopyPath", "");
                 bool oldSetPrincipalPolicy = settings.GetSetting("Options.TestLoader.SetPrincipalPolicy", false);
                 PrincipalPolicy oldPrincipalPolicy = (PrincipalPolicy)settings.GetSetting("Options.TestLoader.PrincipalPolicy", PrincipalPolicy.UnauthenticatedPrincipal);
@@ -259,8 +259,8 @@ namespace NUnit.Gui.SettingsPages
                     || principalPolicyCheckBox.Checked != oldSetPrincipalPolicy
                     || principalPolicyListBox.SelectedIndex != (int)oldPrincipalPolicy;
 
-			}
-		}
+            }
+        }
 
         private void enableShadowCopyCheckBox_CheckedChanged(object sender, EventArgs e)
         {
@@ -271,6 +271,6 @@ namespace NUnit.Gui.SettingsPages
         {
             principalPolicyListBox.Enabled = principalPolicyCheckBox.Checked;
         }
-	}
+    }
 }
 

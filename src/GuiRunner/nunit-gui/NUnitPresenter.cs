@@ -15,9 +15,9 @@ using NUnit.UiKit;
 
 namespace NUnit.Gui
 {
-	/// <summary>
-	/// NUnitPresenter does all file opening and closing that
-	/// involves interacting with the user.
+    /// <summary>
+    /// NUnitPresenter does all file opening and closing that
+    /// involves interacting with the user.
     /// 
     /// NOTE: This class originated as the static class
     /// TestLoaderUI and is slowly being converted to a
@@ -32,7 +32,7 @@ namespace NUnit.Gui
     /// 
     /// 3. The presenter creates dialogs itself, which
     /// limits testability.
-	/// </summary>
+    /// </summary>
     public class NUnitPresenter
     {
         #region Instance Variables
@@ -91,17 +91,17 @@ namespace NUnit.Gui
         #region Open Methods
 
         public void OpenProject()
-		{
-			OpenFileDialog dlg = new OpenFileDialog();
-			System.ComponentModel.ISite site = Form == null ? null : Form.Site;
-			if ( site != null ) dlg.Site = site;
-			dlg.Title = "Open Project";
-			
-			if ( VisualStudioSupport )
-			{
+        {
+            OpenFileDialog dlg = new OpenFileDialog();
+            System.ComponentModel.ISite site = Form == null ? null : Form.Site;
+            if ( site != null ) dlg.Site = site;
+            dlg.Title = "Open Project";
+            
+            if ( VisualStudioSupport )
+            {
                 dlg.Filter =
-					"Projects & Assemblies(*.nunit,*.csproj,*.vbproj,*.vjsproj, *.vcproj,*.sln,*.dll,*.exe )|*.nunit;*.csproj;*.vjsproj;*.vbproj;*.vcproj;*.sln;*.dll;*.exe|" +
-					"All Project Types (*.nunit,*.csproj,*.vbproj,*.vjsproj,*.vcproj,*.sln)|*.nunit;*.csproj;*.vjsproj;*.vbproj;*.vcproj;*.sln|" +
+                    "Projects & Assemblies(*.nunit,*.csproj,*.vbproj,*.vjsproj, *.vcproj,*.sln,*.dll,*.exe )|*.nunit;*.csproj;*.vjsproj;*.vbproj;*.vcproj;*.sln;*.dll;*.exe|" +
+                    "All Project Types (*.nunit,*.csproj,*.vbproj,*.vjsproj,*.vcproj,*.sln)|*.nunit;*.csproj;*.vjsproj;*.vbproj;*.vcproj;*.sln|" +
                     "Test Projects (*.nunit)|*.nunit|" +
                     "Solutions (*.sln)|*.sln|" +
                     "C# Projects (*.csproj)|*.csproj|" +
@@ -109,21 +109,21 @@ namespace NUnit.Gui
                     "VB Projects (*.vbproj)|*.vbproj|" +
                     "C++ Projects (*.vcproj)|*.vcproj|" +
                     "Assemblies (*.dll,*.exe)|*.dll;*.exe";
-			}
-			else
-			{
+            }
+            else
+            {
                 dlg.Filter =
                     "Projects & Assemblies(*.nunit,*.dll,*.exe)|*.nunit;*.dll;*.exe|" +
                     "Test Projects (*.nunit)|*.nunit|" +
                     "Assemblies (*.dll,*.exe)|*.dll;*.exe";
-			}
+            }
 
-			dlg.FilterIndex = 1;
-			dlg.FileName = "";
+            dlg.FilterIndex = 1;
+            dlg.FileName = "";
 
-			if ( dlg.ShowDialog( Form ) == DialogResult.OK ) 
-				OpenProject( dlg.FileName );
-		}
+            if ( dlg.ShowDialog( Form ) == DialogResult.OK ) 
+                OpenProject( dlg.FileName );
+        }
 
         public void WatchProject(string projectPath)
         {
@@ -154,29 +154,29 @@ namespace NUnit.Gui
         }
 
         public void OpenProject(string testFileName, string configName, string testName)
-		{
-			if ( loader.IsProjectLoaded && SaveProjectIfDirty() == DialogResult.Cancel )
-				return;
+        {
+            if ( loader.IsProjectLoaded && SaveProjectIfDirty() == DialogResult.Cancel )
+                return;
 
-			loader.LoadProject( testFileName, configName );
-			if ( loader.IsProjectLoaded )
-			{	
-				NUnitProject testProject = loader.TestProject;
-				if ( testProject.Configs.Count == 0 )
+            loader.LoadProject( testFileName, configName );
+            if ( loader.IsProjectLoaded )
+            {	
+                NUnitProject testProject = loader.TestProject;
+                if ( testProject.Configs.Count == 0 )
                     Form.MessageDisplay.Info("Loaded project contains no configuration data");
-				else if ( testProject.ActiveConfig == null )
+                else if ( testProject.ActiveConfig == null )
                     Form.MessageDisplay.Info("Loaded project has no active configuration");
-				else if ( testProject.ActiveConfig.Assemblies.Count == 0 )
+                else if ( testProject.ActiveConfig.Assemblies.Count == 0 )
                     Form.MessageDisplay.Info("Active configuration contains no assemblies");
-				else
-					loader.LoadTest( testName );
-			}
-		}
+                else
+                    loader.LoadTest( testName );
+            }
+        }
 
-		public void OpenProject( string testFileName )
-		{
-			OpenProject( testFileName, null, null );
-		}
+        public void OpenProject( string testFileName )
+        {
+            OpenProject( testFileName, null, null );
+        }
 
 //		public static void OpenResults( Form owner )
 //		{
@@ -212,37 +212,37 @@ namespace NUnit.Gui
         #region Add Methods
 
         public void AddToProject()
-		{
-			AddToProject( null );
-		}
+        {
+            AddToProject( null );
+        }
         // TODO: Not used?
-		public void AddToProject( string configName )
-		{
-			ProjectConfig config = configName == null
-				? loader.TestProject.ActiveConfig
-				: loader.TestProject.Configs[configName];
+        public void AddToProject( string configName )
+        {
+            ProjectConfig config = configName == null
+                ? loader.TestProject.ActiveConfig
+                : loader.TestProject.Configs[configName];
 
-			OpenFileDialog dlg = new OpenFileDialog();
-			dlg.Title = "Add Assemblies To Project";
-			dlg.InitialDirectory = config.BasePath;
+            OpenFileDialog dlg = new OpenFileDialog();
+            dlg.Title = "Add Assemblies To Project";
+            dlg.InitialDirectory = config.BasePath;
 
-			if ( VisualStudioSupport )
-				dlg.Filter =
-					"Projects & Assemblies(*.csproj,*.vbproj,*.vjsproj, *.vcproj,*.dll,*.exe )|*.csproj;*.vjsproj;*.vbproj;*.vcproj;*.dll;*.exe|" +
-					"Visual Studio Projects (*.csproj,*.vjsproj,*.vbproj,*.vcproj)|*.csproj;*.vjsproj;*.vbproj;*.vcproj|" +
-					"C# Projects (*.csproj)|*.csproj|" +
-					"J# Projects (*.vjsproj)|*.vjsproj|" +
-					"VB Projects (*.vbproj)|*.vbproj|" +
-					"C++ Projects (*.vcproj)|*.vcproj|" +
-					"Assemblies (*.dll,*.exe)|*.dll;*.exe";
-			else
-				dlg.Filter = "Assemblies (*.dll,*.exe)|*.dll;*.exe";
+            if ( VisualStudioSupport )
+                dlg.Filter =
+                    "Projects & Assemblies(*.csproj,*.vbproj,*.vjsproj, *.vcproj,*.dll,*.exe )|*.csproj;*.vjsproj;*.vbproj;*.vcproj;*.dll;*.exe|" +
+                    "Visual Studio Projects (*.csproj,*.vjsproj,*.vbproj,*.vcproj)|*.csproj;*.vjsproj;*.vbproj;*.vcproj|" +
+                    "C# Projects (*.csproj)|*.csproj|" +
+                    "J# Projects (*.vjsproj)|*.vjsproj|" +
+                    "VB Projects (*.vbproj)|*.vbproj|" +
+                    "C++ Projects (*.vcproj)|*.vcproj|" +
+                    "Assemblies (*.dll,*.exe)|*.dll;*.exe";
+            else
+                dlg.Filter = "Assemblies (*.dll,*.exe)|*.dll;*.exe";
 
-			dlg.FilterIndex = 1;
-			dlg.FileName = "";
+            dlg.FilterIndex = 1;
+            dlg.FileName = "";
 
-			if ( dlg.ShowDialog( Form ) != DialogResult.OK )
-				return;
+            if ( dlg.ShowDialog( Form ) != DialogResult.OK )
+                return;
 
             if (PathUtils.IsAssemblyFileType(dlg.FileName))
             {
@@ -291,56 +291,56 @@ namespace NUnit.Gui
                 }
         }
 
-		public void AddAssembly()
-		{
-			AddAssembly( null );
-		}
+        public void AddAssembly()
+        {
+            AddAssembly( null );
+        }
 
-		public void AddAssembly( string configName )
-		{
-			ProjectConfig config = configName == null
-				? loader.TestProject.ActiveConfig
-				: loader.TestProject.Configs[configName];
+        public void AddAssembly( string configName )
+        {
+            ProjectConfig config = configName == null
+                ? loader.TestProject.ActiveConfig
+                : loader.TestProject.Configs[configName];
 
-			OpenFileDialog dlg = new OpenFileDialog();
-			dlg.Title = "Add Assembly";
-			dlg.InitialDirectory = config.BasePath;
+            OpenFileDialog dlg = new OpenFileDialog();
+            dlg.Title = "Add Assembly";
+            dlg.InitialDirectory = config.BasePath;
             dlg.Filter = "Assemblies (*.dll,*.exe)|*.dll;*.exe";
-			dlg.FilterIndex = 1;
-			dlg.FileName = "";
+            dlg.FilterIndex = 1;
+            dlg.FileName = "";
 
             if (dlg.ShowDialog(Form) == DialogResult.OK)
                 config.Assemblies.Add(dlg.FileName);
-		}
+        }
 
-		public void AddVSProject()
-		{
-			OpenFileDialog dlg = new OpenFileDialog();
-			dlg.Title = "Add Visual Studio Project";
+        public void AddVSProject()
+        {
+            OpenFileDialog dlg = new OpenFileDialog();
+            dlg.Title = "Add Visual Studio Project";
 
-			dlg.Filter =
-				"All Project Types (*.csproj,*.vjsproj,*.vbproj,*.vcproj)|*.csproj;*.vjsproj;*.vbproj;*.vcproj|" +
-				"C# Projects (*.csproj)|*.csproj|" +
-				"J# Projects (*.vjsproj)|*.vjsproj|" +
-				"VB Projects (*.vbproj)|*.vbproj|" +
-				"C++ Projects (*.vcproj)|*.vcproj|" +
-				"All Files (*.*)|*.*";
+            dlg.Filter =
+                "All Project Types (*.csproj,*.vjsproj,*.vbproj,*.vcproj)|*.csproj;*.vjsproj;*.vbproj;*.vcproj|" +
+                "C# Projects (*.csproj)|*.csproj|" +
+                "J# Projects (*.vjsproj)|*.vjsproj|" +
+                "VB Projects (*.vbproj)|*.vbproj|" +
+                "C++ Projects (*.vcproj)|*.vcproj|" +
+                "All Files (*.*)|*.*";
 
-			dlg.FilterIndex = 1;
-			dlg.FileName = "";
+            dlg.FilterIndex = 1;
+            dlg.FileName = "";
 
-			if ( dlg.ShowDialog( Form ) == DialogResult.OK ) 
-			{
-				try
-				{
-					VSProject vsProject = new VSProject( dlg.FileName );
-					loader.TestProject.Add( vsProject );
-				}
-				catch( Exception ex )
-				{
+            if ( dlg.ShowDialog( Form ) == DialogResult.OK ) 
+            {
+                try
+                {
+                    VSProject vsProject = new VSProject( dlg.FileName );
+                    loader.TestProject.Add( vsProject );
+                }
+                catch( Exception ex )
+                {
                     Form.MessageDisplay.Error("Invalid VS Project", ex);
-				}
-			}
+                }
+            }
         }
 
         #endregion
@@ -348,38 +348,38 @@ namespace NUnit.Gui
         #region Save Methods
 
         public void SaveProject()
-		{
-			if ( Path.IsPathRooted( loader.TestProject.ProjectPath ) &&
-				 NUnitProject.IsNUnitProjectFile( loader.TestProject.ProjectPath ) &&
-				 CanWriteProjectFile( loader.TestProject.ProjectPath ) )
-				loader.TestProject.Save();
-			else
-				SaveProjectAs();
-		}
+        {
+            if ( Path.IsPathRooted( loader.TestProject.ProjectPath ) &&
+                 NUnitProject.IsNUnitProjectFile( loader.TestProject.ProjectPath ) &&
+                 CanWriteProjectFile( loader.TestProject.ProjectPath ) )
+                loader.TestProject.Save();
+            else
+                SaveProjectAs();
+        }
 
-		public void SaveProjectAs()
-		{
-			SaveFileDialog dlg = new SaveFileDialog();
-			dlg.Title = "Save Test Project";
-			dlg.Filter = "NUnit Test Project (*.nunit)|*.nunit|All Files (*.*)|*.*";
-			string path = NUnitProject.ProjectPathFromFile( loader.TestProject.ProjectPath );
-			if ( CanWriteProjectFile( path ) )
-				dlg.FileName = path;
-			dlg.DefaultExt = "nunit";
-			dlg.ValidateNames = true;
-			dlg.OverwritePrompt = true;
+        public void SaveProjectAs()
+        {
+            SaveFileDialog dlg = new SaveFileDialog();
+            dlg.Title = "Save Test Project";
+            dlg.Filter = "NUnit Test Project (*.nunit)|*.nunit|All Files (*.*)|*.*";
+            string path = NUnitProject.ProjectPathFromFile( loader.TestProject.ProjectPath );
+            if ( CanWriteProjectFile( path ) )
+                dlg.FileName = path;
+            dlg.DefaultExt = "nunit";
+            dlg.ValidateNames = true;
+            dlg.OverwritePrompt = true;
 
-			while( dlg.ShowDialog( Form ) == DialogResult.OK )
-			{
-				if ( !CanWriteProjectFile( dlg.FileName ) )
+            while( dlg.ShowDialog( Form ) == DialogResult.OK )
+            {
+                if ( !CanWriteProjectFile( dlg.FileName ) )
                     Form.MessageDisplay.Info(string.Format("File {0} is write-protected. Select another file name.", dlg.FileName));
-				else
-				{
-					loader.TestProject.Save( dlg.FileName );
+                else
+                {
+                    loader.TestProject.Save( dlg.FileName );
                     ReloadProject();
                     return;
-				}
-			}
+                }
+            }
         }
 
         private DialogResult SaveProjectIfDirty()

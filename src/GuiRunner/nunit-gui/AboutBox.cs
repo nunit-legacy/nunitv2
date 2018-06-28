@@ -14,83 +14,83 @@ using System.Reflection;
 
 namespace NUnit.Gui
 {
-	public class AboutBox : System.Windows.Forms.Form
-	{
-		private System.Windows.Forms.Button OkButton;
-		private System.Windows.Forms.Label label1;
-		private System.Windows.Forms.Label versionLabel;
-		private System.Windows.Forms.Label label2;
-		private System.Windows.Forms.Label label3;
-		private System.Windows.Forms.LinkLabel linkLabel1;
-		private System.Windows.Forms.Label label4;
-		private System.Windows.Forms.Label label5;
-		private System.Windows.Forms.Label label6;
-		private System.Windows.Forms.Label label7;
-		private System.Windows.Forms.Label copyright;
-		private System.Windows.Forms.Label dotNetVersionLabel;
-		private System.Windows.Forms.Label clrTypeLabel;
-		/// <summary>
-		/// Required designer variable.
-		/// </summary>
-		private System.ComponentModel.Container components = null;
+    public class AboutBox : System.Windows.Forms.Form
+    {
+        private System.Windows.Forms.Button OkButton;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Label versionLabel;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.LinkLabel linkLabel1;
+        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.Label label7;
+        private System.Windows.Forms.Label copyright;
+        private System.Windows.Forms.Label dotNetVersionLabel;
+        private System.Windows.Forms.Label clrTypeLabel;
+        /// <summary>
+        /// Required designer variable.
+        /// </summary>
+        private System.ComponentModel.Container components = null;
 
-		public AboutBox()
-		{
-			//
-			// Required for Windows Form Designer support
-			//
-			InitializeComponent();
+        public AboutBox()
+        {
+            //
+            // Required for Windows Form Designer support
+            //
+            InitializeComponent();
 
-			//
-			// TODO: Add any constructor code after InitializeComponent call
-			//
-			Assembly executingAssembly = Assembly.GetExecutingAssembly();
-			string versionText = executingAssembly.GetName().Version.ToString();
+            //
+            // TODO: Add any constructor code after InitializeComponent call
+            //
+            Assembly executingAssembly = Assembly.GetExecutingAssembly();
+            string versionText = executingAssembly.GetName().Version.ToString();
 
             object [] objectAttrs = executingAssembly.GetCustomAttributes(typeof(AssemblyInformationalVersionAttribute), false);
             if ( objectAttrs.Length > 0 )
-				versionText = ((AssemblyInformationalVersionAttribute)objectAttrs[0]).InformationalVersion;
+                versionText = ((AssemblyInformationalVersionAttribute)objectAttrs[0]).InformationalVersion;
 
-			objectAttrs = executingAssembly.GetCustomAttributes(typeof(AssemblyConfigurationAttribute), false);
-			if ( objectAttrs.Length > 0 )
-			{
-				string configText = ((AssemblyConfigurationAttribute)objectAttrs[0]).Configuration;
+            objectAttrs = executingAssembly.GetCustomAttributes(typeof(AssemblyConfigurationAttribute), false);
+            if ( objectAttrs.Length > 0 )
+            {
+                string configText = ((AssemblyConfigurationAttribute)objectAttrs[0]).Configuration;
                 if ( configText != "" )
-				    versionText += string.Format(" ({0})",configText);
-			}
-			
-			string copyrightText = "Copyright (C) 2002-2014, 2018 Charlie Poole.\r\nCopyright (C) 2002-2004 James W. Newkirk, Michael C. Two, Alexei A. Vorontsov.\r\nCopyright (C) 2000-2002 Philip Craig.\r\nAll Rights Reserved.";
-			objectAttrs = executingAssembly.GetCustomAttributes(typeof(AssemblyCopyrightAttribute), false);
-			if ( objectAttrs.Length > 0 )
-				copyrightText = ((AssemblyCopyrightAttribute)objectAttrs[0]).Copyright;
+                    versionText += string.Format(" ({0})",configText);
+            }
+            
+            string copyrightText = "Copyright (C) 2002-2014, 2018 Charlie Poole.\r\nCopyright (C) 2002-2004 James W. Newkirk, Michael C. Two, Alexei A. Vorontsov.\r\nCopyright (C) 2000-2002 Philip Craig.\r\nAll Rights Reserved.";
+            objectAttrs = executingAssembly.GetCustomAttributes(typeof(AssemblyCopyrightAttribute), false);
+            if ( objectAttrs.Length > 0 )
+                copyrightText = ((AssemblyCopyrightAttribute)objectAttrs[0]).Copyright;
 
-			versionLabel.Text = versionText;
-			copyright.Text = copyrightText;
-			dotNetVersionLabel.Text = NUnit.Core.RuntimeFramework.CurrentFramework.DisplayName;
-		}
+            versionLabel.Text = versionText;
+            copyright.Text = copyrightText;
+            dotNetVersionLabel.Text = NUnit.Core.RuntimeFramework.CurrentFramework.DisplayName;
+        }
 
-		/// <summary>
-		/// Clean up any resources being used.
-		/// </summary>
-		protected override void Dispose( bool disposing )
-		{
-			if( disposing )
-			{
-				if(components != null)
-				{
-					components.Dispose();
-				}
-			}
-			base.Dispose( disposing );
-		}
+        /// <summary>
+        /// Clean up any resources being used.
+        /// </summary>
+        protected override void Dispose( bool disposing )
+        {
+            if( disposing )
+            {
+                if(components != null)
+                {
+                    components.Dispose();
+                }
+            }
+            base.Dispose( disposing );
+        }
 
-		#region Windows Form Designer generated code
-		/// <summary>
-		/// Required method for Designer support - do not modify
-		/// the contents of this method with the code editor.
-		/// </summary>
-		private void InitializeComponent()
-		{
+        #region Windows Form Designer generated code
+        /// <summary>
+        /// Required method for Designer support - do not modify
+        /// the contents of this method with the code editor.
+        /// </summary>
+        private void InitializeComponent()
+        {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(AboutBox));
             this.OkButton = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
@@ -245,18 +245,18 @@ namespace NUnit.Gui
             this.Text = "About NUnit";
             this.ResumeLayout(false);
 
-		}
-		#endregion
-
-		private void button1_Click(object sender, System.EventArgs e)
-		{
-			this.Close();
-		}
-
-		private void linkLabel1_LinkClicked(object sender, System.Windows.Forms.LinkLabelLinkClickedEventArgs e)
-		{
-			System.Diagnostics.Process.Start("http://nunit.org");
-			linkLabel1.LinkVisited = true;
         }
-	}
+        #endregion
+
+        private void button1_Click(object sender, System.EventArgs e)
+        {
+            this.Close();
+        }
+
+        private void linkLabel1_LinkClicked(object sender, System.Windows.Forms.LinkLabelLinkClickedEventArgs e)
+        {
+            System.Diagnostics.Process.Start("http://nunit.org");
+            linkLabel1.LinkVisited = true;
+        }
+    }
 }
