@@ -12,18 +12,18 @@ using System.Threading;
 
 namespace NUnit.Core
 {
-	#region Individual Event Classes
+    #region Individual Event Classes
 
-	/// <summary>
-	/// NUnit.Core.Event is the abstract base for all stored events.
-	/// An Event is the stored representation of a call to the 
-	/// EventListener interface and is used to record such calls
-	/// or to queue them for forwarding on another thread or at
-	/// a later time.
-	/// </summary>
-	public abstract class Event
-	{
-		abstract public void Send( EventListener listener );
+    /// <summary>
+    /// NUnit.Core.Event is the abstract base for all stored events.
+    /// An Event is the stored representation of a call to the 
+    /// EventListener interface and is used to record such calls
+    /// or to queue them for forwarding on another thread or at
+    /// a later time.
+    /// </summary>
+    public abstract class Event
+    {
+        abstract public void Send( EventListener listener );
 
         /// <summary>
         /// Gets a value indicating whether this event is delivered synchronously by the NUnit <see cref="EventPump"/>.
@@ -33,13 +33,13 @@ namespace NUnit.Core
         /// thread has delivered the event and sets the WaitHandle.
         /// </para>
         /// </summary>
-	    public virtual bool IsSynchronous
-	    {
-	        get
-	        {
-	            return false;
-	        }
-	    }
+        public virtual bool IsSynchronous
+        {
+            get
+            {
+                return false;
+            }
+        }
 
         protected static Exception WrapUnserializableException(Exception ex)
         {
@@ -50,18 +50,18 @@ namespace NUnit.Core
                 ex);
             return new Exception(message);
         }
-	}
+    }
 
-	public class RunStartedEvent : Event
-	{
-		string name;
-		int testCount;
+    public class RunStartedEvent : Event
+    {
+        string name;
+        int testCount;
 
-		public RunStartedEvent( string name, int testCount )
-		{
-			this.name = name;
-			this.testCount = testCount;
-		}
+        public RunStartedEvent( string name, int testCount )
+        {
+            this.name = name;
+            this.testCount = testCount;
+        }
 
         public override bool IsSynchronous
         {
@@ -69,36 +69,36 @@ namespace NUnit.Core
             {
                 return true;
             }
-		}
+        }
 
-		public override void Send( EventListener listener )
-		{
-			listener.RunStarted(name, testCount);
-		}
-	}
+        public override void Send( EventListener listener )
+        {
+            listener.RunStarted(name, testCount);
+        }
+    }
 
-	public class RunFinishedEvent : Event
-	{
-		TestResult result;
-		Exception exception;
+    public class RunFinishedEvent : Event
+    {
+        TestResult result;
+        Exception exception;
 
-		public RunFinishedEvent( TestResult result )
-		{
-			this.result = result;
-		}
+        public RunFinishedEvent( TestResult result )
+        {
+            this.result = result;
+        }
 
-		public RunFinishedEvent( Exception exception )
-		{
-			this.exception = exception;
-		}
+        public RunFinishedEvent( Exception exception )
+        {
+            this.exception = exception;
+        }
 
-		public override void Send( EventListener listener )
-		{
-			if ( this.exception != null )
+        public override void Send( EventListener listener )
+        {
+            if ( this.exception != null )
             {
                 try
                 {
-					listener.RunFinished( this.exception );
+                    listener.RunFinished( this.exception );
                 }
                 catch (SerializationException)
                 {
@@ -106,19 +106,19 @@ namespace NUnit.Core
                     listener.RunFinished(wrapped);
                 }
             }
-			else
-				listener.RunFinished( this.result );
-		}
-	}
+            else
+                listener.RunFinished( this.result );
+        }
+    }
 
-	public class TestStartedEvent : Event
-	{
-		TestName testName;
+    public class TestStartedEvent : Event
+    {
+        TestName testName;
 
-		public TestStartedEvent( TestName testName )
-		{
-			this.testName = testName;
-		}
+        public TestStartedEvent( TestName testName )
+        {
+            this.testName = testName;
+        }
 
         public override bool IsSynchronous
         {
@@ -128,35 +128,35 @@ namespace NUnit.Core
             }
         }
         
-		public override void Send( EventListener listener )
-		{
-			listener.TestStarted( this.testName );
-		}
-	}
-			
-	public class TestFinishedEvent : Event
-	{
-		TestResult result;
+        public override void Send( EventListener listener )
+        {
+            listener.TestStarted( this.testName );
+        }
+    }
+            
+    public class TestFinishedEvent : Event
+    {
+        TestResult result;
 
-		public TestFinishedEvent( TestResult result )
-		{
-			this.result = result;
-		}
+        public TestFinishedEvent( TestResult result )
+        {
+            this.result = result;
+        }
 
-		public override void Send( EventListener listener )
-		{
-			listener.TestFinished( this.result );
-		}
-	}
+        public override void Send( EventListener listener )
+        {
+            listener.TestFinished( this.result );
+        }
+    }
 
-	public class SuiteStartedEvent : Event
-	{
-		TestName suiteName;
+    public class SuiteStartedEvent : Event
+    {
+        TestName suiteName;
 
-		public SuiteStartedEvent( TestName suiteName )
-		{
-			this.suiteName = suiteName;
-		}
+        public SuiteStartedEvent( TestName suiteName )
+        {
+            this.suiteName = suiteName;
+        }
 
         public override bool IsSynchronous
         {
@@ -166,75 +166,75 @@ namespace NUnit.Core
             }
         }
         
-		public override void Send( EventListener listener )
-		{
-			listener.SuiteStarted( this.suiteName );
-		}
-	}
+        public override void Send( EventListener listener )
+        {
+            listener.SuiteStarted( this.suiteName );
+        }
+    }
 
-	public class SuiteFinishedEvent : Event
-	{
-		TestResult result;
+    public class SuiteFinishedEvent : Event
+    {
+        TestResult result;
 
-		public SuiteFinishedEvent( TestResult result )
-		{
-			this.result = result;
-		}
+        public SuiteFinishedEvent( TestResult result )
+        {
+            this.result = result;
+        }
 
-		public override void Send( EventListener listener )
-		{
-			listener.SuiteFinished( this.result );
-		}
-	}
+        public override void Send( EventListener listener )
+        {
+            listener.SuiteFinished( this.result );
+        }
+    }
 
-	public class UnhandledExceptionEvent : Event
-	{
-		Exception exception;
+    public class UnhandledExceptionEvent : Event
+    {
+        Exception exception;
 
-		public UnhandledExceptionEvent( Exception exception )
-		{
-			this.exception = exception;
-		}
+        public UnhandledExceptionEvent( Exception exception )
+        {
+            this.exception = exception;
+        }
 
-		public override void Send( EventListener listener )
-		{
+        public override void Send( EventListener listener )
+        {
             try
             {
-				listener.UnhandledException( this.exception );
+                listener.UnhandledException( this.exception );
             }
             catch (SerializationException)
             {
                 Exception wrapped = WrapUnserializableException(this.exception);
                 listener.UnhandledException(wrapped);
             }
-		}
-	}
+        }
+    }
 
-	public class OutputEvent : Event
-	{
-		TestOutput output;
+    public class OutputEvent : Event
+    {
+        TestOutput output;
 
-		public OutputEvent( TestOutput output )
-		{
-			this.output = output;
-		}
+        public OutputEvent( TestOutput output )
+        {
+            this.output = output;
+        }
 
-		public override void Send( EventListener listener )
-		{
-			listener.TestOutput( this.output );
-		}
-	}
+        public override void Send( EventListener listener )
+        {
+            listener.TestOutput( this.output );
+        }
+    }
 
-	#endregion
+    #endregion
 
-	/// <summary>
-	/// Implements a queue of work items each of which
-	/// is queued as a WaitCallback.
-	/// </summary>
-	public class EventQueue
-	{
-		private readonly Queue queue = new Queue();
-	    private readonly object syncRoot;
+    /// <summary>
+    /// Implements a queue of work items each of which
+    /// is queued as a WaitCallback.
+    /// </summary>
+    public class EventQueue
+    {
+        private readonly Queue queue = new Queue();
+        private readonly object syncRoot;
         private bool stopped;
 
         /// <summary>
@@ -248,16 +248,16 @@ namespace NUnit.Core
         /// </summary>
         private AutoResetEvent synchronousEventSent;
 
-		public int Count
-		{
-			get 
-			{
-				lock( this.syncRoot )
-				{
-					return this.queue.Count; 
-				}
-			}
-		}
+        public int Count
+        {
+            get 
+            {
+                lock( this.syncRoot )
+                {
+                    return this.queue.Count; 
+                }
+            }
+        }
 
         public EventQueue()
         {
@@ -278,13 +278,13 @@ namespace NUnit.Core
             this.synchronousEventSent = synchronousEventWaitHandle;
         }
 
-		public void Enqueue( Event e )
-		{
-			lock( this.syncRoot )
-			{
-				this.queue.Enqueue( e );
-				Monitor.Pulse( this.syncRoot );
-			}
+        public void Enqueue( Event e )
+        {
+            lock( this.syncRoot )
+            {
+                this.queue.Enqueue( e );
+                Monitor.Pulse( this.syncRoot );
+            }
 
             if ( this.synchronousEventSent != null && e.IsSynchronous )
             {
@@ -294,7 +294,7 @@ namespace NUnit.Core
             {
                 Thread.Sleep( 0 ); // give EventPump thread a chance to process the event
             }
-		}
+        }
 
         /// <summary>
         /// Removes the first element from the queue and returns it (or <c>null</c>).
@@ -316,10 +316,10 @@ namespace NUnit.Core
         ///   </item>
         /// </list>
         /// </returns>
-		public Event Dequeue( bool blockWhenEmpty )
-		{
-			lock( this.syncRoot )
-			{
+        public Event Dequeue( bool blockWhenEmpty )
+        {
+            lock( this.syncRoot )
+            {
                 while ( this.queue.Count == 0 )
                 {
                     if ( blockWhenEmpty && !this.stopped )
@@ -332,9 +332,9 @@ namespace NUnit.Core
                     }
                 }
 
-				return (Event)this.queue.Dequeue();
-			}
-		}
+                return (Event)this.queue.Dequeue();
+            }
+        }
 
         public void Stop()
         {
@@ -347,5 +347,5 @@ namespace NUnit.Core
                 }
             }
         }
-	}
+    }
 }

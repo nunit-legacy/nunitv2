@@ -14,12 +14,12 @@ using NUnit.Util;
 
 namespace NUnit.Agent
 {
-	/// <summary>
-	/// Summary description for Program.
-	/// </summary>
-	public class NUnitTestAgent
-	{
-		static Logger log = InternalTrace.GetLogger(typeof(NUnitTestAgent));
+    /// <summary>
+    /// Summary description for Program.
+    /// </summary>
+    public class NUnitTestAgent
+    {
+        static Logger log = InternalTrace.GetLogger(typeof(NUnitTestAgent));
 
         static Guid AgentId;
         static string AgencyUrl;
@@ -32,11 +32,11 @@ namespace NUnit.Agent
         static TcpChannel Channel;
 
         /// <summary>
-		/// The main entry point for the application.
-		/// </summary>
-		[STAThread]
-		public static int Main(string[] args)
-		{
+        /// The main entry point for the application.
+        /// </summary>
+        [STAThread]
+        public static int Main(string[] args)
+        {
             AgentId = new Guid(args[0]);
             AgencyUrl = args[1];
 
@@ -49,22 +49,22 @@ namespace NUnit.Agent
             SettingsService settingsService = new SettingsService(false);
             InternalTrace.Initialize("nunit-agent_%p.log", (InternalTraceLevel)settingsService.GetSetting("Options.InternalTraceLevel", InternalTraceLevel.Default));
 
-			log.Info("Agent process {0} starting", Process.GetCurrentProcess().Id);
+            log.Info("Agent process {0} starting", Process.GetCurrentProcess().Id);
             log.Info("Running under version {0}, {1}", 
                 Environment.Version, 
                 RuntimeFramework.CurrentFramework.DisplayName);
 
-			// Add Standard Services to ServiceManager
+            // Add Standard Services to ServiceManager
             log.Info("Adding Services");
             ServiceManager.Services.AddService(settingsService);
             ServiceManager.Services.AddService(new ProjectService());
-			ServiceManager.Services.AddService( new DomainManager() );
-			//ServiceManager.Services.AddService( new RecentFilesService() );
-			//ServiceManager.Services.AddService( new TestLoader() );
-			ServiceManager.Services.AddService( new AddinRegistry() );
-			ServiceManager.Services.AddService( new AddinManager() );
+            ServiceManager.Services.AddService( new DomainManager() );
+            //ServiceManager.Services.AddService( new RecentFilesService() );
+            //ServiceManager.Services.AddService( new TestLoader() );
+            ServiceManager.Services.AddService( new AddinRegistry() );
+            ServiceManager.Services.AddService( new AddinManager() );
 
-			// Initialize Services
+            // Initialize Services
             log.Info("Initializing Services");
             ServiceManager.Services.InitializeServices();
 
@@ -117,7 +117,7 @@ namespace NUnit.Agent
             log.Info("Agent process {0} exiting", Process.GetCurrentProcess().Id);
             InternalTrace.Close();
 
-			return 0;
-		}
-	}
+            return 0;
+        }
+    }
 }

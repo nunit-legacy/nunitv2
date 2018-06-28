@@ -7,20 +7,20 @@
 
 namespace NUnit.Util
 {
-	using System;
-	using System.Collections;
-	using System.IO;
-	using NUnit.Core;
+    using System;
+    using System.Collections;
+    using System.IO;
+    using NUnit.Core;
     using System.Diagnostics;
 
     #region AggregatingTestRunner
     /// <summary>
-	/// AggregatingTestRunner allows running multiple TestRunners
-	/// and combining the results.
-	/// </summary>
+    /// AggregatingTestRunner allows running multiple TestRunners
+    /// and combining the results.
+    /// </summary>
     
-	public abstract class AggregatingTestRunner : MarshalByRefObject, TestRunner, EventListener
-	{
+    public abstract class AggregatingTestRunner : MarshalByRefObject, TestRunner, EventListener
+    {
         private Logger log;
         private Logger Log
         {
@@ -33,120 +33,120 @@ namespace NUnit.Util
             }
         }
 
-		static int AggregateTestID = 1000;
+        static int AggregateTestID = 1000;
 
-		#region Instance Variables
+        #region Instance Variables
 
-		/// <summary>
-		/// Our runner ID
-		/// </summary>
-		protected int runnerID;
+        /// <summary>
+        /// Our runner ID
+        /// </summary>
+        protected int runnerID;
 
-		/// <summary>
-		/// The downstream TestRunners
-		/// </summary>
-		protected ArrayList runners;
+        /// <summary>
+        /// The downstream TestRunners
+        /// </summary>
+        protected ArrayList runners;
 
         /// <summary>
         /// Indicates whether we should run test assemblies in parallel
         /// </summary>
         private bool runInParallel;
 
-		/// <summary>
-		/// The loaded test suite
-		/// </summary>
-		protected TestNode aggregateTest;
+        /// <summary>
+        /// The loaded test suite
+        /// </summary>
+        protected TestNode aggregateTest;
 
-		/// <summary>
-		/// The result of the last run
-		/// </summary>
-		private TestResult testResult;
+        /// <summary>
+        /// The result of the last run
+        /// </summary>
+        private TestResult testResult;
 
-		/// <summary>
-		/// The event listener for the currently running test
-		/// </summary>
-		protected EventListener listener;
+        /// <summary>
+        /// The event listener for the currently running test
+        /// </summary>
+        protected EventListener listener;
 
-		protected TestName testName;
+        protected TestName testName;
 
-		#endregion
+        #endregion
 
-		#region Constructors
-		public AggregatingTestRunner() : this( 0 ) { }
-		public AggregatingTestRunner( int runnerID )
-		{
-			this.runnerID = runnerID;
-			this.testName = new TestName();
-			testName.TestID = new TestID( AggregateTestID );
-			testName.RunnerID = this.runnerID;
-			testName.FullName = testName.Name = "Not Loaded";
-		}
-		#endregion
+        #region Constructors
+        public AggregatingTestRunner() : this( 0 ) { }
+        public AggregatingTestRunner( int runnerID )
+        {
+            this.runnerID = runnerID;
+            this.testName = new TestName();
+            testName.TestID = new TestID( AggregateTestID );
+            testName.RunnerID = this.runnerID;
+            testName.FullName = testName.Name = "Not Loaded";
+        }
+        #endregion
 
-		#region Properties
+        #region Properties
 
-		public virtual int ID
-		{
-			get { return runnerID; }
-		}
+        public virtual int ID
+        {
+            get { return runnerID; }
+        }
 
-		public virtual bool Running
-		{
-			get 
-			{ 
-				foreach( TestRunner runner in runners )
-					if ( runner.Running )
-						return true;
-			
-				return false;
-			}
-		}
+        public virtual bool Running
+        {
+            get 
+            { 
+                foreach( TestRunner runner in runners )
+                    if ( runner.Running )
+                        return true;
+            
+                return false;
+            }
+        }
 
-		public virtual IList AssemblyInfo
-		{
-			get
-			{
-				ArrayList info = new ArrayList();
-				foreach( TestRunner runner in runners )
-					info.AddRange( runner.AssemblyInfo );
-				return info;
-			}
-		}
+        public virtual IList AssemblyInfo
+        {
+            get
+            {
+                ArrayList info = new ArrayList();
+                foreach( TestRunner runner in runners )
+                    info.AddRange( runner.AssemblyInfo );
+                return info;
+            }
+        }
 
-		public virtual ITest Test
-		{
-			get
-			{
-				if ( aggregateTest == null && runners != null )
-				{
-					// Count non-null tests, in case we specified a fixture
-					int count = 0;
-					foreach( TestRunner runner in runners )
-						if ( runner.Test != null )
-							++count;  
+        public virtual ITest Test
+        {
+            get
+            {
+                if ( aggregateTest == null && runners != null )
+                {
+                    // Count non-null tests, in case we specified a fixture
+                    int count = 0;
+                    foreach( TestRunner runner in runners )
+                        if ( runner.Test != null )
+                            ++count;  
 
-					// Copy non-null tests to an array
-					int index = 0;
-					ITest[] tests = new ITest[count];
-					foreach( TestRunner runner in runners )
-						if ( runner.Test != null )
-							tests[index++] = runner.Test;
+                    // Copy non-null tests to an array
+                    int index = 0;
+                    ITest[] tests = new ITest[count];
+                    foreach( TestRunner runner in runners )
+                        if ( runner.Test != null )
+                            tests[index++] = runner.Test;
 
-					// Return master node containing all the tests
-					aggregateTest = new TestNode( testName, tests );
-				}
+                    // Return master node containing all the tests
+                    aggregateTest = new TestNode( testName, tests );
+                }
 
-				return aggregateTest;
-			}
-		}
+                return aggregateTest;
+            }
+        }
 
-		public virtual TestResult TestResult
-		{
-			get { return testResult; }
-		}
-		#endregion
+        public virtual TestResult TestResult
+        {
+            get { return testResult; }
+        }
+        #endregion
 
-		#region Load and Unload Methods
+        #region Load and Unload Methods
         public bool Load(TestPackage package)
         {
             Log.Info("Loading " + package.Name);
@@ -219,8 +219,8 @@ namespace NUnit.Util
 
         protected abstract TestRunner CreateRunner(int runnerID);
 
-		public virtual void Unload()
-		{
+        public virtual void Unload()
+        {
             if (aggregateTest != null)
                 Log.Info("Unloading " + Path.GetFileName(aggregateTest.TestName.Name));
 
@@ -230,31 +230,31 @@ namespace NUnit.Util
 
             aggregateTest = null;
             Log.Info("Unload complete");
-		}
-		#endregion
+        }
+        #endregion
 
-		#region CountTestCases
-		public virtual int CountTestCases( ITestFilter filter )
-		{
-			int count = 0;
-			foreach( TestRunner runner in runners )
-				count += runner.CountTestCases( filter );
-			return count;
-		}
-		#endregion
+        #region CountTestCases
+        public virtual int CountTestCases( ITestFilter filter )
+        {
+            int count = 0;
+            foreach( TestRunner runner in runners )
+                count += runner.CountTestCases( filter );
+            return count;
+        }
+        #endregion
 
-		#region Methods for Running Tests
+        #region Methods for Running Tests
 
-		public virtual TestResult Run(EventListener listener, ITestFilter filter, bool tracing, LoggingThreshold logLevel)
-		{
+        public virtual TestResult Run(EventListener listener, ITestFilter filter, bool tracing, LoggingThreshold logLevel)
+        {
             Log.Info("Run - EventListener={0}", listener.GetType().Name);
 
-			// Save active listener for derived classes
-			this.listener = listener;
+            // Save active listener for derived classes
+            this.listener = listener;
 
-			ITest[] tests = new ITest[runners.Count];
-			for( int index = 0; index < runners.Count; index++ )
-				tests[index] = ((TestRunner)runners[index]).Test;
+            ITest[] tests = new ITest[runners.Count];
+            for( int index = 0; index < runners.Count; index++ )
+                tests[index] = ((TestRunner)runners[index]).Test;
 
             string name = this.testName.Name;
             int count = this.CountTestCases(filter);
@@ -264,10 +264,10 @@ namespace NUnit.Util
 #if CLR_2_0 || CLR_4_0
             long startTime = Stopwatch.GetTimestamp();
 #else
-			long startTime = DateTime.Now.Ticks;
+            long startTime = DateTime.Now.Ticks;
 #endif
 
-		    TestResult result = new TestResult(new TestInfo(testName, tests));
+            TestResult result = new TestResult(new TestInfo(testName, tests));
 
             if (this.runInParallel)
             {
@@ -283,77 +283,77 @@ namespace NUnit.Util
                     if (filter.Pass(runner.Test))
                         result.AddResult(runner.Run(this, filter, tracing, logLevel));
             }
-			
+            
 #if CLR_2_0 || CLR_4_0
             long stopTime = Stopwatch.GetTimestamp();
             double time = ((double)(stopTime - startTime)) / (double)Stopwatch.Frequency;
 #else
-			long stopTime = DateTime.Now.Ticks;
-			double time = ((double)(stopTime - startTime)) / (double)TimeSpan.TicksPerSecond;
+            long stopTime = DateTime.Now.Ticks;
+            double time = ((double)(stopTime - startTime)) / (double)TimeSpan.TicksPerSecond;
 #endif
-			result.Time = time;
+            result.Time = time;
 
-			this.listener.RunFinished( result );
+            this.listener.RunFinished( result );
 
-			this.testResult = result;
+            this.testResult = result;
 
-			return result;
-		}
+            return result;
+        }
 
-		public virtual void BeginRun( EventListener listener, ITestFilter filter, bool tracing, LoggingThreshold logLevel )
-		{
-			// Save active listener for derived classes
-			this.listener = listener;
+        public virtual void BeginRun( EventListener listener, ITestFilter filter, bool tracing, LoggingThreshold logLevel )
+        {
+            // Save active listener for derived classes
+            this.listener = listener;
 
             Log.Info("BeginRun");
 
             // ThreadedTestRunner will call our Run method on a separate thread
             ThreadedTestRunner threadedRunner = new ThreadedTestRunner(this);
             threadedRunner.BeginRun(listener, filter, tracing, logLevel);
-		}
+        }
 
-		public virtual TestResult EndRun()
-		{
+        public virtual TestResult EndRun()
+        {
             Log.Info("EndRun");
             TestResult suiteResult = new TestResult(Test as TestInfo);
-			foreach( TestRunner runner in runners )
-				suiteResult.Results.Add( runner.EndRun() );
+            foreach( TestRunner runner in runners )
+                suiteResult.Results.Add( runner.EndRun() );
 
-			return suiteResult;
-		}
+            return suiteResult;
+        }
 
-		public virtual void CancelRun()
-		{
-			foreach( TestRunner runner in runners )
-				runner.CancelRun();
-		}
+        public virtual void CancelRun()
+        {
+            foreach( TestRunner runner in runners )
+                runner.CancelRun();
+        }
 
-		public virtual void Wait()
-		{
-			foreach( TestRunner runner in runners )
-				runner.Wait();
-		}
+        public virtual void Wait()
+        {
+            foreach( TestRunner runner in runners )
+                runner.Wait();
+        }
         #endregion
 
-		#region EventListener Members
-		public void TestStarted(TestName testName)
-		{
-			this.listener.TestStarted( testName );
-		}
+        #region EventListener Members
+        public void TestStarted(TestName testName)
+        {
+            this.listener.TestStarted( testName );
+        }
 
-		public void RunStarted(string name, int testCount)
-		{
-			// TODO: We may want to count how many runs are started
-			// Ignore - we provide our own
-		}
+        public void RunStarted(string name, int testCount)
+        {
+            // TODO: We may want to count how many runs are started
+            // Ignore - we provide our own
+        }
 
-		public void RunFinished(Exception exception)
-		{
-			// Ignore - we provide our own
-		}
+        public void RunFinished(Exception exception)
+        {
+            // Ignore - we provide our own
+        }
 
-		void NUnit.Core.EventListener.RunFinished(TestResult result)
-		{
+        void NUnit.Core.EventListener.RunFinished(TestResult result)
+        {
             if (this.runInParallel)
             {
                 foreach (TestRunner runner in runners)
@@ -366,40 +366,40 @@ namespace NUnit.Util
 
                 listener.RunFinished(this.TestResult);
             }
-		}
+        }
 
-		public void SuiteFinished(TestResult result)
-		{
-			this.listener.SuiteFinished( result );
-		}
+        public void SuiteFinished(TestResult result)
+        {
+            this.listener.SuiteFinished( result );
+        }
 
-		public void TestFinished(TestResult result)
-		{
-			this.listener.TestFinished( result );
-		}
+        public void TestFinished(TestResult result)
+        {
+            this.listener.TestFinished( result );
+        }
 
-		public void UnhandledException(Exception exception)
-		{
-			this.listener.UnhandledException( exception );
-		}
+        public void UnhandledException(Exception exception)
+        {
+            this.listener.UnhandledException( exception );
+        }
 
-		public void TestOutput(TestOutput testOutput)
-		{
-			this.listener.TestOutput( testOutput );
-		}
+        public void TestOutput(TestOutput testOutput)
+        {
+            this.listener.TestOutput( testOutput );
+        }
 
-		public void SuiteStarted(TestName suiteName)
-		{
-			this.listener.SuiteStarted( suiteName );
-		}
-		#endregion
+        public void SuiteStarted(TestName suiteName)
+        {
+            this.listener.SuiteStarted( suiteName );
+        }
+        #endregion
 
-		#region InitializeLifetimeService Override
-		public override object InitializeLifetimeService()
-		{
-			return null;
-		}
-		#endregion
+        #region InitializeLifetimeService Override
+        public override object InitializeLifetimeService()
+        {
+            return null;
+        }
+        #endregion
 
         #region IDisposable Members
 

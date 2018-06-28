@@ -9,20 +9,20 @@ using NUnit.Framework;
 
 namespace NUnit.TestData
 {
-	[TestFixture]
-	public class TestMethodSignatureFixture
-	{
-		public static int Tests = 20;
-		public static int Runnable = 12;
-		public static int NotRunnable = 8;
-	    public static int Errors = 3;
-	    public static int Failures = 0;
+    [TestFixture]
+    public class TestMethodSignatureFixture
+    {
+        public static int Tests = 20;
+        public static int Runnable = 12;
+        public static int NotRunnable = 8;
+        public static int Errors = 3;
+        public static int Failures = 0;
 
-		[Test]
-		public void InstanceTestMethod() { }
+        [Test]
+        public void InstanceTestMethod() { }
 
-		[Test]
-		public static void StaticTestMethod() { }
+        [Test]
+        public static void StaticTestMethod() { }
 
         [Test]
         public void TestMethodWithArgumentsNotProvided(int x, int y, string label) { }
@@ -30,8 +30,8 @@ namespace NUnit.TestData
         [Test]
         public static void StaticTestMethodWithArgumentsNotProvided(int x, int y, string label) { }
 
-		[TestCase(5, 2, "ABC")]
-		public void TestMethodWithoutParametersWithArgumentsProvided() { }
+        [TestCase(5, 2, "ABC")]
+        public void TestMethodWithoutParametersWithArgumentsProvided() { }
 
         [TestCase(5, 2, "ABC")]
         public void TestMethodWithArgumentsProvided(int x, int y, string label)
@@ -82,12 +82,12 @@ namespace NUnit.TestData
         }
 
         [TestCase(12, 3, 4)]
-		[TestCase( 12, 2, 6 )]
-		[TestCase( 12, 4, 3 )]
-		public void TestMethodWithMultipleTestCases( int n, int d, int q )
-		{
-			Assert.AreEqual( q, n / d );
-		}
+        [TestCase( 12, 2, 6 )]
+        [TestCase( 12, 4, 3 )]
+        public void TestMethodWithMultipleTestCases( int n, int d, int q )
+        {
+            Assert.AreEqual( q, n / d );
+        }
 
         [TestCase(new int[] {1, 2, 3})]
         public void TestMethodWithParamsArgument(params int[] n)
@@ -97,16 +97,16 @@ namespace NUnit.TestData
 //		[Test]
 //		public abstract void AbstractTestMethod() { }
 
-		[Test]
-		protected void ProtectedTestMethod() { }
+        [Test]
+        protected void ProtectedTestMethod() { }
 
-		[Test]
-		private void PrivateTestMethod() { }
+        [Test]
+        private void PrivateTestMethod() { }
 
-		[Test]
-		public bool TestMethodWithReturnType() 
-		{
-			return true;
-		}
-	}
+        [Test]
+        public bool TestMethodWithReturnType() 
+        {
+            return true;
+        }
+    }
 }

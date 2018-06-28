@@ -9,15 +9,15 @@ using System;
 
 namespace NUnit.Core.Builders
 {
-	/// <summary>
-	/// SetUpFixtureBuilder knows how to build a SetUpFixture.
-	/// </summary>
-	public class SetUpFixtureBuilder : Extensibility.ISuiteBuilder
-	{	
-		#region ISuiteBuilder Members
-		public Test BuildFrom(Type type)
-		{
-			SetUpFixture fixture = new SetUpFixture( type );
+    /// <summary>
+    /// SetUpFixtureBuilder knows how to build a SetUpFixture.
+    /// </summary>
+    public class SetUpFixtureBuilder : Extensibility.ISuiteBuilder
+    {	
+        #region ISuiteBuilder Members
+        public Test BuildFrom(Type type)
+        {
+            SetUpFixture fixture = new SetUpFixture( type );
 
             string reason = null;
             if (!IsValidFixtureType(type, ref reason))
@@ -27,13 +27,13 @@ namespace NUnit.Core.Builders
             }
 
             return fixture;
-		}
+        }
 
-		public bool CanBuildFrom(Type type)
-		{
-			return Reflect.HasAttribute( type, NUnitFramework.SetUpFixtureAttribute, false );
-		}
-		#endregion
+        public bool CanBuildFrom(Type type)
+        {
+            return Reflect.HasAttribute( type, NUnitFramework.SetUpFixtureAttribute, false );
+        }
+        #endregion
 
         private bool IsValidFixtureType(Type type, ref string reason)
         {
@@ -71,5 +71,5 @@ namespace NUnit.Core.Builders
 
             return true;
         }
-	}
+    }
 }

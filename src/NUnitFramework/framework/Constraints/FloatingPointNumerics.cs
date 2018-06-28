@@ -230,9 +230,9 @@ namespace NUnit.Framework.Constraints
             return union.Double;
         }
 
-		private FloatingPointNumerics()
-		{
-		}
+        private FloatingPointNumerics()
+        {
+        }
     }
 }
 

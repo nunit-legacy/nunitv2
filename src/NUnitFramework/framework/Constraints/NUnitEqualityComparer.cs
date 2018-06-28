@@ -221,9 +221,9 @@ namespace NUnit.Framework.Constraints
         }
 
 #if CLR_2_0 || CLR_4_0
-    	private static bool FirstImplementsIEquatableOfSecond(Type first, Type second)
+        private static bool FirstImplementsIEquatableOfSecond(Type first, Type second)
     	{
-    		Type[] equatableArguments = GetEquatableGenericArguments(first);
+            Type[] equatableArguments = GetEquatableGenericArguments(first);
 
     		foreach (Type xEquatableArgument in equatableArguments)
     			if (xEquatableArgument.Equals(second))

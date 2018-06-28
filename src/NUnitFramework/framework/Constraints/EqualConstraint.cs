@@ -24,7 +24,7 @@ namespace NUnit.Framework.Constraints
     {
         #region Static and Instance Fields
 
-		private readonly object expected;
+        private readonly object expected;
 
         private Tolerance tolerance = Tolerance.Empty;
 
@@ -40,22 +40,22 @@ namespace NUnit.Framework.Constraints
 
         #region Message Strings
         private static readonly string StringsDiffer_1 =
-			"String lengths are both {0}. Strings differ at index {1}.";
-		private static readonly string StringsDiffer_2 =
-			"Expected string length {0} but was {1}. Strings differ at index {2}.";
-		private static readonly string StreamsDiffer_1 =
-			"Stream lengths are both {0}. Streams differ at offset {1}.";
-		private static readonly string StreamsDiffer_2 =
-			"Expected Stream length {0} but was {1}.";// Streams differ at offset {2}.";
-		private static readonly string CollectionType_1 =
-			"Expected and actual are both {0}";
-		private static readonly string CollectionType_2 =
-			"Expected is {0}, actual is {1}";
-		private static readonly string ValuesDiffer_1 =
-			"Values differ at index {0}";
-		private static readonly string ValuesDiffer_2 =
-			"Values differ at expected index {0}, actual index {1}";
-		
+            "String lengths are both {0}. Strings differ at index {1}.";
+        private static readonly string StringsDiffer_2 =
+            "Expected string length {0} but was {1}. Strings differ at index {2}.";
+        private static readonly string StreamsDiffer_1 =
+            "Stream lengths are both {0}. Streams differ at offset {1}.";
+        private static readonly string StreamsDiffer_2 =
+            "Expected Stream length {0} but was {1}.";// Streams differ at offset {2}.";
+        private static readonly string CollectionType_1 =
+            "Expected and actual are both {0}";
+        private static readonly string CollectionType_2 =
+            "Expected is {0}, actual is {1}";
+        private static readonly string ValuesDiffer_1 =
+            "Values differ at index {0}";
+        private static readonly string ValuesDiffer_2 =
+            "Values differ at expected index {0}, actual index {1}";
+        
         #endregion
 
         #endregion
@@ -339,18 +339,18 @@ namespace NUnit.Framework.Constraints
         /// <param name="writer">The MessageWriter to write to</param>
         public override void WriteDescriptionTo(MessageWriter writer)
         {
-			writer.WriteExpectedValue( expected );
+            writer.WriteExpectedValue( expected );
 
             if (tolerance != null && !tolerance.IsEmpty)
-			{
-				writer.WriteConnector("+/-");
+            {
+                writer.WriteConnector("+/-");
                 writer.WriteExpectedValue(tolerance.Value);
                 if (tolerance.Mode != ToleranceMode.Linear)
                     writer.Write(" {0}", tolerance.Mode);
-			}
+            }
 
-			if ( comparer.IgnoreCase )
-				writer.WriteModifier("ignoring case");
+            if ( comparer.IgnoreCase )
+                writer.WriteModifier("ignoring case");
         }
 
         private void DisplayDifferences(MessageWriter writer, object expected, object actual, int depth)
@@ -362,7 +362,7 @@ namespace NUnit.Framework.Constraints
             else if (expected is IEnumerable && actual is IEnumerable)
                 DisplayEnumerableDifferences(writer, (IEnumerable)expected, (IEnumerable)actual, depth);
             else if (expected is Stream && actual is Stream)
-				DisplayStreamDifferences(writer, (Stream)expected, (Stream)actual, depth);
+                DisplayStreamDifferences(writer, (Stream)expected, (Stream)actual, depth);
             else if (tolerance != null)
                 writer.DisplayDifferences(expected, actual, tolerance);
             else
@@ -376,27 +376,27 @@ namespace NUnit.Framework.Constraints
             int mismatch = MsgUtils.FindMismatchPosition(expected, actual, 0, comparer.IgnoreCase);
 
             if (expected.Length == actual.Length)
-				writer.WriteMessageLine(StringsDiffer_1, expected.Length, mismatch);
-			else
-				writer.WriteMessageLine(StringsDiffer_2, expected.Length, actual.Length, mismatch);
+                writer.WriteMessageLine(StringsDiffer_1, expected.Length, mismatch);
+            else
+                writer.WriteMessageLine(StringsDiffer_2, expected.Length, actual.Length, mismatch);
 
             writer.DisplayStringDifferences(expected, actual, mismatch, comparer.IgnoreCase, clipStrings);
         }
         #endregion
 
-		#region DisplayStreamDifferences
-		private void DisplayStreamDifferences(MessageWriter writer, Stream expected, Stream actual, int depth)
-		{
-			if ( expected.Length == actual.Length )
-			{
-				FailurePoint fp = (FailurePoint)comparer.FailurePoints[depth];
+        #region DisplayStreamDifferences
+        private void DisplayStreamDifferences(MessageWriter writer, Stream expected, Stream actual, int depth)
+        {
+            if ( expected.Length == actual.Length )
+            {
+                FailurePoint fp = (FailurePoint)comparer.FailurePoints[depth];
                 long offset = fp.Position;
-				writer.WriteMessageLine(StreamsDiffer_1, expected.Length, offset);
-			}
-			else
-				writer.WriteMessageLine(StreamsDiffer_2, expected.Length, actual.Length);
-		}
-		#endregion
+                writer.WriteMessageLine(StreamsDiffer_1, expected.Length, offset);
+            }
+            else
+                writer.WriteMessageLine(StreamsDiffer_2, expected.Length, actual.Length);
+        }
+        #endregion
 
         #region DisplayCollectionDifferences
         /// <summary>

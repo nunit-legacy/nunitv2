@@ -34,11 +34,11 @@ namespace NUnit.Framework.Constraints
         /// <returns>
         /// 	<c>true</c> if the specified enumerable is empty; otherwise, <c>false</c>.
         /// </returns>
-		protected static bool IsEmpty( IEnumerable enumerable )
-		{
-			ICollection collection = enumerable as ICollection;
-			if ( collection != null )
-				return collection.Count == 0;
+        protected static bool IsEmpty( IEnumerable enumerable )
+        {
+            ICollection collection = enumerable as ICollection;
+            if ( collection != null )
+                return collection.Count == 0;
 
             // NOTE: Ignore unsuppressed warning about o in .NET 1.1 build
             foreach (object o in enumerable)
@@ -47,27 +47,27 @@ namespace NUnit.Framework.Constraints
             return true;
         }
 
-		/// <summary>
-		/// Test whether the constraint is satisfied by a given value
-		/// </summary>
-		/// <param name="actual">The value to be tested</param>
-		/// <returns>True for success, false for failure</returns>
-		public override bool Matches(object actual)
-		{
-			this.actual = actual;
+        /// <summary>
+        /// Test whether the constraint is satisfied by a given value
+        /// </summary>
+        /// <param name="actual">The value to be tested</param>
+        /// <returns>True for success, false for failure</returns>
+        public override bool Matches(object actual)
+        {
+            this.actual = actual;
 
-			IEnumerable enumerable = actual as IEnumerable;
-			if ( enumerable == null )
-				throw new ArgumentException( "The actual value must be an IEnumerable", "actual" );
-		
-			return doMatch( enumerable );
-		}
+            IEnumerable enumerable = actual as IEnumerable;
+            if ( enumerable == null )
+                throw new ArgumentException( "The actual value must be an IEnumerable", "actual" );
+        
+            return doMatch( enumerable );
+        }
 
-		/// <summary>
-		/// Protected method to be implemented by derived classes
-		/// </summary>
-		/// <param name="collection"></param>
-		/// <returns></returns>
-		protected abstract bool doMatch(IEnumerable collection);
+        /// <summary>
+        /// Protected method to be implemented by derived classes
+        /// </summary>
+        /// <param name="collection"></param>
+        /// <returns></returns>
+        protected abstract bool doMatch(IEnumerable collection);
     }
 }

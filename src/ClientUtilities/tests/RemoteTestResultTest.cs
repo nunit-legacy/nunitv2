@@ -11,9 +11,9 @@ using NUnit.Core;
 
 namespace NUnit.Util.Tests
 {
-	[TestFixture]
-	public class RemoteTestResultTest
-	{
+    [TestFixture]
+    public class RemoteTestResultTest
+    {
         private static readonly string mockDll = 
             NUnit.Tests.Assemblies.MockAssembly.AssemblyPath; 
         private TestDomain domain;
@@ -31,19 +31,19 @@ namespace NUnit.Util.Tests
                 domain.Unload();
         }
 
-		[Test]
-		public void ResultStillValidAfterDomainUnload() 
-		{
+        [Test]
+        public void ResultStillValidAfterDomainUnload() 
+        {
             //TODO: This no longer appears to test anything
-			TestPackage package = new TestPackage( mockDll );
-			Assert.IsTrue( domain.Load( package ) );
-			TestResult result = domain.Run( new NullListener(), TestFilter.Empty, false, LoggingThreshold.Off );
-			TestResult caseResult = findCaseResult(result);
-			Assert.IsNotNull(caseResult);
+            TestPackage package = new TestPackage( mockDll );
+            Assert.IsTrue( domain.Load( package ) );
+            TestResult result = domain.Run( new NullListener(), TestFilter.Empty, false, LoggingThreshold.Off );
+            TestResult caseResult = findCaseResult(result);
+            Assert.IsNotNull(caseResult);
             //TestResultItem item = new TestResultItem(caseResult);
             //string message = item.GetMessage();
             //Assert.IsNotNull(message);
-		}
+        }
 
         [Test, Explicit("Fails intermittently")]
         public void AppDomainUnloadedBug()
@@ -54,24 +54,24 @@ namespace NUnit.Util.Tests
             domain.Unload();
         }
 
-		private TestResult findCaseResult(TestResult suite) 
-		{
-			foreach (TestResult r in suite.Results) 
-			{
-				if (!r.Test.IsSuite)
-				{
-					return r;
-				}
-				else 
-				{
-					TestResult result = findCaseResult(r);
-					if (result != null)
-						return result;
-				}
+        private TestResult findCaseResult(TestResult suite) 
+        {
+            foreach (TestResult r in suite.Results) 
+            {
+                if (!r.Test.IsSuite)
+                {
+                    return r;
+                }
+                else 
+                {
+                    TestResult result = findCaseResult(r);
+                    if (result != null)
+                        return result;
+                }
 
-			}
+            }
 
-			return null;
-		}
-	}
+            return null;
+        }
+    }
 }

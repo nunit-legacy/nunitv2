@@ -14,12 +14,12 @@ using NUnit.Core;
 
 namespace NUnit.Gui.SettingsPages
 {
-	public class TestLoaderSettingsPage : NUnit.UiKit.SettingsPage
-	{
-		private System.Windows.Forms.CheckBox mergeAssembliesCheckBox;
-		private System.Windows.Forms.RadioButton singleDomainRadioButton;
-		private System.Windows.Forms.RadioButton multiDomainRadioButton;
-		private System.Windows.Forms.HelpProvider helpProvider1;
+    public class TestLoaderSettingsPage : NUnit.UiKit.SettingsPage
+    {
+        private System.Windows.Forms.CheckBox mergeAssembliesCheckBox;
+        private System.Windows.Forms.RadioButton singleDomainRadioButton;
+        private System.Windows.Forms.RadioButton multiDomainRadioButton;
+        private System.Windows.Forms.HelpProvider helpProvider1;
         private Label label3;
         private GroupBox groupBox3;
         private RadioButton multiProcessRadioButton;
@@ -27,38 +27,38 @@ namespace NUnit.Gui.SettingsPages
         private RadioButton sameProcessRadioButton;
         private Label label2;
         private GroupBox groupBox2;
-		private System.ComponentModel.IContainer components = null;
+        private System.ComponentModel.IContainer components = null;
 
-		public TestLoaderSettingsPage(string key) : base(key)
-		{
-			// This call is required by the Windows Form Designer.
-			InitializeComponent();
+        public TestLoaderSettingsPage(string key) : base(key)
+        {
+            // This call is required by the Windows Form Designer.
+            InitializeComponent();
 
-			// TODO: Add any initialization after the InitializeComponent call
-		}
+            // TODO: Add any initialization after the InitializeComponent call
+        }
 
-		/// <summary>
-		/// Clean up any resources being used.
-		/// </summary>
-		protected override void Dispose( bool disposing )
-		{
-			if( disposing )
-			{
-				if (components != null) 
-				{
-					components.Dispose();
-				}
-			}
-			base.Dispose( disposing );
-		}
+        /// <summary>
+        /// Clean up any resources being used.
+        /// </summary>
+        protected override void Dispose( bool disposing )
+        {
+            if( disposing )
+            {
+                if (components != null) 
+                {
+                    components.Dispose();
+                }
+            }
+            base.Dispose( disposing );
+        }
 
-		#region Designer generated code
-		/// <summary>
-		/// Required method for Designer support - do not modify
-		/// the contents of this method with the code editor.
-		/// </summary>
-		private void InitializeComponent()
-		{
+        #region Designer generated code
+        /// <summary>
+        /// Required method for Designer support - do not modify
+        /// the contents of this method with the code editor.
+        /// </summary>
+        private void InitializeComponent()
+        {
             this.mergeAssembliesCheckBox = new System.Windows.Forms.CheckBox();
             this.singleDomainRadioButton = new System.Windows.Forms.RadioButton();
             this.multiDomainRadioButton = new System.Windows.Forms.RadioButton();
@@ -198,11 +198,11 @@ namespace NUnit.Gui.SettingsPages
             this.ResumeLayout(false);
             this.PerformLayout();
 
-		}
-		#endregion
-		
-		public override void LoadSettings()
-		{
+        }
+        #endregion
+        
+        public override void LoadSettings()
+        {
             switch( GetSavedProcessModel() )
             {
                 case ProcessModel.Separate:
@@ -222,16 +222,16 @@ namespace NUnit.Gui.SettingsPages
                     break;
             }
 
-			bool multiDomain = GetSavedDomainUsage() == DomainUsage.Multiple;
-			multiDomainRadioButton.Checked = multiDomain;
-			singleDomainRadioButton.Checked = !multiDomain;
+            bool multiDomain = GetSavedDomainUsage() == DomainUsage.Multiple;
+            multiDomainRadioButton.Checked = multiDomain;
+            singleDomainRadioButton.Checked = !multiDomain;
             mergeAssembliesCheckBox.Enabled = !multiDomain;
 
-			mergeAssembliesCheckBox.Checked = settings.GetSetting( "Options.TestLoader.MergeAssemblies", false );
-		}
+            mergeAssembliesCheckBox.Checked = settings.GetSetting( "Options.TestLoader.MergeAssemblies", false );
+        }
 
-		public override void ApplySettings()
-		{
+        public override void ApplySettings()
+        {
             if (multiProcessRadioButton.Checked)
                 settings.SaveSetting("Options.TestLoader.ProcessModel", ProcessModel.Multiple);
             else if (separateProcessRadioButton.Checked)
@@ -243,9 +243,9 @@ namespace NUnit.Gui.SettingsPages
                 settings.SaveSetting("Options.TestLoader.DomainUsage", DomainUsage.Multiple);
             else
                 settings.RemoveSetting("Options.TestLoader.DomainUsage");
-			
+            
             settings.SaveSetting( "Options.TestLoader.MergeAssemblies", mergeAssembliesCheckBox.Checked );
-		}
+        }
 
         // TODO: Combine toggleProcessUsage and toggleMultiDomain
         private void toggleProcessUsage(object sender, EventArgs e)
@@ -257,22 +257,22 @@ namespace NUnit.Gui.SettingsPages
         }
         
         private void toggleMultiDomain(object sender, System.EventArgs e)
-		{
-			bool multiDomain = multiDomainRadioButton.Checked = ! multiDomainRadioButton.Checked;
-			singleDomainRadioButton.Checked = !multiDomain;
-			mergeAssembliesCheckBox.Enabled = !multiDomain && !multiProcessRadioButton.Checked;
-		}
+        {
+            bool multiDomain = multiDomainRadioButton.Checked = ! multiDomainRadioButton.Checked;
+            singleDomainRadioButton.Checked = !multiDomain;
+            mergeAssembliesCheckBox.Enabled = !multiDomain && !multiProcessRadioButton.Checked;
+        }
 
-		public override bool HasChangesRequiringReload
-		{
-			get 
-			{
-				return
+        public override bool HasChangesRequiringReload
+        {
+            get 
+            {
+                return
                     GetSavedProcessModel() != GetSelectedProcessModel() ||
                     GetSavedDomainUsage() != GetSelectedDomainUsage() ||
-					settings.GetSetting("Options.TestLoader.MergeAssemblies", false ) != mergeAssembliesCheckBox.Checked;
-			}
-		}
+                    settings.GetSetting("Options.TestLoader.MergeAssemblies", false ) != mergeAssembliesCheckBox.Checked;
+            }
+        }
 
         private ProcessModel GetSavedProcessModel()
         {
@@ -299,6 +299,6 @@ namespace NUnit.Gui.SettingsPages
                 ? DomainUsage.Multiple
                 : DomainUsage.Single;
         }
-	}
+    }
 }
 

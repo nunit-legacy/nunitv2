@@ -10,56 +10,56 @@ using System.Collections;
 
 namespace NUnit.Framework.Tests
 {
-	/// <summary>
-	/// ICollectionAdapter is used in testing to wrap an array or
-	/// ArrayList, ensuring that only methods of the ICollection
-	/// interface are accessible.
-	/// </summary>
-	class ICollectionAdapter : ICollection
-	{
-		private readonly ICollection inner;
+    /// <summary>
+    /// ICollectionAdapter is used in testing to wrap an array or
+    /// ArrayList, ensuring that only methods of the ICollection
+    /// interface are accessible.
+    /// </summary>
+    class ICollectionAdapter : ICollection
+    {
+        private readonly ICollection inner;
 
-		public ICollectionAdapter(ICollection inner)
-		{
-			this.inner = inner;
-		}
+        public ICollectionAdapter(ICollection inner)
+        {
+            this.inner = inner;
+        }
 
-		public ICollectionAdapter(params object[] inner)
-		{
-			this.inner = inner;
-		}
+        public ICollectionAdapter(params object[] inner)
+        {
+            this.inner = inner;
+        }
 
-		#region ICollection Members
+        #region ICollection Members
 
-		public void CopyTo(Array array, int index)
-		{
-			inner.CopyTo(array, index);
-		}
+        public void CopyTo(Array array, int index)
+        {
+            inner.CopyTo(array, index);
+        }
 
-		public int Count
-		{
-			get { return inner.Count; }
-		}
+        public int Count
+        {
+            get { return inner.Count; }
+        }
 
-		public bool IsSynchronized
-		{
-			get { return  inner.IsSynchronized; }
-		}
+        public bool IsSynchronized
+        {
+            get { return  inner.IsSynchronized; }
+        }
 
-		public object SyncRoot
-		{
-			get { return inner.SyncRoot; }
-		}
+        public object SyncRoot
+        {
+            get { return inner.SyncRoot; }
+        }
 
-		#endregion
+        #endregion
 
-		#region IEnumerable Members
+        #region IEnumerable Members
 
-		public IEnumerator GetEnumerator()
-		{
-			return inner.GetEnumerator();
-		}
+        public IEnumerator GetEnumerator()
+        {
+            return inner.GetEnumerator();
+        }
 
-		#endregion
-	}
+        #endregion
+    }
 }

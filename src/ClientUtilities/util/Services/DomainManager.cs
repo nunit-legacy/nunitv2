@@ -21,45 +21,45 @@ using System.Security.Principal;
 
 namespace NUnit.Util
 {
-	/// <summary>
-	/// The DomainManager class handles the creation and unloading
-	/// of domains as needed and keeps track of all existing domains.
-	/// </summary>
-	public class DomainManager : IService
-	{
+    /// <summary>
+    /// The DomainManager class handles the creation and unloading
+    /// of domains as needed and keeps track of all existing domains.
+    /// </summary>
+    public class DomainManager : IService
+    {
         static Logger log = InternalTrace.GetLogger(typeof(DomainManager));
 
-		#region Properties
-		private static string shadowCopyPath;
-		public static string ShadowCopyPath
-		{
-			get
-			{
-				if ( shadowCopyPath == null )
-				{
+        #region Properties
+        private static string shadowCopyPath;
+        public static string ShadowCopyPath
+        {
+            get
+            {
+                if ( shadowCopyPath == null )
+                {
                     shadowCopyPath = Services.UserSettings.GetSetting("Options.TestLoader.ShadowCopyPath", "");
                     if (shadowCopyPath == "")
                         shadowCopyPath = PathUtils.Combine(Path.GetTempPath(), "nunit20", "ShadowCopyCache");
-					else
-						shadowCopyPath = Environment.ExpandEnvironmentVariables(shadowCopyPath);
-				}
+                    else
+                        shadowCopyPath = Environment.ExpandEnvironmentVariables(shadowCopyPath);
+                }
 
-				return shadowCopyPath;
-			}
-		}
-		#endregion
+                return shadowCopyPath;
+            }
+        }
+        #endregion
 
-		#region Create and Unload Domains
-		/// <summary>
-		/// Construct an application domain for running a test package
-		/// </summary>
-		/// <param name="package">The TestPackage to be run</param>
-		public AppDomain CreateDomain( TestPackage package )
-		{
-			AppDomainSetup setup = new AppDomainSetup();
-			 
-			//For paralell tests, we need to use distinct application name
-        	setup.ApplicationName = "Tests" + "_" + Environment.TickCount;
+        #region Create and Unload Domains
+        /// <summary>
+        /// Construct an application domain for running a test package
+        /// </summary>
+        /// <param name="package">The TestPackage to be run</param>
+        public AppDomain CreateDomain( TestPackage package )
+        {
+            AppDomainSetup setup = new AppDomainSetup();
+             
+            //For paralell tests, we need to use distinct application name
+            setup.ApplicationName = "Tests" + "_" + Environment.TickCount;
 
             FileInfo testFile = package.FullName != null && package.FullName != string.Empty
                 ? new FileInfo(package.FullName)
@@ -93,9 +93,9 @@ namespace NUnit.Util
                 : configFile;
 
             if (package.AutoBinPath)
-				binPath = GetPrivateBinPath( appBase, package.Assemblies );
+                binPath = GetPrivateBinPath( appBase, package.Assemblies );
 
-			setup.PrivateBinPath = binPath;
+            setup.PrivateBinPath = binPath;
 
             if (package.GetSetting("ShadowCopyFiles", true))
             {
@@ -106,7 +106,7 @@ namespace NUnit.Util
             else
                 setup.ShadowCopyFiles = "false";
 
-			string domainName = "test-domain-" + package.Name;
+            string domainName = "test-domain-" + package.Name;
             // Setup the Evidence
             Evidence evidence = new Evidence(AppDomain.CurrentDomain.Evidence);
             if (evidence.Count == 0)
@@ -122,30 +122,30 @@ namespace NUnit.Util
 
             log.Info("Creating AppDomain " + domainName);
 
-			AppDomain runnerDomain;
-			
-			// TODO: Try to eliminate this test. Currently, running on
-			// Linux with the permission set specified causes an
+            AppDomain runnerDomain;
+            
+            // TODO: Try to eliminate this test. Currently, running on
+            // Linux with the permission set specified causes an
             // unexplained crash when unloading the domain.
 #if CLR_2_0 || CLR_4_0
             if (Environment.OSVersion.Platform == PlatformID.Win32NT)
-			{
-            	PermissionSet permissionSet = new PermissionSet( PermissionState.Unrestricted );	
-           		runnerDomain = AppDomain.CreateDomain(domainName, evidence, setup, permissionSet, null);
-			}
-			else
+            {
+                PermissionSet permissionSet = new PermissionSet( PermissionState.Unrestricted );	
+                runnerDomain = AppDomain.CreateDomain(domainName, evidence, setup, permissionSet, null);
+            }
+            else
 #endif
-            	runnerDomain = AppDomain.CreateDomain(domainName, evidence, setup);
+                runnerDomain = AppDomain.CreateDomain(domainName, evidence, setup);
 
             // Set PrincipalPolicy for the domain if called for in the settings
             if ( Services.UserSettings.GetSetting("Options.TestLoader.SetPrincipalPolicy", false ))
                 runnerDomain.SetPrincipalPolicy((PrincipalPolicy)Services.UserSettings.GetSetting(
                     "Options.TestLoader.PrincipalPolicy", PrincipalPolicy.UnauthenticatedPrincipal));
 
-			// HACK: Only pass down our AddinRegistry one level so that tests of NUnit
-			// itself start without any addins defined.
-			if ( !IsTestDomain( AppDomain.CurrentDomain ) )
-				runnerDomain.SetData("AddinRegistry", Services.AddinRegistry);
+            // HACK: Only pass down our AddinRegistry one level so that tests of NUnit
+            // itself start without any addins defined.
+            if ( !IsTestDomain( AppDomain.CurrentDomain ) )
+                runnerDomain.SetData("AddinRegistry", Services.AddinRegistry);
 
             // Inject DomainInitializer into the remote domain - there are other
             // approaches, but this works for all CLR versions.
@@ -157,15 +157,15 @@ namespace NUnit.Util
 
             initializer.InitializeDomain(traceLevel);
 
-			return runnerDomain;
-		}
+            return runnerDomain;
+        }
 
         public void Unload(AppDomain domain)
         {
             new DomainUnloader(domain).Unload();
         }
 
-		#endregion
+        #endregion
 
         #region Nested DomainUnloader Class
         class DomainUnloader
@@ -233,82 +233,82 @@ namespace NUnit.Util
 
         #region Helper Methods
         /// <summary>
-		/// Get the location for caching and delete any old cache info
-		/// </summary>
-		private string GetCachePath()
-		{
+        /// Get the location for caching and delete any old cache info
+        /// </summary>
+        private string GetCachePath()
+        {
             int processId = Process.GetCurrentProcess().Id;
             long ticks = DateTime.Now.Ticks;
-			string cachePath = Path.Combine( ShadowCopyPath, processId.ToString() + "_" + ticks.ToString() ); 
-				
-			try 
-			{
-				DirectoryInfo dir = new DirectoryInfo(cachePath);		
-				if(dir.Exists) dir.Delete(true);
-			}
-			catch( Exception ex)
-			{
-				throw new ApplicationException( 
-					string.Format( "Invalid cache path: {0}",cachePath ),
-					ex );
-			}
+            string cachePath = Path.Combine( ShadowCopyPath, processId.ToString() + "_" + ticks.ToString() ); 
+                
+            try 
+            {
+                DirectoryInfo dir = new DirectoryInfo(cachePath);		
+                if(dir.Exists) dir.Delete(true);
+            }
+            catch( Exception ex)
+            {
+                throw new ApplicationException( 
+                    string.Format( "Invalid cache path: {0}",cachePath ),
+                    ex );
+            }
 
-			return cachePath;
-		}
+            return cachePath;
+        }
 
-		/// <summary>
-		/// Helper method to delete the cache dir. This method deals 
-		/// with a bug that occurs when files are marked read-only
-		/// and deletes each file separately in order to give better 
-		/// exception information when problems occur.
-		/// 
-		/// TODO: This entire method is problematic. Should we be doing it?
-		/// </summary>
-		/// <param name="cacheDir"></param>
-		private static void DeleteCacheDir( DirectoryInfo cacheDir )
-		{
-			//			Debug.WriteLine( "Modules:");
-			//			foreach( ProcessModule module in Process.GetCurrentProcess().Modules )
-			//				Debug.WriteLine( module.ModuleName );
-			
+        /// <summary>
+        /// Helper method to delete the cache dir. This method deals 
+        /// with a bug that occurs when files are marked read-only
+        /// and deletes each file separately in order to give better 
+        /// exception information when problems occur.
+        /// 
+        /// TODO: This entire method is problematic. Should we be doing it?
+        /// </summary>
+        /// <param name="cacheDir"></param>
+        private static void DeleteCacheDir( DirectoryInfo cacheDir )
+        {
+            //			Debug.WriteLine( "Modules:");
+            //			foreach( ProcessModule module in Process.GetCurrentProcess().Modules )
+            //				Debug.WriteLine( module.ModuleName );
+            
 
-			if(cacheDir.Exists)
-			{
-				foreach( DirectoryInfo dirInfo in cacheDir.GetDirectories() )
-					DeleteCacheDir( dirInfo );
+            if(cacheDir.Exists)
+            {
+                foreach( DirectoryInfo dirInfo in cacheDir.GetDirectories() )
+                    DeleteCacheDir( dirInfo );
 
-				foreach( FileInfo fileInfo in cacheDir.GetFiles() )
-				{
-					fileInfo.Attributes = FileAttributes.Normal;
-					try 
-					{
-						fileInfo.Delete();
-					}
-					catch( Exception ex )
-					{
-						Debug.WriteLine( string.Format( 
-							"Error deleting {0}, {1}", fileInfo.Name, ex.Message ) );
-					}
-				}
+                foreach( FileInfo fileInfo in cacheDir.GetFiles() )
+                {
+                    fileInfo.Attributes = FileAttributes.Normal;
+                    try 
+                    {
+                        fileInfo.Delete();
+                    }
+                    catch( Exception ex )
+                    {
+                        Debug.WriteLine( string.Format( 
+                            "Error deleting {0}, {1}", fileInfo.Name, ex.Message ) );
+                    }
+                }
 
-				cacheDir.Attributes = FileAttributes.Normal;
+                cacheDir.Attributes = FileAttributes.Normal;
 
-				try
-				{
-					cacheDir.Delete();
-				}
-				catch( Exception ex )
-				{
-					Debug.WriteLine( string.Format( 
-						"Error deleting {0}, {1}", cacheDir.Name, ex.Message ) );
-				}
-			}
-		}
+                try
+                {
+                    cacheDir.Delete();
+                }
+                catch( Exception ex )
+                {
+                    Debug.WriteLine( string.Format( 
+                        "Error deleting {0}, {1}", cacheDir.Name, ex.Message ) );
+                }
+            }
+        }
 
-		private bool IsTestDomain(AppDomain domain)
-		{
-			return domain.FriendlyName.StartsWith( "test-domain-" );
-		}
+        private bool IsTestDomain(AppDomain domain)
+        {
+            return domain.FriendlyName.StartsWith( "test-domain-" );
+        }
 
         public static string GetCommonAppBase(IList assemblies)
         {
@@ -326,47 +326,47 @@ namespace NUnit.Util
             return commonBase;
         }
 
-		public static string GetPrivateBinPath( string basePath, IList assemblies )
-		{
-			StringBuilder sb = new StringBuilder(200);
-			ArrayList dirList = new ArrayList();
+        public static string GetPrivateBinPath( string basePath, IList assemblies )
+        {
+            StringBuilder sb = new StringBuilder(200);
+            ArrayList dirList = new ArrayList();
 
-			foreach( string assembly in assemblies )
-			{
-				string dir = PathUtils.RelativePath(
+            foreach( string assembly in assemblies )
+            {
+                string dir = PathUtils.RelativePath(
                     Path.GetFullPath(basePath), 
                     Path.GetDirectoryName( Path.GetFullPath(assembly) ) );
-				if ( dir != null && dir != "." && !dirList.Contains( dir ) )
-				{
-					dirList.Add( dir );
-					if ( sb.Length > 0 )
-						sb.Append( Path.PathSeparator );
-					sb.Append( dir );
-				}
-			}
+                if ( dir != null && dir != "." && !dirList.Contains( dir ) )
+                {
+                    dirList.Add( dir );
+                    if ( sb.Length > 0 )
+                        sb.Append( Path.PathSeparator );
+                    sb.Append( dir );
+                }
+            }
 
-			return sb.Length == 0 ? null : sb.ToString();
-		}
+            return sb.Length == 0 ? null : sb.ToString();
+        }
 
-		public static void DeleteShadowCopyPath()
-		{
-			if ( Directory.Exists( ShadowCopyPath ) )
-				Directory.Delete( ShadowCopyPath, true );
-		}
-		#endregion
+        public static void DeleteShadowCopyPath()
+        {
+            if ( Directory.Exists( ShadowCopyPath ) )
+                Directory.Delete( ShadowCopyPath, true );
+        }
+        #endregion
 
-		#region IService Members
+        #region IService Members
 
-		public void UnloadService()
-		{
+        public void UnloadService()
+        {
             // TODO:  Add DomainManager.UnloadService implementation
         }
 
-		public void InitializeService()
-		{
-			// TODO:  Add DomainManager.InitializeService implementation
-		}
+        public void InitializeService()
+        {
+            // TODO:  Add DomainManager.InitializeService implementation
+        }
 
-		#endregion
-	}
+        #endregion
+    }
 }

@@ -128,7 +128,7 @@ namespace NUnit.UiException.Tests.CodeFormatters
         public void StringIndexer_Can_Throw_NullExtensionException()
         {
             if (_empty[(string)null] == null) // throws exception
-				return;
+                return;
         }
 
         [Test]
@@ -136,7 +136,7 @@ namespace NUnit.UiException.Tests.CodeFormatters
         public void ItemIndexer_Can_Throw_NullExtensionException()
         {
             if (_empty[null] == null) // throws exception
-				return;
+                return;
         }
 
         [Test]
@@ -146,7 +146,7 @@ namespace NUnit.UiException.Tests.CodeFormatters
         public void Indexer_Can_Throw_UnknownExtensionException()
         {
             if (_empty["unk"] == null) // throws exception
-				return;
+                return;
         }
 
         [Test]

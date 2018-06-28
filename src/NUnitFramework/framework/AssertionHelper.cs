@@ -12,15 +12,15 @@ using NUnit.Framework.Constraints;
 
 namespace NUnit.Framework
 {
-	/// <summary>
-	/// AssertionHelper is an optional base class for user tests,
-	/// allowing the use of shorter names for constraints and
-	/// asserts and avoiding conflict with the definition of 
-	/// <see cref="Is"/>, from which it inherits much of its
-	/// behavior, in certain mock object frameworks.
-	/// </summary>
+    /// <summary>
+    /// AssertionHelper is an optional base class for user tests,
+    /// allowing the use of shorter names for constraints and
+    /// asserts and avoiding conflict with the definition of 
+    /// <see cref="Is"/>, from which it inherits much of its
+    /// behavior, in certain mock object frameworks.
+    /// </summary>
     [Obsolete("Not supported in NUnit 3")]
-	public class AssertionHelper : ConstraintFactory
+    public class AssertionHelper : ConstraintFactory
     {
         /// <summary>
         /// Constructor is used to issue a compatibility warning, if needed
@@ -171,40 +171,40 @@ namespace NUnit.Framework
 
 #if CLR_2_0 || CLR_4_0
         /// <summary>
-		/// Apply a constraint to an actual value, succeeding if the constraint
-		/// is satisfied and throwing an assertion exception on failure.
-		/// </summary>
-		/// <param name="expr">A Constraint expression to be applied</param>
-		/// <param name="del">An ActualValueDelegate returning the value to be tested</param>
-		public void Expect<T>(ActualValueDelegate<T> del, IResolveConstraint expr)
-		{
-			Assert.That(del, expr.Resolve(), null, null);
-		}
+        /// Apply a constraint to an actual value, succeeding if the constraint
+        /// is satisfied and throwing an assertion exception on failure.
+        /// </summary>
+        /// <param name="expr">A Constraint expression to be applied</param>
+        /// <param name="del">An ActualValueDelegate returning the value to be tested</param>
+        public void Expect<T>(ActualValueDelegate<T> del, IResolveConstraint expr)
+        {
+            Assert.That(del, expr.Resolve(), null, null);
+        }
 
-		/// <summary>
-		/// Apply a constraint to an actual value, succeeding if the constraint
-		/// is satisfied and throwing an assertion exception on failure.
-		/// </summary>
-		/// <param name="expr">A Constraint expression to be applied</param>
-		/// <param name="del">An ActualValueDelegate returning the value to be tested</param>
-		/// <param name="message">The message that will be displayed on failure</param>
-		public void Expect<T>(ActualValueDelegate<T> del, IResolveConstraint expr, string message)
-		{
-			Assert.That(del, expr.Resolve(), message, null);
-		}
+        /// <summary>
+        /// Apply a constraint to an actual value, succeeding if the constraint
+        /// is satisfied and throwing an assertion exception on failure.
+        /// </summary>
+        /// <param name="expr">A Constraint expression to be applied</param>
+        /// <param name="del">An ActualValueDelegate returning the value to be tested</param>
+        /// <param name="message">The message that will be displayed on failure</param>
+        public void Expect<T>(ActualValueDelegate<T> del, IResolveConstraint expr, string message)
+        {
+            Assert.That(del, expr.Resolve(), message, null);
+        }
 
-		/// <summary>
-		/// Apply a constraint to an actual value, succeeding if the constraint
-		/// is satisfied and throwing an assertion exception on failure.
-		/// </summary>
-		/// <param name="del">An ActualValueDelegate returning the value to be tested</param>
-		/// <param name="expr">A Constraint expression to be applied</param>
-		/// <param name="message">The message that will be displayed on failure</param>
-		/// <param name="args">Arguments to be used in formatting the message</param>
-		public void Expect<T>(ActualValueDelegate<T> del, IResolveConstraint expr, string message, params object[] args)
-		{
-			Assert.That(del, expr, message, args);
-		}
+        /// <summary>
+        /// Apply a constraint to an actual value, succeeding if the constraint
+        /// is satisfied and throwing an assertion exception on failure.
+        /// </summary>
+        /// <param name="del">An ActualValueDelegate returning the value to be tested</param>
+        /// <param name="expr">A Constraint expression to be applied</param>
+        /// <param name="message">The message that will be displayed on failure</param>
+        /// <param name="args">Arguments to be used in formatting the message</param>
+        public void Expect<T>(ActualValueDelegate<T> del, IResolveConstraint expr, string message, params object[] args)
+        {
+            Assert.That(del, expr, message, args);
+        }
 #else
         /// <summary>
         /// Apply a constraint to an actual value, succeeding if the constraint
@@ -305,14 +305,14 @@ namespace NUnit.Framework
 
         #region Map
         /// <summary>
-		/// Returns a ListMapper based on a collection.
-		/// </summary>
-		/// <param name="original">The original collection</param>
-		/// <returns></returns>
-		public ListMapper Map( ICollection original )
-		{
-			return new ListMapper( original );
-		}
-		#endregion
-	}
+        /// Returns a ListMapper based on a collection.
+        /// </summary>
+        /// <param name="original">The original collection</param>
+        /// <returns></returns>
+        public ListMapper Map( ICollection original )
+        {
+            return new ListMapper( original );
+        }
+        #endregion
+    }
 }

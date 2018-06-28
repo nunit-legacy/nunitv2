@@ -10,9 +10,9 @@ using NUnit.Framework;
 
 namespace NUnit.TestData.SetUpTest
 {
-	[TestFixture]
-	public class SetUpAndTearDownFixture
-	{
+    [TestFixture]
+    public class SetUpAndTearDownFixture
+    {
         public bool wasSetUpCalled;
         public bool wasTearDownCalled;
 
@@ -33,62 +33,62 @@ namespace NUnit.TestData.SetUpTest
     }
 
 
-	[TestFixture]
-	public class SetUpAndTearDownCounterFixture
-	{
-		public int setUpCounter;
-		public int tearDownCounter;
+    [TestFixture]
+    public class SetUpAndTearDownCounterFixture
+    {
+        public int setUpCounter;
+        public int tearDownCounter;
 
-		[SetUp]
-		public virtual void Init()
-		{
-			setUpCounter++;
-		}
+        [SetUp]
+        public virtual void Init()
+        {
+            setUpCounter++;
+        }
 
-		[TearDown]
-		public virtual void Destroy()
-		{
-			tearDownCounter++;
-		}
+        [TearDown]
+        public virtual void Destroy()
+        {
+            tearDownCounter++;
+        }
 
-		[Test]
-		public void TestOne(){}
+        [Test]
+        public void TestOne(){}
 
-		[Test]
-		public void TestTwo(){}
+        [Test]
+        public void TestTwo(){}
 
-		[Test]
-		public void TestThree(){}
-	}
-		
-	[TestFixture]
-	public class InheritSetUpAndTearDown : SetUpAndTearDownFixture
-	{
-		[Test]
-		public void AnotherTest(){}
-	}
+        [Test]
+        public void TestThree(){}
+    }
+        
+    [TestFixture]
+    public class InheritSetUpAndTearDown : SetUpAndTearDownFixture
+    {
+        [Test]
+        public void AnotherTest(){}
+    }
 
-	[TestFixture]
-	public class DefineInheritSetUpAndTearDown : SetUpAndTearDownFixture
-	{
-		public bool derivedSetUpCalled;
-		public bool derivedTearDownCalled;
+    [TestFixture]
+    public class DefineInheritSetUpAndTearDown : SetUpAndTearDownFixture
+    {
+        public bool derivedSetUpCalled;
+        public bool derivedTearDownCalled;
 
-		[SetUp]
-		public override void Init()
-		{
-			derivedSetUpCalled = true;
-		}
+        [SetUp]
+        public override void Init()
+        {
+            derivedSetUpCalled = true;
+        }
 
-		[TearDown]
-		public override void Destroy()
-		{
-			derivedTearDownCalled = true;
-		}
+        [TearDown]
+        public override void Destroy()
+        {
+            derivedTearDownCalled = true;
+        }
 
-		[Test]
-		public void AnotherTest(){}
-	}
+        [Test]
+        public void AnotherTest(){}
+    }
 
     public class MultipleSetUpTearDownFixture
     {

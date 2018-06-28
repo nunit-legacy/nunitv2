@@ -16,23 +16,23 @@ using ThreadState = System.Threading.ThreadState;
 
 namespace NUnit.Core.Tests
 {
-	/// <summary>
-	/// Summary description for EventQueueTests.
-	/// </summary>
+    /// <summary>
+    /// Summary description for EventQueueTests.
+    /// </summary>
     [TestFixture]
     public class EventQueueTests
     {
         static readonly Event[] events = {
-				new RunStartedEvent( string.Empty, 0 ),
-				new SuiteStartedEvent( null ),
+                new RunStartedEvent( string.Empty, 0 ),
+                new SuiteStartedEvent( null ),
                 new OutputEvent( new TestOutput( string.Empty, TestOutputType.Log )),
-				new TestStartedEvent( null ),
+                new TestStartedEvent( null ),
                 new OutputEvent( new TestOutput( string.Empty, TestOutputType.Out )),
-				new TestFinishedEvent( null ),
+                new TestFinishedEvent( null ),
                 new OutputEvent( new TestOutput( string.Empty, TestOutputType.Trace )),
-				new SuiteFinishedEvent( null ),
-				new RunFinishedEvent( (TestResult)null )
-			};
+                new SuiteFinishedEvent( null ),
+                new RunFinishedEvent( (TestResult)null )
+            };
 
         private static void EnqueueEvents(EventQueue q)
         {

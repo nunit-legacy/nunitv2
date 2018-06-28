@@ -11,12 +11,12 @@ using System.Reflection;
 
 namespace NUnit.Core
 {
-	/// <summary>
-	/// Represesents an agent that controls running of tests in
+    /// <summary>
+    /// Represesents an agent that controls running of tests in
     /// an application domain.
-	/// </summary>
-	public class DomainAgent : TestAgent
-	{
+    /// </summary>
+    public class DomainAgent : TestAgent
+    {
         static Logger log = InternalTrace.GetLogger(typeof(DomainAgent));
 
         /// <summary>
@@ -31,7 +31,7 @@ namespace NUnit.Core
             System.Runtime.Remoting.ObjectHandle oh = Activator.CreateInstance(
                 targetDomain,
 #else
-			System.Runtime.Remoting.ObjectHandle oh = targetDomain.CreateInstance(
+            System.Runtime.Remoting.ObjectHandle oh = targetDomain.CreateInstance(
 #endif
  Assembly.GetExecutingAssembly().FullName,
                 typeof(DomainAgent).FullName,
@@ -47,9 +47,9 @@ namespace NUnit.Core
         /// Constructs a DomainAgent specifying the trace level.
         /// </summary>
         /// <param name="traceLevel">The level of internal tracing to use</param>
-		public DomainAgent() : base( Guid.NewGuid() ) { }
+        public DomainAgent() : base( Guid.NewGuid() ) { }
 
-		#region Public Methods
+        #region Public Methods
         /// <summary>
         /// Creates a TestRunner for use in loading and running
         /// tests in this domain. DomainAgent always creates
@@ -57,11 +57,11 @@ namespace NUnit.Core
         /// </summary>
         /// <param name="runnerID">Runner ID to be used</param>
         /// <returns>A TestRunner</returns>
-		public override TestRunner CreateRunner(int runnerID)
-		{
+        public override TestRunner CreateRunner(int runnerID)
+        {
             log.Info("Creating RemoteTestRunner");
-			return new RemoteTestRunner(runnerID);
-		}
+            return new RemoteTestRunner(runnerID);
+        }
 
         /// <summary>
         /// Starts the agent if it is no aready started.
@@ -94,7 +94,7 @@ namespace NUnit.Core
         {
             get { return AppDomain.CurrentDomain; }
         }
-		#endregion
+        #endregion
     }
 
     public class DomainInitializer : MarshalByRefObject
@@ -113,7 +113,7 @@ namespace NUnit.Core
             System.Runtime.Remoting.ObjectHandle oh = Activator.CreateInstanceFrom(
                 targetDomain,
 #else
-			System.Runtime.Remoting.ObjectHandle oh = targetDomain.CreateInstanceFrom(
+            System.Runtime.Remoting.ObjectHandle oh = targetDomain.CreateInstanceFrom(
 #endif
                 typeof(DomainInitializer).Assembly.CodeBase,
                 typeof(DomainInitializer).FullName,
@@ -141,8 +141,8 @@ namespace NUnit.Core
             AssemblyResolver resolver = new AssemblyResolver();
             resolver.AddDirectory(NUnitConfiguration.NUnitLibDirectory);
             resolver.AddDirectory(NUnitConfiguration.AddinDirectory);
-						
-			// TODO: Temporary additions till we resolve a problem with pnunit
+                        
+            // TODO: Temporary additions till we resolve a problem with pnunit
             // Test for existence is needed to avoid messing when the installation
             // does not include pnunit.
             string binDir = NUnitConfiguration.NUnitBinDirectory;

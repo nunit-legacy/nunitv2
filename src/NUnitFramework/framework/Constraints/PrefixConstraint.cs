@@ -7,9 +7,9 @@
 
 namespace NUnit.Framework.Constraints
 {
-	/// <summary>
-	/// Abstract base class used for prefixes
-	/// </summary>
+    /// <summary>
+    /// Abstract base class used for prefixes
+    /// </summary>
     public abstract class PrefixConstraint : Constraint
     {
         /// <summary>

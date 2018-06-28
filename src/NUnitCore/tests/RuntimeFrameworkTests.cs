@@ -23,7 +23,7 @@ namespace NUnit.Core.Tests
             RuntimeFramework framework = RuntimeFramework.CurrentFramework;
 
             Console.WriteLine("Running under {0}", framework.DisplayName);
-			Assert.That(framework.Runtime, Is.EqualTo(currentRuntime));
+            Assert.That(framework.Runtime, Is.EqualTo(currentRuntime));
             Assert.That(framework.ClrVersion, Is.EqualTo(Environment.Version));
         }
 

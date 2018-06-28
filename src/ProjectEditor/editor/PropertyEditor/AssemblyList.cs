@@ -11,13 +11,13 @@ using System.Xml;
 
 namespace NUnit.ProjectEditor
 {
-	/// <summary>
-	/// Represents a list of assemblies. It stores paths 
-	/// that are added and fires an event whenevever it
-	/// changes. All paths should be added as absolute paths.
-	/// </summary>
-	public class AssemblyList
-	{
+    /// <summary>
+    /// Represents a list of assemblies. It stores paths 
+    /// that are added and fires an event whenevever it
+    /// changes. All paths should be added as absolute paths.
+    /// </summary>
+    public class AssemblyList
+    {
         private XmlNode configNode;
 
         public AssemblyList(XmlNode configNode)

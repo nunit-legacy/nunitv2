@@ -24,7 +24,7 @@ namespace NUnit.Core.Builders
     /// provided, but all four cases are dealt with in lower-level methods
     /// </summary>
     public class NUnitTestCaseBuilder : ITestCaseBuilder2
-	{
+    {
         #region ITestCaseBuilder Methods
         /// <summary>
         /// Determines if the method can be used to build an NUnit test
@@ -52,7 +52,7 @@ namespace NUnit.Core.Builders
                 || Reflect.HasAttribute(method, NUnitFramework.TheoryAttribute, false);
         }
 
-		/// <summary>
+        /// <summary>
         /// Build a Test from the provided MethodInfo. Depending on
         /// whether the method takes arguments and on the availability
         /// of test case data, this method may return a single test
@@ -62,7 +62,7 @@ namespace NUnit.Core.Builders
         /// <param name="suite">The test fixture being populated, or null</param>
         /// <returns>A Test representing one or more method invocations</returns>
         public Test BuildFrom(MethodInfo method)
-		{
+        {
             return BuildFrom(method, null);
         }
 
@@ -253,7 +253,7 @@ namespace NUnit.Core.Builders
 
             return testMethod;
         }
-		#endregion
+        #endregion
 
         #region Helper Methods
         /// <summary>
@@ -273,7 +273,7 @@ namespace NUnit.Core.Builders
         /// <param name="parms">Parameters to be used for this test, or null</param>
         /// <returns>True if the method signature is valid, false if not</returns>
         private static bool CheckTestMethodSignature(TestMethod testMethod, ParameterSet parms)
-		{
+        {
             if (testMethod.Method.IsAbstract)
             {
                 testMethod.RunState = RunState.NotRunnable;
@@ -313,26 +313,26 @@ namespace NUnit.Core.Builders
                     return false;
             }
 
-			
+            
 #if CLR_2_0 || CLR_4_0
-	        bool isAsyncMethod = Reflect.IsAsyncMethod(testMethod.Method);
-			bool hasMeaningfulReturnType = isAsyncMethod ? testMethod.Method.ReturnType.IsGenericType : testMethod.Method.ReturnType != typeof(void);
+            bool isAsyncMethod = Reflect.IsAsyncMethod(testMethod.Method);
+            bool hasMeaningfulReturnType = isAsyncMethod ? testMethod.Method.ReturnType.IsGenericType : testMethod.Method.ReturnType != typeof(void);
 #else
-			bool hasMeaningfulReturnType = testMethod.Method.ReturnType != typeof(void);
+            bool hasMeaningfulReturnType = testMethod.Method.ReturnType != typeof(void);
 #endif
 
-			if (hasMeaningfulReturnType && (parms == null || !parms.HasExpectedResult && parms.ExpectedExceptionName == null))
-		        return MarkAsNotRunnable(testMethod, "Test method has non-void return type, but no result is expected");
-			if (!hasMeaningfulReturnType && parms != null && parms.HasExpectedResult)
-				return MarkAsNotRunnable(testMethod, "Test method has void return type, but a result is expected");
+            if (hasMeaningfulReturnType && (parms == null || !parms.HasExpectedResult && parms.ExpectedExceptionName == null))
+                return MarkAsNotRunnable(testMethod, "Test method has non-void return type, but no result is expected");
+            if (!hasMeaningfulReturnType && parms != null && parms.HasExpectedResult)
+                return MarkAsNotRunnable(testMethod, "Test method has void return type, but a result is expected");
 
-	        if (argsProvided > 0 && argsNeeded == 0)
-		        return MarkAsNotRunnable(testMethod, "Arguments provided for method not taking any");
+            if (argsProvided > 0 && argsNeeded == 0)
+                return MarkAsNotRunnable(testMethod, "Arguments provided for method not taking any");
 
-	        if (argsProvided == 0 && argsNeeded > 0)
-		        return MarkAsNotRunnable(testMethod, "No arguments were provided");
+            if (argsProvided == 0 && argsNeeded > 0)
+                return MarkAsNotRunnable(testMethod, "No arguments were provided");
 
-	        //if (argsProvided > argsNeeded)
+            //if (argsProvided > argsNeeded)
             //{
             //    ParameterInfo lastParameter = parameters[argsNeeded - 1];
             //    Type lastParameterType = lastParameter.ParameterType;
@@ -396,12 +396,12 @@ namespace NUnit.Core.Builders
             return true;
         }
 
-	    private static bool MarkAsNotRunnable(TestMethod testMethod, string reason)
-	    {
-		    testMethod.RunState = RunState.NotRunnable;
-		    testMethod.IgnoreReason = reason;
-		    return false;
-	    }
+        private static bool MarkAsNotRunnable(TestMethod testMethod, string reason)
+        {
+            testMethod.RunState = RunState.NotRunnable;
+            testMethod.IgnoreReason = reason;
+            return false;
+        }
 
 #if CLR_2_0 || CLR_4_0
         private static Type[] GetTypeArgumentsForMethod(MethodInfo method, object[] arglist)

@@ -11,12 +11,12 @@ using System.Windows.Forms;
 
 namespace NUnit.UiKit
 {
-	/// <summary>
-	/// Summary description for MessageDisplay.
-	/// </summary>
-	public class MessageDisplay : IMessageDisplay
-	{
-		private static readonly string DEFAULT_CAPTION = "NUnit";
+    /// <summary>
+    /// Summary description for MessageDisplay.
+    /// </summary>
+    public class MessageDisplay : IMessageDisplay
+    {
+        private static readonly string DEFAULT_CAPTION = "NUnit";
 
         private readonly string caption;
 
@@ -46,9 +46,9 @@ namespace NUnit.UiKit
         #region Error
 
         public DialogResult Error( string message )
-		{
+        {
             return Error(message, MessageBoxButtons.OK);
-		}
+        }
 
         public DialogResult Error(string message, MessageBoxButtons buttons)
         {
@@ -94,7 +94,7 @@ namespace NUnit.UiKit
         }
 
         public DialogResult Ask(string message, MessageBoxButtons buttons)
-		{
+        {
             return MessageBox.Show(message, caption, buttons, MessageBoxIcon.Question);
         }
 

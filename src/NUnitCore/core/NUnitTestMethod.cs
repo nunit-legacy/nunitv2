@@ -9,32 +9,32 @@ using System.Reflection;
 
 namespace NUnit.Core
 {
-	/// <summary>
-	/// Class to implement an NUnit test method
-	/// </summary>
-	public class NUnitTestMethod : TestMethod
-	{
-		#region Constructor
-		public NUnitTestMethod(MethodInfo method) : base(method) 
+    /// <summary>
+    /// Class to implement an NUnit test method
+    /// </summary>
+    public class NUnitTestMethod : TestMethod
+    {
+        #region Constructor
+        public NUnitTestMethod(MethodInfo method) : base(method) 
         {
         }
-		#endregion
+        #endregion
 
-		#region TestMethod Overrides
+        #region TestMethod Overrides
 
         /// <summary>
-		/// Run a test returning the result. Overrides TestMethod
-		/// to count assertions.
-		/// </summary>
-		/// <param name="testResult"></param>
-		public override TestResult RunTest()
-		{
-			TestResult testResult = base.RunTest();
+        /// Run a test returning the result. Overrides TestMethod
+        /// to count assertions.
+        /// </summary>
+        /// <param name="testResult"></param>
+        public override TestResult RunTest()
+        {
+            TestResult testResult = base.RunTest();
 
-			testResult.AssertCount = NUnitFramework.Assert.GetAssertCount();
-			
-			return testResult;
-		}
+            testResult.AssertCount = NUnitFramework.Assert.GetAssertCount();
+            
+            return testResult;
+        }
         #endregion
-	}
+    }
 }

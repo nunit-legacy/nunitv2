@@ -233,27 +233,27 @@ namespace NUnit.Core.Tests
             Assert.That(fixture.statusList, Is.EqualTo("Inconclusive=>=>Skipped"));
         }	
 
-	    [Test, RequiresThread]
+        [Test, RequiresThread]
         public void CanAccessTestContextWhenRunningTestOnSeparateThread()
         {
-			Assert.That(TestContext.CurrentContext.Test.Name, Is.EqualTo("CanAccessTestContextWhenRunningTestOnSeparateThread"));
+            Assert.That(TestContext.CurrentContext.Test.Name, Is.EqualTo("CanAccessTestContextWhenRunningTestOnSeparateThread"));
         }
 
         private string TestNameFromContext;
 
-		[Test, Platform(Exclude="Net-1.0, Net-1.1, Mono-1.0")]
-		public void CanAccessTestContextFromThreadSpawnedWithinTest()
-		{
+        [Test, Platform(Exclude="Net-1.0, Net-1.1, Mono-1.0")]
+        public void CanAccessTestContextFromThreadSpawnedWithinTest()
+        {
             Thread thread = new Thread(new ThreadStart(FillTestNameFromContext));
             thread.Start();
-			thread.Join();
+            thread.Join();
 
-			Assert.That(TestNameFromContext, Is.EqualTo(TestContext.CurrentContext.Test.Name));
-		}
+            Assert.That(TestNameFromContext, Is.EqualTo(TestContext.CurrentContext.Test.Name));
+        }
 
-		private void FillTestNameFromContext()
-		{
+        private void FillTestNameFromContext()
+        {
             this.TestNameFromContext = TestContext.CurrentContext.Test.Name;
-		}
-	}
+        }
+    }
 }

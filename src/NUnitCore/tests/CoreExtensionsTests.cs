@@ -15,61 +15,61 @@ using NUnit.Core.Extensibility;
 
 namespace NUnit.Core.Tests
 {
-	[TestFixture]
-	public class CoreExtensionsTests
-	{
-		private CoreExtensions host;
+    [TestFixture]
+    public class CoreExtensionsTests
+    {
+        private CoreExtensions host;
 
-		[SetUp]
-		public void CreateHost()
-		{
-			host = new CoreExtensions();
-		}
+        [SetUp]
+        public void CreateHost()
+        {
+            host = new CoreExtensions();
+        }
 
-		[Test]
-		public void HasSuiteBuildersExtensionPoint()
-		{
-			IExtensionPoint ep = host.GetExtensionPoint( "SuiteBuilders" );
-			Assert.IsNotNull( ep );
-			Assert.AreEqual( "SuiteBuilders", ep.Name );
-			Assert.AreEqual( typeof( SuiteBuilderCollection ), ep.GetType() );
-		}
+        [Test]
+        public void HasSuiteBuildersExtensionPoint()
+        {
+            IExtensionPoint ep = host.GetExtensionPoint( "SuiteBuilders" );
+            Assert.IsNotNull( ep );
+            Assert.AreEqual( "SuiteBuilders", ep.Name );
+            Assert.AreEqual( typeof( SuiteBuilderCollection ), ep.GetType() );
+        }
 
-		[Test]
-		public void HasTestCaseBuildersExtensionPoint()
-		{
-			IExtensionPoint ep = host.GetExtensionPoint( "TestCaseBuilders" );
-			Assert.IsNotNull( ep );
-			Assert.AreEqual( "TestCaseBuilders", ep.Name );
-			Assert.AreEqual( typeof( TestCaseBuilderCollection ), ep.GetType() );
-		}
+        [Test]
+        public void HasTestCaseBuildersExtensionPoint()
+        {
+            IExtensionPoint ep = host.GetExtensionPoint( "TestCaseBuilders" );
+            Assert.IsNotNull( ep );
+            Assert.AreEqual( "TestCaseBuilders", ep.Name );
+            Assert.AreEqual( typeof( TestCaseBuilderCollection ), ep.GetType() );
+        }
 
-		[Test]
-		public void HasTestDecoratorsExtensionPoint()
-		{
-			IExtensionPoint ep = host.GetExtensionPoint( "TestDecorators" );
-			Assert.IsNotNull( ep );
-			Assert.AreEqual( "TestDecorators", ep.Name );
-			Assert.AreEqual( typeof( TestDecoratorCollection ), ep.GetType() );
-		}
+        [Test]
+        public void HasTestDecoratorsExtensionPoint()
+        {
+            IExtensionPoint ep = host.GetExtensionPoint( "TestDecorators" );
+            Assert.IsNotNull( ep );
+            Assert.AreEqual( "TestDecorators", ep.Name );
+            Assert.AreEqual( typeof( TestDecoratorCollection ), ep.GetType() );
+        }
 
-		[Test]
-		public void HasEventListenerExtensionPoint()
-		{
-			IExtensionPoint ep = host.GetExtensionPoint( "EventListeners" );
-			Assert.IsNotNull( ep );
-			Assert.AreEqual( "EventListeners", ep.Name );
-			Assert.AreEqual( typeof( EventListenerCollection ), ep.GetType() );
-		}
+        [Test]
+        public void HasEventListenerExtensionPoint()
+        {
+            IExtensionPoint ep = host.GetExtensionPoint( "EventListeners" );
+            Assert.IsNotNull( ep );
+            Assert.AreEqual( "EventListeners", ep.Name );
+            Assert.AreEqual( typeof( EventListenerCollection ), ep.GetType() );
+        }
 
-		[Test]
-		public void HasTestFrameworkRegistry()
-		{
-			IExtensionPoint ep = host.GetExtensionPoint( "FrameworkRegistry" );
-			Assert.IsNotNull( ep );
-			Assert.AreEqual( "FrameworkRegistry", ep.Name );
-			Assert.AreEqual( typeof( FrameworkRegistry ), ep.GetType() );
-		}
+        [Test]
+        public void HasTestFrameworkRegistry()
+        {
+            IExtensionPoint ep = host.GetExtensionPoint( "FrameworkRegistry" );
+            Assert.IsNotNull( ep );
+            Assert.AreEqual( "FrameworkRegistry", ep.Name );
+            Assert.AreEqual( typeof( FrameworkRegistry ), ep.GetType() );
+        }
 
         class MockDecorator : ITestDecorator
         {
@@ -126,8 +126,8 @@ namespace NUnit.Core.Tests
 
 #if NET_3_5 || NET_4_0 || NET_4_5
         [Test, Platform("Net-3.5,Mono-3.5,Net-4.0")]
-		public void CanAddDecorator()
-		{
+        public void CanAddDecorator()
+        {
             ITestDecorator mockDecorator = Substitute.For<ITestDecorator>();
 
             IExtensionPoint ep = host.GetExtensionPoint("TestDecorators");
@@ -137,21 +137,21 @@ namespace NUnit.Core.Tests
             decorators.Decorate(null, null);
 
             mockDecorator.Received().Decorate(null, null);
-		}
+        }
 
         [Test, Platform("Net-3.5,Mono-3.5,Net-4.0")]
-		public void CanAddSuiteBuilder()
-		{
+        public void CanAddSuiteBuilder()
+        {
             ISuiteBuilder mockBuilder = Substitute.For<ISuiteBuilder>();
             mockBuilder.CanBuildFrom(Arg.Any<Type>()).Returns(true);
-			
-			IExtensionPoint ep = host.GetExtensionPoint("SuiteBuilders");
+            
+            IExtensionPoint ep = host.GetExtensionPoint("SuiteBuilders");
             ep.Install(mockBuilder);
-			ISuiteBuilder builders = (ISuiteBuilder)ep;
-			builders.BuildFrom( null );
+            ISuiteBuilder builders = (ISuiteBuilder)ep;
+            builders.BuildFrom( null );
 
             mockBuilder.Received().BuildFrom(null);
-		}
+        }
 
         [Test, Platform("Net-3.5,Mono-3.5,Net-4.0")]
         public void CanAddTestCaseBuilder()
@@ -182,20 +182,20 @@ namespace NUnit.Core.Tests
         }
 
         [Test, Platform("Net-3.5,Mono-3.5,Net-4.0")]
-		public void CanAddEventListener()
-		{
+        public void CanAddEventListener()
+        {
             EventListener mockListener = Substitute.For<EventListener>();
 
-			IExtensionPoint ep = host.GetExtensionPoint("EventListeners");
-			ep.Install( mockListener );
-			EventListener listeners = (EventListener)ep;
+            IExtensionPoint ep = host.GetExtensionPoint("EventListeners");
+            ep.Install( mockListener );
+            EventListener listeners = (EventListener)ep;
 
-			listeners.RunStarted( "test", 0 );
+            listeners.RunStarted( "test", 0 );
             mockListener.Received().RunStarted("test", 0);
 
-			listeners.RunFinished( new TestResult( new TestInfo( new TestSuite( "test" ) ) ) );
+            listeners.RunFinished( new TestResult( new TestInfo( new TestSuite( "test" ) ) ) );
             mockListener.Received().RunFinished(Arg.Is<TestResult>(x=>x.Name=="test"));
-		}
+        }
 #endif
-	}
+    }
 }

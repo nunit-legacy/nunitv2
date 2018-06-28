@@ -34,9 +34,9 @@ namespace NUnit.Gui
             string currentDomainName = "";
 
             AppendProcessInfo(
-			      currentProcessId, 
-			      Path.GetFileName(Assembly.GetEntryAssembly().Location), 
-			      RuntimeFramework.CurrentFramework );
+                  currentProcessId, 
+                  Path.GetFileName(Assembly.GetEntryAssembly().Location), 
+                  RuntimeFramework.CurrentFramework );
 
             foreach (TestAssemblyInfo info in Services.TestLoader.AssemblyInfo)
             {
@@ -55,9 +55,9 @@ namespace NUnit.Gui
 
                 AppendAssemblyInfo(info);
             }
-			
-			TextBox.Select(0,0);
-			TextBox.ScrollToCaret();
+            
+            TextBox.Select(0,0);
+            TextBox.ScrollToCaret();
         }
 
         private void AppendProcessInfo(TestAssemblyInfo info)
@@ -132,14 +132,14 @@ namespace NUnit.Gui
             TextBox.SelectedText += text;
         }
 
-		void TextBox_ContentsResized(object sender, ContentsResizedEventArgs e)
-		{
+        void TextBox_ContentsResized(object sender, ContentsResizedEventArgs e)
+        {
             int increase = e.NewRectangle.Width - TextBox.ClientSize.Width;
             if (increase > 0)
             {
                 TextBox.Width += increase;
                 this.Width += increase;
             }
-		}
-	}
+        }
+    }
 }

@@ -44,12 +44,12 @@ namespace NUnit.Framework.Constraints
                 "\"C:\\folder2\\file.tmp\"",
                 "\"C:\\folder1\\.\\folder2\\..\\file.temp\""
             };
-		
-		[Test]
-		public void RootPathEquality()
-		{
-			Assert.That("c:\\", Is.SamePath("C:\\junk\\..\\").IgnoreCase);
-		}
+        
+        [Test]
+        public void RootPathEquality()
+        {
+            Assert.That("c:\\", Is.SamePath("C:\\junk\\..\\").IgnoreCase);
+        }
     }
 
     [TestFixture]
@@ -92,12 +92,12 @@ namespace NUnit.Framework.Constraints
                 "\"/FOLDER1/./folder2/../File.TMP\"",
             };
 
-		[Test]
-		public void RootPathEquality()
-		{
-			Assert.That("/", Is.SamePath("/junk/../"));
-		}
-	}
+        [Test]
+        public void RootPathEquality()
+        {
+            Assert.That("/", Is.SamePath("/junk/../"));
+        }
+    }
 
     [TestFixture]
     public class SubPathTest_Windows : ConstraintTestBase
@@ -142,12 +142,12 @@ namespace NUnit.Framework.Constraints
                 "\"C:\\FOLDER1\\.\\junk\\..\\Folder2\"",
                 "\"C:/folder1/folder2\""
             };
-		
-		[Test]
-		public void SubPathOfRoot()
-		{
-			Assert.That("C:\\junk\\file.temp", new SubPathConstraint("C:\\"));
-		}
+        
+        [Test]
+        public void SubPathOfRoot()
+        {
+            Assert.That("C:\\junk\\file.temp", new SubPathConstraint("C:\\"));
+        }
     }
 
     [TestFixture]
@@ -176,7 +176,7 @@ namespace NUnit.Framework.Constraints
                 "/FOLDER1/./junk/../Folder2/temp/../Folder3",
                 "/folder1/folder3",
                 "/folder1/./folder2/../folder3",
-				"/folder1",
+                "/folder1",
                 "/folder1/folder2",
                 "/folder1/./folder2",
                 "/folder1/junk/../folder2",
@@ -190,20 +190,20 @@ namespace NUnit.Framework.Constraints
                 "\"/FOLDER1/./junk/../Folder2/temp/../Folder3\"",
                 "\"/folder1/folder3\"",
                 "\"/folder1/./folder2/../folder3\"",
-				"\"/folder1\"",
+                "\"/folder1\"",
                 "\"/folder1/folder2\"",
                 "\"/folder1/./folder2\"",
                 "\"/folder1/junk/../folder2\"",
                 "\"\\folder1\\folder2\""
             };
 
-		[Test]
-		public void SubPathOfRoot()
-		{
-			Assert.That("/junk/file.temp", new SubPathConstraint("/"));
-		}
+        [Test]
+        public void SubPathOfRoot()
+        {
+            Assert.That("/junk/file.temp", new SubPathConstraint("/"));
+        }
 }
-	
+    
     [TestFixture]
     public class SamePathOrUnderTest_Windows : ConstraintTestBase
     {
@@ -273,7 +273,7 @@ namespace NUnit.Framework.Constraints
                 "/FOLDER1/./junk/../Folder2/temp/../Folder3",
                 "/folder1/folder3",
                 "/folder1/./folder2/../folder3",
-				"/folder1"
+                "/folder1"
             };
         internal string[] ActualValues = new string[]
             {
@@ -283,7 +283,7 @@ namespace NUnit.Framework.Constraints
                 "\"/FOLDER1/./junk/../Folder2/temp/../Folder3\"",
                 "\"/folder1/folder3\"",
                 "\"/folder1/./folder2/../folder3\"",
-				"\"/folder1\""
+                "\"/folder1\""
             };
     }
 }

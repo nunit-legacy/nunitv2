@@ -12,15 +12,15 @@ using System.Reflection;
 
 namespace NUnit.Core
 {
-	/// <summary>
-	/// SetUpFixture extends TestSuite and supports
-	/// Setup and TearDown methods.
-	/// </summary>
-	public class SetUpFixture : TestSuite
-	{
-		#region Constructor
-		public SetUpFixture( Type type ) : base( type )
-		{
+    /// <summary>
+    /// SetUpFixture extends TestSuite and supports
+    /// Setup and TearDown methods.
+    /// </summary>
+    public class SetUpFixture : TestSuite
+    {
+        #region Constructor
+        public SetUpFixture( Type type ) : base( type )
+        {
             this.TestName.Name = type.Namespace;
             if (this.TestName.Name == null)
                 this.TestName.Name = "[default namespace]";
@@ -41,10 +41,10 @@ namespace NUnit.Core
 #if CLR_2_0 || CLR_4_0
             this.actions = ActionsHelper.GetActionsFromTypesAttributes(type);
 #endif
-		}
-		#endregion
+        }
+        #endregion
 
-		#region TestSuite Overrides
+        #region TestSuite Overrides
 
         /// <summary>
         /// Gets a string representing the kind of test
@@ -55,13 +55,13 @@ namespace NUnit.Core
             get { return "SetUpFixture"; }
         }
 
-		public override TestResult Run(EventListener listener, ITestFilter filter)
-		{
-			using ( new DirectorySwapper( AssemblyHelper.GetDirectoryName( FixtureType.Assembly ) ) )
-			{
-				return base.Run(listener, filter);
-			}
-		}
-		#endregion
-	}
+        public override TestResult Run(EventListener listener, ITestFilter filter)
+        {
+            using ( new DirectorySwapper( AssemblyHelper.GetDirectoryName( FixtureType.Assembly ) ) )
+            {
+                return base.Run(listener, filter);
+            }
+        }
+        #endregion
+    }
 }

@@ -15,38 +15,38 @@ namespace NUnit.Framework.Syntax
     {
         Microsoft.CSharp.CSharpCodeProvider provider;
 #if CLR_1_0 || CLR_1_1
-		ICodeCompiler compiler;
+        ICodeCompiler compiler;
 #endif
         CompilerParameters options;
 
-		public TestCompiler() : this( null, null ) { }
+        public TestCompiler() : this( null, null ) { }
 
-		public TestCompiler( string[] assemblyNames ) : this( assemblyNames, null ) { }
+        public TestCompiler( string[] assemblyNames ) : this( assemblyNames, null ) { }
 
-		public TestCompiler( string[] assemblyNames, string outputName )
-		{
-			this.provider = new Microsoft.CSharp.CSharpCodeProvider();
+        public TestCompiler( string[] assemblyNames, string outputName )
+        {
+            this.provider = new Microsoft.CSharp.CSharpCodeProvider();
 #if CLR_1_0 || CLR_1_1
-			this.compiler = provider.CreateCompiler();
+            this.compiler = provider.CreateCompiler();
 #endif
             this.options = new CompilerParameters();
 
-			if ( assemblyNames != null && assemblyNames.Length > 0 )
-				options.ReferencedAssemblies.AddRange( assemblyNames );
-			if ( outputName != null )
-				options.OutputAssembly = outputName;
+            if ( assemblyNames != null && assemblyNames.Length > 0 )
+                options.ReferencedAssemblies.AddRange( assemblyNames );
+            if ( outputName != null )
+                options.OutputAssembly = outputName;
 
-			options.IncludeDebugInformation = false;
-			options.TempFiles = new TempFileCollection( Path.GetTempPath(), false );
-			options.GenerateInMemory = false;
-		}
+            options.IncludeDebugInformation = false;
+            options.TempFiles = new TempFileCollection( Path.GetTempPath(), false );
+            options.GenerateInMemory = false;
+        }
 
-		public CompilerParameters Options
-		{
-			get { return options; }
-		}
+        public CompilerParameters Options
+        {
+            get { return options; }
+        }
 
-		public CompilerResults CompileCode( string code )
+        public CompilerResults CompileCode( string code )
         {
 #if CLR_2_0 || CLR_4_0
             return provider.CompileAssemblyFromSource( options, code );

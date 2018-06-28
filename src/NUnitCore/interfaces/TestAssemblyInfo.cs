@@ -13,13 +13,13 @@ using System.Text;
 
 namespace NUnit.Core
 {
-	/// <summary>
-	/// TestAssemblyInfo holds information about a loaded test assembly
-	/// </summary>
-	[Serializable]
-	public class TestAssemblyInfo
-	{
-		private string assemblyName;
+    /// <summary>
+    /// TestAssemblyInfo holds information about a loaded test assembly
+    /// </summary>
+    [Serializable]
+    public class TestAssemblyInfo
+    {
+        private string assemblyName;
         private Version imageRuntimeVersion;
         private RuntimeFramework runnerRuntimeFramework;
         private int processId;
@@ -37,31 +37,31 @@ namespace NUnit.Core
         /// <param name="imageRuntimeVersion">The version of the runtime for which the assembly was built</param>
         /// <param name="runnerRuntimeFramework">The runtime framework under which the assembly is loaded</param>
         /// <param name="testFrameworks">A list of test framework useds by the assembly</param>
-		public TestAssemblyInfo( string assemblyName, Version imageRuntimeVersion, RuntimeFramework runnerRuntimeFramework, IList testFrameworks )
-		{
-			this.assemblyName = assemblyName;
+        public TestAssemblyInfo( string assemblyName, Version imageRuntimeVersion, RuntimeFramework runnerRuntimeFramework, IList testFrameworks )
+        {
+            this.assemblyName = assemblyName;
             this.imageRuntimeVersion = imageRuntimeVersion;
             this.runnerRuntimeFramework = runnerRuntimeFramework;
             this.testFrameworks = testFrameworks;
             Process p = Process.GetCurrentProcess();
             this.processId = p.Id;
-			Assembly entryAssembly = Assembly.GetEntryAssembly();
+            Assembly entryAssembly = Assembly.GetEntryAssembly();
             this.moduleName = entryAssembly != null
-				? Path.GetFileName(Assembly.GetEntryAssembly().Location)
-				: p.MainModule.ModuleName;
+                ? Path.GetFileName(Assembly.GetEntryAssembly().Location)
+                : p.MainModule.ModuleName;
             this.domainName = AppDomain.CurrentDomain.FriendlyName;
             this.appBase = AppDomain.CurrentDomain.SetupInformation.ApplicationBase;
             this.configFile = AppDomain.CurrentDomain.SetupInformation.ConfigurationFile;
             this.binPath = AppDomain.CurrentDomain.SetupInformation.PrivateBinPath;
-		}
+        }
 
         /// <summary>
         /// Gets the name of the assembly
         /// </summary>
-		public string Name
-		{
-			get { return assemblyName; }
-		}
+        public string Name
+        {
+            get { return assemblyName; }
+        }
 
         /// <summary>
         /// Gets the runtime version for which the assembly was built
@@ -133,15 +133,15 @@ namespace NUnit.Core
         public string ModuleName
         {
             get { return moduleName; }
-			set { moduleName = value; }
+            set { moduleName = value; }
         }
 
         /// <summary>
         /// Gets a list of testframeworks referenced by the assembly
         /// </summary>
-		public IList TestFrameworks
-		{
-			get { return testFrameworks; }
-		}
+        public IList TestFrameworks
+        {
+            get { return testFrameworks; }
+        }
     }
 }

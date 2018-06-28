@@ -16,19 +16,19 @@ using NUnit.Util;
 
 namespace NUnit.Gui.SettingsPages
 {
-	public class TreeSettingsPage : NUnit.UiKit.SettingsPage
-	{
-		private System.Windows.Forms.GroupBox groupBox1;
-		private System.Windows.Forms.Label label1;
-		private System.Windows.Forms.Label label2;
-		private System.Windows.Forms.ComboBox initialDisplayComboBox;
-		private System.Windows.Forms.CheckBox clearResultsCheckBox;
-		private System.Windows.Forms.CheckBox saveVisualStateCheckBox;
-		private System.Windows.Forms.CheckBox showCheckBoxesCheckBox;
-		private System.Windows.Forms.HelpProvider helpProvider1;
-		private System.Windows.Forms.RadioButton flatTestList;
-		private System.Windows.Forms.RadioButton autoNamespaceSuites;
-		private System.Windows.Forms.Label label3;
+    public class TreeSettingsPage : NUnit.UiKit.SettingsPage
+    {
+        private System.Windows.Forms.GroupBox groupBox1;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.ComboBox initialDisplayComboBox;
+        private System.Windows.Forms.CheckBox clearResultsCheckBox;
+        private System.Windows.Forms.CheckBox saveVisualStateCheckBox;
+        private System.Windows.Forms.CheckBox showCheckBoxesCheckBox;
+        private System.Windows.Forms.HelpProvider helpProvider1;
+        private System.Windows.Forms.RadioButton flatTestList;
+        private System.Windows.Forms.RadioButton autoNamespaceSuites;
+        private System.Windows.Forms.Label label3;
         private System.Windows.Forms.GroupBox groupBox2;
         private Label label6;
         private PictureBox successImage;
@@ -36,42 +36,42 @@ namespace NUnit.Gui.SettingsPages
         private PictureBox ignoredImage;
         private PictureBox inconclusiveImage;
         private PictureBox skippedImage;
-		private System.ComponentModel.IContainer components = null;
+        private System.ComponentModel.IContainer components = null;
         private Label label4;
         private ListBox imageSetListBox;
 
         private static string treeImageDir = PathUtils.Combine(Assembly.GetExecutingAssembly(), "Images", "Tree");
 
-		public TreeSettingsPage(string key) : base(key)
-		{
-			// This call is required by the Windows Form Designer.
-			InitializeComponent();
+        public TreeSettingsPage(string key) : base(key)
+        {
+            // This call is required by the Windows Form Designer.
+            InitializeComponent();
 
-			// TODO: Add any initialization after the InitializeComponent call
-		}
+            // TODO: Add any initialization after the InitializeComponent call
+        }
 
-		/// <summary>
-		/// Clean up any resources being used.
-		/// </summary>
-		protected override void Dispose( bool disposing )
-		{
-			if( disposing )
-			{
-				if (components != null) 
-				{
-					components.Dispose();
-				}
-			}
-			base.Dispose( disposing );
-		}
+        /// <summary>
+        /// Clean up any resources being used.
+        /// </summary>
+        protected override void Dispose( bool disposing )
+        {
+            if( disposing )
+            {
+                if (components != null) 
+                {
+                    components.Dispose();
+                }
+            }
+            base.Dispose( disposing );
+        }
 
-		#region Designer generated code
-		/// <summary>
-		/// Required method for Designer support - do not modify
-		/// the contents of this method with the code editor.
-		/// </summary>
-		private void InitializeComponent()
-		{
+        #region Designer generated code
+        /// <summary>
+        /// Required method for Designer support - do not modify
+        /// the contents of this method with the code editor.
+        /// </summary>
+        private void InitializeComponent()
+        {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(TreeSettingsPage));
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.label1 = new System.Windows.Forms.Label();
@@ -334,15 +334,15 @@ namespace NUnit.Gui.SettingsPages
             this.ResumeLayout(false);
             this.PerformLayout();
 
-		}
-		#endregion
+        }
+        #endregion
 
-		public override void LoadSettings()
-		{
-			initialDisplayComboBox.SelectedIndex = (int)(TestSuiteTreeView.DisplayStyle)settings.GetSetting( "Gui.TestTree.InitialTreeDisplay", TestSuiteTreeView.DisplayStyle.Auto );
-			clearResultsCheckBox.Checked = settings.GetSetting( "Options.TestLoader.ClearResultsOnReload", true );
-			saveVisualStateCheckBox.Checked = settings.GetSetting( "Gui.TestTree.SaveVisualState", true );
-			showCheckBoxesCheckBox.Checked = settings.GetSetting( "Options.ShowCheckBoxes", false );
+        public override void LoadSettings()
+        {
+            initialDisplayComboBox.SelectedIndex = (int)(TestSuiteTreeView.DisplayStyle)settings.GetSetting( "Gui.TestTree.InitialTreeDisplay", TestSuiteTreeView.DisplayStyle.Auto );
+            clearResultsCheckBox.Checked = settings.GetSetting( "Options.TestLoader.ClearResultsOnReload", true );
+            saveVisualStateCheckBox.Checked = settings.GetSetting( "Gui.TestTree.SaveVisualState", true );
+            showCheckBoxesCheckBox.Checked = settings.GetSetting( "Options.ShowCheckBoxes", false );
 
             string[] altDirs = Directory.Exists(treeImageDir)
                 ? Directory.GetDirectories(treeImageDir)
@@ -353,37 +353,37 @@ namespace NUnit.Gui.SettingsPages
             string imageSet = settings.GetSetting("Gui.TestTree.AlternateImageSet", "Default");
             if (imageSetListBox.Items.Contains(imageSet))
                 imageSetListBox.SelectedItem = imageSet;
-		
-			autoNamespaceSuites.Checked = settings.GetSetting( "Options.TestLoader.AutoNamespaceSuites", true );
-			flatTestList.Checked = !autoNamespaceSuites.Checked;
-		}
+        
+            autoNamespaceSuites.Checked = settings.GetSetting( "Options.TestLoader.AutoNamespaceSuites", true );
+            flatTestList.Checked = !autoNamespaceSuites.Checked;
+        }
 
-		public override void ApplySettings()
-		{
-			settings.SaveSetting( "Gui.TestTree.InitialTreeDisplay", (TestSuiteTreeView.DisplayStyle)initialDisplayComboBox.SelectedIndex );
-			settings.SaveSetting( "Options.TestLoader.ClearResultsOnReload", clearResultsCheckBox.Checked );
-			settings.SaveSetting( "Gui.TestTree.SaveVisualState", saveVisualStateCheckBox.Checked );
-			settings.SaveSetting( "Options.ShowCheckBoxes", showCheckBoxesCheckBox.Checked );
+        public override void ApplySettings()
+        {
+            settings.SaveSetting( "Gui.TestTree.InitialTreeDisplay", (TestSuiteTreeView.DisplayStyle)initialDisplayComboBox.SelectedIndex );
+            settings.SaveSetting( "Options.TestLoader.ClearResultsOnReload", clearResultsCheckBox.Checked );
+            settings.SaveSetting( "Gui.TestTree.SaveVisualState", saveVisualStateCheckBox.Checked );
+            settings.SaveSetting( "Options.ShowCheckBoxes", showCheckBoxesCheckBox.Checked );
 
             if (imageSetListBox.SelectedIndex >= 0)
                 settings.SaveSetting("Gui.TestTree.AlternateImageSet", imageSetListBox.SelectedItem);
 
-			settings.SaveSetting( "Options.TestLoader.AutoNamespaceSuites", autoNamespaceSuites.Checked );
-		}
+            settings.SaveSetting( "Options.TestLoader.AutoNamespaceSuites", autoNamespaceSuites.Checked );
+        }
 
-		private void toggleTestStructure(object sender, System.EventArgs e)
-		{
-			bool auto = autoNamespaceSuites.Checked = !autoNamespaceSuites.Checked;
-			flatTestList.Checked = !auto;
-		}
-	
-		public override bool HasChangesRequiringReload
-		{
-			get
-			{
+        private void toggleTestStructure(object sender, System.EventArgs e)
+        {
+            bool auto = autoNamespaceSuites.Checked = !autoNamespaceSuites.Checked;
+            flatTestList.Checked = !auto;
+        }
+    
+        public override bool HasChangesRequiringReload
+        {
+            get
+            {
                 return settings.GetSetting("Options.TestLoader.AutoNamespaceSuites", true) != autoNamespaceSuites.Checked;
-			}
-		}
+            }
+        }
 
         private void imageSetListBox_SelectedIndexChanged(object sender, EventArgs e)
         {
@@ -418,6 +418,6 @@ namespace NUnit.Gui.SettingsPages
                 }
             }
         }
-	}
+    }
 }
 

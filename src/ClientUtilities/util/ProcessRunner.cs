@@ -18,22 +18,22 @@ using NUnit.Core;
 
 namespace NUnit.Util
 {
-	/// <summary>
-	/// Summary description for ProcessRunner.
-	/// </summary>
-	public class ProcessRunner : ProxyTestRunner
-	{
+    /// <summary>
+    /// Summary description for ProcessRunner.
+    /// </summary>
+    public class ProcessRunner : ProxyTestRunner
+    {
         static Logger log = InternalTrace.GetLogger(typeof(ProcessRunner));
 
-		private TestAgent agent;
+        private TestAgent agent;
 
         private RuntimeFramework runtimeFramework;
 
-		#region Constructors
-		public ProcessRunner() : base( 0 ) { }
+        #region Constructors
+        public ProcessRunner() : base( 0 ) { }
 
-		public ProcessRunner( int runnerID ) : base( runnerID ) { }
-		#endregion
+        public ProcessRunner( int runnerID ) : base( runnerID ) { }
+        #endregion
 
         #region Properties
         public RuntimeFramework RuntimeFramework
@@ -43,9 +43,9 @@ namespace NUnit.Util
         #endregion
 
         public override bool Load(TestPackage package)
-		{
+        {
             log.Info("Loading " + package.Name);
-			Unload();
+            Unload();
 
             runtimeFramework = package.Settings["RuntimeFramework"] as RuntimeFramework;
             if ( runtimeFramework == null )
@@ -53,8 +53,8 @@ namespace NUnit.Util
 
             bool loaded = false;
 
-			try
-			{
+            try
+            {
                 if (this.agent == null)
                 {
                     this.agent = Services.TestAgency.GetAgent(
@@ -64,19 +64,19 @@ namespace NUnit.Util
                     if (this.agent == null)
                         return false;
                 }
-	
-				if ( this.TestRunner == null )
-					this.TestRunner = agent.CreateRunner(this.runnerID);
+    
+                if ( this.TestRunner == null )
+                    this.TestRunner = agent.CreateRunner(this.runnerID);
 
-				loaded = base.Load (package);
+                loaded = base.Load (package);
                 return loaded;
-			}
-			finally
-			{
+            }
+            finally
+            {
                 // Clean up if the load failed
-				if ( !loaded ) Unload();
-			}
-		}
+                if ( !loaded ) Unload();
+            }
+        }
 
         public override void Unload()
         {
@@ -86,12 +86,12 @@ namespace NUnit.Util
                 this.TestRunner.Unload();
                 this.TestRunner = null;
             }
-		}
+        }
 
-		#region IDisposable Members
+        #region IDisposable Members
 
-		public override void Dispose()
-		{
+        public override void Dispose()
+        {
             // Do this first, because the next step will
             // make the downstream runner inaccessible.
             base.Dispose();
@@ -114,6 +114,6 @@ namespace NUnit.Util
             }
         }
 
-		#endregion
-	}
+        #endregion
+    }
 }

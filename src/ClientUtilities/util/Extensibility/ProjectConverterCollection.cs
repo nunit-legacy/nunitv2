@@ -10,48 +10,48 @@ using NUnit.Core.Extensibility;
 
 namespace NUnit.Util.Extensibility
 {
-	/// <summary>
-	/// Summary description for ProjectConverterCollection.
-	/// </summary>
-	public class ProjectConverterCollection : IProjectConverter, IExtensionPoint
-	{
-		private ArrayList converters = new ArrayList();
+    /// <summary>
+    /// Summary description for ProjectConverterCollection.
+    /// </summary>
+    public class ProjectConverterCollection : IProjectConverter, IExtensionPoint
+    {
+        private ArrayList converters = new ArrayList();
 
-		public ProjectConverterCollection()
-		{
-			//
-			// TODO: Add constructor logic here
-			//
-		}
+        public ProjectConverterCollection()
+        {
+            //
+            // TODO: Add constructor logic here
+            //
+        }
 
-		#region IProjectConverter Members
+        #region IProjectConverter Members
 
-		public bool CanConvertFrom(string path)
-		{
-			foreach( IProjectConverter converter in converters )
-				if ( converter.CanConvertFrom( path ) )
-					return true;
+        public bool CanConvertFrom(string path)
+        {
+            foreach( IProjectConverter converter in converters )
+                if ( converter.CanConvertFrom( path ) )
+                    return true;
 
-			return false;
-		}
+            return false;
+        }
 
-		public NUnitProject ConvertFrom(string path)
-		{
-			foreach( IProjectConverter converter in converters )
-				if ( converter.CanConvertFrom( path ) )
-					return converter.ConvertFrom( path );
-			
-			return null;
-		}
+        public NUnitProject ConvertFrom(string path)
+        {
+            foreach( IProjectConverter converter in converters )
+                if ( converter.CanConvertFrom( path ) )
+                    return converter.ConvertFrom( path );
+            
+            return null;
+        }
 
-		#endregion
+        #endregion
 
-		#region IExtensionPoint Members
+        #region IExtensionPoint Members
 
-		public void Remove(object extension)
-		{
-			// TODO:  Add ProjectConverterCollection.Remove implementation
-		}
+        public void Remove(object extension)
+        {
+            // TODO:  Add ProjectConverterCollection.Remove implementation
+        }
 
         public void Install(object extension)
         {
@@ -63,23 +63,23 @@ namespace NUnit.Util.Extensibility
             // TODO:  Add ProjectConverterCollection.Install implementation
         }
 
-		public IExtensionHost Host
-		{
-			get
-			{
-				// TODO:  Add ProjectConverterCollection.Host getter implementation
-				return null;
-			}
-		}
+        public IExtensionHost Host
+        {
+            get
+            {
+                // TODO:  Add ProjectConverterCollection.Host getter implementation
+                return null;
+            }
+        }
 
-		public string Name
-		{
-			get
-			{
-				return "Converters";
-			}
-		}
+        public string Name
+        {
+            get
+            {
+                return "Converters";
+            }
+        }
 
-		#endregion
-	}
+        #endregion
+    }
 }

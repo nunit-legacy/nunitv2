@@ -15,7 +15,7 @@ namespace NUnit.Framework
     /// namespace or an assembly.
     /// </summary>
     [AttributeUsage(AttributeTargets.Class, AllowMultiple = false, Inherited = true)]
-	public class SetUpFixtureAttribute : Attribute
-	{
-	}
+    public class SetUpFixtureAttribute : Attribute
+    {
+    }
 }

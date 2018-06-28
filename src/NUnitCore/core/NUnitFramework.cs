@@ -13,27 +13,27 @@ using NUnit.Core.Extensibility;
 
 namespace NUnit.Core
 {
-	/// <summary>
-	/// Static methods that implement aspects of the NUnit framework that cut 
-	/// across individual test types, extensions, etc. Some of these use the 
-	/// methods of the Reflect class to implement operations specific to the 
-	/// NUnit Framework.
-	/// </summary>
-	public class NUnitFramework
-	{
+    /// <summary>
+    /// Static methods that implement aspects of the NUnit framework that cut 
+    /// across individual test types, extensions, etc. Some of these use the 
+    /// methods of the Reflect class to implement operations specific to the 
+    /// NUnit Framework.
+    /// </summary>
+    public class NUnitFramework
+    {
         #region Constants
 
-		#region Attribute Names
-		// NOTE: Attributes used in switch statements must be const
+        #region Attribute Names
+        // NOTE: Attributes used in switch statements must be const
 
         // Attributes that apply to Assemblies, Classes and Methods
         public const string IgnoreAttribute = "NUnit.Framework.IgnoreAttribute";
-		public const string PlatformAttribute = "NUnit.Framework.PlatformAttribute";
-		public const string CultureAttribute = "NUnit.Framework.CultureAttribute";
-		public const string ExplicitAttribute = "NUnit.Framework.ExplicitAttribute";
+        public const string PlatformAttribute = "NUnit.Framework.PlatformAttribute";
+        public const string CultureAttribute = "NUnit.Framework.CultureAttribute";
+        public const string ExplicitAttribute = "NUnit.Framework.ExplicitAttribute";
         public const string CategoryAttribute = "NUnit.Framework.CategoryAttribute";
         public const string PropertyAttribute = "NUnit.Framework.PropertyAttribute";
-		public const string DescriptionAttribute = "NUnit.Framework.DescriptionAttribute";
+        public const string DescriptionAttribute = "NUnit.Framework.DescriptionAttribute";
         public const string RequiredAddinAttribute = "NUnit.Framework.RequiredAddinAttribute";
 
         // Attributes that apply only to Classes
@@ -61,14 +61,14 @@ namespace NUnit.Core
 
         public static readonly string TestActionInterface = "NUnit.Framework.ITestAction, nunit.framework";
 
-	    public static readonly string TestDetailsClass = "NUnit.Framework.TestDetails, nunit.framework";
+        public static readonly string TestDetailsClass = "NUnit.Framework.TestDetails, nunit.framework";
 
         public static readonly string AssertException = "NUnit.Framework.AssertionException";
         public static readonly string IgnoreException = "NUnit.Framework.IgnoreException";
         public static readonly string InconclusiveException = "NUnit.Framework.InconclusiveException";
         public static readonly string SuccessException = "NUnit.Framework.SuccessException";
         public static readonly string AssertType = "NUnit.Framework.Assert";
-		public static readonly string ExpectExceptionInterface = "NUnit.Framework.IExpectException";
+        public static readonly string ExpectExceptionInterface = "NUnit.Framework.IExpectException";
         #endregion
 
         #region Core Types
@@ -128,26 +128,26 @@ namespace NUnit.Core
 
         #region IgnoreReason
         public static string GetIgnoreReason( System.Attribute attribute )
-		{
+        {
             return Reflect.GetPropertyValue(attribute, PropertyNames.Reason) as string;
-		}
-		#endregion
+        }
+        #endregion
 
-		#region Description
-		/// <summary>
-		/// Method to return the description from an source
-		/// </summary>
-		/// <param name="source">The source to check</param>
-		/// <returns>The description, if any, or null</returns>
-		public static string GetDescription(System.Attribute attribute)
-		{
+        #region Description
+        /// <summary>
+        /// Method to return the description from an source
+        /// </summary>
+        /// <param name="source">The source to check</param>
+        /// <returns>The description, if any, or null</returns>
+        public static string GetDescription(System.Attribute attribute)
+        {
             return Reflect.GetPropertyValue(attribute, PropertyNames.Description) as string;
-		}
-		#endregion
+        }
+        #endregion
 
-		#endregion
+        #endregion
 
-		#region ApplyCommonAttributes
+        #region ApplyCommonAttributes
         /// <summary>
         /// Modify a newly constructed test based on a type or method by 
         /// applying any of NUnit's common attributes.
@@ -182,38 +182,38 @@ namespace NUnit.Core
         {
             foreach (Attribute attribute in attributes)
             {
-				Type attributeType = attribute.GetType();
-				string attributeName = attributeType.FullName;
+                Type attributeType = attribute.GetType();
+                string attributeName = attributeType.FullName;
                 bool isValid = test.RunState != RunState.NotRunnable;
 
                 switch (attributeName)
                 {
-					case TestFixtureAttribute:
-					case TestAttribute:
-						if ( test.Description == null )
-							test.Description = GetDescription( attribute );
-						break;
-					case DescriptionAttribute:
-						test.Description = GetDescription( attribute );
-						break;
+                    case TestFixtureAttribute:
+                    case TestAttribute:
+                        if ( test.Description == null )
+                            test.Description = GetDescription( attribute );
+                        break;
+                    case DescriptionAttribute:
+                        test.Description = GetDescription( attribute );
+                        break;
                     case PlatformAttribute:
                         PlatformHelper pHelper = new PlatformHelper();
                         if (isValid && !pHelper.IsPlatformSupported(attribute))
                         {
                             test.RunState = RunState.Skipped;
                             test.IgnoreReason = GetIgnoreReason(attribute);
-							if ( test.IgnoreReason == null )
-								test.IgnoreReason = pHelper.Reason;
+                            if ( test.IgnoreReason == null )
+                                test.IgnoreReason = pHelper.Reason;
                         }
                         break;
-					case CultureAttribute:
-						CultureDetector cultureDetector = new CultureDetector();
-						if (isValid && !cultureDetector.IsCultureSupported(attribute))
-						{
-							test.RunState = RunState.Skipped;
-							test.IgnoreReason = cultureDetector.Reason;
-						}
-						break;
+                    case CultureAttribute:
+                        CultureDetector cultureDetector = new CultureDetector();
+                        if (isValid && !cultureDetector.IsCultureSupported(attribute))
+                        {
+                            test.RunState = RunState.Skipped;
+                            test.IgnoreReason = cultureDetector.Reason;
+                        }
+                        break;
                     case RequiredAddinAttribute:
                         string required = (string)Reflect.GetPropertyValue(attribute, PropertyNames.RequiredAddin);
                         if (!IsAddinAvailable(required))
@@ -229,8 +229,8 @@ namespace NUnit.Core
                         test.Properties.Add("APARTMENT_STATE", System.Threading.ApartmentState.MTA);
                         break;
                     default:
-						if ( Reflect.InheritsFrom( attributeType, CategoryAttribute ) )
-						{
+                        if ( Reflect.InheritsFrom( attributeType, CategoryAttribute ) )
+                        {
                             string categoryName = (string)Reflect.GetPropertyValue(attribute, PropertyNames.CategoryName);
                             test.Categories.Add(categoryName);
 
@@ -240,9 +240,9 @@ namespace NUnit.Core
                                 test.IgnoreReason = "Category name must not contain ',', '!', '+' or '-'";
                             }
                         }
-						else if ( Reflect.InheritsFrom( attributeType, PropertyAttribute ) )
-						{
-							object propObject = Reflect.GetPropertyValue( attribute, PropertyNames.Properties );
+                        else if ( Reflect.InheritsFrom( attributeType, PropertyAttribute ) )
+                        {
+                            object propObject = Reflect.GetPropertyValue( attribute, PropertyNames.Properties );
                             IDictionary props = propObject as IDictionary;
                             if (props != null)
                                 foreach (DictionaryEntry entry in props)
@@ -276,12 +276,12 @@ namespace NUnit.Core
                                  test.IgnoreReason = GetIgnoreReason(attribute);
                              }
                          }
-						break;
+                        break;
                 }
             }
         }
 
-		#endregion
+        #endregion
 
         #region ApplyExpectedExceptionAttribute
         /// <summary>
@@ -305,27 +305,27 @@ namespace NUnit.Core
 
         #region IsSuiteBuilder
         public static bool IsSuiteBuilder( Type type )
-		{
-			return Reflect.HasAttribute( type, SuiteBuilderAttribute, false )
-				&& Reflect.HasInterface( type, SuiteBuilderInterface );
-		}
-		#endregion
+        {
+            return Reflect.HasAttribute( type, SuiteBuilderAttribute, false )
+                && Reflect.HasInterface( type, SuiteBuilderInterface );
+        }
+        #endregion
 
-		#region IsTestCaseBuilder
-		public static bool IsTestCaseBuilder( Type type )
-		{
-			return Reflect.HasAttribute( type, TestCaseBuilderAttributeName, false )
-				&& Reflect.HasInterface( type, TestCaseBuilderInterfaceName );
-		}
-		#endregion
+        #region IsTestCaseBuilder
+        public static bool IsTestCaseBuilder( Type type )
+        {
+            return Reflect.HasAttribute( type, TestCaseBuilderAttributeName, false )
+                && Reflect.HasInterface( type, TestCaseBuilderInterfaceName );
+        }
+        #endregion
 
-		#region IsTestDecorator
-		public static bool IsTestDecorator( Type type )
-		{
-			return Reflect.HasAttribute( type, TestDecoratorAttributeName, false )
-				&& Reflect.HasInterface( type, TestDecoratorInterfaceName );
-		}
-		#endregion
+        #region IsTestDecorator
+        public static bool IsTestDecorator( Type type )
+        {
+            return Reflect.HasAttribute( type, TestDecoratorAttributeName, false )
+                && Reflect.HasInterface( type, TestDecoratorInterfaceName );
+        }
+        #endregion
 
         #region IsAddinAvailable
         public static bool IsAddinAvailable(string name)

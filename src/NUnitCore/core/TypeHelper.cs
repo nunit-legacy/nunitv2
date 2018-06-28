@@ -184,12 +184,12 @@ namespace NUnit.Core
                 for (int i = 0; i < typeArgs.Length; i++)
                 {
                     for (int j = 0; j < arglist.Length; j++)
-			        {
+                    {
                         if (parameters[j].ParameterType.Equals(typeParameters[i]))
                             typeArgs[i] = TypeHelper.BestCommonType(
                                 typeArgs[i],
                                 arglist[j].GetType());
-			        }
+                    }
 
                     if (typeArgs[i] == null)
                     {

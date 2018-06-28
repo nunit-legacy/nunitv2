@@ -45,10 +45,10 @@ namespace NUnit.Framework
         /// <param name="arguments"></param>
         public TestCaseAttribute(params object[] arguments)
         {
-         	if (arguments == null)
-         		this.arguments = new object[] { null };
-         	else
- 	        	this.arguments = arguments;
+           	if (arguments == null)
+         	    this.arguments = new object[] { null };
+            else
+ 	            this.arguments = arguments;
         }
 
         /// <summary>
@@ -186,7 +186,7 @@ namespace NUnit.Framework
         public string ExpectedMessage
         {
             get { return expectedMessage; }
-         	set { expectedMessage = value; }
+            set { expectedMessage = value; }
         }
 
         /// <summary>

@@ -43,9 +43,9 @@ namespace NUnit.Framework.Constraints
         /// <returns>True if an exception is thrown and the constraint succeeds, otherwise false</returns>
         public override bool Matches(object actual)
         {
-	        caughtException = ExceptionInterceptor.Intercept(actual);
+            caughtException = ExceptionInterceptor.Intercept(actual);
 
-			if (caughtException == null)
+            if (caughtException == null)
                 return false;
 
             return baseConstraint == null || baseConstraint.Matches(caughtException);
@@ -57,7 +57,7 @@ namespace NUnit.Framework.Constraints
         /// </summary>
 #if CLR_2_0 || CLR_4_0
         public override bool Matches<T>(ActualValueDelegate<T> del)
-		{
+        {
             return Matches(new GenericInvocationDescriptor<T>(del));
         }
 #else
@@ -67,7 +67,7 @@ namespace NUnit.Framework.Constraints
         }
 #endif
 
-		/// <summary>
+        /// <summary>
         /// Write the constraint description to a MessageWriter
         /// </summary>
         /// <param name="writer">The writer on which the description is displayed</param>
@@ -109,141 +109,141 @@ namespace NUnit.Framework.Constraints
         }
     }
 
-	#region ExceptionInterceptor
+    #region ExceptionInterceptor
 
-	internal class ExceptionInterceptor
-	{
-		private ExceptionInterceptor(){}
+    internal class ExceptionInterceptor
+    {
+        private ExceptionInterceptor(){}
 
-		internal static Exception Intercept(object invocation)
-		{
-			IInvocationDescriptor invocationDescriptor = GetInvocationDescriptor(invocation);
+        internal static Exception Intercept(object invocation)
+        {
+            IInvocationDescriptor invocationDescriptor = GetInvocationDescriptor(invocation);
 
 #if CLR_2_0 || CLR_4_0
-			if (AsyncInvocationRegion.IsAsyncOperation(invocationDescriptor.Delegate))
-			{
-				using (AsyncInvocationRegion region = AsyncInvocationRegion.Create(invocationDescriptor.Delegate))
-				{
-					object result = invocationDescriptor.Invoke();
+            if (AsyncInvocationRegion.IsAsyncOperation(invocationDescriptor.Delegate))
+            {
+                using (AsyncInvocationRegion region = AsyncInvocationRegion.Create(invocationDescriptor.Delegate))
+                {
+                    object result = invocationDescriptor.Invoke();
 
-					try
-					{
-						region.WaitForPendingOperationsToComplete(result);
-						return null;
-					}
-					catch (Exception ex)
-					{
-						return ex;
-					}
-				}
-			}
-			else
+                    try
+                    {
+                        region.WaitForPendingOperationsToComplete(result);
+                        return null;
+                    }
+                    catch (Exception ex)
+                    {
+                        return ex;
+                    }
+                }
+            }
+            else
 #endif
-			{
-				try
-				{
-					invocationDescriptor.Invoke();
-					return null;
-				}
-				catch (Exception ex)
-				{
-					return ex;
-				}
-			}
-		}
+            {
+                try
+                {
+                    invocationDescriptor.Invoke();
+                    return null;
+                }
+                catch (Exception ex)
+                {
+                    return ex;
+                }
+            }
+        }
 
-		private static IInvocationDescriptor GetInvocationDescriptor(object actual)
-		{
-			IInvocationDescriptor invocationDescriptor = actual as IInvocationDescriptor;
+        private static IInvocationDescriptor GetInvocationDescriptor(object actual)
+        {
+            IInvocationDescriptor invocationDescriptor = actual as IInvocationDescriptor;
 
-			if (invocationDescriptor == null)
-			{
-				TestDelegate testDelegate = actual as TestDelegate;
+            if (invocationDescriptor == null)
+            {
+                TestDelegate testDelegate = actual as TestDelegate;
 
-				if (testDelegate == null)
-					throw new ArgumentException(
-						String.Format("The actual value must be a TestDelegate or ActualValueDelegate but was {0}", actual.GetType().Name),
-						"actual");
+                if (testDelegate == null)
+                    throw new ArgumentException(
+                        String.Format("The actual value must be a TestDelegate or ActualValueDelegate but was {0}", actual.GetType().Name),
+                        "actual");
 
-				invocationDescriptor = new VoidInvocationDescriptor(testDelegate);
-			}
+                invocationDescriptor = new VoidInvocationDescriptor(testDelegate);
+            }
 
-			return invocationDescriptor;
-		}
-	}
+            return invocationDescriptor;
+        }
+    }
 
-	#endregion
+    #endregion
 
-	#region InvocationDescriptor
+    #region InvocationDescriptor
 
-	internal class VoidInvocationDescriptor : IInvocationDescriptor
-	{
-		private readonly TestDelegate _del;
+    internal class VoidInvocationDescriptor : IInvocationDescriptor
+    {
+        private readonly TestDelegate _del;
 
-		public VoidInvocationDescriptor(TestDelegate del)
-		{
-			_del = del;
-		}
+        public VoidInvocationDescriptor(TestDelegate del)
+        {
+            _del = del;
+        }
 
-		public object Invoke()
-		{
-			_del();
-			return null;
-		}
+        public object Invoke()
+        {
+            _del();
+            return null;
+        }
 
-		public Delegate Delegate
-		{
-			get { return _del; }
-		}
-	}
+        public Delegate Delegate
+        {
+            get { return _del; }
+        }
+    }
 
 #if CLR_2_0 || CLR_4_0
-	internal class GenericInvocationDescriptor<T> : IInvocationDescriptor
-	{
-		private readonly ActualValueDelegate<T> _del;
+    internal class GenericInvocationDescriptor<T> : IInvocationDescriptor
+    {
+        private readonly ActualValueDelegate<T> _del;
 
-		public GenericInvocationDescriptor(ActualValueDelegate<T> del)
-		{
-			_del = del;
-		}
+        public GenericInvocationDescriptor(ActualValueDelegate<T> del)
+        {
+            _del = del;
+        }
 
-		public object Invoke()
-		{
-			return _del();
-		}
+        public object Invoke()
+        {
+            return _del();
+        }
 
-		public Delegate Delegate
-		{
-			get { return _del; }
-		}
-	}
+        public Delegate Delegate
+        {
+            get { return _del; }
+        }
+    }
 #else
-	internal class ObjectInvocationDescriptor : IInvocationDescriptor
-	{
-		private readonly ActualValueDelegate _del;
+    internal class ObjectInvocationDescriptor : IInvocationDescriptor
+    {
+        private readonly ActualValueDelegate _del;
 
-		public ObjectInvocationDescriptor(ActualValueDelegate del)
-		{
-			_del = del;
-		}
+        public ObjectInvocationDescriptor(ActualValueDelegate del)
+        {
+            _del = del;
+        }
 
-		public object Invoke()
-		{
-			return _del();
-		}
+        public object Invoke()
+        {
+            return _del();
+        }
 
-		public Delegate Delegate
-		{
-			get { return _del; }
-		}
-	}
+        public Delegate Delegate
+        {
+            get { return _del; }
+        }
+    }
 #endif
 
-	internal interface IInvocationDescriptor
-	{
-		object Invoke();
-		Delegate Delegate { get; }
-	}
+    internal interface IInvocationDescriptor
+    {
+        object Invoke();
+        Delegate Delegate { get; }
+    }
 
-	#endregion
+    #endregion
 }

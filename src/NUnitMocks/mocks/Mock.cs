@@ -13,93 +13,93 @@ using NUnit.Framework;
 
 namespace NUnit.Mocks
 {
-	/// <summary>
-	/// Summary description for MockObject.
-	/// </summary>
+    /// <summary>
+    /// Summary description for MockObject.
+    /// </summary>
     [Obsolete("NUnit now uses NSubstitute")]
     public class Mock : IMock
-	{
-		#region Private Fields
+    {
+        #region Private Fields
 
-		private string name;
+        private string name;
 
-		private bool strict;
+        private bool strict;
 
-		private IDictionary methods = new Hashtable();
+        private IDictionary methods = new Hashtable();
 
-		private Exception lastException;
+        private Exception lastException;
 
         private ArrayList unexpected = new ArrayList();
 
-		#endregion
+        #endregion
 
-		#region Properties
+        #region Properties
 
-		public Exception LastException
-		{
-			get { return lastException; }
-		}
+        public Exception LastException
+        {
+            get { return lastException; }
+        }
 
-		#endregion
+        #endregion
 
-		#region Constructors
+        #region Constructors
 
-		public Mock() : this( "Mock" ) { }
+        public Mock() : this( "Mock" ) { }
 
-		public Mock( string name )
-		{
-			this.name = name;
-		}
+        public Mock( string name )
+        {
+            this.name = name;
+        }
 
-		#endregion
+        #endregion
 
-		#region IMock Members
+        #region IMock Members
 
-		public string Name
-		{
-			get { return name; }
-		}
+        public string Name
+        {
+            get { return name; }
+        }
 
-		public bool Strict
-		{
-			get { return strict; }
-			set { strict = value; }
-		}
+        public bool Strict
+        {
+            get { return strict; }
+            set { strict = value; }
+        }
 
-		public void Expect( string methodName, params object[] args )
-		{
-			ExpectAndReturn( methodName, null, args );
-		}
+        public void Expect( string methodName, params object[] args )
+        {
+            ExpectAndReturn( methodName, null, args );
+        }
 
-		public void Expect( string methodName )
-		{
-			ExpectAndReturn( methodName, null, null );
-		}
+        public void Expect( string methodName )
+        {
+            ExpectAndReturn( methodName, null, null );
+        }
 
-		public void ExpectNoCall( string methodName )
-		{
-			methods[methodName] = new MockMethod( methodName, null, 
-				new AssertionException("Unexpected call to method " + methodName) );
-		}
+        public void ExpectNoCall( string methodName )
+        {
+            methods[methodName] = new MockMethod( methodName, null, 
+                new AssertionException("Unexpected call to method " + methodName) );
+        }
 
-		public void ExpectAndReturn( string methodName, object returnVal, params object[] args )
-		{
-			AddExpectedCall( methodName, returnVal, null, args );
-		}
+        public void ExpectAndReturn( string methodName, object returnVal, params object[] args )
+        {
+            AddExpectedCall( methodName, returnVal, null, args );
+        }
 
-		public void ExpectAndThrow( string methodName, Exception exception, params object[] args )
-		{
-			AddExpectedCall( methodName, null, exception, args );
-		}
+        public void ExpectAndThrow( string methodName, Exception exception, params object[] args )
+        {
+            AddExpectedCall( methodName, null, exception, args );
+        }
 
-		public void SetReturnValue( string methodName, object returnVal )
-		{
-			methods[methodName] = new MockMethod( methodName, returnVal );
-		}
+        public void SetReturnValue( string methodName, object returnVal )
+        {
+            methods[methodName] = new MockMethod( methodName, returnVal );
+        }
 
-		#endregion
+        #endregion
 
-		#region IVerify Members
+        #region IVerify Members
 
         public virtual void Verify()
         {
@@ -110,56 +110,56 @@ namespace NUnit.Mocks
                 Assert.Fail("Unexpected call to " + (string)unexpected[0]);
         }
 
-		#endregion
+        #endregion
 
-		#region ICallHandler Members
+        #region ICallHandler Members
 
-		public virtual object Call( string methodName, params object[] args )
-		{
-			if ( methods.Contains( methodName ) )
-			{
-				try
-				{
-					IMethod method = (IMethod)methods[methodName];
-					return method.Call( args );
-				}
-				catch( Exception exception )
-				{
-					// Save exception in case MO is running on a separate thread
-					lastException = exception;
-					throw;
-				}
-			}
-			else // methodName is not listed in methods
+        public virtual object Call( string methodName, params object[] args )
+        {
+            if ( methods.Contains( methodName ) )
+            {
+                try
+                {
+                    IMethod method = (IMethod)methods[methodName];
+                    return method.Call( args );
+                }
+                catch( Exception exception )
+                {
+                    // Save exception in case MO is running on a separate thread
+                    lastException = exception;
+                    throw;
+                }
+            }
+            else // methodName is not listed in methods
                 if (Strict)
                 {
                     unexpected.Add(methodName);
                     Assert.Fail("Unexpected call to " + methodName);
                 }
-			
-			// not listed but Strict is not specified
-			return null;
-		}
+            
+            // not listed but Strict is not specified
+            return null;
+        }
 
-		#endregion
-	
-		#region Helper Methods
+        #endregion
+    
+        #region Helper Methods
 
-		private void AddExpectedCall( string methodName, object returnVal, Exception exception, object[] args )
-		{
-			IMethod method = (IMethod)methods[methodName];
-			if ( method == null )
-			{
-				method = new MockMethod( methodName );
-				methods[methodName] = method;
-			}
+        private void AddExpectedCall( string methodName, object returnVal, Exception exception, object[] args )
+        {
+            IMethod method = (IMethod)methods[methodName];
+            if ( method == null )
+            {
+                method = new MockMethod( methodName );
+                methods[methodName] = method;
+            }
 
-			Type[] argTypes = MethodSignature.GetArgTypes( args );
-			MethodSignature signature = new MethodSignature( this.Name, methodName, argTypes );
+            Type[] argTypes = MethodSignature.GetArgTypes( args );
+            MethodSignature signature = new MethodSignature( this.Name, methodName, argTypes );
 
-			method.Expect( new MockCall( signature, returnVal, exception, args ) );
-		}
+            method.Expect( new MockCall( signature, returnVal, exception, args ) );
+        }
 
-		#endregion
-	}
+        #endregion
+    }
 }

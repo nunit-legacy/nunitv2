@@ -9,13 +9,13 @@ using System;
 
 namespace NUnit.Framework
 {
-	/// <summary>
-	/// RepeatAttribute may be applied to test case in order
-	/// to run it multiple times.
-	/// </summary>
-	[AttributeUsage(AttributeTargets.Method, AllowMultiple=false, Inherited=false)]
-	public class RepeatAttribute : PropertyAttribute
-	{
+    /// <summary>
+    /// RepeatAttribute may be applied to test case in order
+    /// to run it multiple times.
+    /// </summary>
+    [AttributeUsage(AttributeTargets.Method, AllowMultiple=false, Inherited=false)]
+    public class RepeatAttribute : PropertyAttribute
+    {
         /// <summary>
         /// Construct a RepeatAttribute
         /// </summary>
@@ -40,5 +40,5 @@ namespace NUnit.Framework
         //{
         //    get { return count; }
         //}
-	}
+    }
 }

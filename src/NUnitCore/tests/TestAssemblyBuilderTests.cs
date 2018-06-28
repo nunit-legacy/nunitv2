@@ -15,7 +15,7 @@ namespace NUnit.Core.Tests
     // It's no longer possible to load assemblies at a relative
     // location to the current directory.
     // TODO: Create other tests
-	//[TestFixture]
+    //[TestFixture]
     //public class TestAssemblyBuilderTests
     //{
     //    [Test]
@@ -43,5 +43,5 @@ namespace NUnit.Core.Tests
     //            Environment.CurrentDirectory = current.FullName;
     //        }
     //    }
-	//}
+    //}
 }

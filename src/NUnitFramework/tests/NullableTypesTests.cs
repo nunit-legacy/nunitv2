@@ -50,7 +50,7 @@ namespace NUnit.Framework.Tests
             //Assert.That(3, Is.LessThan(five));
             //Assert.That(5, Is.LessThanOrEqualTo(five));
         }
-		
+        
         [Test]
         public void CanCompareNullableDoubles()
         {
@@ -111,7 +111,7 @@ namespace NUnit.Framework.Tests
             //Assert.That(5m, Is.LessThanOrEqualTo(five));
         }
 #endif
-		
+        
         [Test]
         public void CanCompareWithTolerance()
         {

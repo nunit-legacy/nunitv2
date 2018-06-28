@@ -10,69 +10,69 @@ using System.IO;
 
 namespace NUnit.Core.Tests
 {
-	[TestFixture]
-	public class AssemblyReaderTests
-	{
-		private AssemblyReader rdr;
+    [TestFixture]
+    public class AssemblyReaderTests
+    {
+        private AssemblyReader rdr;
 
-		[SetUp]
-		public void CreateReader()
-		{
-			rdr = new AssemblyReader( this.GetType().Assembly );
-		}
+        [SetUp]
+        public void CreateReader()
+        {
+            rdr = new AssemblyReader( this.GetType().Assembly );
+        }
 
-		[TearDown]
-		public void DisposeReader()
-		{
-			if ( rdr != null )
-				rdr.Dispose();
+        [TearDown]
+        public void DisposeReader()
+        {
+            if ( rdr != null )
+                rdr.Dispose();
 
-			rdr = null;
-		}
+            rdr = null;
+        }
 
-		[Test]
-		public void CreateFromPath()
-		{
+        [Test]
+        public void CreateFromPath()
+        {
             string path = AssemblyHelper.GetAssemblyPath(System.Reflection.Assembly.GetAssembly(GetType()));
             Assert.AreEqual(path, new AssemblyReader(path).AssemblyPath);
-		}
+        }
 
-		[Test]
-		public void CreateFromAssembly()
-		{
+        [Test]
+        public void CreateFromAssembly()
+        {
             string path = AssemblyHelper.GetAssemblyPath(System.Reflection.Assembly.GetAssembly(GetType()));
             Assert.AreEqual(path, rdr.AssemblyPath);
-		}
+        }
 
-		[Test]
-		public void IsValidPeFile()
-		{
-			Assert.IsTrue( rdr.IsValidPeFile );
-		}
+        [Test]
+        public void IsValidPeFile()
+        {
+            Assert.IsTrue( rdr.IsValidPeFile );
+        }
 
-		[Test]
-		public void IsValidPeFile_Fails()
-		{
-			string configFile = AppDomain.CurrentDomain.SetupInformation.ConfigurationFile;
-			Assert.IsFalse( new AssemblyReader( configFile ).IsValidPeFile );
-		}
+        [Test]
+        public void IsValidPeFile_Fails()
+        {
+            string configFile = AppDomain.CurrentDomain.SetupInformation.ConfigurationFile;
+            Assert.IsFalse( new AssemblyReader( configFile ).IsValidPeFile );
+        }
 
-		[Test]
-		public void IsDotNetFile()
-		{
-			Assert.IsTrue( rdr.IsDotNetFile );
-		}
+        [Test]
+        public void IsDotNetFile()
+        {
+            Assert.IsTrue( rdr.IsDotNetFile );
+        }
 
-		[Test]
-		public void ImageRuntimeVersion()
-		{
-			string runtimeVersion = rdr.ImageRuntimeVersion;
+        [Test]
+        public void ImageRuntimeVersion()
+        {
+            string runtimeVersion = rdr.ImageRuntimeVersion;
 
-			StringAssert.StartsWith( "v", runtimeVersion );
-			new Version( runtimeVersion.Substring( 1 ) );
-			// This fails when we force running under a prior version
-			// Assert.LessOrEqual( version, Environment.Version );
-		}
+            StringAssert.StartsWith( "v", runtimeVersion );
+            new Version( runtimeVersion.Substring( 1 ) );
+            // This fails when we force running under a prior version
+            // Assert.LessOrEqual( version, Environment.Version );
+        }
 
-	}
+    }
 }

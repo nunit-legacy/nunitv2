@@ -130,7 +130,7 @@ namespace NUnit.Core
                         break;
                 }
             }
-		}
+        }
         #endregion
 
         #region Helper Methods

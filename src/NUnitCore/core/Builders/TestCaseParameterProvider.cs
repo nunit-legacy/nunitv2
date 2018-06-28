@@ -33,7 +33,7 @@ namespace NUnit.Core.Builders
         /// <returns></returns>
         public IEnumerable GetTestCasesFor(MethodInfo method)
         {
-			ArrayList list = new ArrayList();
+            ArrayList list = new ArrayList();
 
             Attribute[] attrs = Reflect.GetAttributes(method, NUnitFramework.TestCaseAttribute, false);
 
@@ -109,9 +109,9 @@ namespace NUnit.Core.Builders
                 }
 
                 list.Add( parms );
-			}
+            }
 
-			return list;
+            return list;
         }
         
         /// <summary>

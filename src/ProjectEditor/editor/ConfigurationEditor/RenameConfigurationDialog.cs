@@ -14,13 +14,13 @@ using NUnit.ProjectEditor.ViewElements;
 
 namespace NUnit.ProjectEditor
 {
-	/// <summary>
+    /// <summary>
     /// Displays a dialog for entry of a new name for an
     /// existing configuration. This dialog collects and
     /// validates the name. The caller is responsible for
     /// actually renaming the cofiguration.
     /// </summary>
-	public partial class RenameConfigurationDialog : System.Windows.Forms.Form, IRenameConfigurationDialog
+    public partial class RenameConfigurationDialog : System.Windows.Forms.Form, IRenameConfigurationDialog
     {
         #region Instance Variables
 
@@ -33,8 +33,8 @@ namespace NUnit.ProjectEditor
         #region Constructor
 
         public RenameConfigurationDialog()
-		{
-			InitializeComponent();
+        {
+            InitializeComponent();
 
             configurationName = new TextElement(configurationNameTextBox);
             okButtonWrapper = new ButtonElement(okButton);
@@ -42,11 +42,11 @@ namespace NUnit.ProjectEditor
             messageDisplay = new MessageDisplay("Rename Configuration");
         }
 
-		#endregion
+        #endregion
 
-		#region IRenameConfigurationDialogMembers
+        #region IRenameConfigurationDialogMembers
 
-		public ITextElement ConfigurationName 
+        public ITextElement ConfigurationName 
         {
             get { return configurationName; }
         }
@@ -56,7 +56,7 @@ namespace NUnit.ProjectEditor
             get { return okButtonWrapper; }
         }
 
-		#endregion
+        #endregion
 
         #region IView Members
 

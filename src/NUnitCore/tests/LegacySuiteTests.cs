@@ -14,12 +14,12 @@ using NUnit.TestData.LegacySuiteData;
 
 namespace NUnit.Core.Tests
 {
-	/// <summary>
-	/// Summary description for LegacySuiteTests.
-	/// </summary>
-	[TestFixture]
-	public class LegacySuiteTests
-	{
+    /// <summary>
+    /// Summary description for LegacySuiteTests.
+    /// </summary>
+    [TestFixture]
+    public class LegacySuiteTests
+    {
         static int setupCount = 0;
         static int teardownCount = 0;
         private Builders.LegacySuiteBuilder builder = new Builders.LegacySuiteBuilder();
@@ -93,36 +93,36 @@ namespace NUnit.Core.Tests
         }
 
         [Test]
-		public void SetUpAndTearDownAreCalled()
-		{
+        public void SetUpAndTearDownAreCalled()
+        {
             setupCount = teardownCount = 0;
-			Test suite = builder.BuildFrom( typeof( LegacySuiteWithSetUpAndTearDown ) );
+            Test suite = builder.BuildFrom( typeof( LegacySuiteWithSetUpAndTearDown ) );
             Assert.AreEqual(RunState.Runnable, suite.RunState);
             suite.Run(NullListener.NULL, TestFilter.Empty);
-			Assert.AreEqual( 1, setupCount );
-			Assert.AreEqual( 1, teardownCount );
-		}
+            Assert.AreEqual( 1, setupCount );
+            Assert.AreEqual( 1, teardownCount );
+        }
 
-		private class LegacySuiteWithSetUpAndTearDown
-		{
- 			[Suite]
-			public static TestSuite TheSuite
-			{
-				get { return new TestSuite( "EmptySuite" ); }
-			}
+        private class LegacySuiteWithSetUpAndTearDown
+        {
+            [Suite]
+            public static TestSuite TheSuite
+            {
+                get { return new TestSuite( "EmptySuite" ); }
+            }
 
-			[TestFixtureSetUp]
-			public void SetUpMethod()
-			{
-				setupCount++;
-			}
+            [TestFixtureSetUp]
+            public void SetUpMethod()
+            {
+                setupCount++;
+            }
 
-			[TestFixtureTearDown]
-			public void TearDownMethod()
-			{
-				teardownCount++;
-			}
-		}
+            [TestFixtureTearDown]
+            public void TearDownMethod()
+            {
+                teardownCount++;
+            }
+        }
 
         [Test]
         public void SuitePropertyWithInvalidType()
@@ -139,5 +139,5 @@ namespace NUnit.Core.Tests
                 get { return null; }
             }
         }
-	}
+    }
 }

@@ -15,41 +15,41 @@ using NUnit.Core;
 
 namespace NUnit.Util
 {
-	/// <summary>
-	/// Summary description for ServerBase.
-	/// </summary>
-	public abstract class ServerBase : MarshalByRefObject, IDisposable
-	{
-		protected string uri;
-		protected int port;
+    /// <summary>
+    /// Summary description for ServerBase.
+    /// </summary>
+    public abstract class ServerBase : MarshalByRefObject, IDisposable
+    {
+        protected string uri;
+        protected int port;
 
-		private TcpChannel channel;
-		private bool isMarshalled;
+        private TcpChannel channel;
+        private bool isMarshalled;
 
-		private object theLock = new object();
+        private object theLock = new object();
 
-		protected ServerBase()
-		{
-		}
+        protected ServerBase()
+        {
+        }
 
-		/// <summary>
-		/// Constructor used to provide
-		/// </summary>
-		/// <param name="uri"></param>
-		/// <param name="port"></param>
-		protected ServerBase(string uri, int port)
-		{
-			this.uri = uri;
-			this.port = port;
-		}
+        /// <summary>
+        /// Constructor used to provide
+        /// </summary>
+        /// <param name="uri"></param>
+        /// <param name="port"></param>
+        protected ServerBase(string uri, int port)
+        {
+            this.uri = uri;
+            this.port = port;
+        }
 
         public string ServerUrl
         {
             get { return string.Format("tcp://127.0.0.1:{0}/{1}", port, uri); }
         }
 
-		public virtual void Start()
-		{
+        public virtual void Start()
+        {
             if (uri != null && uri != string.Empty)
             {
                 lock (theLock)
@@ -70,51 +70,51 @@ namespace NUnit.Util
                     }
                 }
             }
-		}
+        }
 
-		[System.Runtime.Remoting.Messaging.OneWay]
-		public virtual void Stop()
-		{
-			lock( theLock )
-			{
-				if ( this.isMarshalled )
-				{
-					RemotingServices.Disconnect( this );
-					this.isMarshalled = false;
-				}
+        [System.Runtime.Remoting.Messaging.OneWay]
+        public virtual void Stop()
+        {
+            lock( theLock )
+            {
+                if ( this.isMarshalled )
+                {
+                    RemotingServices.Disconnect( this );
+                    this.isMarshalled = false;
+                }
 
-				if ( this.channel != null )
-				{
-					ChannelServices.UnregisterChannel( this.channel );
-					this.channel = null;
-				}
+                if ( this.channel != null )
+                {
+                    ChannelServices.UnregisterChannel( this.channel );
+                    this.channel = null;
+                }
 
-				Monitor.PulseAll( theLock );
-			}
-		}
+                Monitor.PulseAll( theLock );
+            }
+        }
 
-		public void WaitForStop()
-		{
-			lock( theLock )
-			{
-				Monitor.Wait( theLock );
-			}
-		}
+        public void WaitForStop()
+        {
+            lock( theLock )
+            {
+                Monitor.Wait( theLock );
+            }
+        }
 
-		#region IDisposable Members
+        #region IDisposable Members
 
-		public void Dispose()
-		{
-			this.Stop();
-		}
+        public void Dispose()
+        {
+            this.Stop();
+        }
 
-		#endregion
+        #endregion
 
-		#region InitializeLifetimeService
-		public override object InitializeLifetimeService()
-		{
-			return null;
-		}
-		#endregion
-	}
+        #region InitializeLifetimeService
+        public override object InitializeLifetimeService()
+        {
+            return null;
+        }
+        #endregion
+    }
 }

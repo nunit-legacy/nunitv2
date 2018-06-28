@@ -9,61 +9,61 @@ using System;
 
 namespace NUnit.Framework.Tests
 {
-	[TestFixture]
-	public class NotEqualFixture : MessageChecker
-	{
-		[Test]
-		public void NotEqual()
-		{
-			Assert.AreNotEqual( 5, 3 );
-		}
+    [TestFixture]
+    public class NotEqualFixture : MessageChecker
+    {
+        [Test]
+        public void NotEqual()
+        {
+            Assert.AreNotEqual( 5, 3 );
+        }
 
-		[Test, ExpectedException( typeof( AssertionException ) )]
-		public void NotEqualFails()
-		{
-			expectedMessage =
-				"  Expected: not 5" + Environment.NewLine +
-				"  But was:  5" + Environment.NewLine;
-			Assert.AreNotEqual( 5, 5 );
-		}
+        [Test, ExpectedException( typeof( AssertionException ) )]
+        public void NotEqualFails()
+        {
+            expectedMessage =
+                "  Expected: not 5" + Environment.NewLine +
+                "  But was:  5" + Environment.NewLine;
+            Assert.AreNotEqual( 5, 5 );
+        }
 
-		[Test]
-		public void NullNotEqualToNonNull()
-		{
-			Assert.AreNotEqual( null, 3 );
-		}
+        [Test]
+        public void NullNotEqualToNonNull()
+        {
+            Assert.AreNotEqual( null, 3 );
+        }
 
-		[Test, ExpectedException( typeof( AssertionException ) )]
-		public void NullEqualsNull()
-		{
-			expectedMessage =
-				"  Expected: not null" + Environment.NewLine +
-				"  But was:  null" + Environment.NewLine;
-			Assert.AreNotEqual( null, null );
-		}
+        [Test, ExpectedException( typeof( AssertionException ) )]
+        public void NullEqualsNull()
+        {
+            expectedMessage =
+                "  Expected: not null" + Environment.NewLine +
+                "  But was:  null" + Environment.NewLine;
+            Assert.AreNotEqual( null, null );
+        }
 
-		[Test]
-		public void ArraysNotEqual()
-		{
-			Assert.AreNotEqual( new object[] { 1, 2, 3 }, new object[] { 1, 3, 2 } );
-		}
+        [Test]
+        public void ArraysNotEqual()
+        {
+            Assert.AreNotEqual( new object[] { 1, 2, 3 }, new object[] { 1, 3, 2 } );
+        }
 
-		[Test, ExpectedException( typeof( AssertionException ) )]
-		public void ArraysNotEqualFails()
-		{
-			expectedMessage =
-				"  Expected: not < 1, 2, 3 >" + Environment.NewLine +
-				"  But was:  < 1, 2, 3 >" + Environment.NewLine;
-			Assert.AreNotEqual( new object[] { 1, 2, 3 }, new object[] { 1, 2, 3 } );
-		}
+        [Test, ExpectedException( typeof( AssertionException ) )]
+        public void ArraysNotEqualFails()
+        {
+            expectedMessage =
+                "  Expected: not < 1, 2, 3 >" + Environment.NewLine +
+                "  But was:  < 1, 2, 3 >" + Environment.NewLine;
+            Assert.AreNotEqual( new object[] { 1, 2, 3 }, new object[] { 1, 2, 3 } );
+        }
 
-		[Test]
-		public void UInt()
-		{
-			uint u1 = 5;
-			uint u2 = 8;
-			Assert.AreNotEqual( u1, u2 );
-		}
+        [Test]
+        public void UInt()
+        {
+            uint u1 = 5;
+            uint u2 = 8;
+            Assert.AreNotEqual( u1, u2 );
+        }
 
         [Test]
         public void NotEqualSameTypes()

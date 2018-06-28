@@ -16,8 +16,8 @@ namespace NUnit.Framework.Tests
     {
         private TextMessageWriter writer;
 
-		[SetUp]
-		public void SetUp()
+        [SetUp]
+        public void SetUp()
         {
             writer = new TextMessageWriter();
         }
@@ -50,9 +50,9 @@ namespace NUnit.Framework.Tests
             Expect(writer.ToString(), EqualTo("\"Hello\""));
         }
 
-		// This test currently fails because control character replacement is
-		// done at a higher level...
-		// TODO: See if we should do it at a lower level
+        // This test currently fails because control character replacement is
+        // done at a higher level...
+        // TODO: See if we should do it at a lower level
 //            [Test]
 //            public void ControlCharactersInStringsAreEscaped()
 //            {
@@ -104,12 +104,12 @@ namespace NUnit.Framework.Tests
             Expect(writer.ToString(), EqualTo("12345678901234567890123456789m"));
         }
 
-		[Test]
-		public void DateTimeTest()
-		{
+        [Test]
+        public void DateTimeTest()
+        {
             writer.WriteValue(new DateTime(2007, 7, 4, 9, 15, 30, 123));
             Expect(writer.ToString(), EqualTo("2007-07-04 09:15:30.123"));
-		}
+        }
 
         [Test]
         public void DisplayStringDifferences()

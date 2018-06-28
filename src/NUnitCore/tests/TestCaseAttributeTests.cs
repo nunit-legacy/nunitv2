@@ -89,12 +89,12 @@ namespace NUnit.Core.Tests
 #endif
 
         [Test]
-		public void ConversionOverflowMakesTestNonRunnable()
-		{
-			Test test = (Test)TestBuilder.MakeTestCase(
-				typeof(TestCaseAttributeFixture), "MethodCausesConversionOverflow").Tests[0];
-			Assert.AreEqual(RunState.NotRunnable, test.RunState);
-		}
+        public void ConversionOverflowMakesTestNonRunnable()
+        {
+            Test test = (Test)TestBuilder.MakeTestCase(
+                typeof(TestCaseAttributeFixture), "MethodCausesConversionOverflow").Tests[0];
+            Assert.AreEqual(RunState.NotRunnable, test.RunState);
+        }
 
         [TestCase("ABCD\u0019"), Explicit("For display purposes only")]
         public void UnicodeCharInStringArgument(string arg)
@@ -206,10 +206,10 @@ namespace NUnit.Core.Tests
         [Test]
         public void CanSpecifyDescription()
         {
-			Test test = (Test)TestBuilder.MakeTestCase(
-				typeof(TestCaseAttributeFixture), "MethodHasDescriptionSpecified").Tests[0];
-			Assert.AreEqual("My Description", test.Description);
-		}
+            Test test = (Test)TestBuilder.MakeTestCase(
+                typeof(TestCaseAttributeFixture), "MethodHasDescriptionSpecified").Tests[0];
+            Assert.AreEqual("My Description", test.Description);
+        }
 
         [Test]
         public void CanSpecifyTestName()

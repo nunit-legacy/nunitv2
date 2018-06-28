@@ -16,33 +16,33 @@ using System.Diagnostics;
 
 namespace NUnit.UiKit
 {
-	public class TextOutputSettingsPage : NUnit.UiKit.SettingsPage
-	{
-		private System.Windows.Forms.Label label1;
-		private System.Windows.Forms.Label label2;
+    public class TextOutputSettingsPage : NUnit.UiKit.SettingsPage
+    {
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Label label2;
         private System.Windows.Forms.GroupBox groupBox2;
-		private System.Windows.Forms.CheckBox showStandardOutput;
+        private System.Windows.Forms.CheckBox showStandardOutput;
         private System.Windows.Forms.CheckBox showErrorOutput;
-		private System.Windows.Forms.ComboBox tabSelectComboBox;
+        private System.Windows.Forms.ComboBox tabSelectComboBox;
         private System.Windows.Forms.Button useDefaultsButton;
-		private System.ComponentModel.IContainer components = null;
-		private System.Windows.Forms.TextBox textBox1;
-		private System.Windows.Forms.Label label5;
+        private System.ComponentModel.IContainer components = null;
+        private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.Label label5;
 
-		private TextDisplayTabSettings tabSettings = new TextDisplayTabSettings();
-		private System.Windows.Forms.CheckBox enabledCheckBox;
+        private TextDisplayTabSettings tabSettings = new TextDisplayTabSettings();
+        private System.Windows.Forms.CheckBox enabledCheckBox;
         private System.Windows.Forms.HelpProvider helpProvider1;
         private Label label6;
         private ComboBox logLevelComboBox;
         private Label label3;
         private ComboBox labelsComboBox;
         private CheckBox showTraceOutput;
-		private int selectedTabIndex = -1;
+        private int selectedTabIndex = -1;
 
-		public TextOutputSettingsPage(string key) : base(key)
-		{
-			// This call is required by the Windows Form Designer.
-			InitializeComponent();
+        public TextOutputSettingsPage(string key) : base(key)
+        {
+            // This call is required by the Windows Form Designer.
+            InitializeComponent();
 
             logLevelComboBox.Items.Clear();
             foreach (string name in System.Enum.GetNames(typeof(LoggingThreshold)))
@@ -51,30 +51,30 @@ namespace NUnit.UiKit
             labelsComboBox.Items.Clear();
             foreach (string name in System.Enum.GetNames(typeof(TestLabelLevel)))
                 labelsComboBox.Items.Add(name);
-		}
+        }
 
-		/// <summary>
-		/// Clean up any resources being used.
-		/// </summary>
-		protected override void Dispose( bool disposing )
-		{
-			if( disposing )
-			{
-				if (components != null) 
-				{
-					components.Dispose();
-				}
-			}
-			base.Dispose( disposing );
-		}
+        /// <summary>
+        /// Clean up any resources being used.
+        /// </summary>
+        protected override void Dispose( bool disposing )
+        {
+            if( disposing )
+            {
+                if (components != null) 
+                {
+                    components.Dispose();
+                }
+            }
+            base.Dispose( disposing );
+        }
 
-		#region Designer generated code
-		/// <summary>
-		/// Required method for Designer support - do not modify
-		/// the contents of this method with the code editor.
-		/// </summary>
-		private void InitializeComponent()
-		{
+        #region Designer generated code
+        /// <summary>
+        /// Required method for Designer support - do not modify
+        /// the contents of this method with the code editor.
+        /// </summary>
+        private void InitializeComponent()
+        {
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.showStandardOutput = new System.Windows.Forms.CheckBox();
@@ -285,127 +285,127 @@ namespace NUnit.UiKit
             this.ResumeLayout(false);
             this.PerformLayout();
 
-		}
-		#endregion
+        }
+        #endregion
 
-		public override void LoadSettings()
-		{
-			tabSettings.LoadSettings(settings);
-			InitializeTabSelectComboBox();
-		}
+        public override void LoadSettings()
+        {
+            tabSettings.LoadSettings(settings);
+            InitializeTabSelectComboBox();
+        }
 
-		private void InitializeTabSelectComboBox()
-		{
-			FillTabSelectComboBox();
+        private void InitializeTabSelectComboBox()
+        {
+            FillTabSelectComboBox();
 
-			if ( this.tabSelectComboBox.Items.Count > 0 )
-			{
-				this.tabSelectComboBox.SelectedIndex = this.selectedTabIndex = 0;
-				this.InitDisplay(tabSettings.Tabs[0]);
-			}
-		}
+            if ( this.tabSelectComboBox.Items.Count > 0 )
+            {
+                this.tabSelectComboBox.SelectedIndex = this.selectedTabIndex = 0;
+                this.InitDisplay(tabSettings.Tabs[0]);
+            }
+        }
 
-		private void FillTabSelectComboBox()
-		{
-			tabSelectComboBox.Items.Clear();
+        private void FillTabSelectComboBox()
+        {
+            tabSelectComboBox.Items.Clear();
 
-			foreach( TextDisplayTabSettings.TabInfo tabInfo in this.tabSettings.Tabs )
-				this.tabSelectComboBox.Items.Add( tabInfo.Title );
+            foreach( TextDisplayTabSettings.TabInfo tabInfo in this.tabSettings.Tabs )
+                this.tabSelectComboBox.Items.Add( tabInfo.Title );
 
-			tabSelectComboBox.Items.Add( "<New...>" );
-			tabSelectComboBox.Items.Add( "<Edit...>" );
-		}
+            tabSelectComboBox.Items.Add( "<New...>" );
+            tabSelectComboBox.Items.Add( "<Edit...>" );
+        }
 
-		public override void ApplySettings()
-		{
-			tabSettings.ApplySettings();
-		}
+        public override void ApplySettings()
+        {
+            tabSettings.ApplySettings();
+        }
 
-		private void button1_Click(object sender, System.EventArgs e)
-		{
-			tabSettings.LoadDefaults();
-			InitializeTabSelectComboBox();
-		}
+        private void button1_Click(object sender, System.EventArgs e)
+        {
+            tabSettings.LoadDefaults();
+            InitializeTabSelectComboBox();
+        }
 
-		private void InitDisplay(TextDisplayTabSettings.TabInfo tabInfo)
-		{
-			textBox1.Text = tabInfo.Title;
+        private void InitDisplay(TextDisplayTabSettings.TabInfo tabInfo)
+        {
+            textBox1.Text = tabInfo.Title;
 
-			TextDisplayContent content = tabInfo.Content;
+            TextDisplayContent content = tabInfo.Content;
             showStandardOutput.Checked = content.Out;
             showErrorOutput.Checked = content.Error;
             showTraceOutput.Checked = content.Trace;
             logLevelComboBox.SelectedIndex = (int)content.LogLevel;
             labelsComboBox.SelectedIndex = (int)content.Labels;
 
-			enabledCheckBox.Checked = tabInfo.Enabled;
-		}
+            enabledCheckBox.Checked = tabInfo.Enabled;
+        }
 
-		private void tabSelectComboBox_SelectedIndexChanged(object sender, System.EventArgs e)
-		{
-			int index = tabSelectComboBox.SelectedIndex;
-			if ( index < tabSettings.Tabs.Count )
-			{
-				selectedTabIndex = index;
-				InitDisplay(tabSettings.Tabs[index]);
-			}
-			else // Not a tab, but a "menu" item
-			{
-				tabSelectComboBox.SelectedIndex = selectedTabIndex;
+        private void tabSelectComboBox_SelectedIndexChanged(object sender, System.EventArgs e)
+        {
+            int index = tabSelectComboBox.SelectedIndex;
+            if ( index < tabSettings.Tabs.Count )
+            {
+                selectedTabIndex = index;
+                InitDisplay(tabSettings.Tabs[index]);
+            }
+            else // Not a tab, but a "menu" item
+            {
+                tabSelectComboBox.SelectedIndex = selectedTabIndex;
 
-				if ( index == tabSettings.Tabs.Count )
-					addNewTabPage();
-				else
-					editTabPages();
-			}
-		}
+                if ( index == tabSettings.Tabs.Count )
+                    addNewTabPage();
+                else
+                    editTabPages();
+            }
+        }
 
-		private void addNewTabPage()
-		{
-			using( AddTabPageDialog dlg = new AddTabPageDialog(tabSettings) )
-			{
-				this.ParentForm.Site.Container.Add( dlg );
-				if ( dlg.ShowDialog(this) == DialogResult.OK )
-				{
-					FillTabSelectComboBox();
-					this.tabSelectComboBox.SelectedIndex = tabSettings.Tabs.Count - 1;
-				}
-			}
-		}
+        private void addNewTabPage()
+        {
+            using( AddTabPageDialog dlg = new AddTabPageDialog(tabSettings) )
+            {
+                this.ParentForm.Site.Container.Add( dlg );
+                if ( dlg.ShowDialog(this) == DialogResult.OK )
+                {
+                    FillTabSelectComboBox();
+                    this.tabSelectComboBox.SelectedIndex = tabSettings.Tabs.Count - 1;
+                }
+            }
+        }
 
-		private void editTabPages()
-		{
-			using( EditTabPagesDialog dlg = new EditTabPagesDialog( tabSettings) )
-			{
-				this.ParentForm.Site.Container.Add( dlg );
-				dlg.ShowDialog(this);
+        private void editTabPages()
+        {
+            using( EditTabPagesDialog dlg = new EditTabPagesDialog( tabSettings) )
+            {
+                this.ParentForm.Site.Container.Add( dlg );
+                dlg.ShowDialog(this);
 
-				FillTabSelectComboBox();
-					
-				if ( tabSelectComboBox.Items.Count > 0 )
-					tabSelectComboBox.SelectedIndex = selectedTabIndex = 0;
-			}
-		}
+                FillTabSelectComboBox();
+                    
+                if ( tabSelectComboBox.Items.Count > 0 )
+                    tabSelectComboBox.SelectedIndex = selectedTabIndex = 0;
+            }
+        }
 
-		private void showStandardOutput_CheckedChanged(object sender, System.EventArgs e)
-		{
+        private void showStandardOutput_CheckedChanged(object sender, System.EventArgs e)
+        {
             tabSettings.Tabs[tabSelectComboBox.SelectedIndex].Content.Out = showStandardOutput.Checked;
         }
 
-		private void showErrorOutput_CheckedChanged(object sender, System.EventArgs e)
-		{
+        private void showErrorOutput_CheckedChanged(object sender, System.EventArgs e)
+        {
             tabSettings.Tabs[tabSelectComboBox.SelectedIndex].Content.Error = showErrorOutput.Checked;
         }
 
-		private void textBox1_TextChanged(object sender, System.EventArgs e)
-		{
-			tabSettings.Tabs[tabSelectComboBox.SelectedIndex].Title = textBox1.Text;
-		}
+        private void textBox1_TextChanged(object sender, System.EventArgs e)
+        {
+            tabSettings.Tabs[tabSelectComboBox.SelectedIndex].Title = textBox1.Text;
+        }
 
-		private void displayTab_CheckedChanged(object sender, System.EventArgs e)
-		{
-			tabSettings.Tabs[tabSelectComboBox.SelectedIndex].Enabled = enabledCheckBox.Checked;
-		}
+        private void displayTab_CheckedChanged(object sender, System.EventArgs e)
+        {
+            tabSettings.Tabs[tabSelectComboBox.SelectedIndex].Enabled = enabledCheckBox.Checked;
+        }
 
         private void labelsComboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
@@ -421,6 +421,6 @@ namespace NUnit.UiKit
         {
             tabSettings.Tabs[tabSelectComboBox.SelectedIndex].Content.Trace = showTraceOutput.Checked;
         }
-	}
+    }
 }
 

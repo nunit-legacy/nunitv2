@@ -14,52 +14,52 @@ using NUnit.UiKit;
 
 namespace NUnit.Gui.SettingsPages
 {
-	public class GuiSettingsPage : NUnit.UiKit.SettingsPage
-	{
-		private System.Windows.Forms.Label label1;
-		private System.Windows.Forms.GroupBox groupBox1;
-		private System.Windows.Forms.Label label2;
-		private System.Windows.Forms.GroupBox groupBox2;
-		private System.Windows.Forms.Label label3;
-		private System.Windows.Forms.TextBox recentFilesCountTextBox;
-		private System.Windows.Forms.Label label4;
-		private System.Windows.Forms.CheckBox loadLastProjectCheckBox;
-		private System.Windows.Forms.RadioButton fullGuiRadioButton;
-		private System.Windows.Forms.RadioButton miniGuiRadioButton;
-		private System.Windows.Forms.HelpProvider helpProvider1;
+    public class GuiSettingsPage : NUnit.UiKit.SettingsPage
+    {
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.GroupBox groupBox1;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.GroupBox groupBox2;
+        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.TextBox recentFilesCountTextBox;
+        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.CheckBox loadLastProjectCheckBox;
+        private System.Windows.Forms.RadioButton fullGuiRadioButton;
+        private System.Windows.Forms.RadioButton miniGuiRadioButton;
+        private System.Windows.Forms.HelpProvider helpProvider1;
         private CheckBox checkFilesExistCheckBox;
-		private System.ComponentModel.IContainer components = null;
+        private System.ComponentModel.IContainer components = null;
 
-		public GuiSettingsPage(string key) : base(key)
-		{
-			// This call is required by the Windows Form Designer.
-			InitializeComponent();
+        public GuiSettingsPage(string key) : base(key)
+        {
+            // This call is required by the Windows Form Designer.
+            InitializeComponent();
 
-			// TODO: Add any initialization after the InitializeComponent call
-		}
+            // TODO: Add any initialization after the InitializeComponent call
+        }
 
-		/// <summary>
-		/// Clean up any resources being used.
-		/// </summary>
-		protected override void Dispose( bool disposing )
-		{
-			if( disposing )
-			{
-				if (components != null) 
-				{
-					components.Dispose();
-				}
-			}
-			base.Dispose( disposing );
-		}
+        /// <summary>
+        /// Clean up any resources being used.
+        /// </summary>
+        protected override void Dispose( bool disposing )
+        {
+            if( disposing )
+            {
+                if (components != null) 
+                {
+                    components.Dispose();
+                }
+            }
+            base.Dispose( disposing );
+        }
 
-		#region Designer generated code
-		/// <summary>
-		/// Required method for Designer support - do not modify
-		/// the contents of this method with the code editor.
-		/// </summary>
-		private void InitializeComponent()
-		{
+        #region Designer generated code
+        /// <summary>
+        /// Required method for Designer support - do not modify
+        /// the contents of this method with the code editor.
+        /// </summary>
+        private void InitializeComponent()
+        {
             this.label1 = new System.Windows.Forms.Label();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.label2 = new System.Windows.Forms.Label();
@@ -201,81 +201,81 @@ namespace NUnit.Gui.SettingsPages
             this.ResumeLayout(false);
             this.PerformLayout();
 
-		}
-		#endregion
+        }
+        #endregion
 
-		public override void LoadSettings()
-		{
-			string displayFormat = settings.GetSetting( "Gui.DisplayFormat", "Full" );
-			switch( displayFormat )
-			{
-				case "Full":
-					fullGuiRadioButton.Checked = true;
-					break;
-				case "Mini":
-					miniGuiRadioButton.Checked = true;
-					break;
-			}
+        public override void LoadSettings()
+        {
+            string displayFormat = settings.GetSetting( "Gui.DisplayFormat", "Full" );
+            switch( displayFormat )
+            {
+                case "Full":
+                    fullGuiRadioButton.Checked = true;
+                    break;
+                case "Mini":
+                    miniGuiRadioButton.Checked = true;
+                    break;
+            }
 
-			recentFilesCountTextBox.Text = Services.RecentFiles.MaxFiles.ToString();
+            recentFilesCountTextBox.Text = Services.RecentFiles.MaxFiles.ToString();
             checkFilesExistCheckBox.Checked = settings.GetSetting("Gui.RecentProjects.CheckFilesExist", true);
-			loadLastProjectCheckBox.Checked = settings.GetSetting( "Options.LoadLastProject", true );
-		}
+            loadLastProjectCheckBox.Checked = settings.GetSetting( "Options.LoadLastProject", true );
+        }
 
-		public override void ApplySettings()
-		{
-			string fmt = fullGuiRadioButton.Checked ? "Full" : "Mini";
-			settings.SaveSetting( "Gui.DisplayFormat", fmt );
+        public override void ApplySettings()
+        {
+            string fmt = fullGuiRadioButton.Checked ? "Full" : "Mini";
+            settings.SaveSetting( "Gui.DisplayFormat", fmt );
             settings.SaveSetting("Gui.RecentProjects.CheckFilesExist", checkFilesExistCheckBox.Checked);
-			settings.SaveSetting( "Options.LoadLastProject", loadLastProjectCheckBox.Checked );
-		}
+            settings.SaveSetting( "Options.LoadLastProject", loadLastProjectCheckBox.Checked );
+        }
 
-		private void recentFilesCountTextBox_Validating(object sender, System.ComponentModel.CancelEventArgs e)
-		{
-			if ( recentFilesCountTextBox.Text.Length == 0 )
-			{
-				recentFilesCountTextBox.Text = Services.RecentFiles.MaxFiles.ToString();
-				recentFilesCountTextBox.SelectAll();
-				e.Cancel = true;
-			}
-			else
-			{
-				string errmsg = null;
+        private void recentFilesCountTextBox_Validating(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            if ( recentFilesCountTextBox.Text.Length == 0 )
+            {
+                recentFilesCountTextBox.Text = Services.RecentFiles.MaxFiles.ToString();
+                recentFilesCountTextBox.SelectAll();
+                e.Cancel = true;
+            }
+            else
+            {
+                string errmsg = null;
 
-				try
-				{
-					int count = int.Parse( recentFilesCountTextBox.Text );
+                try
+                {
+                    int count = int.Parse( recentFilesCountTextBox.Text );
 
-					if ( count < RecentFilesService.MinSize ||
-						count > RecentFilesService.MaxSize )
-					{
-						errmsg = string.Format( "Number of files must be from {0} to {1}", 
-							RecentFilesService.MinSize, RecentFilesService.MaxSize );
-					}
-				}
-				catch
-				{
-					errmsg = "Number of files must be numeric";
-				}
+                    if ( count < RecentFilesService.MinSize ||
+                        count > RecentFilesService.MaxSize )
+                    {
+                        errmsg = string.Format( "Number of files must be from {0} to {1}", 
+                            RecentFilesService.MinSize, RecentFilesService.MaxSize );
+                    }
+                }
+                catch
+                {
+                    errmsg = "Number of files must be numeric";
+                }
 
-				if ( errmsg != null )
-				{
-					recentFilesCountTextBox.SelectAll();
+                if ( errmsg != null )
+                {
+                    recentFilesCountTextBox.SelectAll();
                     MessageDisplay.Error(errmsg);
-					e.Cancel = true;
-				}
-			}
-		}
+                    e.Cancel = true;
+                }
+            }
+        }
 
-		private void recentFilesCountTextBox_Validated(object sender, System.EventArgs e)
-		{
-			int count = int.Parse( recentFilesCountTextBox.Text );
-			Services.RecentFiles.MaxFiles = count;
+        private void recentFilesCountTextBox_Validated(object sender, System.EventArgs e)
+        {
+            int count = int.Parse( recentFilesCountTextBox.Text );
+            Services.RecentFiles.MaxFiles = count;
             if (count == 0)
                 loadLastProjectCheckBox.Checked = false;
-		}
+        }
 
 
-	}
+    }
 }
 

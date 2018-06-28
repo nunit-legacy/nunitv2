@@ -11,40 +11,40 @@ using System.Collections;
 
 namespace NUnit.Framework.Syntax
 {
-	public class AfterTest_SimpleConstraint : SyntaxTest
-	{
-		[SetUp]
-		public void SetUp()
-		{
-			parseTree = "<after 1000 <equal 10>>";
-			staticSyntax = Is.EqualTo(10).After(1000);
-			inheritedSyntax = Helper().EqualTo(10).After(1000);
-			builderSyntax = Builder().EqualTo(10).After(1000);
-		}
-	}
+    public class AfterTest_SimpleConstraint : SyntaxTest
+    {
+        [SetUp]
+        public void SetUp()
+        {
+            parseTree = "<after 1000 <equal 10>>";
+            staticSyntax = Is.EqualTo(10).After(1000);
+            inheritedSyntax = Helper().EqualTo(10).After(1000);
+            builderSyntax = Builder().EqualTo(10).After(1000);
+        }
+    }
 
-	public class AfterTest_ProperyTest : SyntaxTest
-	{
-		[SetUp]
-		public void SetUp()
-		{
-			parseTree = "<after 1000 <property X <equal 10>>>";
-			staticSyntax = Has.Property("X").EqualTo(10).After(1000);
-			inheritedSyntax = Helper().Property("X").EqualTo(10).After(1000);
-			builderSyntax = Builder().Property("X").EqualTo(10).After(1000);
-		}
-	}
+    public class AfterTest_ProperyTest : SyntaxTest
+    {
+        [SetUp]
+        public void SetUp()
+        {
+            parseTree = "<after 1000 <property X <equal 10>>>";
+            staticSyntax = Has.Property("X").EqualTo(10).After(1000);
+            inheritedSyntax = Helper().Property("X").EqualTo(10).After(1000);
+            builderSyntax = Builder().Property("X").EqualTo(10).After(1000);
+        }
+    }
 
-	public class AfterTest_AndOperator : SyntaxTest
-	{
-		[SetUp]
-		public void SetUp()
-		{
-			parseTree = "<after 1000 <and <greaterthan 0> <lessthan 10>>>";
-			staticSyntax = Is.GreaterThan(0).And.LessThan(10).After(1000);
-			inheritedSyntax = Helper().GreaterThan(0).And.LessThan(10).After(1000);
-			builderSyntax = Builder().GreaterThan(0).And.LessThan(10).After(1000);
-		}
+    public class AfterTest_AndOperator : SyntaxTest
+    {
+        [SetUp]
+        public void SetUp()
+        {
+            parseTree = "<after 1000 <and <greaterthan 0> <lessthan 10>>>";
+            staticSyntax = Is.GreaterThan(0).And.LessThan(10).After(1000);
+            inheritedSyntax = Helper().GreaterThan(0).And.LessThan(10).After(1000);
+            builderSyntax = Builder().GreaterThan(0).And.LessThan(10).After(1000);
+        }
     }
 
 #if CLR_2_0 || CLR_4_0
@@ -130,11 +130,11 @@ namespace NUnit.Framework.Syntax
             Assert.That(delegate { return greeting; }, Is.StringEnding("world").After(5000, 200));
         }
 
-		[Test]
-		public void ThrowsTest()
-		{
-			Assert.That(delegate { throw new Exception(); }, Throws.TypeOf<Exception>().After(100));
-		}
+        [Test]
+        public void ThrowsTest()
+        {
+            Assert.That(delegate { throw new Exception(); }, Throws.TypeOf<Exception>().After(100));
+        }
     }
 
     public class AfterSyntaxUsingActualPassedByRef : AfterSyntaxTests

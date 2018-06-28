@@ -7,68 +7,68 @@
 
 namespace NUnit.Util
 {
-	using System;
-	using System.IO;
-	using System.Text;
+    using System;
+    using System.IO;
+    using System.Text;
 
-	/// <summary>
-	/// Class used for receiving console output from the running test and displaying it.
-	/// </summary>
-	public class ConsoleWriter : TextWriter
-	{
-		#region Private Fields
+    /// <summary>
+    /// Class used for receiving console output from the running test and displaying it.
+    /// </summary>
+    public class ConsoleWriter : TextWriter
+    {
+        #region Private Fields
 
-		private TextWriter console;
+        private TextWriter console;
 
-		#endregion
+        #endregion
 
-		#region Constructors
-    			
-		public ConsoleWriter(TextWriter console)
-		{
-			this.console = console;
-		}
+        #region Constructors
+                
+        public ConsoleWriter(TextWriter console)
+        {
+            this.console = console;
+        }
 
-		#endregion
-    			
-		#region TextWriter Overrides
+        #endregion
+                
+        #region TextWriter Overrides
 
-		public override void Close()
-		{
-			//console.Close ();
-		}
+        public override void Close()
+        {
+            //console.Close ();
+        }
 
-		public override void Flush()
-		{
-			console.Flush ();
-		}
+        public override void Flush()
+        {
+            console.Flush ();
+        }
 
 
-		public override void Write(char c)
-		{
-			console.Write(c);
-		}
+        public override void Write(char c)
+        {
+            console.Write(c);
+        }
 
-		public override void Write(String s)
-		{
-			console.Write(s);
-		}
+        public override void Write(String s)
+        {
+            console.Write(s);
+        }
 
-		public override void WriteLine(string s)
-		{
-			console.WriteLine(s);
-		}
+        public override void WriteLine(string s)
+        {
+            console.WriteLine(s);
+        }
 
-		public override Encoding Encoding
-		{
-			get { return Encoding.Default; }
-		}
+        public override Encoding Encoding
+        {
+            get { return Encoding.Default; }
+        }
 
-		public override Object InitializeLifetimeService()
-		{
-			return null;
-		}
+        public override Object InitializeLifetimeService()
+        {
+            return null;
+        }
 
-		#endregion
-	}
+        #endregion
+    }
 }

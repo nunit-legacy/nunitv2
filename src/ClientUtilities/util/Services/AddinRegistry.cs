@@ -13,37 +13,37 @@ using NUnit.Core.Extensibility;
 
 namespace NUnit.Util
 {
-	/// <summary>
-	/// Summary description for AddinRegistry.
-	/// </summary>
-	public class AddinRegistry : MarshalByRefObject, IAddinRegistry, IService
+    /// <summary>
+    /// Summary description for AddinRegistry.
+    /// </summary>
+    public class AddinRegistry : MarshalByRefObject, IAddinRegistry, IService
     {
         #region Instance Fields
         private ArrayList addins = new ArrayList();
-		#endregion
+        #endregion
 
-		#region IAddinRegistry Members
+        #region IAddinRegistry Members
 
-		public void Register(Addin addin)
-		{
-			addins.Add( addin );
-		}
+        public void Register(Addin addin)
+        {
+            addins.Add( addin );
+        }
 
-		public  IList Addins
-		{
-			get
-			{
-				return addins;
-			}
-		}
+        public  IList Addins
+        {
+            get
+            {
+                return addins;
+            }
+        }
 
         public bool IsAddinRegistered(string name)
         {
             return FindAddinByName(name) != null;
         }
 
-		public void SetStatus( string name, AddinStatus status, string message )
-		{
+        public void SetStatus( string name, AddinStatus status, string message )
+        {
             Addin addin = FindAddinByName(name);
             if (addin != null)
             {
@@ -60,17 +60,17 @@ namespace NUnit.Util
 
             return null;
         }
-		#endregion
+        #endregion
 
-		#region IService Members
-		public void InitializeService()
-		{
-		}
+        #region IService Members
+        public void InitializeService()
+        {
+        }
 
-		public void UnloadService()
-		{
-		}
-		#endregion
+        public void UnloadService()
+        {
+        }
+        #endregion
 
         #region InitializeLifetimeService
         public override object InitializeLifetimeService()

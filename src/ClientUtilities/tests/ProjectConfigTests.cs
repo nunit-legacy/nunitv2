@@ -12,27 +12,27 @@ using NUnit.Framework;
 
 namespace NUnit.Util.Tests
 {
-	/// <summary>
-	/// Summary description for ProjectConfigTests.
-	/// </summary>
-	[TestFixture]
-	public class ProjectConfigTests
-	{
-		private ProjectConfig activeConfig;
+    /// <summary>
+    /// Summary description for ProjectConfigTests.
+    /// </summary>
+    [TestFixture]
+    public class ProjectConfigTests
+    {
+        private ProjectConfig activeConfig;
         private ProjectConfig inactiveConfig;
-		private NUnitProject project;
+        private NUnitProject project;
 
-		[SetUp]
-		public void SetUp()
-		{
-			activeConfig = new ProjectConfig( "Debug" );
+        [SetUp]
+        public void SetUp()
+        {
+            activeConfig = new ProjectConfig( "Debug" );
             inactiveConfig = new ProjectConfig("Release");
-			project = new NUnitProject( TestPath( "/test/myproject.nunit" ) );
-			project.Configs.Add( activeConfig );
+            project = new NUnitProject( TestPath( "/test/myproject.nunit" ) );
+            project.Configs.Add( activeConfig );
             project.Configs.Add(inactiveConfig);
             project.IsDirty = false;
             project.HasChangesRequiringReload = false;
-		}
+        }
 
         /// <summary>
         /// Take a valid Linux filePath and make a valid windows filePath out of it
@@ -51,37 +51,37 @@ namespace NUnit.Util.Tests
             return path;
         }
 
-		[Test]
-		public void EmptyConfig()
-		{
-			Assert.AreEqual( "Debug", activeConfig.Name );
-			Assert.AreEqual( 0, activeConfig.Assemblies.Count );
-		}
+        [Test]
+        public void EmptyConfig()
+        {
+            Assert.AreEqual( "Debug", activeConfig.Name );
+            Assert.AreEqual( 0, activeConfig.Assemblies.Count );
+        }
 
-		[Test]
-		public void CanAddAssemblies()
-		{
+        [Test]
+        public void CanAddAssemblies()
+        {
             string path1 = TestPath("/test/assembly1.dll");
             string path2 = TestPath("/test/assembly2.dll");
             activeConfig.Assemblies.Add(path1);
-			activeConfig.Assemblies.Add( path2 );
-			Assert.AreEqual( 2, activeConfig.Assemblies.Count );
-			Assert.AreEqual( path1, activeConfig.Assemblies[0] );
-			Assert.AreEqual( path2, activeConfig.Assemblies[1] );
-		}
+            activeConfig.Assemblies.Add( path2 );
+            Assert.AreEqual( 2, activeConfig.Assemblies.Count );
+            Assert.AreEqual( path1, activeConfig.Assemblies[0] );
+            Assert.AreEqual( path2, activeConfig.Assemblies[1] );
+        }
 
-		[Test]
-		public void ToArray()
-		{
+        [Test]
+        public void ToArray()
+        {
             string path1 = TestPath("/test/assembly1.dll");
             string path2 = TestPath("/test/assembly2.dll");
             activeConfig.Assemblies.Add( path1 );
-			activeConfig.Assemblies.Add( path2 );
+            activeConfig.Assemblies.Add( path2 );
 
-			string[] files = activeConfig.Assemblies.ToArray();
-			Assert.AreEqual( path1, files[0] );
-			Assert.AreEqual( path2, files[1] );
-		}
+            string[] files = activeConfig.Assemblies.ToArray();
+            Assert.AreEqual( path1, files[0] );
+            Assert.AreEqual( path2, files[1] );
+        }
 
         [Test]
         public void AddToActiveConfigMarksProjectDirty()
@@ -231,30 +231,30 @@ namespace NUnit.Util.Tests
         }
 
         [Test]
-		public void AbsoluteBasePath()
-		{
+        public void AbsoluteBasePath()
+        {
             activeConfig.BasePath = TestPath("/junk");
             string path1 = TestPath( "/junk/bin/debug/assembly1.dll" );
-			activeConfig.Assemblies.Add( path1 );
-			Assert.AreEqual( path1, activeConfig.Assemblies[0] );
-		}
+            activeConfig.Assemblies.Add( path1 );
+            Assert.AreEqual( path1, activeConfig.Assemblies[0] );
+        }
 
-		[Test]
-		public void RelativeBasePath()
-		{
-			activeConfig.BasePath = @"junk";
+        [Test]
+        public void RelativeBasePath()
+        {
+            activeConfig.BasePath = @"junk";
             string path1 = TestPath("/test/junk/bin/debug/assembly1.dll");
             activeConfig.Assemblies.Add( path1 );
-			Assert.AreEqual( path1, activeConfig.Assemblies[0] );
-		}
+            Assert.AreEqual( path1, activeConfig.Assemblies[0] );
+        }
 
-		[Test]
-		public void NoBasePathSet()
-		{
+        [Test]
+        public void NoBasePathSet()
+        {
             string path1 = TestPath( "/test/bin/debug/assembly1.dll" );
-			activeConfig.Assemblies.Add( path1 );
-			Assert.AreEqual( path1, activeConfig.Assemblies[0] );
-		}
+            activeConfig.Assemblies.Add( path1 );
+            Assert.AreEqual( path1, activeConfig.Assemblies[0] );
+        }
 
         [Test]
         public void SettingActiveConfigConfigurationFileMarksProjectDirty()
@@ -285,26 +285,26 @@ namespace NUnit.Util.Tests
         }
 
         [Test]
-		public void DefaultConfigurationFile()
-		{
-			Assert.AreEqual( "myproject.config", activeConfig.ConfigurationFile );
-			Assert.AreEqual( TestPath( "/test/myproject.config" ), activeConfig.ConfigurationFilePath );
-		}
+        public void DefaultConfigurationFile()
+        {
+            Assert.AreEqual( "myproject.config", activeConfig.ConfigurationFile );
+            Assert.AreEqual( TestPath( "/test/myproject.config" ), activeConfig.ConfigurationFilePath );
+        }
 
-		[Test]
-		public void AbsoluteConfigurationFile()
-		{
+        [Test]
+        public void AbsoluteConfigurationFile()
+        {
             string path1 = TestPath("/configs/myconfig.config");
-			activeConfig.ConfigurationFile = path1;
-			Assert.AreEqual( path1, activeConfig.ConfigurationFilePath );
-		}
+            activeConfig.ConfigurationFile = path1;
+            Assert.AreEqual( path1, activeConfig.ConfigurationFilePath );
+        }
 
-		[Test]
-		public void RelativeConfigurationFile()
-		{
-			activeConfig.ConfigurationFile = "myconfig.config";
-			Assert.AreEqual( TestPath( "/test/myconfig.config" ), activeConfig.ConfigurationFilePath );
-		}
+        [Test]
+        public void RelativeConfigurationFile()
+        {
+            activeConfig.ConfigurationFile = "myconfig.config";
+            Assert.AreEqual( TestPath( "/test/myconfig.config" ), activeConfig.ConfigurationFilePath );
+        }
 
         [Test]
         public void SettingActiveConfigPrivateBinPathMarksProjectDirty()
@@ -362,24 +362,24 @@ namespace NUnit.Util.Tests
             Assert.IsFalse(project.HasChangesRequiringReload);
         }
 
-		[Test]
-		public void NoPrivateBinPath()
-		{
-			activeConfig.Assemblies.Add( TestPath( "/bin/assembly1.dll" ) );
-			activeConfig.Assemblies.Add( TestPath( "/bin/assembly2.dll" ) );
-			activeConfig.BinPathType = BinPathType.None;
-			Assert.IsNull( activeConfig.PrivateBinPath );
-		}
+        [Test]
+        public void NoPrivateBinPath()
+        {
+            activeConfig.Assemblies.Add( TestPath( "/bin/assembly1.dll" ) );
+            activeConfig.Assemblies.Add( TestPath( "/bin/assembly2.dll" ) );
+            activeConfig.BinPathType = BinPathType.None;
+            Assert.IsNull( activeConfig.PrivateBinPath );
+        }
 
-		[Test]
-		public void ManualPrivateBinPath()
-		{
-			activeConfig.Assemblies.Add( TestPath( "/test/bin/assembly1.dll" ) );
-			activeConfig.Assemblies.Add( TestPath( "/test/bin/assembly2.dll" ) );
-			activeConfig.BinPathType = BinPathType.Manual;
-			activeConfig.PrivateBinPath = TestPath( "/test" );
-			Assert.AreEqual( TestPath( "/test" ), activeConfig.PrivateBinPath );
-		}
+        [Test]
+        public void ManualPrivateBinPath()
+        {
+            activeConfig.Assemblies.Add( TestPath( "/test/bin/assembly1.dll" ) );
+            activeConfig.Assemblies.Add( TestPath( "/test/bin/assembly2.dll" ) );
+            activeConfig.BinPathType = BinPathType.Manual;
+            activeConfig.PrivateBinPath = TestPath( "/test" );
+            Assert.AreEqual( TestPath( "/test" ), activeConfig.PrivateBinPath );
+        }
 
 // TODO: Move to DomainManagerTests
 //		[Test]
@@ -390,5 +390,5 @@ namespace NUnit.Util.Tests
 //			config.BinPathType = BinPathType.Auto;
 //			Assert.AreEqual( "bin", config.PrivateBinPath );
 //		}
-	}
+    }
 }

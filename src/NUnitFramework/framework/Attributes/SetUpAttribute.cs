@@ -7,7 +7,7 @@
 
 namespace NUnit.Framework
 {
-	using System;
+    using System;
 
     /// <summary>
     /// SetUpAttribute is used in a TestFixture to identify a method
@@ -16,6 +16,6 @@ namespace NUnit.Framework
     /// called once, before any of the subordinate tests are run.
     /// </summary>
     [AttributeUsage(AttributeTargets.Method, AllowMultiple = false, Inherited = true)]
-	public class SetUpAttribute : Attribute
-	{}
+    public class SetUpAttribute : Attribute
+    {}
 }

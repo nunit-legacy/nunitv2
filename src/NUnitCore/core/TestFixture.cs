@@ -9,20 +9,20 @@ using System;
 
 namespace NUnit.Core
 {
-	/// <summary>
-	/// TestFixture is a surrogate for a user test fixture class,
-	/// containing one or more tests.
-	/// </summary>
-	public class TestFixture : TestSuite
-	{
-		#region Constructors
+    /// <summary>
+    /// TestFixture is a surrogate for a user test fixture class,
+    /// containing one or more tests.
+    /// </summary>
+    public class TestFixture : TestSuite
+    {
+        #region Constructors
         public TestFixture(Type fixtureType)
             : base(fixtureType) { }
         public TestFixture(Type fixtureType, object[] arguments)
             : base(fixtureType, arguments) { }
         #endregion
 
-		#region TestSuite Overrides
+        #region TestSuite Overrides
 
         /// <summary>
         /// Gets a string representing the kind of test
@@ -40,6 +40,6 @@ namespace NUnit.Core
                 return base.Run(listener, filter);
             }
         }
-		#endregion
-	}
+        #endregion
+    }
 }

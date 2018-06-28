@@ -12,29 +12,29 @@ using NUnit.Util;
 
 namespace NUnit.TestUtilities
 {
-	/// <summary>
-	/// Summary description for MockTestEventSource.
-	/// </summary>
-	public class MockTestEventSource : TestEventDispatcher, EventListener
-	{
-		//private string testFileName;
-		private TestSuite suite;
+    /// <summary>
+    /// Summary description for MockTestEventSource.
+    /// </summary>
+    public class MockTestEventSource : TestEventDispatcher, EventListener
+    {
+        //private string testFileName;
+        private TestSuite suite;
 
-		public MockTestEventSource( TestSuite suite )
-		{
-			this.suite = suite;
-			//this.testFileName = testFileName;
-		}
+        public MockTestEventSource( TestSuite suite )
+        {
+            this.suite = suite;
+            //this.testFileName = testFileName;
+        }
 
-		public void SimulateTestRun()
-		{
-			FireRunStarting( suite.TestName.FullName, suite.TestCount );
+        public void SimulateTestRun()
+        {
+            FireRunStarting( suite.TestName.FullName, suite.TestCount );
 
-			//TestResult result = SimulateTest( fixture, RunState.Runnable );
+            //TestResult result = SimulateTest( fixture, RunState.Runnable );
             TestResult result = suite.Run(this, TestFilter.Empty);
 
-			FireRunFinished( result );
-		}
+            FireRunFinished( result );
+        }
 
 //		private TestResult SimulateTest( Test test, RunState parentState )
 //		{
@@ -65,53 +65,53 @@ namespace NUnit.TestUtilities
 //			}
 //		}
 
-		#region EventListener Members
+        #region EventListener Members
 
-		void EventListener.TestStarted(TestName testName)
-		{
-			this.FireTestStarting( testName );
-		}
+        void EventListener.TestStarted(TestName testName)
+        {
+            this.FireTestStarting( testName );
+        }
 
-		void EventListener.RunStarted(string name, int testCount)
-		{
-			this.FireRunStarting( name, testCount );
-		}
+        void EventListener.RunStarted(string name, int testCount)
+        {
+            this.FireRunStarting( name, testCount );
+        }
 
-		void EventListener.RunFinished(Exception exception)
-		{
-			this.FireRunFinished(exception);
-		}
+        void EventListener.RunFinished(Exception exception)
+        {
+            this.FireRunFinished(exception);
+        }
 
-		void EventListener.RunFinished(TestResult result)
-		{
-			this.FireRunFinished(result);
-		}
+        void EventListener.RunFinished(TestResult result)
+        {
+            this.FireRunFinished(result);
+        }
 
-		void EventListener.SuiteFinished(TestResult result)
-		{
-			this.FireSuiteFinished(result);
-		}
+        void EventListener.SuiteFinished(TestResult result)
+        {
+            this.FireSuiteFinished(result);
+        }
 
-		void EventListener.TestFinished(TestResult result)
-		{
-			this.FireTestFinished(result);
-		}
+        void EventListener.TestFinished(TestResult result)
+        {
+            this.FireTestFinished(result);
+        }
 
-		void EventListener.UnhandledException(Exception exception)
-		{
-			this.FireRunFinished(exception);
-		}
+        void EventListener.UnhandledException(Exception exception)
+        {
+            this.FireRunFinished(exception);
+        }
 
-		void EventListener.TestOutput(TestOutput testOutput)
-		{
-			this.FireTestOutput(testOutput);
-		}
+        void EventListener.TestOutput(TestOutput testOutput)
+        {
+            this.FireTestOutput(testOutput);
+        }
 
-		void EventListener.SuiteStarted(TestName testName)
-		{
-			this.FireSuiteStarting(testName);
-		}
+        void EventListener.SuiteStarted(TestName testName)
+        {
+            this.FireSuiteStarting(testName);
+        }
 
-		#endregion
-	}
+        #endregion
+    }
 }

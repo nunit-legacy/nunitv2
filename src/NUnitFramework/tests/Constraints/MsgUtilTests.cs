@@ -7,12 +7,12 @@
 
 namespace NUnit.Framework.Constraints
 {
-	/// <summary>
-	/// Summary description for MsgUtilTests.
-	/// </summary>
-	[TestFixture]
-	public class MsgUtilTests
-	{
+    /// <summary>
+    /// Summary description for MsgUtilTests.
+    /// </summary>
+    [TestFixture]
+    public class MsgUtilTests
+    {
         [TestCase("\n", "\\n")]
         [TestCase("\n\n", "\\n\\n")]
         [TestCase("\n\n\n", "\\n\\n\\n")]
@@ -41,9 +41,9 @@ namespace NUnit.Framework.Constraints
         [TestCase("\x2028", "\\x2028", Description = "Line separator character")]
         [TestCase("\x2029", "\\x2029", Description = "Paragraph separator character")]
         public void EscapeControlCharsTest(string input, string expected)
-		{
+        {
             Assert.AreEqual( expected, MsgUtils.EscapeControlChars(input) );
-		}
+        }
 
 #if MONO
         [Test]
@@ -110,5 +110,5 @@ namespace NUnit.Framework.Constraints
             Assert.AreEqual("...efghijklmnopqrstuvw...", s1);
             Assert.AreEqual("...efghijklmno?qrstuvwxyz", s2);
         }
-	}
+    }
 }

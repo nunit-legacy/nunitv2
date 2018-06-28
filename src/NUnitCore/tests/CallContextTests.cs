@@ -11,11 +11,11 @@ using NUnit.Framework;
 
 namespace NUnit.Core.Tests
 {
-	// TODO: Make this work for .NET 2.0
-	[TestFixture]
-	public class CallContextTests
-	{
-		const string CONTEXT_DATA = "MyContextData";
+    // TODO: Make this work for .NET 2.0
+    [TestFixture]
+    public class CallContextTests
+    {
+        const string CONTEXT_DATA = "MyContextData";
 //		IPrincipal savedPrincipal;
 
 //		[SetUp]
@@ -60,93 +60,93 @@ namespace NUnit.Core.Tests
         }
 
         [Test]
-		public void ILogicalThreadAffinativeTestConsole()
-		{	
-			CallContext.SetData( CONTEXT_DATA, new EmptyCallContextData() );
+        public void ILogicalThreadAffinativeTestConsole()
+        {	
+            CallContext.SetData( CONTEXT_DATA, new EmptyCallContextData() );
 
-			// TODO: make this Assertable
-			//Console.WriteLine("ILogicalThreadAffinativeTest");
-			Console.Out.Flush();
-		}
+            // TODO: make this Assertable
+            //Console.WriteLine("ILogicalThreadAffinativeTest");
+            Console.Out.Flush();
+        }
 
-		[Test]
-		public void GenericPrincipalTest()
-		{
-			GenericIdentity ident = new GenericIdentity("Bob");
-			GenericPrincipal prpal = new GenericPrincipal(ident, 
-				new string[] {"Level1"});
+        [Test]
+        public void GenericPrincipalTest()
+        {
+            GenericIdentity ident = new GenericIdentity("Bob");
+            GenericPrincipal prpal = new GenericPrincipal(ident, 
+                new string[] {"Level1"});
 
-			CallContext.SetData( CONTEXT_DATA, new PrincipalCallContextData( prpal ) );
-		}
+            CallContext.SetData( CONTEXT_DATA, new PrincipalCallContextData( prpal ) );
+        }
 
-		[Test]
-		public void SetGenericPrincipalOnThread()
-		{
-			GenericIdentity ident = new GenericIdentity("Bob");
-			GenericPrincipal prpal = new GenericPrincipal(ident, 
-				new string[] {"Level1"});
+        [Test]
+        public void SetGenericPrincipalOnThread()
+        {
+            GenericIdentity ident = new GenericIdentity("Bob");
+            GenericPrincipal prpal = new GenericPrincipal(ident, 
+                new string[] {"Level1"});
 
-			System.Threading.Thread.CurrentPrincipal = prpal;
-		}
+            System.Threading.Thread.CurrentPrincipal = prpal;
+        }
 
-		[Test]
-		public void SetCustomPrincipalOnThread()
-		{
-			MyPrincipal prpal = new MyPrincipal();
+        [Test]
+        public void SetCustomPrincipalOnThread()
+        {
+            MyPrincipal prpal = new MyPrincipal();
 
-			System.Threading.Thread.CurrentPrincipal = prpal;
-		}
+            System.Threading.Thread.CurrentPrincipal = prpal;
+        }
 
-		[Test]
-		public void UseCustomIdentity()
-		{
-			TestIdentity ident = new TestIdentity( "test" );
-			GenericPrincipal principal = new GenericPrincipal( ident, new string[] { "Level1" } );
-		
-			System.Threading.Thread.CurrentPrincipal = principal;
-		}
-	}
+        [Test]
+        public void UseCustomIdentity()
+        {
+            TestIdentity ident = new TestIdentity( "test" );
+            GenericPrincipal principal = new GenericPrincipal( ident, new string[] { "Level1" } );
+        
+            System.Threading.Thread.CurrentPrincipal = principal;
+        }
+    }
 
-	/// <summary>
-	/// Helper class that implements ILogicalThreadAffinative
-	/// but holds no data at all
-	/// </summary>
-	[Serializable]
-	public class EmptyCallContextData : ILogicalThreadAffinative
-	{
-	}
+    /// <summary>
+    /// Helper class that implements ILogicalThreadAffinative
+    /// but holds no data at all
+    /// </summary>
+    [Serializable]
+    public class EmptyCallContextData : ILogicalThreadAffinative
+    {
+    }
 
-	[Serializable]
-	public class PrincipalCallContextData : ILogicalThreadAffinative
-	{
-		public PrincipalCallContextData( IPrincipal principal )
-		{
-		}
-	}
+    [Serializable]
+    public class PrincipalCallContextData : ILogicalThreadAffinative
+    {
+        public PrincipalCallContextData( IPrincipal principal )
+        {
+        }
+    }
 
-	[Serializable]
-	public class MyPrincipal : IPrincipal
-	{
-		public IIdentity Identity
-		{
-			get
-			{
-				// TODO:  Add MyPrincipal.Identity getter implementation
-				return null;
-			}
-		}
+    [Serializable]
+    public class MyPrincipal : IPrincipal
+    {
+        public IIdentity Identity
+        {
+            get
+            {
+                // TODO:  Add MyPrincipal.Identity getter implementation
+                return null;
+            }
+        }
 
-		public bool IsInRole(string role)
-		{
-			// TODO:  Add MyPrincipal.IsInRole implementation
-			return false;
-		}
-	}
+        public bool IsInRole(string role)
+        {
+            // TODO:  Add MyPrincipal.IsInRole implementation
+            return false;
+        }
+    }
 
-	[Serializable]
-	public class TestIdentity : GenericIdentity
-	{
-		public TestIdentity( string name ) : base( name ) { }
-	}
+    [Serializable]
+    public class TestIdentity : GenericIdentity
+    {
+        public TestIdentity( string name ) : base( name ) { }
+    }
 
 }

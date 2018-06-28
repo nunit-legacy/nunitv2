@@ -7,16 +7,16 @@
 
 namespace NUnit.Core
 {
-	using System;
-	using System.Collections;
-	using System.Collections.Specialized;
+    using System;
+    using System.Collections;
+    using System.Collections.Specialized;
     using System.Threading;
-	using System.Reflection;
+    using System.Reflection;
 
-	/// <summary>
-	///		Test Class.
-	/// </summary>
-	public abstract class Test : ITest, IComparable
+    /// <summary>
+    ///		Test Class.
+    /// </summary>
+    public abstract class Test : ITest, IComparable
     {
         #region Constants
         //private static readonly string SETCULTURE = "_SETCULTURE";
@@ -27,27 +27,27 @@ namespace NUnit.Core
 
         #region Fields
         /// <summary>
-		/// TestName that identifies this test
-		/// </summary>
-		private TestName testName;
+        /// TestName that identifies this test
+        /// </summary>
+        private TestName testName;
 
-		/// <summary>
-		/// Indicates whether the test should be executed
-		/// </summary>
-		private RunState runState;
+        /// <summary>
+        /// Indicates whether the test should be executed
+        /// </summary>
+        private RunState runState;
 
-		/// <summary>
-		/// Test suite containing this test, or null
-		/// </summary>
-		private Test parent;
-		
-		/// <summary>
-		/// A dictionary of properties, used to add information
-		/// to tests without requiring the class to change.
-		/// </summary>
-		private IDictionary properties;
+        /// <summary>
+        /// Test suite containing this test, or null
+        /// </summary>
+        private Test parent;
+        
+        /// <summary>
+        /// A dictionary of properties, used to add information
+        /// to tests without requiring the class to change.
+        /// </summary>
+        private IDictionary properties;
 
-		#endregion
+        #endregion
 
         #region Properties
         /// <summary>
@@ -96,215 +96,215 @@ namespace NUnit.Core
                     && ApartmentState != GetCurrentApartment();
             }
         }
-		#endregion
+        #endregion
 
         #region Construction
 
         /// <summary>
-		/// Constructs a test given its name
-		/// </summary>
-		/// <param name="name">The name of the test</param>
-		protected Test( string name )
-		{
-			this.testName = new TestName();
-			this.testName.FullName = name;
-			this.testName.Name = name;
-			this.testName.TestID = new TestID();
+        /// Constructs a test given its name
+        /// </summary>
+        /// <param name="name">The name of the test</param>
+        protected Test( string name )
+        {
+            this.testName = new TestName();
+            this.testName.FullName = name;
+            this.testName.Name = name;
+            this.testName.TestID = new TestID();
 
             this.runState = RunState.Runnable;
-		}
+        }
 
-		/// <summary>
-		/// Constructs a test given the path through the
-		/// test hierarchy to its parent and a name.
-		/// </summary>
-		/// <param name="pathName">The parent tests full name</param>
-		/// <param name="name">The name of the test</param>
-		protected Test( string pathName, string name ) 
-		{ 
-			this.testName = new TestName();
-			this.testName.FullName = pathName == null || pathName == string.Empty 
-				? name : pathName + "." + name;
-			this.testName.Name = name;
-			this.testName.TestID = new TestID();
+        /// <summary>
+        /// Constructs a test given the path through the
+        /// test hierarchy to its parent and a name.
+        /// </summary>
+        /// <param name="pathName">The parent tests full name</param>
+        /// <param name="name">The name of the test</param>
+        protected Test( string pathName, string name ) 
+        { 
+            this.testName = new TestName();
+            this.testName.FullName = pathName == null || pathName == string.Empty 
+                ? name : pathName + "." + name;
+            this.testName.Name = name;
+            this.testName.TestID = new TestID();
 
             this.runState = RunState.Runnable;
-		}
+        }
 
-		/// <summary>
-		/// Constructs a test given a TestName object
-		/// </summary>
-		/// <param name="testName">The TestName for this test</param>
-		protected Test( TestName testName )
-		{
-			this.testName = testName;
-			
-			this.runState = RunState.Runnable;
-		}
+        /// <summary>
+        /// Constructs a test given a TestName object
+        /// </summary>
+        /// <param name="testName">The TestName for this test</param>
+        protected Test( TestName testName )
+        {
+            this.testName = testName;
+            
+            this.runState = RunState.Runnable;
+        }
 
-		/// <summary>
-		/// Sets the runner id of a test and optionally its children
-		/// </summary>
-		/// <param name="runnerID">The runner id to be used</param>
-		/// <param name="recursive">True if all children should get the same id</param>
-		public void SetRunnerID( int runnerID, bool recursive )
-		{
-			this.testName.RunnerID = runnerID;
+        /// <summary>
+        /// Sets the runner id of a test and optionally its children
+        /// </summary>
+        /// <param name="runnerID">The runner id to be used</param>
+        /// <param name="recursive">True if all children should get the same id</param>
+        public void SetRunnerID( int runnerID, bool recursive )
+        {
+            this.testName.RunnerID = runnerID;
 
-			if ( recursive && this.Tests != null )
-				foreach( Test child in this.Tests )
-					child.SetRunnerID( runnerID, true );
-		}
+            if ( recursive && this.Tests != null )
+                foreach( Test child in this.Tests )
+                    child.SetRunnerID( runnerID, true );
+        }
 
-		#endregion
+        #endregion
 
-		#region ITest Members
+        #region ITest Members
 
         #region Properties
-		/// <summary>
-		/// Gets the TestName of the test
-		/// </summary>
+        /// <summary>
+        /// Gets the TestName of the test
+        /// </summary>
         public TestName TestName
-		{
-			get { return testName; }
-		}
+        {
+            get { return testName; }
+        }
 
-		/// <summary>
-		/// Gets a string representing the kind of test
-		/// that this object represents, for use in display.
-		/// </summary>
+        /// <summary>
+        /// Gets a string representing the kind of test
+        /// that this object represents, for use in display.
+        /// </summary>
         public abstract string TestType
         {
             get;
         }
 
 
-		/// <summary>
-		/// Whether or not the test should be run
-		/// </summary>
+        /// <summary>
+        /// Whether or not the test should be run
+        /// </summary>
         public RunState RunState
         {
             get { return runState; }
             set { runState = value; }
         }
 
-		/// <summary>
-		/// Reason for not running the test, if applicable
-		/// </summary>
-		public string IgnoreReason
-		{
-			get { return (string)Properties[IGNOREREASON]; }
-			set 
+        /// <summary>
+        /// Reason for not running the test, if applicable
+        /// </summary>
+        public string IgnoreReason
+        {
+            get { return (string)Properties[IGNOREREASON]; }
+            set 
             {
                 if (value == null)
                     Properties.Remove(IGNOREREASON);
                 else
                     Properties[IGNOREREASON] = value;
             }
-		}
+        }
 
-		/// <summary>
-		/// Gets a count of test cases represented by
-		/// or contained under this test.
-		/// </summary>
-		public virtual int TestCount 
-		{ 
-			get { return 1; } 
-		}
+        /// <summary>
+        /// Gets a count of test cases represented by
+        /// or contained under this test.
+        /// </summary>
+        public virtual int TestCount 
+        { 
+            get { return 1; } 
+        }
 
-		/// <summary>
-		/// Gets a list of categories associated with this test.
-		/// </summary>
-		public IList Categories 
-		{
-			get 
+        /// <summary>
+        /// Gets a list of categories associated with this test.
+        /// </summary>
+        public IList Categories 
+        {
+            get 
             {
                 if (Properties[CATEGORIES] == null)
                     Properties[CATEGORIES] = new ArrayList();
 
                 return (IList)Properties[CATEGORIES]; 
             }
-			set 
+            set 
             {
                 Properties[CATEGORIES] = value; 
             }
-		}
+        }
 
-		/// <summary>
-		/// Gets a description associated with this test.
-		/// </summary>
-		public String Description
-		{
-			get { return (string)Properties[DESCRIPTION]; }
-			set 
+        /// <summary>
+        /// Gets a description associated with this test.
+        /// </summary>
+        public String Description
+        {
+            get { return (string)Properties[DESCRIPTION]; }
+            set 
             {
                 if (value == null)
                     Properties.Remove(DESCRIPTION);
                 else
                     Properties[DESCRIPTION] = value; 
             }
-		}
+        }
 
-		/// <summary>
-		/// Gets the property dictionary for this test
-		/// </summary>
-		public IDictionary Properties
-		{
-			get 
-			{
-				if ( properties == null )
-					properties = new ListDictionary();
+        /// <summary>
+        /// Gets the property dictionary for this test
+        /// </summary>
+        public IDictionary Properties
+        {
+            get 
+            {
+                if ( properties == null )
+                    properties = new ListDictionary();
 
-				return properties; 
-			}
-			set
-			{
-				properties = value;
-			}
-		}
+                return properties; 
+            }
+            set
+            {
+                properties = value;
+            }
+        }
 
-		/// <summary>
-		/// Indicates whether this test is a suite
-		/// </summary>
+        /// <summary>
+        /// Indicates whether this test is a suite
+        /// </summary>
         public virtual bool IsSuite
         {
             get { return false; }
         }
 
 
-		/// <summary>
-		/// Gets the parent test of this test
-		/// </summary>
-		ITest ITest.Parent 
-		{
-			get { return parent; }
-		}
+        /// <summary>
+        /// Gets the parent test of this test
+        /// </summary>
+        ITest ITest.Parent 
+        {
+            get { return parent; }
+        }
 
-		/// <summary>
-		/// Gets the parent as a Test object.
-		/// Used by the core to set the parent.
-		/// </summary>
-		public Test Parent
-		{
-			get { return parent; }
-			set { parent = value; }
-		}
+        /// <summary>
+        /// Gets the parent as a Test object.
+        /// Used by the core to set the parent.
+        /// </summary>
+        public Test Parent
+        {
+            get { return parent; }
+            set { parent = value; }
+        }
 
-		/// <summary>
-		/// Gets this test's child tests
-		/// </summary>
-		public virtual IList Tests 
+        /// <summary>
+        /// Gets this test's child tests
+        /// </summary>
+        public virtual IList Tests 
         {
             get { return null; } 
         }
 
-		/// <summary>
-		/// Gets the Type of the fixture used in running this test
-		/// </summary>
-		public virtual Type FixtureType
-		{
-			get { return null; }
-		}
+        /// <summary>
+        /// Gets the Type of the fixture used in running this test
+        /// </summary>
+        public virtual Type FixtureType
+        {
+            get { return null; }
+        }
 
         /// <summary>
         /// Gets the name of the class containing this test. Returns
@@ -337,22 +337,22 @@ namespace NUnit.Core
             get { return null; }
         }
 
-		/// <summary>
-		/// Gets or sets a fixture object for running this test
-		/// </summary>
-		public  abstract object Fixture
-		{
-			get; set;
+        /// <summary>
+        /// Gets or sets a fixture object for running this test
+        /// </summary>
+        public  abstract object Fixture
+        {
+            get; set;
         }
         #endregion
 
         #region Methods
-		/// <summary>
-		/// Gets a count of test cases that would be run using
-		/// the specified filter.
-		/// </summary>
-		/// <param name="filter"></param>
-		/// <returns></returns>
+        /// <summary>
+        /// Gets a count of test cases that would be run using
+        /// the specified filter.
+        /// </summary>
+        /// <param name="filter"></param>
+        /// <returns></returns>
         public virtual int CountTestCases(ITestFilter filter)
         {
             if (filter.Pass(this))
@@ -373,21 +373,21 @@ namespace NUnit.Core
 
         #endregion
 
-		#region IComparable Members
-		/// <summary>
-		/// Compares this test to another test for sorting purposes
-		/// </summary>
-		/// <param name="obj">The other test</param>
-		/// <returns>Value of -1, 0 or +1 depending on whether the current test is less than, equal to or greater than the other test</returns>
-		public int CompareTo(object obj)
-		{
-			Test other = obj as Test;
-			
-			if ( other == null )
-				return -1;
+        #region IComparable Members
+        /// <summary>
+        /// Compares this test to another test for sorting purposes
+        /// </summary>
+        /// <param name="obj">The other test</param>
+        /// <returns>Value of -1, 0 or +1 depending on whether the current test is less than, equal to or greater than the other test</returns>
+        public int CompareTo(object obj)
+        {
+            Test other = obj as Test;
+            
+            if ( other == null )
+                return -1;
 
-			return this.TestName.FullName.CompareTo( other.TestName.FullName );
-		}
-		#endregion
-	}
+            return this.TestName.FullName.CompareTo( other.TestName.FullName );
+        }
+        #endregion
+    }
 }

@@ -11,10 +11,10 @@ using System.Reflection;
 
 namespace NUnit.Core.Builders
 {
-	/// <summary>
-	/// Built-in SuiteBuilder for LegacySuite
-	/// </summary>
-	public class LegacySuiteBuilder : Extensibility.ISuiteBuilder
+    /// <summary>
+    /// Built-in SuiteBuilder for LegacySuite
+    /// </summary>
+    public class LegacySuiteBuilder : Extensibility.ISuiteBuilder
     {
         #region ISuiteBuilderMembers
         /// <summary>
@@ -24,12 +24,12 @@ namespace NUnit.Core.Builders
         /// <param name="type">The fixture type to check</param>
         /// <returns>True if the fixture can be built, false if not</returns>
         public bool CanBuildFrom(Type type)
-		{
-			return GetSuiteProperty( type ) != null;
-		}
+        {
+            return GetSuiteProperty( type ) != null;
+        }
 
-		public Test BuildFrom( Type type )
-		{
+        public Test BuildFrom( Type type )
+        {
             TestSuite suite = new LegacySuite( type );
 
             string reason = null;

@@ -12,47 +12,47 @@ using System.Windows.Forms;
 
 namespace NUnit.Gui.SettingsPages
 {
-	public class VisualStudioSettingsPage : NUnit.UiKit.SettingsPage
-	{
-		private System.Windows.Forms.Label label1;
-		private System.Windows.Forms.GroupBox groupBox1;
-		private System.Windows.Forms.CheckBox visualStudioSupportCheckBox;
-		private System.Windows.Forms.HelpProvider helpProvider1;
+    public class VisualStudioSettingsPage : NUnit.UiKit.SettingsPage
+    {
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.GroupBox groupBox1;
+        private System.Windows.Forms.CheckBox visualStudioSupportCheckBox;
+        private System.Windows.Forms.HelpProvider helpProvider1;
         private CheckBox useSolutionConfigsCheckBox;
         private Label label2;
         private Label label3;
-		private System.ComponentModel.IContainer components = null;
+        private System.ComponentModel.IContainer components = null;
 
-		public VisualStudioSettingsPage(string key) : base(key)
-		{
-			// This call is required by the Windows Form Designer.
-			InitializeComponent();
+        public VisualStudioSettingsPage(string key) : base(key)
+        {
+            // This call is required by the Windows Form Designer.
+            InitializeComponent();
 
-			// TODO: Add any initialization after the InitializeComponent call
-		}
+            // TODO: Add any initialization after the InitializeComponent call
+        }
 
-		/// <summary>
-		/// Clean up any resources being used.
-		/// </summary>
-		protected override void Dispose( bool disposing )
-		{
-			if( disposing )
-			{
-				if (components != null) 
-				{
-					components.Dispose();
-				}
-			}
-			base.Dispose( disposing );
-		}
+        /// <summary>
+        /// Clean up any resources being used.
+        /// </summary>
+        protected override void Dispose( bool disposing )
+        {
+            if( disposing )
+            {
+                if (components != null) 
+                {
+                    components.Dispose();
+                }
+            }
+            base.Dispose( disposing );
+        }
 
-		#region Designer generated code
-		/// <summary>
-		/// Required method for Designer support - do not modify
-		/// the contents of this method with the code editor.
-		/// </summary>
-		private void InitializeComponent()
-		{
+        #region Designer generated code
+        /// <summary>
+        /// Required method for Designer support - do not modify
+        /// the contents of this method with the code editor.
+        /// </summary>
+        private void InitializeComponent()
+        {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(VisualStudioSettingsPage));
             this.label1 = new System.Windows.Forms.Label();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
@@ -134,27 +134,27 @@ namespace NUnit.Gui.SettingsPages
             this.ResumeLayout(false);
             this.PerformLayout();
 
-		}
-		#endregion
+        }
+        #endregion
 
-		public override void LoadSettings()
-		{
-			visualStudioSupportCheckBox.Checked = settings.GetSetting( "Options.TestLoader.VisualStudioSupport", false );
+        public override void LoadSettings()
+        {
+            visualStudioSupportCheckBox.Checked = settings.GetSetting( "Options.TestLoader.VisualStudioSupport", false );
             useSolutionConfigsCheckBox.Enabled = visualStudioSupportCheckBox.Checked;
             useSolutionConfigsCheckBox.Checked = settings.GetSetting("Options.TestLoader.VisualStudio.UseSolutionConfigs", true);
-		}
+        }
 
-		public override void ApplySettings()
-		{
-			settings.SaveSetting( "Options.TestLoader.VisualStudioSupport", visualStudioSupportCheckBox.Checked );
+        public override void ApplySettings()
+        {
+            settings.SaveSetting( "Options.TestLoader.VisualStudioSupport", visualStudioSupportCheckBox.Checked );
             settings.SaveSetting("Options.TestLoader.VisualStudio.UseSolutionConfigs", useSolutionConfigsCheckBox.Checked);
-		}
+        }
 
         private void visualStudioSupportCheckBox_CheckedChanged(object sender, EventArgs e)
         {
             useSolutionConfigsCheckBox.Enabled = visualStudioSupportCheckBox.Checked;
         }
 
-	}
+    }
 }
 

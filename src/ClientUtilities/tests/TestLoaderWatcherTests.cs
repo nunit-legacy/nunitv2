@@ -11,139 +11,139 @@ using NUnit.Tests.Assemblies;
 
 namespace NUnit.Util.Tests
 {
-	[TestFixture]
-	public class TestLoaderWatcherTests
-	{
-		private readonly string assembly = MockAssembly.AssemblyPath;
-		private MockAssemblyWatcher2 mockWatcher;
-		private ITestLoader testLoader;
-		private const string ReloadOnChangeSetting = "Options.TestLoader.ReloadOnChange";
+    [TestFixture]
+    public class TestLoaderWatcherTests
+    {
+        private readonly string assembly = MockAssembly.AssemblyPath;
+        private MockAssemblyWatcher2 mockWatcher;
+        private ITestLoader testLoader;
+        private const string ReloadOnChangeSetting = "Options.TestLoader.ReloadOnChange";
 
-		[SetUp]
-		public void PreprareTestLoader()
-		{
-			// arrange
-			mockWatcher = new MockAssemblyWatcher2();
-			testLoader = new TestLoader(mockWatcher);
-			testLoader.LoadProject(assembly);
-		}
+        [SetUp]
+        public void PreprareTestLoader()
+        {
+            // arrange
+            mockWatcher = new MockAssemblyWatcher2();
+            testLoader = new TestLoader(mockWatcher);
+            testLoader.LoadProject(assembly);
+        }
 
-		[TearDown]
-		public void CleanUpSettings()
-		{
-			Services.UserSettings.RemoveSetting(ReloadOnChangeSetting);
-		}
+        [TearDown]
+        public void CleanUpSettings()
+        {
+            Services.UserSettings.RemoveSetting(ReloadOnChangeSetting);
+        }
 
-		private void AssertWatcherIsPrepared()
-		{
-			Assert.IsTrue(mockWatcher.IsWatching);
-			Assert.SamePath(assembly, mockWatcher.AssembliesToWatch[0]);
-		}
+        private void AssertWatcherIsPrepared()
+        {
+            Assert.IsTrue(mockWatcher.IsWatching);
+            Assert.SamePath(assembly, mockWatcher.AssembliesToWatch[0]);
+        }
 
-		[Test]
-		public void LoadShouldStartWatcher()
-		{
-			// act
-			testLoader.LoadTest();
+        [Test]
+        public void LoadShouldStartWatcher()
+        {
+            // act
+            testLoader.LoadTest();
 
-			// assert
-			AssertWatcherIsPrepared();
+            // assert
+            AssertWatcherIsPrepared();
             Assert.AreEqual(1, mockWatcher.DelegateCount);
         }
 
-		[Test]
-		public void ReloadShouldStartWatcher()
-		{
-			// arrange
-			testLoader.LoadTest();
-			mockWatcher.AssembliesToWatch = null;
-			mockWatcher.IsWatching = false;
+        [Test]
+        public void ReloadShouldStartWatcher()
+        {
+            // arrange
+            testLoader.LoadTest();
+            mockWatcher.AssembliesToWatch = null;
+            mockWatcher.IsWatching = false;
 
-			// act
-			testLoader.ReloadTest();
+            // act
+            testLoader.ReloadTest();
 
-			// assert
-			AssertWatcherIsPrepared();
+            // assert
+            AssertWatcherIsPrepared();
             Assert.AreEqual(1, mockWatcher.DelegateCount);
         }
 
-		[Test]
-		public void UnloadShouldStopWatcherAndFreeResources()
-		{
-			// act
-			testLoader.LoadTest();
-			testLoader.UnloadTest();
+        [Test]
+        public void UnloadShouldStopWatcherAndFreeResources()
+        {
+            // act
+            testLoader.LoadTest();
+            testLoader.UnloadTest();
 
-			// assert
-			Assert.IsFalse(mockWatcher.IsWatching);
-			Assert.IsTrue(mockWatcher.AreResourcesFreed);
+            // assert
+            Assert.IsFalse(mockWatcher.IsWatching);
+            Assert.IsTrue(mockWatcher.AreResourcesFreed);
             Assert.AreEqual(0, mockWatcher.DelegateCount);
         }
 
-		[Test]
-		public void LoadShouldStartWatcherDependingOnSettings()
-		{
-			// arrange
-			Services.UserSettings.SaveSetting(ReloadOnChangeSetting, false);
-			testLoader.LoadTest();
+        [Test]
+        public void LoadShouldStartWatcherDependingOnSettings()
+        {
+            // arrange
+            Services.UserSettings.SaveSetting(ReloadOnChangeSetting, false);
+            testLoader.LoadTest();
 
-			// assert
-			Assert.IsFalse(mockWatcher.IsWatching);
+            // assert
+            Assert.IsFalse(mockWatcher.IsWatching);
             Assert.AreEqual(0, mockWatcher.DelegateCount);
         }
 
-		[Test]
-		public void ReloadShouldStartWatcherDependingOnSettings()
-		{
-			// arrange
-			Services.UserSettings.SaveSetting(ReloadOnChangeSetting, false);
-			testLoader.LoadTest();
-			testLoader.ReloadTest();
+        [Test]
+        public void ReloadShouldStartWatcherDependingOnSettings()
+        {
+            // arrange
+            Services.UserSettings.SaveSetting(ReloadOnChangeSetting, false);
+            testLoader.LoadTest();
+            testLoader.ReloadTest();
 
-			// assert
-			Assert.IsFalse(mockWatcher.IsWatching);
+            // assert
+            Assert.IsFalse(mockWatcher.IsWatching);
             Assert.AreEqual(0, mockWatcher.DelegateCount);
         }
-	}
+    }
 
-	internal class MockAssemblyWatcher2 : IAssemblyWatcher
-	{
-		public bool IsWatching;
+    internal class MockAssemblyWatcher2 : IAssemblyWatcher
+    {
+        public bool IsWatching;
 #if CLR_2_0 || CLR_4_0 || CLR_4_0
         public System.Collections.Generic.IList<string> AssembliesToWatch;
 #else
-		public System.Collections.IList AssembliesToWatch;
+        public System.Collections.IList AssembliesToWatch;
 #endif
-		public bool AreResourcesFreed;
+        public bool AreResourcesFreed;
 
-		public void Stop()
-		{
-			IsWatching = false;
-		}
+        public void Stop()
+        {
+            IsWatching = false;
+        }
 
-		public void Start()
-		{
-			IsWatching = true;
-		}
+        public void Start()
+        {
+            IsWatching = true;
+        }
 
 #if CLR_2_0 || CLR_4_0
-		public void Setup(int delayInMs, System.Collections.Generic.IList<string> assemblies)
+        public void Setup(int delayInMs, System.Collections.Generic.IList<string> assemblies)
 #else
         public void Setup(int delayInMs, System.Collections.IList assemblies)
 #endif
-		{
-			AssembliesToWatch = assemblies;
-		}
+        {
+            AssembliesToWatch = assemblies;
+        }
 
-		public void Setup(int delayInMs, string assemblyFileName)
-		{
-			Setup(delayInMs, new string[] {assemblyFileName});
-		}
+        public void Setup(int delayInMs, string assemblyFileName)
+        {
+            Setup(delayInMs, new string[] {assemblyFileName});
+        }
 
-		public void FreeResources()
-		{
-			AreResourcesFreed = true;
-		}
+        public void FreeResources()
+        {
+            AreResourcesFreed = true;
+        }
 
         // This method is not used. It exists only to supress a 
         // warning about AssemblyChanged never being used
@@ -163,6 +163,6 @@ namespace NUnit.Util.Tests
             }
         }
 
-		public event AssemblyChangedHandler AssemblyChanged;
+        public event AssemblyChangedHandler AssemblyChanged;
     }
 }
