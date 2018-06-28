@@ -358,48 +358,48 @@ namespace NUnit.Framework
 
 #if CLR_2_0 || CLR_4_0
         /// <summary>
-		/// Apply a constraint to an actual value, succeeding if the constraint
-		/// is satisfied and throwing an assertion exception on failure.
-		/// </summary>
-		/// <param name="del">An ActualValueDelegate returning the value to be tested</param>
+        /// Apply a constraint to an actual value, succeeding if the constraint
+        /// is satisfied and throwing an assertion exception on failure.
+        /// </summary>
+        /// <param name="del">An ActualValueDelegate returning the value to be tested</param>
         /// <param name="expr">A Constraint expression to be applied</param>
         static public void That<T>(ActualValueDelegate<T> del, IResolveConstraint expr)
-		{
-			Assert.That(del, expr.Resolve(), null, null);
-		}
+        {
+            Assert.That(del, expr.Resolve(), null, null);
+        }
 
-		/// <summary>
-		/// Apply a constraint to an actual value, succeeding if the constraint
-		/// is satisfied and throwing an assertion exception on failure.
-		/// </summary>
-		/// <param name="del">An ActualValueDelegate returning the value to be tested</param>
+        /// <summary>
+        /// Apply a constraint to an actual value, succeeding if the constraint
+        /// is satisfied and throwing an assertion exception on failure.
+        /// </summary>
+        /// <param name="del">An ActualValueDelegate returning the value to be tested</param>
         /// <param name="expr">A Constraint expression to be applied</param>
         /// <param name="message">The message that will be displayed on failure</param>
-		static public void That<T>(ActualValueDelegate<T> del, IResolveConstraint expr, string message)
-		{
-			Assert.That(del, expr.Resolve(), message, null);
-		}
+        static public void That<T>(ActualValueDelegate<T> del, IResolveConstraint expr, string message)
+        {
+            Assert.That(del, expr.Resolve(), message, null);
+        }
 
-		/// <summary>
-		/// Apply a constraint to an actual value, succeeding if the constraint
-		/// is satisfied and throwing an assertion exception on failure.
-		/// </summary>
-		/// <param name="del">An ActualValueDelegate returning the value to be tested</param>
-		/// <param name="expr">A Constraint expression to be applied</param>
-		/// <param name="message">The message that will be displayed on failure</param>
-		/// <param name="args">Arguments to be used in formatting the message</param>
-		static public void That<T>(ActualValueDelegate<T> del, IResolveConstraint expr, string message, params object[] args)
-		{
-			Constraint constraint = expr.Resolve();
+        /// <summary>
+        /// Apply a constraint to an actual value, succeeding if the constraint
+        /// is satisfied and throwing an assertion exception on failure.
+        /// </summary>
+        /// <param name="del">An ActualValueDelegate returning the value to be tested</param>
+        /// <param name="expr">A Constraint expression to be applied</param>
+        /// <param name="message">The message that will be displayed on failure</param>
+        /// <param name="args">Arguments to be used in formatting the message</param>
+        static public void That<T>(ActualValueDelegate<T> del, IResolveConstraint expr, string message, params object[] args)
+        {
+            Constraint constraint = expr.Resolve();
 
-			IncrementAssertCount();
-			if (!constraint.Matches(del))
-			{
-				MessageWriter writer = new TextMessageWriter(message, args);
-				constraint.WriteMessageTo(writer);
-				throw new AssertionException(writer.ToString());
-			}
-		}
+            IncrementAssertCount();
+            if (!constraint.Matches(del))
+            {
+                MessageWriter writer = new TextMessageWriter(message, args);
+                constraint.WriteMessageTo(writer);
+                throw new AssertionException(writer.ToString());
+            }
+        }
 #else
         /// <summary>
         /// Apply a constraint to an actual value, succeeding if the constraint
@@ -577,23 +577,23 @@ namespace NUnit.Framework
             Exception caughtException = null;
 
 #if CLR_2_0 || CLR_4_0
-			if (AsyncInvocationRegion.IsAsyncOperation(code))
-			{
-				using (AsyncInvocationRegion region = AsyncInvocationRegion.Create(code))
-				{
-					code();
+            if (AsyncInvocationRegion.IsAsyncOperation(code))
+            {
+                using (AsyncInvocationRegion region = AsyncInvocationRegion.Create(code))
+                {
+                    code();
 
-					try
-					{
-						region.WaitForPendingOperationsToComplete(null);
-					}
-					catch (Exception e)
-					{
-						caughtException = e;
-					}
-				}
-			}
-			else
+                    try
+                    {
+                        region.WaitForPendingOperationsToComplete(null);
+                    }
+                    catch (Exception e)
+                    {
+                        caughtException = e;
+                    }
+                }
+            }
+            else
 #endif
             try
             {

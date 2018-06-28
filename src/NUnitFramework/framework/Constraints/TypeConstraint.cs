@@ -35,9 +35,9 @@ namespace NUnit.Framework.Constraints
         /// the name of the type.
         /// </summary>
         /// <param name="writer">The writer on which the actual value is displayed</param>
-		public override void WriteActualValueTo(MessageWriter writer)
-		{
-			writer.WriteActualValue( actual == null ? null : actual.GetType() ); 
-		}
-	}
+        public override void WriteActualValueTo(MessageWriter writer)
+        {
+            writer.WriteActualValue( actual == null ? null : actual.GetType() ); 
+        }
+    }
 }

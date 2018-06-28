@@ -15,10 +15,10 @@ namespace NUnit.Framework.Constraints
 #if CLR_2_0 || CLR_4_0
     public delegate T ActualValueDelegate<T>();
 #else
-	public delegate object ActualValueDelegate();
+    public delegate object ActualValueDelegate();
 #endif
-	
-	/// <summary>
+    
+    /// <summary>
     /// The Constraint class is the base of all built-in constraints
     /// within NUnit. It provides the operator overloads used to combine 
     /// constraints.
@@ -40,14 +40,14 @@ namespace NUnit.Framework.Constraints
         }
         #endregion
 
-		#region Static and Instance Fields
+        #region Static and Instance Fields
         /// <summary>
         /// Static UnsetObject used to detect derived constraints
         /// failing to set the actual value.
         /// </summary>
         protected static object UNSET = new UnsetObject();
 
-		/// <summary>
+        /// <summary>
         /// The actual value being tested against a constraint
         /// </summary>
         protected object actual = UNSET;
@@ -134,9 +134,9 @@ namespace NUnit.Framework.Constraints
 
             set { displayName = value; }
         }
-		#endregion
+        #endregion
 
-		#region Abstract and Virtual Methods
+        #region Abstract and Virtual Methods
         /// <summary>
         /// Write the failure message to the MessageWriter provided
         /// as an argument. The default implementation simply passes
@@ -160,7 +160,7 @@ namespace NUnit.Framework.Constraints
         public abstract bool Matches(object actual);
 
 #if CLR_2_0 || CLR_4_0
-		/// <summary>
+        /// <summary>
         /// Test whether the constraint is satisfied by an
         /// ActualValueDelegate that returns the value to be tested.
         /// The default implementation simply evaluates the delegate
@@ -170,13 +170,13 @@ namespace NUnit.Framework.Constraints
         /// <param name="del">An <see cref="ActualValueDelegate{T}"/></param>
         /// <returns>True for success, false for failure</returns>
         public virtual bool Matches<T>(ActualValueDelegate<T> del)
-		{
-			if(AsyncInvocationRegion.IsAsyncOperation(del))
-				using (var region = AsyncInvocationRegion.Create(del))
-					return Matches(region.WaitForPendingOperationsToComplete(del()));
+        {
+            if(AsyncInvocationRegion.IsAsyncOperation(del))
+                using (var region = AsyncInvocationRegion.Create(del))
+                    return Matches(region.WaitForPendingOperationsToComplete(del()));
 
-			return Matches(del());
-		}
+            return Matches(del());
+        }
 #else
         /// <summary>
         /// Test whether the constraint is satisfied by an
@@ -203,7 +203,7 @@ namespace NUnit.Framework.Constraints
 #if CLR_2_0 || CLR_4_0
         public virtual bool Matches<T>(ref T actual)
 #else
-		public virtual bool Matches(ref bool actual)
+        public virtual bool Matches(ref bool actual)
 #endif
         {
             return Matches(actual);
@@ -216,17 +216,17 @@ namespace NUnit.Framework.Constraints
         public abstract void WriteDescriptionTo(MessageWriter writer);
 
         /// <summary>
-		/// Write the actual value for a failing constraint test to a
-		/// MessageWriter. The default implementation simply writes
-		/// the raw value of actual, leaving it to the writer to
-		/// perform any formatting.
-		/// </summary>
-		/// <param name="writer">The writer on which the actual value is displayed</param>
-		public virtual void WriteActualValueTo(MessageWriter writer)
-		{
-			writer.WriteActualValue( actual );
-		}
-		#endregion
+        /// Write the actual value for a failing constraint test to a
+        /// MessageWriter. The default implementation simply writes
+        /// the raw value of actual, leaving it to the writer to
+        /// perform any formatting.
+        /// </summary>
+        /// <param name="writer">The writer on which the actual value is displayed</param>
+        public virtual void WriteActualValueTo(MessageWriter writer)
+        {
+            writer.WriteActualValue( actual );
+        }
+        #endregion
 
         #region ToString Override
         /// <summary>

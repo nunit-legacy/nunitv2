@@ -11,32 +11,32 @@ using System.IO;
 namespace NUnit.Framework.Constraints
 {
     /// <summary>
-	/// PathConstraint serves as the abstract base of constraints
-	/// that operate on paths and provides several helper methods.
-	/// </summary>
-	public abstract class PathConstraint : Constraint
+    /// PathConstraint serves as the abstract base of constraints
+    /// that operate on paths and provides several helper methods.
+    /// </summary>
+    public abstract class PathConstraint : Constraint
     {
         private const char WindowsDirectorySeparatorChar = '\\';
         private const char NonWindowsDirectorySeparatorChar = '/';
         private static readonly char[] DirectorySeparatorChars = { WindowsDirectorySeparatorChar, NonWindowsDirectorySeparatorChar };
 
-		/// <summary>
-		/// The expected path used in the constraint
-		/// </summary>
-		protected string expectedPath;
-		
+        /// <summary>
+        /// The expected path used in the constraint
+        /// </summary>
+        protected string expectedPath;
+        
         /// <summary>
         /// Flag indicating whether a caseInsensitive comparison should be made
         /// </summary>
         protected bool caseInsensitive = Path.DirectorySeparatorChar == WindowsDirectorySeparatorChar;
 
         /// <summary>
-		/// Construct a PathConstraint for a give expected path
-		/// </summary>
-		/// <param name="expectedPath">The expected path</param>
-		protected PathConstraint( string expectedPath ) : base(expectedPath)
-		{
-			this.expectedPath = expectedPath;
+        /// Construct a PathConstraint for a give expected path
+        /// </summary>
+        /// <param name="expectedPath">The expected path</param>
+        protected PathConstraint( string expectedPath ) : base(expectedPath)
+        {
+            this.expectedPath = expectedPath;
         }
 
         /// <summary>
@@ -146,21 +146,21 @@ namespace NUnit.Framework.Constraints
         /// <param name="ignoreCase">Indicates whether case should be ignored</param>
         /// <returns></returns>
         protected static bool IsSubPath(string path1, string path2, bool ignoreCase)
-		{
+        {
             int length1 = path1.Length;
-			int length2 = path2.Length;
+            int length2 = path2.Length;
 
-			// if path1 is longer or equal, then path2 can't be under it
-			if ( length1 >= length2 )
-				return false;
+            // if path1 is longer or equal, then path2 can't be under it
+            if ( length1 >= length2 )
+                return false;
 
-			// path 2 is longer than path 1: see if initial parts match
-			if ( string.Compare( path1, path2.Substring( 0, length1 ), ignoreCase ) != 0 )
-				return false;
-			
-			// must match through or up to a directory separator boundary
-			return	path2[length1-1] == Path.DirectorySeparatorChar ||
-				length2 > length1 && path2[length1] == Path.DirectorySeparatorChar;
+            // path 2 is longer than path 1: see if initial parts match
+            if ( string.Compare( path1, path2.Substring( 0, length1 ), ignoreCase ) != 0 )
+                return false;
+            
+            // must match through or up to a directory separator boundary
+            return	path2[length1-1] == Path.DirectorySeparatorChar ||
+                length2 > length1 && path2[length1] == Path.DirectorySeparatorChar;
         }
 
         #endregion

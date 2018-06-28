@@ -183,47 +183,47 @@ namespace NUnit.Framework
 
 #if CLR_2_0 || CLR_4_0
         /// <summary>
-		/// Apply a constraint to an actual value, succeeding if the constraint
-		/// is satisfied and throwing an InconclusiveException on failure.
-		/// </summary>
-		/// <param name="expr">A Constraint expression to be applied</param>
-		/// <param name="del">An ActualValueDelegate returning the value to be tested</param>
-		static public void That<T>(ActualValueDelegate<T> del, IResolveConstraint expr)
-		{
-			Assume.That(del, expr.Resolve(), null, null);
-		}
+        /// Apply a constraint to an actual value, succeeding if the constraint
+        /// is satisfied and throwing an InconclusiveException on failure.
+        /// </summary>
+        /// <param name="expr">A Constraint expression to be applied</param>
+        /// <param name="del">An ActualValueDelegate returning the value to be tested</param>
+        static public void That<T>(ActualValueDelegate<T> del, IResolveConstraint expr)
+        {
+            Assume.That(del, expr.Resolve(), null, null);
+        }
 
-		/// <summary>
-		/// Apply a constraint to an actual value, succeeding if the constraint
-		/// is satisfied and throwing an InconclusiveException on failure.
-		/// </summary>
-		/// <param name="expr">A Constraint expression to be applied</param>
-		/// <param name="del">An ActualValueDelegate returning the value to be tested</param>
-		/// <param name="message">The message that will be displayed on failure</param>
-		static public void That<T>(ActualValueDelegate<T> del, IResolveConstraint expr, string message)
-		{
-			Assume.That(del, expr.Resolve(), message, null);
-		}
+        /// <summary>
+        /// Apply a constraint to an actual value, succeeding if the constraint
+        /// is satisfied and throwing an InconclusiveException on failure.
+        /// </summary>
+        /// <param name="expr">A Constraint expression to be applied</param>
+        /// <param name="del">An ActualValueDelegate returning the value to be tested</param>
+        /// <param name="message">The message that will be displayed on failure</param>
+        static public void That<T>(ActualValueDelegate<T> del, IResolveConstraint expr, string message)
+        {
+            Assume.That(del, expr.Resolve(), message, null);
+        }
 
-		/// <summary>
-		/// Apply a constraint to an actual value, succeeding if the constraint
-		/// is satisfied and throwing an InconclusiveException on failure.
-		/// </summary>
-		/// <param name="del">An ActualValueDelegate returning the value to be tested</param>
-		/// <param name="expr">A Constraint expression to be applied</param>
-		/// <param name="message">The message that will be displayed on failure</param>
-		/// <param name="args">Arguments to be used in formatting the message</param>
-		static public void That<T>(ActualValueDelegate<T> del, IResolveConstraint expr, string message, params object[] args)
-		{
-			Constraint constraint = expr.Resolve();
+        /// <summary>
+        /// Apply a constraint to an actual value, succeeding if the constraint
+        /// is satisfied and throwing an InconclusiveException on failure.
+        /// </summary>
+        /// <param name="del">An ActualValueDelegate returning the value to be tested</param>
+        /// <param name="expr">A Constraint expression to be applied</param>
+        /// <param name="message">The message that will be displayed on failure</param>
+        /// <param name="args">Arguments to be used in formatting the message</param>
+        static public void That<T>(ActualValueDelegate<T> del, IResolveConstraint expr, string message, params object[] args)
+        {
+            Constraint constraint = expr.Resolve();
 
-			if (!constraint.Matches(del))
-			{
-				MessageWriter writer = new TextMessageWriter(message, args);
-				constraint.WriteMessageTo(writer);
-				throw new InconclusiveException(writer.ToString());
-			}
-		}
+            if (!constraint.Matches(del))
+            {
+                MessageWriter writer = new TextMessageWriter(message, args);
+                constraint.WriteMessageTo(writer);
+                throw new InconclusiveException(writer.ToString());
+            }
+        }
 #else
         /// <summary>
         /// Apply a constraint to an actual value, succeeding if the constraint

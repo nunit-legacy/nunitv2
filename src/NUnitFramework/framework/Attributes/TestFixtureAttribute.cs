@@ -7,18 +7,18 @@
 
 namespace NUnit.Framework
 {
-	using System;
+    using System;
     using System.Collections;
 
-	/// <example>
-	/// [TestFixture]
-	/// public class ExampleClass 
-	/// {}
-	/// </example>
-	[AttributeUsage(AttributeTargets.Class, AllowMultiple=true, Inherited=true)]
-	public class TestFixtureAttribute : Attribute
-	{
-		private string description;
+    /// <example>
+    /// [TestFixture]
+    /// public class ExampleClass 
+    /// {}
+    /// </example>
+    [AttributeUsage(AttributeTargets.Class, AllowMultiple=true, Inherited=true)]
+    public class TestFixtureAttribute : Attribute
+    {
+        private string description;
 
         private object[] arguments;
         private bool isIgnored;
@@ -55,10 +55,10 @@ namespace NUnit.Framework
         /// Descriptive text for this fixture
         /// </summary>
         public string Description
-		{
-			get { return description; }
-			set { description = value; }
-		}
+        {
+            get { return description; }
+            set { description = value; }
+        }
 
         /// <summary>
         /// Gets and sets the category for this fixture.
@@ -122,5 +122,5 @@ namespace NUnit.Framework
             set { typeArgs = value; }
         }
 #endif
-	}
+    }
 }

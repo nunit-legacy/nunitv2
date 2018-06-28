@@ -125,7 +125,7 @@ namespace NUnit.Framework
                     data[i] = Convert.ChangeType(arg, targetType, System.Globalization.CultureInfo.InvariantCulture);
             }
 
-			return data;
+            return data;
         }
     }
 }
