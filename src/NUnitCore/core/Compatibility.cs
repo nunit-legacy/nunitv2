@@ -26,7 +26,8 @@ namespace NUnit.Core
         public static void Initialize(string workDirectory)
         {
             _workFilePath = Path.Combine(workDirectory, WORK_FILE);
-            File.Create(_workFilePath);
+            var fs = File.Create(_workFilePath);
+            fs.Close();
         }
 
         /// <summary>
