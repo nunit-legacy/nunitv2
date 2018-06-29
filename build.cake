@@ -43,12 +43,12 @@ var PACKAGE_DIR = PROJECT_DIR + "package/";
 
 string PackageBaseName
 {
-	get { return "NUnit-" + packageVersion; }
+    get { return "NUnit-" + packageVersion; }
 }
 
 string PackageWorkDir
 {
-	get { return PACKAGE_DIR + PackageBaseName + "/"; }
+    get { return PACKAGE_DIR + PackageBaseName + "/"; }
 }
 
 //////////////////////////////////////////////////////////////////////
@@ -104,11 +104,11 @@ Task("Clean")
     });
 
 Task("CleanPackageWorkDir")
-	.Description("Deletes all files in the package work directory")
-	.Does(() =>
-	{
-		CleanDirectory(PackageWorkDir);
-	});
+    .Description("Deletes all files in the package work directory")
+    .Does(() =>
+    {
+        CleanDirectory(PackageWorkDir);
+    });
 
 //////////////////////////////////////////////////////////////////////
 // NUGET RESTORE
@@ -126,66 +126,85 @@ Task("NuGetRestore")
 //////////////////////////////////////////////////////////////////////
 
 Task("Build")
-	.Description("Builds the Solution")
-	.IsDependentOn("NuGetRestore")
-	.Does(() =>
-	{
-		MSBuild(SOLUTION_FILE, new MSBuildSettings()
-			.SetConfiguration(configuration)
-			.SetVerbosity(Verbosity.Minimal));
+    .Description("Builds the Solution")
+    .IsDependentOn("NuGetRestore")
+    .Does(() =>
+    {
+        MSBuild(SOLUTION_FILE, new MSBuildSettings()
+            .SetConfiguration(configuration)
+            .SetVerbosity(Verbosity.Minimal));
 
-		// Extra copies of some files are needed for backward compatibility
-		// and to avoid changing the structure of the MSI directories.
-		CopyFileToDirectory(BIN_DIR + "log4net.dll", BIN_DIR + "lib/");
-		CopyFileToDirectory(BIN_DIR + "tests/NSubstitute.dll", BIN_DIR + "lib/");
-		CopyFileToDirectory(BIN_DIR + "pnunit.framework.dll", BIN_DIR + "framework/");
+        // Extra copies of some files are needed for backward compatibility
+        // and to avoid changing the structure of the MSI directories.
+        CopyFileToDirectory(BIN_DIR + "log4net.dll", BIN_DIR + "lib/");
+        CopyFileToDirectory(BIN_DIR + "tests/NSubstitute.dll", BIN_DIR + "lib/");
+        CopyFileToDirectory(BIN_DIR + "pnunit.framework.dll", BIN_DIR + "framework/");
 
-		// Copy in NUnit project files
-		CopyFile(PROJECT_DIR + "NUnitTests.v2.nunit", BIN_DIR + "NUnitTests.nunit");
-		CopyFile(PROJECT_DIR + "NUnitTests.config", BIN_DIR + "NUnitTests.config");
-	});
+        // Copy in NUnit project files
+        CopyFile(PROJECT_DIR + "NUnitTests.v2.nunit", BIN_DIR + "NUnitTests.nunit");
+        CopyFile(PROJECT_DIR + "NUnitTests.config", BIN_DIR + "NUnitTests.config");
+    });
 
 //////////////////////////////////////////////////////////////////////
 // TEST
 //////////////////////////////////////////////////////////////////////
 
 Task("BasicTests")
-	.Description("Runs the tests")
-	.IsDependentOn("Build")
-	.Does(() =>
-	{
-		int rc = StartProcess(
-			NUNIT_CONSOLE, 
-			new ProcessSettings()
-			{
-				WorkingDirectory = BIN_DIR,
-				Arguments = "NUnitTests.nunit"
-			});
+    .Description("Runs the tests")
+    .IsDependentOn("Build")
+    .Does(() =>
+    {
+        int rc = StartProcess(
+            NUNIT_CONSOLE, 
+            new ProcessSettings()
+            {
+                WorkingDirectory = BIN_DIR,
+                Arguments = "NUnitTests.nunit"
+            });
 
-		if (rc > 0)
-			throw new Exception(string.Format("{0} tests failed", rc));
-		else if (rc < 0)
-			throw new Exception(string.Format("Console returned rc = {0}", rc));
-	});
+        if (rc > 0)
+            throw new Exception(string.Format("{0} tests failed", rc));
+        else if (rc < 0)
+            throw new Exception(string.Format("Console returned rc = {0}", rc));
+    });
 
 Task("Net45Tests")
-	.Description("Runs the .NET 4.5 tests")
-	.IsDependentOn("Build")
-	.Does(() =>
-	{
-		int rc = StartProcess(
-			NUNIT_CONSOLE,
-			new ProcessSettings()
-			{
-				WorkingDirectory = BIN_DIR + "tests",
-				Arguments = "nunit.core.tests.net45.dll nunit.framework.tests.net45.dll -noxml -framework:net-4.5"
-			});
+    .Description("Runs the .NET 4.5 tests")
+    .IsDependentOn("Build")
+    .Does(() =>
+    {
+        int rc = StartProcess(
+            NUNIT_CONSOLE,
+            new ProcessSettings()
+            {
+                WorkingDirectory = BIN_DIR + "tests",
+                Arguments = "nunit.core.tests.net45.dll nunit.framework.tests.net45.dll -noxml -framework:net-4.5"
+            });
 
-		if (rc > 0)
-			throw new Exception(string.Format("{0} tests failed", rc));
-		else if (rc < 0)
-			throw new Exception(string.Format("Console returned rc = {0}", rc));
-	});
+        if (rc > 0)
+            throw new Exception(string.Format("{0} tests failed", rc));
+        else if (rc < 0)
+            throw new Exception(string.Format("Console returned rc = {0}", rc));
+    });
+
+Task("CompatibilityTests")
+    .Description("Runs the compatibility tests")
+    .IsDependentOn("Build")
+    .Does(() =>
+    {
+        int rc = StartProcess(
+            NUNIT_CONSOLE,
+            new ProcessSettings()
+            {
+                WorkingDirectory = BIN_DIR + "tests",
+                Arguments = "compatibility-tests.dll -noxml -compatibility"
+            });
+
+        if (rc > 0)
+            throw new Exception(string.Format("{0} tests failed", rc));
+        else if (rc < 0)
+            throw new Exception(string.Format("Console returned rc = {0}", rc));
+    });
 
 //////////////////////////////////////////////////////////////////////
 // Package
@@ -201,103 +220,103 @@ Task("Net45Tests")
 // directories where they need to be in order for packaging to work.
 
 Task("CreatePackageDir")
-	.Description("Creates the package directory")
-	.Does(() =>
-	{
-		CreateDirectory(PACKAGE_DIR);
-	});
+    .Description("Creates the package directory")
+    .Does(() =>
+    {
+        CreateDirectory(PACKAGE_DIR);
+    });
 
 Task("PackageSource")
-	.Description("Create Source Package")
-	.IsDependentOn("CreatePackageDir")
-	.Does(() =>
-	{
-		string zipOutput = PACKAGE_DIR + PackageBaseName + "-src.zip";
-		int rc = StartProcess("git", "archive --format=zip --output=" + zipOutput + " HEAD");
-	});
+    .Description("Create Source Package")
+    .IsDependentOn("CreatePackageDir")
+    .Does(() =>
+    {
+        string zipOutput = PACKAGE_DIR + PackageBaseName + "-src.zip";
+        int rc = StartProcess("git", "archive --format=zip --output=" + zipOutput + " HEAD");
+    });
 
 Task("BuildInstallImage")
-	.Description("Build the install image for zip or msi")
-	.IsDependentOn("CreatePackageDir")
-	.IsDependentOn("CleanPackageWorkDir")
-	.Does(() =>
-	{
-		CopyFiles(
-			new FilePath[] {
-				"license.txt",
-				"src/GuiRunner/nunit-gui/Logo.ico"
-			},
-			PackageWorkDir);
-		
-		var binDir = PackageWorkDir + "bin/";
+    .Description("Build the install image for zip or msi")
+    .IsDependentOn("CreatePackageDir")
+    .IsDependentOn("CleanPackageWorkDir")
+    .Does(() =>
+    {
+        CopyFiles(
+            new FilePath[] {
+                "license.txt",
+                "src/GuiRunner/nunit-gui/Logo.ico"
+            },
+            PackageWorkDir);
+        
+        var binDir = PackageWorkDir + "bin/";
 
-		// TODO: Create a method to handle wildcard directories
-		CopyFilesToDirectory(BIN_DIR + "*", binDir);
-		CopyFilesToDirectory(BIN_DIR + "lib/*", binDir + "lib/");
-		CopyFilesToDirectory(BIN_DIR + "lib/Images/*", binDir + "lib/Images/");
-		CopyFilesToDirectory(BIN_DIR + "lib/Images/Tree/Circles/*", binDir + "lib/Images/Tree/Circles/");
-		CopyFilesToDirectory(BIN_DIR + "lib/Images/Tree/Classic/*", binDir + "lib/Images/Tree/Classic/");
-		CopyFilesToDirectory(BIN_DIR + "lib/Images/Tree/Default/*", binDir + "lib/Images/Tree/Default/");
-		CopyFilesToDirectory(BIN_DIR + "lib/Images/Tree/Visual Studio/*", binDir + "lib/Images/Tree/Visual Studio/");
-		CopyFilesToDirectory(BIN_DIR + "tests/*", binDir + "tests/");
-		CopyFilesToDirectory(BIN_DIR + "framework/*", binDir + "framework/");
-	});
+        // TODO: Create a method to handle wildcard directories
+        CopyFilesToDirectory(BIN_DIR + "*", binDir);
+        CopyFilesToDirectory(BIN_DIR + "lib/*", binDir + "lib/");
+        CopyFilesToDirectory(BIN_DIR + "lib/Images/*", binDir + "lib/Images/");
+        CopyFilesToDirectory(BIN_DIR + "lib/Images/Tree/Circles/*", binDir + "lib/Images/Tree/Circles/");
+        CopyFilesToDirectory(BIN_DIR + "lib/Images/Tree/Classic/*", binDir + "lib/Images/Tree/Classic/");
+        CopyFilesToDirectory(BIN_DIR + "lib/Images/Tree/Default/*", binDir + "lib/Images/Tree/Default/");
+        CopyFilesToDirectory(BIN_DIR + "lib/Images/Tree/Visual Studio/*", binDir + "lib/Images/Tree/Visual Studio/");
+        CopyFilesToDirectory(BIN_DIR + "tests/*", binDir + "tests/");
+        CopyFilesToDirectory(BIN_DIR + "framework/*", binDir + "framework/");
+    });
 
 Task("PackageZip")
-	.Description("Create Binary Zip Package")
-	.IsDependentOn("BuildInstallImage")
-	.Does(() =>
-	{
-		var zipOutput = PACKAGE_DIR + PackageBaseName + ".zip";
-		Zip(PackageWorkDir, zipOutput);
-	});
+    .Description("Create Binary Zip Package")
+    .IsDependentOn("BuildInstallImage")
+    .Does(() =>
+    {
+        var zipOutput = PACKAGE_DIR + PackageBaseName + ".zip";
+        Zip(PackageWorkDir, zipOutput);
+    });
 
 Task("PackageMsi")
-	.Description("Create the MSI Installer")
-	.IsDependentOn("BuildInstallImage")
-	.Does(() =>
-	{
-		WiXCandle(
-			INSTALL_DIR + "*.wxs",
+    .Description("Create the MSI Installer")
+    .IsDependentOn("BuildInstallImage")
+    .Does(() =>
+    {
+        WiXCandle(
+            INSTALL_DIR + "*.wxs",
 
-			new CandleSettings()
-			{
-				Defines = new Dictionary<string, string>()
-				{
-					{"ProductVersion", version},
-					{"NominalVersion", packageVersion},
-					{"TargetRuntime", "net-3.5"},
-					{"InstallImage", PackageWorkDir}
-				},
+            new CandleSettings()
+            {
+                Defines = new Dictionary<string, string>()
+                {
+                    {"ProductVersion", version},
+                    {"NominalVersion", packageVersion},
+                    {"TargetRuntime", "net-3.5"},
+                    {"InstallImage", PackageWorkDir}
+                },
 
-				OutputDirectory = PackageWorkDir
-			});
+                OutputDirectory = PackageWorkDir
+            });
 
-		WiXLight(
-			PackageWorkDir + "*.wixobj", 
+        WiXLight(
+            PackageWorkDir + "*.wixobj", 
 
-			new LightSettings()
-			{
-				Extensions = new [] { "WixUiExtension" },
+            new LightSettings()
+            {
+                Extensions = new [] { "WixUiExtension" },
 
-				OutputFile = PACKAGE_DIR + PackageBaseName + ".msi"
-			});
-	});
+                OutputFile = PACKAGE_DIR + PackageBaseName + ".msi"
+            });
+    });
 
 Task("PackageNuGet")
-	.Description("Create the nuget packages")
-	.IsDependentOn("BuildInstallImage")
-	.Does(() =>
-	{
-		foreach (var nuspecFile in GetFiles(NUGET_DIR + "*.nuspec"))
-			NuGetPack(nuspecFile, new NuGetPackSettings()
-			{
-				Version = packageVersion,
-				BasePath = PackageWorkDir,
-				OutputDirectory = PACKAGE_DIR,
-				NoPackageAnalysis = true
-			});
-	});
+    .Description("Create the nuget packages")
+    .IsDependentOn("BuildInstallImage")
+    .Does(() =>
+    {
+        foreach (var nuspecFile in GetFiles(NUGET_DIR + "*.nuspec"))
+            NuGetPack(nuspecFile, new NuGetPackSettings()
+            {
+                Version = packageVersion,
+                BasePath = PackageWorkDir,
+                OutputDirectory = PACKAGE_DIR,
+                NoPackageAnalysis = true
+            });
+    });
 
 //////////////////////////////////////////////////////////////////////
 // HELPER METHODS
@@ -305,10 +324,10 @@ Task("PackageNuGet")
 
 void CopyFilesToDirectory(string pattern, string toDir)
 {
-	if (!DirectoryExists(toDir))
-		CreateDirectory(toDir);
+    if (!DirectoryExists(toDir))
+        CreateDirectory(toDir);
 
-	CopyFiles(pattern, toDir);
+    CopyFiles(pattern, toDir);
 }
 
 //////////////////////////////////////////////////////////////////////
@@ -316,26 +335,27 @@ void CopyFilesToDirectory(string pattern, string toDir)
 //////////////////////////////////////////////////////////////////////
 
 Task("Rebuild")
-	.IsDependentOn("Clean")
-	.IsDependentOn("Build");
+    .IsDependentOn("Clean")
+    .IsDependentOn("Build");
 
 Task("Test")
-	.IsDependentOn("BasicTests")
-	.IsDependentOn("Net45Tests");
+    .IsDependentOn("BasicTests")
+    .IsDependentOn("Net45Tests")
+    .IsDependentOn("CompatibilityTests");
 
 Task("Package")
-	.IsDependentOn("PackageSource")
-	.IsDependentOn("PackageZip")
-	.IsDependentOn("PackageMsi")
-	.IsDependentOn("PackageNuGet");
+    .IsDependentOn("PackageSource")
+    .IsDependentOn("PackageZip")
+    .IsDependentOn("PackageMsi")
+    .IsDependentOn("PackageNuGet");
 
 Task("AppVeyor")
-	.IsDependentOn("Build")
-	.IsDependentOn("Test")
-	.IsDependentOn("Package");
+    .IsDependentOn("Build")
+    .IsDependentOn("Test")
+    .IsDependentOn("Package");
 
 Task("Default")
-	.IsDependentOn("Build");
+    .IsDependentOn("Build");
 
 //////////////////////////////////////////////////////////////////////
 // EXECUTION
