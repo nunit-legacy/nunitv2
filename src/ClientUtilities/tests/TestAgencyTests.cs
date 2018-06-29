@@ -7,6 +7,8 @@
 
 using System;
 using System.Diagnostics;
+using System.IO;
+using System.Reflection;
 using NUnit.Framework;
 using NUnit.Core;
 using System.Runtime.Remoting.Channels;
@@ -54,6 +56,15 @@ namespace NUnit.Util.Tests
                 if ( agent != null )
                     agency.ReleaseAgent(agent);
             }
+        }
+
+        [Test]
+        public void Agent_X86_Is32Bit()
+        {
+            var agentPath = Path.Combine(NUnitConfiguration.NUnitBinDirectory, "nunit-agent-x86.exe");
+            var agentAssembly = AssemblyName.GetAssemblyName(agentPath);
+
+            Assert.That(agentAssembly.ProcessorArchitecture, Is.EqualTo(ProcessorArchitecture.X86));
         }
 
         // TODO: Decide if we really want to do this
