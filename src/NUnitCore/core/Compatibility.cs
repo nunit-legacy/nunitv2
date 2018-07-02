@@ -179,11 +179,11 @@ namespace NUnit.Core
                         string expectedExceptionName = (string)Reflect.GetPropertyValue(attribute, "ExpectedExceptionName");
                         if (!string.IsNullOrEmpty(expectedExceptionName))
                             Error(location, "TestCaseAttribute does not support ExpectedException in NUnit 3. Use Assert.Throws or Throws.InstanceOf.");
-                        bool legacyResultUsed = (bool)Reflect.GetPropertyValue(attribute, "LegacyResultUsed", BindingFlags.Instance | BindingFlags.NonPublic);
-                        if (legacyResultUsed)
+                        object legacyResultUsed = Reflect.GetPropertyValue(attribute, "LegacyResultUsed", BindingFlags.Instance | BindingFlags.NonPublic);
+                        if (legacyResultUsed != null && (bool)legacyResultUsed)
                             Error(location, "TestCaseAttribute no longer supports Result property in NUnit 3. Use ExpectedResult.");
-                        bool ignoreUsed = (bool)Reflect.GetPropertyValue(attribute, "Ignore");
-                        if (ignoreUsed)
+                        object ignoreUsed = Reflect.GetPropertyValue(attribute, "Ignore");
+                        if (ignoreUsed != null && (bool)ignoreUsed)
                             Error(location, "TestCaseAttribute Ignore property changes from bool to string in NUnit 3. Fix after conversion.");
                         break;
                     case "NUnit.Framework.TestCaseSourceAttribute":
@@ -202,8 +202,8 @@ namespace NUnit.Core
                         }
                         break;
                     case "NUnit.Framework.TestFixtureAttribute":
-                        bool ignore = (bool)Reflect.GetPropertyValue(attribute, "Ignore");
-                        if (ignore)
+                        object ignore = Reflect.GetPropertyValue(attribute, "Ignore");
+                        if (ignore != null && (bool)ignore)
                             Error(location, "TestFixtureAttribute Ignore property changes from bool to string in NUnit 3. Fix after conversion.");
                         break;
                     case "NUnit.Framework.TestFixtureSetUpAttribute":
