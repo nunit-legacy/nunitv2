@@ -179,9 +179,18 @@ namespace NUnit.Core
                         string expectedExceptionName = (string)Reflect.GetPropertyValue(attribute, "ExpectedExceptionName");
                         if (!string.IsNullOrEmpty(expectedExceptionName))
                             Error(location, "TestCaseAttribute does not support ExpectedException in NUnit 3. Use Assert.Throws or Throws.InstanceOf.");
-                        object legacyResultUsed = Reflect.GetPropertyValue(attribute, "LegacyResultUsed", BindingFlags.Instance | BindingFlags.NonPublic);
-                        if (legacyResultUsed != null && (bool)legacyResultUsed)
+
+                        var legacyResultProp = Reflect.GetNamedProperty(attributeType, "LegacyResultUsed", BindingFlags.Instance | BindingFlags.NonPublic);
+                        var hasExpectedResultProp = Reflect.GetNamedProperty(attributeType, "HasExpectedResult", BindingFlags.Instance | BindingFlags.Public);
+                        bool resultPropertyError = legacyResultProp != null // NUnit 2.6.5+
+                           ? (bool)legacyResultProp.GetValue(attribute, null)
+                           : hasExpectedResultProp != null // NUnit 2.6.0+
+                               ? (bool)hasExpectedResultProp.GetValue(attribute, null)
+                               : Reflect.GetPropertyValue(attribute, "Result") != null;
+
+                        if (resultPropertyError)
                             Error(location, "TestCaseAttribute no longer supports Result property in NUnit 3. Use ExpectedResult.");
+
                         object ignoreUsed = Reflect.GetPropertyValue(attribute, "Ignore");
                         if (ignoreUsed != null && (bool)ignoreUsed)
                             Error(location, "TestCaseAttribute Ignore property changes from bool to string in NUnit 3. Fix after conversion.");
