@@ -57,13 +57,13 @@ namespace NUnit.Core.Builders
                 return false;
             }
 
-            if ( Reflect.HasMethodWithAttribute(type, NUnitFramework.FixtureSetUpAttribute, true) )
+            if ( Reflect.HasMethodWithAttribute(type, NUnitFramework.TestFixtureSetUpAttribute, true) )
             {
                 reason = "TestFixtureSetUp method not allowed on a SetUpFixture";
                 return false;
             }
 
-            if ( Reflect.HasMethodWithAttribute(type, NUnitFramework.FixtureTearDownAttribute, true) )
+            if ( Reflect.HasMethodWithAttribute(type, NUnitFramework.TestFixtureTearDownAttribute, true) )
             {
                 reason = "TestFixtureTearDown method not allowed on a SetUpFixture";
                 return false;

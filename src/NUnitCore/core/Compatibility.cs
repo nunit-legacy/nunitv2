@@ -147,44 +147,47 @@ namespace NUnit.Core
 
                 switch (attributeFullName)
                 {
-                    case "NUnit.Framework.ExpectedExceptionAttribute":
+                    case NUnitFramework.ExpectedExceptionAttribute:
                         Error(location, "ExpectedExceptionAttribute is not supported in NUnit 3. Use Assert.Throws or Throws.InstanceOf.");
                         break;
-                    case "NUnit.Framework.IgnoreAttribute":
-                        var reason = (string)Reflect.GetPropertyValue(attribute, "Reason");
+                    case NUnitFramework.IgnoreAttribute:
+                        var reason = (string)Reflect.GetPropertyValue(attribute, PropertyNames.Reason);
                         if (string.IsNullOrEmpty(reason))
                             Error(location, "IgnoreAttribute must have a reason specified in NUnit 3.");
                         break;
-                    case "NUnit.Framework.RequiresSTAAttribute":
-                    case "NUnit.Framework.RequiresMTAAttribute":
+                    case NUnitFramework.RequiresSTAAttribute:
+                    case NUnitFramework.RequiresMTAAttribute:
                         Error(location, attributeName + " is not supported in NUnit 3. Use ApartmentAttribute.");
                         break;
                     case "NUnit.Core.Extensibility.NUnitAddinAttribute":
-                    case "NUnit.Framework.RequiredAddinAttribute":
+                    case NUnitFramework.RequiredAddinAttribute:
                         Error(location, attributeName + " is not available in NUnit 3, which no longer supports Addins. After conversion, you can create custom attributes or engine extensions instead.");
                         break;
-                    case "NUnit.Framework.SuiteAttribute":
+                    case NUnitFramework.SuiteAttribute:
                         Error(location, "SuiteAttribute is not supported in NUnit 3. You should restructure your tests to eliminate legacy Suites.");
                         break;
-                    case "NUnit.Framework.SetUpAttribute":
-                    case "NUnit.Framework.TearDownAttribute":
+                    case NUnitFramework.SetUpAttribute:
+                    case NUnitFramework.TearDownAttribute:
                         if (methodInfo != null && methodInfo.ReflectedType != null &&
-                            Reflect.HasAttribute(methodInfo.ReflectedType, "NUnit.Framework.SetUpFixtureAttribute", true))
+                            Reflect.HasAttribute(methodInfo.ReflectedType, NUnitFramework.SetUpFixtureAttribute, true))
                         {
                             var replacement = "OneTime" + attributeName;
                             Error(location, attributeName + " is no longer allowed in a SetUpFixture in NUnit 3. Use " + replacement + ".");
                         }
                         break;
-                    case "NUnit.Framework.TestCaseAttribute":
-                        string expectedExceptionName = (string)Reflect.GetPropertyValue(attribute, "ExpectedExceptionName");
+                    case NUnitFramework.TestCaseAttribute:
+                        string expectedExceptionName = (string)Reflect.GetPropertyValue(attribute, PropertyNames.ExpectedExceptionName);
                         if (!string.IsNullOrEmpty(expectedExceptionName))
                             Error(location, "TestCaseAttribute does not support ExpectedException in NUnit 3. Use Assert.Throws or Throws.InstanceOf.");
 
+                        // NUnit 2.6.5+ has LegacyResultUsed property for compatibility testing.
+                        // The HasExpectedResult property was introduced in 2.
                         var legacyResultProp = Reflect.GetNamedProperty(attributeType, "LegacyResultUsed", BindingFlags.Instance | BindingFlags.NonPublic);
-                        var hasExpectedResultProp = Reflect.GetNamedProperty(attributeType, "HasExpectedResult", BindingFlags.Instance | BindingFlags.Public);
-                        bool resultPropertyError = legacyResultProp != null // NUnit 2.6.5+
+                        // Property present in NUnit 2.6.0+
+                        var hasExpectedResultProp = Reflect.GetNamedProperty(attributeType, PropertyNames.HasExpectedResult, BindingFlags.Instance | BindingFlags.Public);
+                        bool resultPropertyError = legacyResultProp != null
                            ? (bool)legacyResultProp.GetValue(attribute, null)
-                           : hasExpectedResultProp != null // NUnit 2.6.0+
+                           : hasExpectedResultProp != null
                                ? (bool)hasExpectedResultProp.GetValue(attribute, null)
                                : Reflect.GetPropertyValue(attribute, "Result") != null;
 
@@ -195,7 +198,7 @@ namespace NUnit.Core
                         if (ignoreUsed != null && (bool)ignoreUsed)
                             Error(location, "TestCaseAttribute Ignore property changes from bool to string in NUnit 3. Fix after conversion.");
                         break;
-                    case "NUnit.Framework.TestCaseSourceAttribute":
+                    case NUnitFramework.TestCaseSourceAttribute:
                         string sourceName = (string)Reflect.GetPropertyValue(attribute, "SourceName");
                         if (!string.IsNullOrEmpty(sourceName))
                         {
@@ -210,18 +213,18 @@ namespace NUnit.Core
                             }
                         }
                         break;
-                    case "NUnit.Framework.TestFixtureAttribute":
+                    case NUnitFramework.TestFixtureAttribute:
                         object ignore = Reflect.GetPropertyValue(attribute, "Ignore");
                         if (ignore != null && (bool)ignore)
                             Error(location, "TestFixtureAttribute Ignore property changes from bool to string in NUnit 3. Fix after conversion.");
                         break;
-                    case "NUnit.Framework.TestFixtureSetUpAttribute":
+                    case NUnitFramework.TestFixtureSetUpAttribute:
                         Error(location, "TestFixtureSetUpAttribute is not supported in NUnit 3. Use OneTimeSetUpAttribute.");
                         break;
-                    case "NUnit.Framework.TestFixtureTearDownAttribute":
+                    case NUnitFramework.TestFixtureTearDownAttribute:
                         Error(location, "TestFixtureTearDownAttribute is not supported in NUnit 3. Use OneTimeTearDownAttribute.");
                         break;
-                    case "NUnit.Framework.ValueSourceAttribute":
+                    case NUnitFramework.ValueSourceAttribute:
                         sourceName = (string)Reflect.GetPropertyValue(attribute, "SourceName");
                         if (!string.IsNullOrEmpty(sourceName))
                         {
@@ -237,8 +240,8 @@ namespace NUnit.Core
                         }
                         break;
 
-                    case "System.STAThreadAttribute":
-                    case "System.MTAThreadAttribute":
+                    case NUnitFramework.STAThreadAttribute:
+                    case NUnitFramework.MTAThreadAttribute:
                         Warning(location, attributeFullName + " has no effect in NUnit 3. Use ApartmentAttribute.");
                         break;
                 }

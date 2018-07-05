@@ -24,12 +24,12 @@ namespace NUnit.Core
         {
 
             var fixtureSetUpMethods = new List<MethodInfo>();
-            fixtureSetUpMethods.AddRange(Reflect.GetMethodsWithAttribute(fixtureType, NUnitFramework.FixtureSetUpAttribute, true));
+            fixtureSetUpMethods.AddRange(Reflect.GetMethodsWithAttribute(fixtureType, NUnitFramework.TestFixtureSetUpAttribute, true));
             fixtureSetUpMethods.AddRange(Reflect.GetMethodsWithAttribute(fixtureType, NUnitFramework.OneTimeSetUpAttribute, true));
             FixtureSetUpMethods = fixtureSetUpMethods;
 
             var fixtureTearDownMethods = new List<MethodInfo>();
-            fixtureTearDownMethods.AddRange(Reflect.GetMethodsWithAttribute(fixtureType, NUnitFramework.FixtureTearDownAttribute, true));
+            fixtureTearDownMethods.AddRange(Reflect.GetMethodsWithAttribute(fixtureType, NUnitFramework.TestFixtureTearDownAttribute, true));
             fixtureTearDownMethods.AddRange(Reflect.GetMethodsWithAttribute(fixtureType, NUnitFramework.OneTimeTearDownAttribute, true));
             FixtureTearDownMethods = fixtureTearDownMethods;
 
