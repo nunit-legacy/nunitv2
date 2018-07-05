@@ -35,6 +35,8 @@ namespace NUnit.Core
         public const string PropertyAttribute = "NUnit.Framework.PropertyAttribute";
         public const string DescriptionAttribute = "NUnit.Framework.DescriptionAttribute";
         public const string RequiredAddinAttribute = "NUnit.Framework.RequiredAddinAttribute";
+        public const string RequiresSTAAttribute = "NUnit.Framework.RequiresSTAAttribute";
+        public const string RequiresMTAAttribute = "NUnit.Framework.RequiresMTAAttribute";
 
         // Attributes that apply only to Classes
         public const string TestFixtureAttribute = "NUnit.Framework.TestFixtureAttribute";
@@ -45,16 +47,24 @@ namespace NUnit.Core
         public const string TestCaseAttribute = "NUnit.Framework.TestCaseAttribute";
         public const string TestCaseSourceAttribute = "NUnit.Framework.TestCaseSourceAttribute";
         public const string TheoryAttribute = "NUnit.Framework.TheoryAttribute";
-        public static readonly string SetUpAttribute = "NUnit.Framework.SetUpAttribute";
-        public static readonly string TearDownAttribute = "NUnit.Framework.TearDownAttribute";
-        public static readonly string FixtureSetUpAttribute = "NUnit.Framework.TestFixtureSetUpAttribute";
-        public static readonly string FixtureTearDownAttribute = "NUnit.Framework.TestFixtureTearDownAttribute";
-        public static readonly string OneTimeSetUpAttribute = "NUnit.Framework.OneTimeSetUpAttribute";
-        public static readonly string OneTimeTearDownAttribute = "NUnit.Framework.OneTimeTearDownAttribute";
-        public static readonly string ExpectedExceptionAttribute = "NUnit.Framework.ExpectedExceptionAttribute";
+        public const string SetUpAttribute = "NUnit.Framework.SetUpAttribute";
+        public const string TearDownAttribute = "NUnit.Framework.TearDownAttribute";
+        public const string TestFixtureSetUpAttribute = "NUnit.Framework.TestFixtureSetUpAttribute";
+        public const string TestFixtureTearDownAttribute = "NUnit.Framework.TestFixtureTearDownAttribute";
+        public const string OneTimeSetUpAttribute = "NUnit.Framework.OneTimeSetUpAttribute";
+        public const string OneTimeTearDownAttribute = "NUnit.Framework.OneTimeTearDownAttribute";
+        public const string ExpectedExceptionAttribute = "NUnit.Framework.ExpectedExceptionAttribute";
 
         // Attributes that apply only to Properties
-        public static readonly string SuiteAttribute = "NUnit.Framework.SuiteAttribute";
+        public const string SuiteAttribute = "NUnit.Framework.SuiteAttribute";
+
+        // Attributes that apply only to Parameters
+        public const string ValueSourceAttribute = "NUnit.Framework.ValueSourceAttribute";
+
+        // System attributes used by NUnit
+        public const string STAThreadAttribute = "System.STAThreadAttribute";
+        public const string MTAThreadAttribute = "System.MTAThreadAttribute";
+
         #endregion
 
         #region Other Framework Types
@@ -222,10 +232,10 @@ namespace NUnit.Core
                             test.IgnoreReason = string.Format("Required addin {0} not available", required);
                         }
                         break;
-                    case "System.STAThreadAttribute":
+                    case STAThreadAttribute:
                         test.Properties.Add("APARTMENT_STATE", System.Threading.ApartmentState.STA);
                         break;
-                    case "System.MTAThreadAttribute":
+                    case MTAThreadAttribute:
                         test.Properties.Add("APARTMENT_STATE", System.Threading.ApartmentState.MTA);
                         break;
                     default:

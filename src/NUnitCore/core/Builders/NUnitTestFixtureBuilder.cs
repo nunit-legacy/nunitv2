@@ -271,9 +271,9 @@ namespace NUnit.Core.Builders
 
             return NUnitFramework.CheckSetUpTearDownMethods(fixtureType, NUnitFramework.SetUpAttribute, ref reason)
                 && NUnitFramework.CheckSetUpTearDownMethods(fixtureType, NUnitFramework.TearDownAttribute, ref reason)
-                && NUnitFramework.CheckSetUpTearDownMethods(fixtureType, NUnitFramework.FixtureSetUpAttribute, ref reason)
+                && NUnitFramework.CheckSetUpTearDownMethods(fixtureType, NUnitFramework.TestFixtureSetUpAttribute, ref reason)
                 && NUnitFramework.CheckSetUpTearDownMethods(fixtureType, NUnitFramework.OneTimeSetUpAttribute, ref reason)
-                && NUnitFramework.CheckSetUpTearDownMethods(fixtureType, NUnitFramework.FixtureTearDownAttribute, ref reason)
+                && NUnitFramework.CheckSetUpTearDownMethods(fixtureType, NUnitFramework.TestFixtureTearDownAttribute, ref reason)
                 && NUnitFramework.CheckSetUpTearDownMethods(fixtureType, NUnitFramework.OneTimeTearDownAttribute, ref reason);
         }
 

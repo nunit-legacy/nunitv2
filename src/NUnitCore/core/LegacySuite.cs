@@ -19,9 +19,9 @@ namespace NUnit.Core
         public LegacySuite( Type fixtureType ) : base( fixtureType )
         {
             this.FixtureSetUpMethods =
-                Reflect.GetMethodsWithAttribute(fixtureType, NUnitFramework.FixtureSetUpAttribute, true);
+                Reflect.GetMethodsWithAttribute(fixtureType, NUnitFramework.TestFixtureSetUpAttribute, true);
             this.FixtureTearDownMethods =
-                Reflect.GetMethodsWithAttribute(fixtureType, NUnitFramework.FixtureTearDownAttribute, true);
+                Reflect.GetMethodsWithAttribute(fixtureType, NUnitFramework.TestFixtureTearDownAttribute, true);
         }
     }
 }
