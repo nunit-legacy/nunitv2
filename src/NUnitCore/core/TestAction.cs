@@ -24,8 +24,8 @@ namespace NUnit.Core
 
         static TestAction()
         {
-            _ActionInterfaceType = Type.GetType(NUnitFramework.TestActionInterface);
-            _TestDetailsClassType = Type.GetType(NUnitFramework.TestDetailsClass);
+            _ActionInterfaceType = NUnitFramework.FrameworkAssembly.GetType(NUnitFramework.TestActionInterface);
+            _TestDetailsClassType = NUnitFramework.FrameworkAssembly.GetType(NUnitFramework.TestDetailsClass);
         }
 
         private readonly object _Action;

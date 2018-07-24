@@ -10,6 +10,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Reflection;
+using System.Text;
 
 namespace NUnit.Core
 {
@@ -19,7 +20,9 @@ namespace NUnit.Core
 
         static ActionsHelper()
         {
-            _ActionInterfaceType = Type.GetType(NUnitFramework.TestActionInterface);
+            var nunitFramework = NUnitFramework.FrameworkAssembly;
+            if (nunitFramework != null)
+                _ActionInterfaceType = nunitFramework.GetType(NUnitFramework.TestActionInterface);
         }
 
         public static void ExecuteActions(ActionPhase phase, IEnumerable<TestAction> actions, ITest test)
