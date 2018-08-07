@@ -68,11 +68,8 @@ namespace NUnit.Core
         #endregion
 
         #region Other Framework Types
-
-        public static readonly string TestActionInterface = "NUnit.Framework.ITestAction, nunit.framework";
-
-        public static readonly string TestDetailsClass = "NUnit.Framework.TestDetails, nunit.framework";
-
+        public static readonly string TestActionInterface = "NUnit.Framework.ITestAction";
+        public static readonly string TestDetailsClass = "NUnit.Framework.TestDetails";
         public static readonly string AssertException = "NUnit.Framework.AssertionException";
         public static readonly string IgnoreException = "NUnit.Framework.IgnoreException";
         public static readonly string InconclusiveException = "NUnit.Framework.InconclusiveException";
@@ -97,7 +94,7 @@ namespace NUnit.Core
         #region Properties
         private static Assembly frameworkAssembly;
         private static bool frameworkAssemblyInitialized;
-        private static Assembly FrameworkAssembly
+        internal static Assembly FrameworkAssembly
         {
             get
             {
