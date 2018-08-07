@@ -143,6 +143,11 @@ Task("Build")
         // Copy in NUnit project files
         CopyFile(PROJECT_DIR + "NUnitTests.v2.nunit", BIN_DIR + "NUnitTests.nunit");
         CopyFile(PROJECT_DIR + "NUnitTests.config", BIN_DIR + "NUnitTests.config");
+
+        // Copy files for assembly load policy tests
+        var targetDir = BIN_DIR + "tests/loadpolicy/lib/";
+        CreateDirectory(targetDir);
+        CopyFileToDirectory(BIN_DIR + "tests/nunit.framework.dll", targetDir);
     });
 
 //////////////////////////////////////////////////////////////////////
@@ -198,6 +203,25 @@ Task("CompatibilityTests")
             {
                 WorkingDirectory = BIN_DIR + "tests",
                 Arguments = "compatibility-tests.dll -noxml -compatibility"
+            });
+
+        if (rc > 0)
+            throw new Exception(string.Format("{0} tests failed", rc));
+        else if (rc < 0)
+            throw new Exception(string.Format("Console returned rc = {0}", rc));
+    });
+
+Task("AssemblyLoadPolicyTests")
+    .Description("Runs the assembly load policy tests")
+    .IsDependentOn("Build")
+    .Does(() =>
+    {
+        int rc = StartProcess(
+            NUNIT_CONSOLE,
+            new ProcessSettings()
+            {
+                WorkingDirectory = BIN_DIR + "tests/loadpolicy",
+                Arguments = "simple-assembly.dll -noxml"
             });
 
         if (rc > 0)
@@ -341,7 +365,8 @@ Task("Rebuild")
 Task("Test")
     .IsDependentOn("BasicTests")
     .IsDependentOn("Net45Tests")
-    .IsDependentOn("CompatibilityTests");
+    .IsDependentOn("CompatibilityTests")
+    .IsDependentOn("AssemblyLoadPolicyTests");
 
 Task("Package")
     .IsDependentOn("PackageSource")
