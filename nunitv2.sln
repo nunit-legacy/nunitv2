@@ -127,11 +127,11 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "nunit-gui-x86.exe", "src\Gu
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "nuget", "nuget", "{62A4E026-5E59-4E47-BA1E-53EFE6FA95EC}"
 	ProjectSection(SolutionItems) = preProject
-		nuget\nunit.core.nuspec = nuget\nunit.core.nuspec
 		nuget\nunit.editor.nuspec = nuget\nunit.editor.nuspec
 		nuget\nunit.mocks.nuspec = nuget\nunit.mocks.nuspec
 		nuget\nunit.nuspec = nuget\nunit.nuspec
 		nuget\nunit.runners.nuspec = nuget\nunit.runners.nuspec
+		nuget\nunitv2.core.nuspec = nuget\nunitv2.core.nuspec
 		nuget\pnunit.nuspec = nuget\pnunit.nuspec
 	EndProjectSection
 EndProject
