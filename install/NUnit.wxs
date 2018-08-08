@@ -123,7 +123,6 @@
       <ComponentRef Id="Logo.ico" />
       <ComponentRef Id="InstallationRegistryEntry" />
       <ComponentRef Id="nunit.framework" />
-      <ComponentRef Id="nunit.mocks" />
       <ComponentRef Id="AssemblyReferenceFolder" />
       <ComponentRef Id="nunit.core" />
       <ComponentRef Id="nunit.core.interfaces" />
