@@ -18,12 +18,8 @@
 	</metadata>
 	<files>
 		<file src="license.txt" />
-		<file src="bin\agent.conf" target="tools" />
-		<file src="bin\agent.log.conf" target="tools" />
-		<file src="bin\launcher.log.conf" target="tools" />
 		<file src="bin\nunit.exe" target="tools" />
 		<file src="bin\nunit.exe.config" target="tools" />
-		<file src="bin\nunit.framework.dll" target="tools" />
 		<file src="bin\nunit-agent.exe" target="tools" />
 		<file src="bin\nunit-agent.exe.config" target="tools" />
 		<file src="bin\nunit-agent-x86.exe" target="tools" />
@@ -35,15 +31,6 @@
 		<file src="bin\nunit-editor.exe" target="tools" />
 		<file src="bin\nunit-x86.exe" target="tools" />
 		<file src="bin\nunit-x86.exe.config" target="tools" />
-		<file src="bin\pnunit.framework.dll" target="tools" />
-		<file src="bin\pnunit.tests.dll" target="tools" />
-		<file src="bin\pnunit-agent.exe" target="tools" />
-		<file src="bin\pnunit-agent.exe.config" target="tools" />
-		<file src="bin\pnunit-launcher.exe" target="tools" />
-		<file src="bin\pnunit-launcher.exe.config" target="tools" />
-		<file src="bin\runpnunit.bat" target="tools" />
-		<file src="bin\test.conf" target="tools" />
-		<file src="bin\lib\log4net.dll" target="tools\lib" />
 		<file src="bin\lib\nunit.core.dll" target="tools\lib" />
 		<file src="bin\lib\nunit.core.interfaces.dll" target="tools\lib" />
 		<file src="bin\lib\nunit.uiexception.dll" target="tools\lib" />

@@ -18,13 +18,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		README.md = README.md
 	EndProjectSection
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Scripts", "Scripts", "{A785FC02-6044-4864-BE24-4593CAD23A97}"
-	ProjectSection(SolutionItems) = preProject
-		scripts\nunit.build.targets = scripts\nunit.build.targets
-		scripts\nunit.common.targets = scripts\nunit.common.targets
-		scripts\nunit.package.targets = scripts\nunit.package.targets
-	EndProjectSection
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "NUnitFramework", "NUnitFramework", "{A2FF9F1B-1854-479A-859C-6ECEBF045E4C}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ClientUtilities", "ClientUtilities", "{D448BA20-BA70-4F70-AF53-4C0E6C1E97E7}"
@@ -40,8 +33,6 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "GuiException", "GuiException", "{35A92AA3-A1E6-426E-8D96-322F3EBF1C8D}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{6142B985-EA14-4DE0-884F-E62D89949E1D}"
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "PNUnit", "PNUnit", "{979724B8-6FAA-400F-B40D-EB653A815C87}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "NUnitTestServer", "NUnitTestServer", "{D029F8FD-84E3-4AD3-8F1B-CCA0C856E659}"
 EndProject
@@ -91,14 +82,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "test-assembly", "src\tests\
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "simple-assembly", "src\tests\simple-assembly\simple-assembly.csproj", "{AFE712E4-57CA-45B3-A047-05F9838FB87A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "pnunit-agent", "src\PNUnit\agent\pnunit-agent.csproj", "{621C27DA-CC29-4663-9FE4-BF5A67970C18}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "pnunit-launcher", "src\PNUnit\launcher\pnunit-launcher.csproj", "{91FC5C92-E801-4446-B4D6-EAC5B56A4DB2}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "pnunit.tests", "src\PNUnit\tests\pnunit.tests.csproj", "{319B9238-76BE-4335-9B4D-F8E43C4B124F}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "pnunit.framework", "src\PNUnit\pnunit.framework\pnunit.framework.csproj", "{5261ABA1-98E6-4603-A4F0-59CAC307AC68}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "nunit-agent.exe", "src\NUnitTestServer\nunit-agent-exe\nunit-agent.exe.csproj", "{3E469CD9-FED2-4955-AE4C-669A74CA6767}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "nunit-editor", "src\ProjectEditor\editor\nunit-editor.csproj", "{ED57DCEC-3C16-4A90-BD3C-4D5BE5AD70FB}"
@@ -126,7 +109,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "nuget", "nuget", "{62A4E026
 		nuget\nunit.nuspec = nuget\nunit.nuspec
 		nuget\nunit.runners.nuspec = nuget\nunit.runners.nuspec
 		nuget\nunitv2.core.nuspec = nuget\nunitv2.core.nuspec
-		nuget\pnunit.nuspec = nuget\pnunit.nuspec
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "install", "install", "{DF3BF58E-6947-4F52-80D4-2F7B749C5372}"
@@ -136,7 +118,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "install", "install", "{DF3B
 		install\NSubstitute.wxs = install\NSubstitute.wxs
 		install\nunit-gui.wxs = install\nunit-gui.wxs
 		install\NUnit.wxs = install\NUnit.wxs
-		install\pnunit.wxs = install\pnunit.wxs
 		install\tests.wxs = install\tests.wxs
 	EndProjectSection
 EndProject
@@ -234,22 +215,6 @@ Global
 		{AFE712E4-57CA-45B3-A047-05F9838FB87A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{AFE712E4-57CA-45B3-A047-05F9838FB87A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{AFE712E4-57CA-45B3-A047-05F9838FB87A}.Release|Any CPU.Build.0 = Release|Any CPU
-		{621C27DA-CC29-4663-9FE4-BF5A67970C18}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{621C27DA-CC29-4663-9FE4-BF5A67970C18}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{621C27DA-CC29-4663-9FE4-BF5A67970C18}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{621C27DA-CC29-4663-9FE4-BF5A67970C18}.Release|Any CPU.Build.0 = Release|Any CPU
-		{91FC5C92-E801-4446-B4D6-EAC5B56A4DB2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{91FC5C92-E801-4446-B4D6-EAC5B56A4DB2}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{91FC5C92-E801-4446-B4D6-EAC5B56A4DB2}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{91FC5C92-E801-4446-B4D6-EAC5B56A4DB2}.Release|Any CPU.Build.0 = Release|Any CPU
-		{319B9238-76BE-4335-9B4D-F8E43C4B124F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{319B9238-76BE-4335-9B4D-F8E43C4B124F}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{319B9238-76BE-4335-9B4D-F8E43C4B124F}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{319B9238-76BE-4335-9B4D-F8E43C4B124F}.Release|Any CPU.Build.0 = Release|Any CPU
-		{5261ABA1-98E6-4603-A4F0-59CAC307AC68}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{5261ABA1-98E6-4603-A4F0-59CAC307AC68}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{5261ABA1-98E6-4603-A4F0-59CAC307AC68}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{5261ABA1-98E6-4603-A4F0-59CAC307AC68}.Release|Any CPU.Build.0 = Release|Any CPU
 		{3E469CD9-FED2-4955-AE4C-669A74CA6767}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{3E469CD9-FED2-4955-AE4C-669A74CA6767}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3E469CD9-FED2-4955-AE4C-669A74CA6767}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -295,7 +260,6 @@ Global
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
-		{A785FC02-6044-4864-BE24-4593CAD23A97} = {A65042E1-D8BC-48DD-8DE1-F0991F07EA77}
 		{8C326431-AE57-4645-ACC1-A90A0B425129} = {A2FF9F1B-1854-479A-859C-6ECEBF045E4C}
 		{83DD7E12-A705-4DBA-9D71-09C8973D9382} = {A2FF9F1B-1854-479A-859C-6ECEBF045E4C}
 		{74EF7165-117E-48ED-98EA-068EAE438E53} = {D448BA20-BA70-4F70-AF53-4C0E6C1E97E7}
@@ -318,10 +282,6 @@ Global
 		{3E63AD0F-24D4-46BE-BEE4-5A3299847D86} = {6142B985-EA14-4DE0-884F-E62D89949E1D}
 		{1960CAC4-9A82-47C5-A9B3-55BC37572C3C} = {6142B985-EA14-4DE0-884F-E62D89949E1D}
 		{AFE712E4-57CA-45B3-A047-05F9838FB87A} = {6142B985-EA14-4DE0-884F-E62D89949E1D}
-		{621C27DA-CC29-4663-9FE4-BF5A67970C18} = {979724B8-6FAA-400F-B40D-EB653A815C87}
-		{91FC5C92-E801-4446-B4D6-EAC5B56A4DB2} = {979724B8-6FAA-400F-B40D-EB653A815C87}
-		{319B9238-76BE-4335-9B4D-F8E43C4B124F} = {979724B8-6FAA-400F-B40D-EB653A815C87}
-		{5261ABA1-98E6-4603-A4F0-59CAC307AC68} = {979724B8-6FAA-400F-B40D-EB653A815C87}
 		{3E469CD9-FED2-4955-AE4C-669A74CA6767} = {D029F8FD-84E3-4AD3-8F1B-CCA0C856E659}
 		{ED57DCEC-3C16-4A90-BD3C-4D5BE5AD70FB} = {992367F7-9154-4424-B55E-3EF8673A2A36}
 		{A9E1C1E9-AE97-4510-AD94-EAFADE425FBE} = {992367F7-9154-4424-B55E-3EF8673A2A36}

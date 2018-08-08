@@ -157,17 +157,6 @@
 
       </Feature>
 
-      <!-- Defined in pnunit.wxs -->
-      <Feature Id="PNunitRunner" Level="10" Title="PNUnit Runner" Display="expand" Description="Installs the PNUnit runner for parallel distributed tests.">
-
-        <!-- Defined in pnunit.wxs -->
-        <ComponentRef Id="pnunit_agent" />
-        <ComponentRef Id="pnunit_launcher" />
-        <ComponentRef Id="pnunit_framework" />
-        <ComponentRef Id="log4net" />
-
-      </Feature>
-
       <Feature Id="TestsFeature" Level="10" Title="Unit Tests" Display="expand" Description="Installs the unit tests for NUnit itself.">
 
         <!-- Defined in tests.wxs -->
@@ -177,9 +166,6 @@
 
         <!-- Defined in NSubstitute.wxs -->
         <ComponentRef Id="NSubstitute" />
-
-        <!-- Defined in pnunit.wxs -->
-        <ComponentRef Id="pnunit_tests" />
 
         <!-- Defined in net45-tests.wxs -->
         <ComponentRef Id="net45_tests" />
