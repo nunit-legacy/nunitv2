@@ -25,7 +25,6 @@
         <File Id="nonamespaceassembly" Name="nonamespace-assembly.dll" />
         <File Id="nunit.util.tests" Name="nunit.util.tests.dll" />
         <File Id="nunit.framework.tests" Name="nunit.framework.tests.dll" />
-        <File Id="nunit.mocks.tests" Name="nunit.mocks.tests.dll" />
         <File Id="console.tests" Name="nunit-console.tests.dll" />
         <File Id="nunit.core.tests" Name="nunit.core.tests.dll" />
       </Component>
