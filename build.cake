@@ -136,9 +136,7 @@ Task("Build")
 
         // Extra copies of some files are needed for backward compatibility
         // and to avoid changing the structure of the MSI directories.
-        CopyFileToDirectory(BIN_DIR + "log4net.dll", BIN_DIR + "lib/");
         CopyFileToDirectory(BIN_DIR + "tests/NSubstitute.dll", BIN_DIR + "lib/");
-        CopyFileToDirectory(BIN_DIR + "pnunit.framework.dll", BIN_DIR + "framework/");
 
         // Copy in NUnit project files
         CopyFile(PROJECT_DIR + "NUnitTests.v2.nunit", BIN_DIR + "NUnitTests.nunit");
