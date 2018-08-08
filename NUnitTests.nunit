@@ -8,7 +8,6 @@
     <assembly path="tests/nunit.uikit.tests.dll" />
     <assembly path="tests/nunit.uiexception.tests.dll" />
     <assembly path="tests/nunit-gui.tests.dll" />
-    <assembly path="tests/nunit-editor.tests.dll" />
   </Config>
   <Config name="Release" appbase="bin/Release" binpath="lib;tests;framework" configfile="NUnitTests.config">
     <assembly path="tests/nunit.framework.tests.dll" />
@@ -18,6 +17,5 @@
     <assembly path="tests/nunit.uikit.tests.dll" />
     <assembly path="tests/nunit.uiexception.tests.dll" />
     <assembly path="tests/nunit-gui.tests.dll" />
-    <assembly path="tests/nunit-editor.tests.dll" />
   </Config>
 </NUnitProject>

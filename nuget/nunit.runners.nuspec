@@ -28,7 +28,6 @@
 		<file src="bin\nunit-console.exe.config" target="tools" />
 		<file src="bin\nunit-console-x86.exe" target="tools" />
 		<file src="bin\nunit-console-x86.exe.config" target="tools" />
-		<file src="bin\nunit-editor.exe" target="tools" />
 		<file src="bin\nunit-x86.exe" target="tools" />
 		<file src="bin\nunit-x86.exe.config" target="tools" />
 		<file src="bin\lib\nunit.core.dll" target="tools\lib" />
