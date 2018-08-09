@@ -458,15 +458,20 @@ namespace NUnit.Gui
         {
             NUnitProject project = loader.TestProject;
 
-            string editorPath = GetProjectEditorPath();
+            string editorPath = (string)Services.UserSettings.GetSetting("Options.ProjectEditor.EditorPath");
+            bool pathSpecified = editorPath != null;
+
+            if (!pathSpecified)
+                editorPath = Path.Combine(NUnitConfiguration.NUnitBinDirectory, "nunit-editor.exe");
+
             if (!File.Exists(editorPath))
             {
                 string NL = Environment.NewLine;
                 string message =
-                    "Unable to locate the specified Project Editor:" + NL + NL + editorPath + NL + NL +
-                    (Services.UserSettings.GetSetting("Options.ProjectEditor.EditorPath") == null
-                        ? "Verify that nunit.editor.exe is properly installed in the NUnit bin directory."
-                        : "Verify that you have set the path to the editor correctly.");
+                    "Unable to locate the Project Editor:" + NL + NL + editorPath + NL + NL +
+                    (pathSpecified
+                        ? "Verify that you have set the path to the editor correctly."
+                        : "Verify that nunit.editor.exe is properly installed in the NUnit bin directory.");
 
                 Form.MessageDisplay.Error(message);
 
