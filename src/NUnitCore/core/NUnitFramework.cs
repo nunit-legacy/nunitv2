@@ -100,12 +100,15 @@ namespace NUnit.Core
             {
                 if (!frameworkAssemblyInitialized)
                     foreach (Assembly assembly in AppDomain.CurrentDomain.GetAssemblies())
-                        if (assembly.GetName().Name == "nunit.framework" ||
-                            assembly.GetName().Name == "NUnitLite")
+                    {
+                        AssemblyName name = assembly.GetName();
+                        if (name.Name == "nunit.framework" && name.Version.Major == 2 ||
+                            name.Name == "NUnitLite" && name.Version.Major == 1)
                         {
                             frameworkAssembly = assembly;
                             break;
                         }
+                    }
 
                 frameworkAssemblyInitialized = true;
 
