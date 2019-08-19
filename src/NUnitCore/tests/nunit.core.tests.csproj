@@ -165,6 +165,7 @@
     <Compile Include="Generic\SimpleGenericFixture.cs" />
     <Compile Include="Generic\SimpleGenericMethods.cs" />
     <Compile Include="Generic\TypeParameterUsedWithTestMethod.cs" />
+    <Compile Include="IdFilterTests.cs" />
     <Compile Include="IgnoreFixture.cs" />
     <Compile Include="LegacySuiteTests.cs" />
     <Compile Include="MaxTimeTests.cs" />

@@ -4,5 +4,5 @@ os: linux
 dist: trusty
 mono: latest
 script: 
-  - msbuild nunit.sln /t:Rebuild /p:Configuration=Release
+  - msbuild nunitv2.sln /t:Rebuild /p:Configuration=Release
 

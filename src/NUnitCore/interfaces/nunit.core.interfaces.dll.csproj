@@ -120,6 +120,7 @@
     <Compile Include="Extensibility\TestFramework.cs" />
     <Compile Include="Filters\AndFilter.cs" />
     <Compile Include="Filters\CategoryFilter.cs" />
+    <Compile Include="Filters\IdFilter.cs" />
     <Compile Include="Filters\NameFilter.cs" />
     <Compile Include="Filters\NotFilter.cs" />
     <Compile Include="Filters\OrFilter.cs" />
