@@ -1,4 +1,4 @@
-#tool "nuget:?package=WiX.Toolset"
+#tool "nuget:?package=WiX.Toolset&version=3.9.1208"
 
 //////////////////////////////////////////////////////////////////////
 // ARGUMENTS

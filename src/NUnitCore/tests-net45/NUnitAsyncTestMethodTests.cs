@@ -64,7 +64,7 @@ namespace nunit.core.tests.net45
 				yield return new object[] { Method(f => f.TaskCheckTestContextWithinTestBody()), ResultState.Success, 2 };
 
 				yield return new object[] { Method(f => f.VoidAsyncVoidChildCompletingEarlierThanTest()), ResultState.Success, 0 };
-				yield return new object[] { Method(f => f.VoidAsyncVoidChildThrowingImmediately()), ResultState.Success, 0 };
+				yield return new object[] { Method(f => f.VoidAsyncVoidChildThrowingImmediately()), ResultState.Failure, 0 };
 			}
 		}
 
