@@ -11,7 +11,7 @@ var configuration = Argument("configuration", "Release");
 // CHANGE TO SET PACKAGE AND ASSEMBLY VERSIONS
 //////////////////////////////////////////////////////////////////////
 
-var version = "2.7.1";
+var version = "2.7.2";
 var modifier = ""; // for example "-beta2"
 
 var dbgSuffix = configuration == "Debug" ? "-dbg" : "";
