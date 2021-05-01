@@ -1,5 +1,5 @@
 build_script: 
-  - ps: ./build.ps1 -Target AppVeyor -Configuration Release
+  - ps: ./build.ps1 --target=AppVeyor --configuration=Release
   
 # disable built-in tests.
 test: off
